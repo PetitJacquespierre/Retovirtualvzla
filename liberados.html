@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -447,48 +447,43 @@
             <!-- Tercera columna centrada horizontalmente para Grow Studio -->
             <div class="flex flex-col md:items-end items-center justify-center gap-4 pt-8 md:pt-0 border-t border-white/10 md:border-none md:border-l md:pl-8 col-span-1 text-center md:text-right">
                 <span class="text-[#64748b] text-[10px] uppercase tracking-[0.3em] font-bold">Desarrollado por</span>
-                <a href="https://growstudioweb.vercel.app/" target="_blank" class="flex items-center justify-center md:justify-end gap-3 hover:scale-105 transition-transform cursor-pointer group">
-                    <span class="chameleon-text font-black text-base md:text-lg tracking-[0.1em]">GROW STUDIO</span>
-                    <img src="img/grow-logo.png" alt="Grow Studio" class="h-7 md:h-8 object-contain drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_15px_rgba(0,210,255,0.9)] transition-all">
-                </a>
-            </div>
-        </div>
     </footer>
 
     <script>
-// ========== MENÚ MÓVIL HAMBURGUESA ==========
+        // ========== MENÚ MÓVIL HAMBURGUESA ==========
         const menuToggle = document.getElementById('menuToggle');
         const mobileMenu = document.getElementById('mobileMenu');
-        const menuIcon = menuToggle.querySelector('i');
-
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('translate-x-full');
-            
-            // Cambiar icono
-            if (mobileMenu.classList.contains('translate-x-full')) {
-                menuIcon.classList.remove('fa-xmark');
-                menuIcon.classList.add('fa-bars-staggered');
-            } else {
-                menuIcon.classList.remove('fa-bars-staggered');
-                menuIcon.classList.add('fa-xmark');
-            }
-        });
-
-        // Cerrar menú al hacer click en un enlace
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('translate-x-full');
-                menuIcon.classList.remove('fa-xmark');
-                menuIcon.classList.add('fa-bars-staggered');
+        if (menuToggle && mobileMenu) {
+            const menuIcon = menuToggle.querySelector('i');
+            menuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('translate-x-full');
+                if (mobileMenu.classList.contains('translate-x-full')) {
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars-staggered');
+                } else {
+                    menuIcon.classList.remove('fa-bars-staggered');
+                    menuIcon.classList.add('fa-xmark');
+                }
             });
-        });
 
-// ========== TASA BCV AUTOMATIZADA MAESTRA ==========
-        let tasaBCV = parseFloat(localStorage.getItem("reto_bcv_rate")) || 596.78; // Respaldo base o Cache
-        
-        // TU NUEVA API CENTRALIZADA EN VIVO (¡YA ACTIVA!)
-        const urlApiDolarBCV = "https://script.google.com/macros/s/AKfycbwsoD8ahtAQUqfY0TQWf3-dDs29HL8kEJa2t-mjDR3PAo3exTTmtSwXqYuNB2ob5dFpgw/exec";
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('translate-x-full');
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars-staggered');
+                });
+            });
+        }
+
+        // ========== SISTEMA DE TASA BCV SANDÍA PRODUCTION ==========
+        const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbyazhyYfK-vURGv34XF-oTW1_34rTVRs2WM7-aNlswf-mIGhIwgaLgwfGx1xZxfm50/exec";
+        const tasaRespaldoLocal = 848.55;
+        let tasaBCV = parseFloat(sessionStorage.getItem("tasa_bcv_cache")) || parseFloat(localStorage.getItem("reto_bcv_rate")) || tasaRespaldoLocal;
+
+        function formatVE(num) {
+            return new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
+        }
 
         const urlCSV_Comparacion = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5yMHsenxCWE5kZBDUZ8UcYqDtdAHstfqXcvWkuYZPQ_4n2xSrfs6ptk7k21r1kcMHHLtWjz8SEHwl/pub?gid=0&single=true&output=csv";
         const urlBaseDeDatos = "https://script.google.com/macros/s/AKfycbyp-NJc2uozcF4VDYRm3_XhKiKmPwdLfB4jLxJV_L9EFpXSBI7dp1TuMG0hxWzC7dLaCg/exec";
@@ -523,51 +518,84 @@
         let dorsalActual = "000";
         let ciValidada = ""; 
 
-        // Función dedicada a consultar tu propia API centralizada en Google Apps Script
-        async function obtenerTasaBCV() {
+        async function sincronizarTasaBCV() {
+            const cacheGuardada = sessionStorage.getItem("tasa_bcv_cache");
+            const tiempoGuardado = sessionStorage.getItem("tasa_bcv_time");
+            const ahora = Date.now();
+
+            // Si ya consultó hace menos de 10 minutos (600.000 ms), usar caché y no consultar red
+            if (cacheGuardada && tiempoGuardado && (ahora - parseInt(tiempoGuardado)) < 600000) {
+                tasaBCV = parseFloat(cacheGuardada);
+                actualizarPantallaTasa();
+                return;
+            }
+
+            // Consultar en segundo plano con parámetro anti-caché ?t=
             try {
-                const respuesta = await fetch(urlApiDolarBCV);
+                const respuesta = await fetch(urlApiDivisasBCV + "?t=" + ahora);
                 if (respuesta.ok) {
-                    const datos = await respuesta.json();
-                    if (datos && datos.usd) {
-                        // Aquí toma el valor de precisión enviado por tu API
-                        let nuevaTasa = parseFloat(datos.usd); if(nuevaTasa > 10) { tasaBCV = nuevaTasa; localStorage.setItem("reto_bcv_rate", tasaBCV); }
-                        console.log("¡API Sincronizada con éxito!: " + tasaBCV);
+                    const data = await respuesta.json();
+                    if (data && data.usd && parseFloat(data.usd) > 10) {
+                        tasaBCV = parseFloat(data.usd);
+                        sessionStorage.setItem("tasa_bcv_cache", tasaBCV);
+                        sessionStorage.setItem("tasa_bcv_time", ahora.toString());
+                        localStorage.setItem("reto_bcv_rate", tasaBCV);
+                        actualizarPantallaTasa();
+                        return;
                     }
                 }
             } catch (error) {
-                console.error("Falló la conexión con la API central, usando tasa base de contingencia.", error);
-            } finally {
-                // Este bloque SE EJECUTA SÍ O SÍ, evitando que se quede estancado
-                if (document.getElementById('valor-tasa')) {
-                    document.getElementById('valor-tasa').innerText = tasaBCV.toFixed(2);
-                }
+                // Respaldo secundario local /api/bcv
+                try {
+                    const res2 = await fetch("/api/bcv");
+                    if (res2.ok) {
+                        const data2 = await res2.json();
+                        if (data2 && data2.usd && parseFloat(data2.usd) > 10) {
+                            tasaBCV = parseFloat(data2.usd);
+                            sessionStorage.setItem("tasa_bcv_cache", tasaBCV);
+                            sessionStorage.setItem("tasa_bcv_time", ahora.toString());
+                            localStorage.setItem("reto_bcv_rate", tasaBCV);
+                            actualizarPantallaTasa();
+                        }
+                    }
+                } catch (err2) {}
+            }
+        }
+
+        function actualizarPantallaTasa() {
+            const elTasa = document.getElementById('valor-tasa');
+            if (elTasa) {
+                elTasa.innerText = formatVE(tasaBCV);
+            }
+            if (typeof actualizarTotal === 'function') {
                 actualizarTotal();
             }
         }
-        window.onload = async () => {
-            const selectEstado = document.getElementById('estadoEnvio');
-            Object.keys(venezuela).sort().forEach(est => {
-                let opt = document.createElement('option');
-                opt.value = est;
-                opt.text = est;
-                selectEstado.add(opt);
-            });
 
-            // Capturar cédula desde la URL
+        window.onload = () => {
+            const selectEstado = document.getElementById('estadoEnvio');
+            if (selectEstado) {
+                Object.keys(venezuela).sort().forEach(est => {
+                    let opt = document.createElement('option');
+                    opt.value = est;
+                    opt.text = est;
+                    selectEstado.add(opt);
+                });
+            }
+
             const urlParams = new URLSearchParams(window.location.search);
             const ciURL = urlParams.get('ci');
             if(ciURL) {
                 ciValidada = ciURL;
-            } else {
-                alert("⚠️ No se detectó cédula. Redirigiendo al inicio.");
-                window.location.href = "inscripcion.html";
             }
 
             dorsalActual = "NUEVO"; 
             
-            // Llamamos a tu API maestra para traer la tasa del BCV en vivo
-            await obtenerTasaBCV();
+            // 0 milisegundos de espera
+            actualizarPantallaTasa();
+
+            // Sincronización en segundo plano
+            sincronizarTasaBCV();
         };
 
         function cargarCiudades() {
@@ -587,17 +615,16 @@
 
         function actualizarTotal() {
             let total = 12; // Precio base inscripción 5K
-            
-            const checkFranelilla = document.getElementById('checkFranelilla').checked;
-            const checkFranela = document.getElementById('checkFranela').checked;
+            const checkFranelilla = document.getElementById('checkFranelilla') ? document.getElementById('checkFranelilla').checked : false;
+            const checkFranela = document.getElementById('checkFranela') ? document.getElementById('checkFranela').checked : false;
             const divTallaFranelilla = document.getElementById('contenedorTallaFranelilla');
             const divTallaFranela = document.getElementById('contenedorTallaFranela');
 
-            if(checkFranelilla) { total += 10; divTallaFranelilla.classList.remove('hidden'); } 
-            else { divTallaFranelilla.classList.add('hidden'); document.getElementById('tallaFranelilla').value = ""; }
+            if(checkFranelilla && divTallaFranelilla) { total += 10; divTallaFranelilla.classList.remove('hidden'); } 
+            else if (divTallaFranelilla) { divTallaFranelilla.classList.add('hidden'); document.getElementById('tallaFranelilla').value = ""; }
 
-            if(checkFranela) { total += 12; divTallaFranela.classList.remove('hidden'); } 
-            else { divTallaFranela.classList.add('hidden'); document.getElementById('tallaFranela').value = ""; }
+            if(checkFranela && divTallaFranela) { total += 12; divTallaFranela.classList.remove('hidden'); } 
+            else if (divTallaFranela) { divTallaFranela.classList.add('hidden'); document.getElementById('tallaFranela').value = ""; }
 
             // LÓGICA DE LOS 10K VIP
             const opcion10k = document.querySelector('input[name="opcion10k"]:checked').value;
@@ -620,7 +647,7 @@
             total += parseInt(opcion10k) + costoExtra10k;
 
             document.getElementById('total-usd').innerText = `$${total}`;
-            document.getElementById('total-bs').innerText = (total * tasaBCV).toFixed(2) + " Bs.";
+            document.getElementById('total-bs').innerText = formatVE(total * tasaBCV) + " Bs.";
         }
 
         async function validarAtleta() {

@@ -468,14 +468,21 @@
     <script>
         const FECHA_LIMITE_PAGO = "15 de Julio de 2026";
 
-        let tasaBCV = 46.50; 
+        // ========== SISTEMA DE TASA BCV SANDÍA PRODUCTION ==========
+        const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbyazhyYfK-vURGv34XF-oTW1_34rTVRs2WM7-aNlswf-mIGhIwgaLgwfGx1xZxfm50/exec";
+        const tasaRespaldoLocal = 848.55;
+        let tasaBCV = parseFloat(sessionStorage.getItem("tasa_bcv_cache")) || parseFloat(localStorage.getItem("reto_bcv_rate")) || tasaRespaldoLocal;
+
+        function formatVE(num) {
+            return new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
+        }
+
         let flujoActual = ""; 
         let ciValidada = "";
         let totalDorsalesRegistrados = 22; 
         let deudaActual = 0; 
 
         // CONFIGURACIÓN DE CONEXIONES
-        const urlApiDolarBCV = "https://script.google.com/macros/s/AKfycbwsoD8ahtAQUqfY0TQWf3-dDs29HL8kEJa2t-mjDR3PAo3exTTmtSwXqYuNB2ob5dFpgw/exec";
         const urlCSV_Comparacion = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5yMHsenxCWE5kZBDUZ8UcYqDtdAHstfqXcvWkuYZPQ_4n2xSrfs6ptk7k21r1kcMHHLtWjz8SEHwl/pub?gid=244601533&single=true&output=csv";
         const urlBaseDeDatos = "https://script.google.com/macros/s/AKfycbyO9tDp2GreaVR-PVRIUS7zbJRQYydOv2S6mgPcYwyqHVM6-v0-TSQ1y-5UlWk6KVN8CA/exec"; 
 
@@ -483,22 +490,28 @@
             "Amazonas": ["Puerto Ayacucho"], "Anzoátegui": ["Barcelona", "Puerto La Cruz"], "Apure": ["San Fernando"], "Aragua": ["Maracay", "Cagua"], "Barinas": ["Barinas"], "Bolívar": ["Ciudad Guayana"], "Carabobo": ["Valencia", "Puerto Cabello"], "Cojedes": ["San Carlos"], "Delta Amacuro": ["Tucupita"], "Distrito Capital": ["Caracas"], "Falcón": ["Punto Fijo", "Coro"], "Guárico": ["San Juan"], "La Guaira": ["La Guaira"], "Lara": ["Barquisimeto"], "Mérida": ["Mérida"], "Miranda": ["Los Teques"], "Monagas": ["Maturín"], "Nueva Esparta": ["Porlamar"], "Portuguesa": ["Guanare"], "Sucre": ["Cumaná"], "Táchira": ["San Cristóbal"], "Trujillo": ["Valera"], "Yaracuy": ["San Felipe"], "Zulia": ["Maracaibo", "Cabimas"]
         };
 
-        window.onload = async () => {
+        window.onload = () => {
+            // 1. Activar el formulario de inmediato según la URL (0 milisegundos)
+            const urlParams = new URLSearchParams(window.location.search);
+            const modoURL = urlParams.get('modo');
+            if (modoURL) {
+                activarFlujo(modoURL.toUpperCase());
+            }
+
+            // 2. Cargar estados de Venezuela
             const selectEstado = document.getElementById('estadoEnvio');
             if(selectEstado) {
                 Object.keys(venezuela).sort().forEach(est => {
                     let opt = document.createElement('option'); opt.value = est; opt.text = est; selectEstado.add(opt);
                 });
             }
-            await obtenerTasaBCV();
-            await actualizarContadorSilencioso();
 
-            // Auto-activar según URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const modoURL = urlParams.get('modo');
-            if (modoURL) {
-                activarFlujo(modoURL.toUpperCase());
-            }
+            // 3. Pintar la tasa INMEDIATAMENTE en pantalla (0 milisegundos)
+            actualizarPantallaTasa();
+
+            // 4. Procesos silenciosos en segundo plano (NUNCA bloquean la pantalla)
+            sincronizarTasaBCV();
+            actualizarContadorSilencioso();
         };
 
         async function actualizarContadorSilencioso() {
@@ -600,22 +613,59 @@
             actualizarTotal();
         }
 
-        async function obtenerTasaBCV() {
+        async function sincronizarTasaBCV() {
+            const cacheGuardada = sessionStorage.getItem("tasa_bcv_cache");
+            const tiempoGuardado = sessionStorage.getItem("tasa_bcv_time");
+            const ahora = Date.now();
+
+            // Si ya consultó hace menos de 10 minutos (600.000 ms), usar caché y no consultar red
+            if (cacheGuardada && tiempoGuardado && (ahora - parseInt(tiempoGuardado)) < 600000) {
+                tasaBCV = parseFloat(cacheGuardada);
+                actualizarPantallaTasa();
+                return;
+            }
+
+            // Consultar en segundo plano con parámetro anti-caché ?t=
             try {
-                const res = await fetch(urlApiDolarBCV);
-                if (res.ok) {
-                    const datos = await res.json();
-                    if (datos && datos.usd) { 
-                        let nuevaTasa = parseFloat(datos.usd); 
-                        if(nuevaTasa > 10) { 
-                            tasaBCV = nuevaTasa; 
-                            localStorage.setItem("reto_bcv_rate", tasaBCV); 
-                        } 
+                const respuesta = await fetch(urlApiDivisasBCV + "?t=" + ahora);
+                if (respuesta.ok) {
+                    const data = await respuesta.json();
+                    if (data && data.usd && parseFloat(data.usd) > 10) {
+                        tasaBCV = parseFloat(data.usd);
+                        sessionStorage.setItem("tasa_bcv_cache", tasaBCV);
+                        sessionStorage.setItem("tasa_bcv_time", ahora.toString());
+                        localStorage.setItem("reto_bcv_rate", tasaBCV);
+                        actualizarPantallaTasa();
+                        return;
                     }
                 }
-            } catch (e) {}
-            document.getElementById('valor-tasa').innerText = tasaBCV.toFixed(2);
+            } catch (e) {
+                // Respaldo secundario local /api/bcv
+                try {
+                    const res2 = await fetch("/api/bcv");
+                    if (res2.ok) {
+                        const data2 = await res2.json();
+                        if (data2 && data2.usd && parseFloat(data2.usd) > 10) {
+                            tasaBCV = parseFloat(data2.usd);
+                            sessionStorage.setItem("tasa_bcv_cache", tasaBCV);
+                            sessionStorage.setItem("tasa_bcv_time", ahora.toString());
+                            localStorage.setItem("reto_bcv_rate", tasaBCV);
+                            actualizarPantallaTasa();
+                        }
+                    }
+                } catch (err2) {}
+            }
+        }
+
+        function actualizarPantallaTasa() {
+            const elTasa = document.getElementById('valor-tasa');
+            if (elTasa) {
+                elTasa.innerText = formatVE(tasaBCV);
+            }
             actualizarTotal();
+            if (typeof actualizarTotalAbono === 'function') {
+                actualizarTotalAbono();
+            }
         }
 
         function cargarCiudades() {
@@ -638,7 +688,7 @@
                 const selectVal = selectEl ? selectEl.value : (flujoActual === 'COMBO' ? 'COMBO' : '5K');
                 const price = selectVal === 'COMBO' ? 16 : 10;
                 document.getElementById('total-usd').innerText = "$" + price.toFixed(2);
-                document.getElementById('total-bs').innerText = (price * tasaBCV).toFixed(2) + " Bs.";
+                document.getElementById('total-bs').innerText = formatVE(price * tasaBCV) + " Bs.";
                 return;
             }
 
@@ -667,7 +717,7 @@
                 }
 
                 document.getElementById('total-usd').innerText = `$${netoUSD.toFixed(2)}`;
-                document.getElementById('total-bs').innerText = (netoUSD * tasaBCV).toFixed(2) + " Bs.";
+                document.getElementById('total-bs').innerText = formatVE(netoUSD * tasaBCV) + " Bs.";
             }
         }
 
@@ -682,7 +732,7 @@
             document.getElementById('label-abono-completo').innerText = `Pagas los $${deudaActual.toFixed(2)} totales.`;
             
             document.getElementById('total-usd').innerText = `$${montoAPagar.toFixed(2)}`;
-            document.getElementById('total-bs').innerText = (montoAPagar * tasaBCV).toFixed(2) + " Bs.";
+            document.getElementById('total-bs').innerText = formatVE(montoAPagar * tasaBCV) + " Bs.";
         }
 
         async function consultarSaldoServidor() {

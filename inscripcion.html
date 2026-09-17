@@ -277,15 +277,71 @@
                 </div>
             </div>
 
-            <div id="seccion-combo-5k" class="hidden-step bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 mb-8 border-2 border-dashed border-[#00D2FF]">
-                <h3 class="text-[#001E50] font-black text-xl mb-4 uppercase italic border-b pb-2">Elige tu Paquete</h3>
-                <div class="flex flex-col gap-2">
-                    <label class="text-[10px] font-bold uppercase text-slate-400">Promoción <span class="req">*</span></label>
-                    <select id="select-combo-5k" onchange="actualizarTotal()" class="bg-slate-50 border-2 border-slate-100 rounded-xl px-4 py-3 font-bold text-sm text-[#001E50]">
-                        <option value="5K">Solo 3ra Edición - $10.00</option>
-                        <option value="COMBO">COMBO DÚO: 3ra y 4ta Edición - $16.00</option>
-                    </select>
+            <div id="seccion-combo-5k" class="hidden-step bg-white p-6 md:p-8 rounded-[2.5rem] shadow-xl border border-slate-100 mb-8">
+                <div class="flex items-center justify-between border-b pb-3 mb-6">
+                    <div>
+                        <h3 class="text-[#001E50] font-black text-xl md:text-2xl uppercase italic tracking-tight">Elige tu Paquete de Inscripción</h3>
+                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mt-0.5">Selecciona una de las 2 opciones para participar</p>
+                    </div>
+                    <span class="hidden md:inline-flex bg-[#001E50] text-[#00D2FF] text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest">
+                        Paso Obligatorio
+                    </span>
                 </div>
+
+                <!-- CARDS DE SELECCIÓN GRANDE -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+                    <!-- OPCION 1: SOLO 5K -->
+                    <div id="card-opcion-5k" onclick="seleccionarPaquete('5K')" class="cursor-pointer border-2 rounded-2xl p-5 md:p-6 transition-all relative flex flex-col justify-between hover:shadow-md border-slate-200 bg-slate-50/50 group">
+                        <div class="flex items-start justify-between gap-3 mb-4">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" id="radio-5k" name="paqueteRadio" value="5K" class="w-5 h-5 accent-[#00D2FF] cursor-pointer" onchange="seleccionarPaquete('5K')">
+                                <div>
+                                    <h4 class="font-black text-[#001E50] text-base md:text-lg uppercase">Solo 3ra Edición</h4>
+                                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Modalidad 5K Individual</span>
+                                </div>
+                            </div>
+                            <span class="text-2xl md:text-3xl font-black text-[#001E50]">$10<span class="text-xs font-bold text-slate-400">.00</span></span>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-2 border-t border-slate-200/80 pt-3">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span>Dorsal Digital Oficial 3ra Edición</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span>Medalla Física Oficial 3ra Edición</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span>Certificado Digital y Ranking Oficial</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- OPCION 2: COMBO DÚO -->
+                    <div id="card-opcion-combo" onclick="seleccionarPaquete('COMBO')" class="cursor-pointer border-2 rounded-2xl p-5 md:p-6 transition-all relative flex flex-col justify-between hover:shadow-lg border-[#00D2FF] bg-gradient-to-br from-blue-50/80 to-cyan-50/40 ring-2 ring-[#00D2FF]/30 group">
+                        <!-- Badge Promoción -->
+                        <div class="absolute -top-3.5 right-4 bg-gradient-to-r from-[#00D2FF] to-blue-600 text-[#001E50] font-black text-[10px] uppercase px-3 py-1 rounded-full shadow-md tracking-wider flex items-center gap-1">
+                            <i class="fa-solid fa-fire text-amber-500"></i> ¡MÁS POPULAR / AHORRA $4!
+                        </div>
+
+                        <div class="flex items-start justify-between gap-3 mb-4">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" id="radio-combo" name="paqueteRadio" value="COMBO" checked class="w-5 h-5 accent-[#00D2FF] cursor-pointer" onchange="seleccionarPaquete('COMBO')">
+                                <div>
+                                    <h4 class="font-black text-[#001E50] text-base md:text-lg uppercase">COMBO DÚO</h4>
+                                    <span class="text-[11px] font-black text-[#00D2FF] uppercase tracking-wider">3ra + 4ta Edición</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-2xl md:text-3xl font-black text-[#001E50]">$16<span class="text-xs font-bold text-slate-400">.00</span></span>
+                                <span class="text-[10px] block line-through text-slate-400 font-bold">$20.00</span>
+                            </div>
+                        </div>
+                        <ul class="text-xs text-slate-700 space-y-2 border-t border-cyan-200/60 pt-3 font-medium">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span><b>2 Dorsales Digitales</b> (3ra y 4ta Edición)</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span><b>2 Medallas Físicas</b> Oficiales (Ambas Ediciones)</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span>Garantizas tu cupo y ahorras tiempo y dinero</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Select oculto para compatibilidad total con el envío de datos -->
+                <select id="select-combo-5k" onchange="actualizarTotal()" class="hidden">
+                    <option value="5K">Solo 3ra Edición - $10.00</option>
+                    <option value="COMBO" selected>COMBO DÚO: 3ra y 4ta Edición - $16.00</option>
+                </select>
             </div>
 
             <div id="seccion-logistica" class="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
@@ -495,11 +551,7 @@
                 document.getElementById('labelCarreraActual').innerText = "Tercera Edición 5K / Combo";
                 document.getElementById('textoBannerPrincipal').innerText = "TERCERA EDICIÓN 5K Y COMBO";
                 document.getElementById('textoBannerSecundario').innerText = "Completa tu Registro y Reporta tu Pago";
-                const selectCombo = document.getElementById('select-combo-5k');
-                if(selectCombo) {
-                    selectCombo.value = modo === 'COMBO' ? 'COMBO' : '5K';
-                }
-                actualizarTotal();
+                seleccionarPaquete(modo === '5K' ? '5K' : 'COMBO');
             }
             else if (modo === '10K') {
                 document.getElementById('paso-fundador').classList.remove('hidden-step');
@@ -517,6 +569,35 @@
                 document.getElementById('textoBannerPrincipal').innerText = "PORTAL DE ABONOS";
                 document.getElementById('textoBannerSecundario').innerText = "Consulta y Liquida tu Cuenta";
             }
+        }
+
+        function seleccionarPaquete(tipo) {
+            const selectEl = document.getElementById('select-combo-5k');
+            if (selectEl) selectEl.value = tipo;
+            
+            const radio5k = document.getElementById('radio-5k');
+            const radioCombo = document.getElementById('radio-combo');
+            const card5k = document.getElementById('card-opcion-5k');
+            const cardCombo = document.getElementById('card-opcion-combo');
+
+            if (tipo === '5K') {
+                if (radio5k) radio5k.checked = true;
+                if (card5k) {
+                    card5k.className = "cursor-pointer border-2 rounded-2xl p-5 md:p-6 transition-all relative flex flex-col justify-between hover:shadow-lg border-[#00D2FF] bg-blue-50/60 ring-2 ring-[#00D2FF]/30 group";
+                }
+                if (cardCombo) {
+                    cardCombo.className = "cursor-pointer border-2 rounded-2xl p-5 md:p-6 transition-all relative flex flex-col justify-between hover:shadow-md border-slate-200 bg-slate-50/50 group";
+                }
+            } else {
+                if (radioCombo) radioCombo.checked = true;
+                if (cardCombo) {
+                    cardCombo.className = "cursor-pointer border-2 rounded-2xl p-5 md:p-6 transition-all relative flex flex-col justify-between hover:shadow-lg border-[#00D2FF] bg-gradient-to-br from-blue-50/80 to-cyan-50/40 ring-2 ring-[#00D2FF]/30 group";
+                }
+                if (card5k) {
+                    card5k.className = "cursor-pointer border-2 rounded-2xl p-5 md:p-6 transition-all relative flex flex-col justify-between hover:shadow-md border-slate-200 bg-slate-50/50 group";
+                }
+            }
+            actualizarTotal();
         }
 
         async function obtenerTasaBCV() {

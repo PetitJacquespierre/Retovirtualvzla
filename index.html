@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ========================================== -->
+    <!-- ETIQUETAS SEO Y OPEN GRAPH                 -->
+    <!-- ========================================== -->
+    <title>Reto Virtual VZLA 2026 | El Circuito Nacional</title>
+    <meta name="description" content="El running virtual más exigente de Venezuela. 4 ediciones, 4 medallas. Únete a la comunidad de más de 500 atletas en todo el país.">
+    <meta name="keywords" content="Reto Virtual VZLA, running venezuela, carreras virtuales, 10k venezuela, 5k venezuela, medallas running, maratón virtual">
+    <meta name="author" content="Reto Virtual VZLA">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph (Previas en WhatsApp, Instagram, Facebook) -->
+    <meta property="og:title" content="Reto Virtual VZLA 2026 | El Circuito Nacional">
+    <meta property="og:description" content="Una Nación, Un Solo Cronómetro. Inscríbete en el circuito de running virtual más grande de Venezuela.">
+    <!-- Asumo que tienes una imagen buena para compartir en la carpeta img -->
+    <meta property="og:image" content="https://www.retovirtualvzla.com/img/fondo1.webp">
+    <meta property="og:url" content="https://www.retovirtualvzla.com/">
+    <meta property="og:type" content="website">
+
+<link rel="icon" type="image/webp" href="img/favicon.webp">
+<link rel="manifest" href="manifest.json">
+
+<!-- Google tag (gtag.js) -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CQ0KVLFL1W"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CQ0KVLFL1W');
+</script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-heading { font-family: 'Montserrat', sans-serif; }
+        .bg-boston-navy { background-color: #001E50; }
+        .text-accent { color: #00D2FF; }
+        .bg-accent { background-color: #00D2FF; }
+        .border-accent { border-color: #00D2FF; }
+        .hero-gradient {
+            background: linear-gradient(to bottom, rgba(0,30,80,0.95), rgba(0,30,80,0.6), rgba(0,30,80,0.98));
+        }
+
+        /* ========== SPLASH SCREEN ========== */
+        #splash {
+            position: fixed;
+            inset: 0;
+            background: #0a0a1a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: splash-exit 0.8s ease-out 1.5s forwards;
+        }
+        @keyframes splash-exit {
+            0%   { opacity: 1; }
+            100% { opacity: 0; pointer-events: none; visibility: hidden; }
+        }
+        .splash-scene {
+            position: relative;
+            width: min(700px, 92vw);
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(16px, 4vw, 40px);
+        }
+        .rv-logo { width: clamp(160px, 30vw, 260px); height: clamp(160px, 30vw, 260px); flex-shrink: 0; }
+        .rv-logo img {
+            width: 100%; height: 100%; object-fit: contain; display: block;
+            animation: rv-float 2.5s ease-in-out infinite;
+        }
+        @keyframes rv-float {
+            0%   { transform: translateY(0px);    filter: drop-shadow(0 0 10px rgba(0,180,255,0.5))  drop-shadow(0 0 20px rgba(220,50,200,0.3)); }
+            50%  { transform: translateY(-12px);  filter: drop-shadow(0 0 22px rgba(0,220,255,0.95)) drop-shadow(0 0 40px rgba(220,50,200,0.75)); }
+            100% { transform: translateY(0px);    filter: drop-shadow(0 0 10px rgba(0,180,255,0.5))  drop-shadow(0 0 20px rgba(220,50,200,0.3)); }
+        }
+        .splash-divider {
+            width: 2px; height: 160px; flex-shrink: 0;
+            background: linear-gradient(to bottom, transparent, #00d4ff, #dc32c8, transparent);
+            animation: divider-pulse 2.5s ease-in-out infinite;
+        }
+        @keyframes divider-pulse {
+            0%, 100% { opacity: 0.4; transform: scaleY(0.85); }
+            50%       { opacity: 1;   transform: scaleY(1); }
+        }
+        .teamfs-splash {
+            width: clamp(120px, 20vw, 180px); flex-shrink: 0;
+            animation: teamfs-entrance 1s ease-out both;
+        }
+        @keyframes teamfs-entrance {
+            from { opacity: 0; transform: scale(0.5) rotate(-15deg); }
+            to   { opacity: 1; transform: scale(1)   rotate(0deg); }
+        }
+        .teamfs-splash.floating {
+            animation: teamfs-float 3s ease-in-out infinite;
+        }
+        @keyframes teamfs-float {
+            0%   { transform: translateY(0px);  filter: drop-shadow(0 0 8px  rgba(255,220,0,0.4)); }
+            50%  { transform: translateY(-9px); filter: drop-shadow(0 0 20px rgba(0,220,200,0.85)); }
+            100% { transform: translateY(0px);  filter: drop-shadow(0 0 8px  rgba(255,220,0,0.4)); }
+        }
+        .splash-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+        .particle { position: absolute; border-radius: 50%; animation: particle-move linear infinite; opacity: 0; }
+        @keyframes particle-move {
+            0%   { transform: translateY(100%)   translateX(0);    opacity: 0; }
+            10%  { opacity: 0.8; }
+            90%  { opacity: 0.5; }
+            100% { transform: translateY(-120%) translateX(20px); opacity: 0; }
+        }
+        .p1  { width:4px;height:4px;background:#00d4ff;left:10%;animation-duration:3.2s;animation-delay:0s; }
+        .p2  { width:3px;height:3px;background:#dc32c8;left:20%;animation-duration:2.8s;animation-delay:0.5s; }
+        .p3  { width:5px;height:5px;background:#ffdd00;left:35%;animation-duration:3.5s;animation-delay:1s; }
+        .p4  { width:2px;height:2px;background:#00d4ff;left:50%;animation-duration:2.5s;animation-delay:0.3s; }
+        .p5  { width:4px;height:4px;background:#dc32c8;left:65%;animation-duration:3.8s;animation-delay:0.8s; }
+        .p6  { width:3px;height:3px;background:#00ffcc;left:78%;animation-duration:2.9s;animation-delay:1.5s; }
+        .p7  { width:5px;height:5px;background:#ffdd00;left:88%;animation-duration:3.1s;animation-delay:0.2s; }
+        .p8  { width:2px;height:2px;background:#00d4ff;left:5%; animation-duration:4s;  animation-delay:2s; }
+        .p9  { width:4px;height:4px;background:#dc32c8;left:93%;animation-duration:2.6s;animation-delay:1.2s; }
+        .p10 { width:3px;height:3px;background:#00ffcc;left:45%;animation-duration:3.3s;animation-delay:0.7s; }
+        .collab-text {
+            position: absolute; bottom: 10px; width: 100%; text-align: center;
+            font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            animation: text-fade 3s ease-in-out infinite;
+        }
+        @keyframes text-fade {
+            0%, 100% { opacity: 0.3; }
+            50%       { opacity: 0.7; }
+        }
+        .splash-progress {
+            position: absolute; bottom: 0; left: 0;
+            height: 2px; width: 0%;
+            background: linear-gradient(to right, #00d4ff, #dc32c8);
+            animation: progress-fill 3.2s linear forwards;
+        }
+        @keyframes progress-fill {
+            0%   { width: 0%; }
+            100% { width: 100%; }
+        }
+        /* ========== FIN SPLASH ========== */
+    </style>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+    <link rel="stylesheet" href="css/wow-effects.css">
+</head>
+<body class="bg-white text-slate-900">
+
+    <!-- ===================== SPLASH SCREEN ===================== -->
+    <div id="splash">
+        <div class="splash-scene">
+            <div class="splash-particles">
+                <div class="particle p1"></div><div class="particle p2"></div>
+                <div class="particle p3"></div><div class="particle p4"></div>
+                <div class="particle p5"></div><div class="particle p6"></div>
+                <div class="particle p7"></div><div class="particle p8"></div>
+                <div class="particle p9"></div><div class="particle p10"></div>
+            </div>
+            <div class="rv-logo">
+                <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual VZLA" />
+            </div>
+          <!-- <div class="splash-divider"></div>
+            <img class="teamfs-splash" id="teamfs-splash" src="img/teamfslogo.webp" alt="Team FS" />
+            <div class="collab-text">Reto Virtual VZLA × Team FS</div> -->
+        </div>
+        <div class="splash-progress"></div>
+    </div>
+    <!-- ================== FIN SPLASH SCREEN =================== -->
+
+
+    <div class="bg-[#00D2FF] text-[#001E50] py-2.5 text-center text-[10px] font-black uppercase tracking-[0.3em] z-50 relative">
+    <i class="fa-solid fa-fire mr-2"></i>
+    Inscripciones 10K Abiertas · Cierra Pronto —
+    <a href="inscripcion.html?modo=10K" class="underline underline-offset-2 hover:opacity-80 transition-opacity ml-1">Reserva el tuyo ahora</a>
+    <i class="fa-solid fa-fire ml-2"></i>
+</div>
+
+    <nav class="bg-[#001E50] sticky top-0 z-50 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 md:h-28">
+                
+                <div class="flex items-center gap-3 md:gap-5 cursor-pointer group -ml-2 md:-ml-4" onclick="location.href='index.html'">
+                    <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual" class="h-12 w-auto object-contain brightness-125 md:hidden">
+                    <img src="img/RV Texto Sin fondo.webp" alt="Reto Virtual" class="hidden md:block h-20 lg:h-28 w-auto object-contain brightness-125">
+                </div>
+
+                <div class="hidden lg:flex items-center space-x-4 xl:space-x-6">
+                    <a href="index.html" class="chameleon-text text-[10px] xl:text-xs font-black uppercase tracking-widest transition-all drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">Inicio</a>
+                    <a href="index.html#ediciones" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Calendario</a>
+                    <a href="evidencias2.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Evidencia</a>
+                    <a href="resultados.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Resultados</a>
+                    <a href="entrenador.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Entrenador IA</a>
+
+                    <div class="relative group">
+                        <button class="flex items-center text-white/80 group-hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">
+                            Info <i class="fa-solid fa-chevron-down ml-2 text-[8px]"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-56 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                            <div class="p-2">
+                                <a href="faq.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
+                                    <i class="fa-solid fa-circle-question mr-3 text-sm opacity-70"></i> Preguntas Frecuentes
+                                </a>
+                                <a href="aliados.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
+                                    <i class="fa-solid fa-handshake mr-3 text-sm opacity-70"></i> Aliados
+                                </a>
+                                <a href="tienda.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
+                                    <i class="fa-solid fa-shop mr-3 text-sm opacity-70"></i> Tienda
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative group">
+                        <button class="border-2 border-white text-white px-5 py-2.5 rounded-full font-black text-[10px] xl:text-xs uppercase tracking-widest hover:bg-white hover:text-[#001E50] transition-all shadow-lg flex items-center gap-2">
+                            INSCRIBIRME <i class="fa-solid fa-chevron-down text-[8px]"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-64 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                            <div class="p-2 space-y-1">
+                                <button onclick="window.location.href='inscripcion.html?modo=5K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
+                                    <i class="fa-solid fa-person-running mr-3 text-sm"></i> Tercera Edición 5K / Combo
+                                </button>
+                                <button onclick="window.location.href='inscripcion.html?modo=10K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
+                                    <i class="fa-solid fa-medal mr-3 text-sm"></i> Edición Especial 10K
+                                </button>
+                                <button onclick="window.location.href='inscripcion.html?modo=ABONO'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all border-t border-white/10 pt-2">
+                                    <i class="fa-solid fa-money-bill-wave mr-3 text-sm"></i> Consultar Saldo / Abonar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="menuToggle" class="lg:hidden text-white text-2xl focus:outline-none z-50">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="fixed inset-0 bg-[#001E50] z-40 transform translate-x-full transition-transform duration-300 lg:hidden">
+            <div class="flex flex-col items-center justify-center h-full space-y-5 px-8">
+                <a href="index.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Inicio</a>
+                <a href="index.html#ediciones" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Calendario</a>
+                <a href="evidencias2.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Evidencia</a>
+                <a href="resultados.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Resultados</a>
+                <a href="entrenador.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Entrenador IA</a>
+                
+                <div class="flex flex-wrap justify-center gap-4 mt-2">
+                    <a href="faq.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">FAQ</a>
+                    <a href="aliados.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">Aliados</a>
+                    <a href="tienda.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">Tienda</a>
+                </div>
+                <div class="border-t border-white/20 w-full pt-5 flex flex-col gap-3 text-center">
+                    <a href="inscripcion.html?modo=5K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Tercera Edición 5K / Combo</a>
+                    <a href="inscripcion.html?modo=10K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Edición Especial 10K</a>
+                    <a href="inscripcion.html?modo=ABONO" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-white transition-colors">Consultar Saldo / Abonar</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- ===================== HERO CARRUSEL ===================== -->
+<style>
+/* CARRUSEL */
+.hero-carousel { position:relative; height:80vh; min-height:520px; overflow:hidden; background:#000; }
+.hero-slide { position:absolute; inset:0; opacity:0; transition:opacity 1s ease-in-out; pointer-events:none; }
+.hero-slide.active { opacity:1; pointer-events:auto; }
+
+/* Slide 2 — medal flip (reutiliza tus estilos ya cargados) */
+.hero-medal-flip { perspective:900px; cursor:pointer; }
+.hero-medal-inner { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+.hero-medal-flip:hover .hero-medal-inner,
+.hero-medal-flip.flipped .hero-medal-inner { transform:rotateY(180deg); }
+.hero-medal-face { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:1.5rem; overflow:hidden; }
+.hero-medal-back { transform:rotateY(180deg); }
+
+/* Indicadores (dots) */
+.carousel-dot { width:8px; height:8px; border-radius:9999px; background:rgba(255,255,255,.3); border:none; cursor:pointer; transition:all .3s; padding:0; }
+.carousel-dot.active { background:#00D2FF; width:28px; }
+
+/* Flechas */
+.carousel-arrow { position:absolute; top:50%; transform:translateY(-50%); z-index:30; background:rgba(0,30,80,.5); border:1px solid rgba(255,255,255,.15); color:white; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; backdrop-filter:blur(8px); transition:all .3s; }
+.carousel-arrow:hover { background:rgba(0,210,255,.3); border-color:#00D2FF; }
+.carousel-arrow.prev { left:16px; }
+.carousel-arrow.next { right:16px; }
+
+/* Barra de progreso */
+.carousel-progress { position:absolute; bottom:0; left:0; height:2px; background:#00D2FF; transition:width 0.1s linear; z-index:20; box-shadow:0 0 8px #00D2FF; }
+
+/* Stat cards slide 3 */
+.hero-stat-card { background:rgba(0,30,80,.6); border:1px solid rgba(0,210,255,.2); backdrop-filter:blur(12px); border-radius:1.25rem; padding:1.5rem; text-align:center; }
+</style>
+
+<section class="hero-carousel" id="heroCarousel">
+
+  <!-- FLECHAS -->
+  <button class="carousel-arrow prev" onclick="heroCarousel.prev()">
+    <i class="fa-solid fa-chevron-left text-sm"></i>
+  </button>
+  <button class="carousel-arrow next" onclick="heroCarousel.next()">
+    <i class="fa-solid fa-chevron-right text-sm"></i>
+  </button>
+
+  <!-- BARRA DE PROGRESO -->
+  <div class="carousel-progress" id="carouselProgress"></div>
+
+  <!-- ===== SLIDE 1: HERO PRINCIPAL ===== -->
+  <div class="hero-slide" data-slide="1">
+    <img src="img/fondo1.webp" class="absolute inset-0 w-full h-full object-cover opacity-40 grayscale" alt="Runner" loading="eager">
+    <div class="absolute inset-0 hero-gradient"></div>
+    <div class="relative z-10 h-full flex items-center justify-center">
+      <div class="max-w-5xl w-full">
+        <!-- PRUEBA SOCIAL (Social Proof) -->
+        <div class="inline-flex items-center gap-3 bg-black/40 backdrop-blur-md border border-white/10 px-5 py-2 rounded-full mb-6 shadow-2xl">
+            <div class="flex -space-x-2">
+                <img src="https://i.pravatar.cc/100?img=1" alt="User" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
+                <img src="https://i.pravatar.cc/100?img=33" alt="User" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
+                <img src="https://i.pravatar.cc/100?img=12" alt="User" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
+            </div>
+            <span class="text-white/90 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em]">+5,000 corredores unidos en toda Venezuela</span>
+        </div>
+
+        <h2 class="text-[#00D2FF] font-bold tracking-[0.6em] uppercase text-xs md:text-sm mb-6 animate-pulse drop-shadow-md">
+          Una Nación, Un Solo Cronómetro
+        </h2>
+        <h1 class="font-heading text-5xl md:text-9xl font-black text-white leading-[0.85] mb-8 tracking-tighter uppercase drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
+          RETO VIRTUAL <br><span class="text-[#00D2FF] italic">VENEZUELA</span>
+        </h1>
+        <p class="text-white max-w-2xl mx-auto text-base md:text-xl font-light mb-10 leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-wide">
+          4 ediciones. 4 medallas. 1 rompecabezas nacional. El running virtual más exigente de Venezuela.
+        </p>
+        <div class="flex flex-col items-center justify-center gap-3 mt-4">
+          <span class="bg-[#00D2FF] text-[#001E50] px-8 py-3 rounded-full text-lg md:text-xl font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,210,255,0.5)] animate-pulse">
+            ¡EVENTO EN CURSO!
+          </span>
+          <!-- MICRO TEXTO DE CONFIANZA -->
+          <div class="flex items-center gap-4 text-white/80 font-bold mt-3 tracking-[0.2em] uppercase text-[9px] drop-shadow-md">
+            <span><i class="fa-solid fa-lock text-[#00D2FF] mr-1"></i>Pago Seguro</span>
+            <span class="opacity-50">|</span>
+            <span><i class="fa-solid fa-truck-fast text-[#00D2FF] mr-1"></i>Envíos Nacionales</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 2: MEDALLA 10K ===== -->
+  <div class="hero-slide active" data-slide="0">
+    <div class="absolute inset-0 bg-[#001E50]"></div>
+    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.webp')] opacity-10"></div>
+    <div class="absolute -left-20 top-1/4 w-96 h-96 bg-[#00D2FF]/8 rounded-full blur-[140px]"></div>
+    <div class="absolute -right-20 bottom-1/4 w-80 h-80 bg-[#00D2FF]/5 rounded-full blur-[120px]"></div>
+    <div class="relative z-10 h-full flex items-center justify-center px-4">
+      <div class="max-w-6xl w-full flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+
+        <!-- Texto izquierda -->
+        <div class="lg:w-1/2 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5"
+               style="background:rgba(0,210,255,.08);border:1px solid rgba(0,210,255,.4);">
+            <i class="fa-solid fa-shield-halved text-[#00D2FF] text-xs"></i>
+            <span class="text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.5em]">The Iron Series</span>
+          </div>
+          <h2 class="text-white font-black uppercase leading-none tracking-tighter mb-4">
+            <span class="block" style="font-size:clamp(2rem,5.5vw,4rem)">EDICIÓN</span>
+            <span class="block italic text-[#00D2FF]" style="font-size:clamp(2.5rem,7.5vw,6rem)">ESPECIAL</span>
+            <span class="block" style="font-size:clamp(2.5rem,7.5vw,6rem)">10K</span>
+          </h2>
+          <p class="text-white/60 text-sm md:text-base font-light leading-relaxed mb-6 max-w-sm mx-auto lg:mx-0">
+            Solo una edición. Solo un año. <strong class="text-white font-semibold">Medalla de metal macizo</strong> para quienes se atrevan a los 10K.
+          </p>
+          <a href="inscripcion.html?modo=10K"
+             class="inline-flex items-center gap-2 bg-[#00D2FF] text-[#001E50] font-black text-xs uppercase tracking-[0.15em] px-6 py-3 rounded-full hover:bg-white transition-colors duration-300">
+            <i class="fa-solid fa-flag-checkered text-xs"></i>
+            Quiero mi lugar en el 10K
+          </a>
+        </div>
+
+        <!-- Medalla flip derecha -->
+        <div class="lg:w-1/2 flex flex-col items-center gap-4">
+          <div class="hero-medal-flip relative" style="width:min(320px,75vw);aspect-ratio:1/1.05;"
+               id="heroMedalFlip" onclick="this.classList.toggle('flipped')">
+            <div class="absolute inset-0 rounded-[2rem] p-[2px]"
+                 style="background:conic-gradient(from 0deg,#00D2FF,#ffffff30,#00D2FF,#ffffff15,#00D2FF);animation:bspin 3s linear infinite;border-radius:2.2rem;"></div>
+            <div class="hero-medal-inner" style="position:absolute;inset:3px;">
+              <div class="hero-medal-face bg-[#001840]">
+                <img src="img/medalla-frente.webp" alt="Medalla 10K frontal"
+                     class="w-full h-full object-contain" loading="lazy">
+              </div>
+              <div class="hero-medal-face hero-medal-back bg-[#001840]">
+                <img src="img/medalla-trasera.webp" alt="Medalla 10K trasera"
+                     class="w-full h-full object-contain" loading="lazy">
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 opacity-50">
+            <i class="fa-solid fa-rotate text-[#00D2FF] text-[10px]"></i>
+            <span class="text-white text-[9px] uppercase tracking-[0.3em]">Hover o clic para girar</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 3: ÚNETE A LA COMUNIDAD ===== -->
+<div class="hero-slide" data-slide="2">
+  <img src="img/fondo1.webp" class="absolute inset-0 w-full h-full object-cover opacity-20 grayscale scale-105" alt="Comunidad" loading="lazy">
+  <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(0,30,80,.97) 0%,rgba(0,30,80,.75) 50%,rgba(0,20,60,.97) 100%)"></div>
+  <div class="relative z-10 h-full flex items-center justify-center px-4">
+    <div class="max-w-5xl w-full text-center">
+
+      <span class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.5em] mb-4 block">Venezuela Corre Unida</span>
+
+      <h2 class="text-white font-black uppercase leading-[0.9] tracking-tighter mb-6"
+          style="font-size:clamp(2.5rem,7vw,5.5rem)">
+        MÁS DE <span class="text-[#00D2FF] italic">500</span><br>ATLETAS NOS SIGUEN
+      </h2>
+
+      <p class="text-white/60 text-base md:text-lg font-light mb-10 max-w-2xl mx-auto leading-relaxed">
+        Corredores de todo el país unidos bajo un mismo cronómetro. Síguenos para recibir resultados, novedades y contenido exclusivo.
+      </p>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-3 gap-4 max-w-2xl mx-auto mb-10">
+        <div class="hero-stat-card">
+          <span class="text-[#00D2FF] font-black text-3xl md:text-4xl italic block leading-none mb-1">500+</span>
+          <span class="text-white/40 text-[9px] font-bold uppercase tracking-widest">Atletas</span>
+        </div>
+        <div class="hero-stat-card">
+          <span class="text-[#00D2FF] font-black text-3xl md:text-4xl italic block leading-none mb-1">6+</span>
+          <span class="text-white/40 text-[9px] font-bold uppercase tracking-widest">Estados</span>
+        </div>
+        <div class="hero-stat-card">
+          <span class="text-[#00D2FF] font-black text-3xl md:text-4xl italic block leading-none mb-1">4</span>
+          <span class="text-white/40 text-[9px] font-bold uppercase tracking-widest">Ediciones</span>
+        </div>
+      </div>
+
+      <!-- Botones sociales -->
+      <div class="flex flex-wrap gap-3 justify-center">
+
+        <!-- Canal WhatsApp -->
+        <a href="https://whatsapp.com/channel/0029VbD2Dmi7IUYZR6nmh60z" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 border border-white/20 text-white font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-full transition-all duration-300"
+           style="background:rgba(37,211,102,.15);"
+           onmouseover="this.style.background='#25D366';this.style.color='#fff';this.style.borderColor='#25D366';"
+           onmouseout="this.style.background='rgba(37,211,102,.15)';this.style.color='white';this.style.borderColor='rgba(255,255,255,.2)';">
+          <i class="fa-brands fa-whatsapp text-[#25D366] text-sm"></i>
+          Canal de Novedades
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/retovirtual.vzla/" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 border border-white/20 text-white font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-full transition-all duration-300"
+           style="background:rgba(225,48,108,.15);"
+           onmouseover="this.style.background='#E1306C';this.style.color='#fff';this.style.borderColor='#E1306C';"
+           onmouseout="this.style.background='rgba(225,48,108,.15)';this.style.color='white';this.style.borderColor='rgba(255,255,255,.2)';">
+          <i class="fa-brands fa-instagram text-[#E1306C] text-sm"></i>
+          @retovirtual.vzla
+        </a>
+
+        <!-- TikTok -->
+        <a href="https://www.tiktok.com/@retovirtual.vzla" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 border border-white/20 text-white font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-full transition-all duration-300"
+           style="background:rgba(255,255,255,.08);"
+           onmouseover="this.style.background='rgba(255,255,255,.2)';this.style.borderColor='rgba(255,255,255,.5)';"
+           onmouseout="this.style.background='rgba(255,255,255,.08)';this.style.borderColor='rgba(255,255,255,.2)';">
+          <i class="fa-brands fa-tiktok text-white text-sm"></i>
+          @retovirtual.vzla
+        </a>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- INDICADORES (dots) -->
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+    <button class="carousel-dot active" onclick="heroCarousel.goTo(0)" aria-label="Slide 1"></button>
+    <button class="carousel-dot" onclick="heroCarousel.goTo(1)" aria-label="Slide 2"></button>
+    <button class="carousel-dot" onclick="heroCarousel.goTo(2)" aria-label="Slide 3"></button>
+  </div>
+
+</section>
+
+<script>
+// ===== LÓGICA DEL CARRUSEL HERO =====
+const heroCarousel = (function() {
+  const INTERVAL = 6000;
+  let current = 0;
+  let timer = null;
+  let elapsed = 0;
+  let tickTimer = null;
+  const slides = document.querySelectorAll('#heroCarousel .hero-slide');
+  const dots = document.querySelectorAll('#heroCarousel .carousel-dot');
+  const progress = document.getElementById('carouselProgress');
+  const total = slides.length;
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (n + total) % total;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    resetTimer();
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  function resetTimer() {
+    clearInterval(timer);
+    clearInterval(tickTimer);
+    elapsed = 0;
+    if (progress) progress.style.width = '0%';
+    tickTimer = setInterval(() => {
+      elapsed += 100;
+      const pct = Math.min((elapsed / INTERVAL) * 100, 100);
+      if (progress) progress.style.width = pct + '%';
+    }, 100);
+    timer = setTimeout(() => next(), INTERVAL);
+  }
+
+  // Pausar en hover
+  const section = document.getElementById('heroCarousel');
+  if (section) {
+    section.addEventListener('mouseenter', () => { clearTimeout(timer); clearInterval(tickTimer); });
+    section.addEventListener('mouseleave', () => resetTimer());
+  }
+
+  // Swipe táctil
+  let touchStartX = 0;
+  if (section) {
+    section.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    section.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) diff > 0 ? next() : prev();
+    }, { passive: true });
+  }
+
+  resetTimer();
+  return { goTo, next, prev };
+})();
+</script>
+<!-- =================== FIN HERO CARRUSEL =================== -->
+
+
+<!-- ═══════════════════════════════════════════
+     BANNER KIT DE CARRERA 10K — OPCIÓN B
+     Coloca este bloque DESPUÉS del carrusel
+     y ANTES de la sección #especial-10k
+════════════════════════════════════════════ -->
+<style>
+  /* Shimmer en el título del banner */
+  @keyframes shimmer-kit {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  .kit-shimmer-text {
+    background: linear-gradient(90deg, #ffffff 0%, #00D2FF 40%, #ffffff 60%, #ffffff 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer-kit 3.5s linear infinite;
+  }
+
+  /* Pulso del borde de la foto */
+  @keyframes border-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,210,255,0.0), 0 0 40px rgba(0,210,255,0.15); }
+    50%       { box-shadow: 0 0 0 6px rgba(0,210,255,0.12), 0 0 80px rgba(0,210,255,0.30); }
+  }
+  .kit-photo-glow {
+    animation: border-pulse 3s ease-in-out infinite;
+  }
+
+  /* Entrada de los items con stagger */
+  @keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(30px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .kit-item-1 { animation: slide-in-right 0.5s ease 0.1s both; }
+  .kit-item-2 { animation: slide-in-right 0.5s ease 0.25s both; }
+  .kit-item-3 { animation: slide-in-right 0.5s ease 0.4s both; }
+
+  /* Hover en los items */
+  .kit-item {
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    cursor: default;
+  }
+  .kit-item:hover {
+    background: rgba(0,210,255,0.08) !important;
+    border-color: rgba(0,210,255,0.4) !important;
+    transform: translateX(6px);
+  }
+
+  /* Línea animada decorativa */
+  @keyframes line-grow {
+    from { width: 0; }
+    to   { width: 100%; }
+  }
+  .kit-line-animated {
+    animation: line-grow 1.2s cubic-bezier(0.16,1,0.3,1) 0.3s both;
+  }
+
+  /* Glow en el CTA */
+  .kit-cta-btn {
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0 0 rgba(0,210,255,0.4);
+  }
+  .kit-cta-btn:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 30px rgba(0,210,255,0.45), 0 0 60px rgba(0,210,255,0.2);
+    background: white !important;
+    color: #001E50 !important;
+  }
+
+  /* Badge VIP flicker */
+  @keyframes vip-flicker {
+    0%,100% { opacity: 1; }
+    92%      { opacity: 1; }
+    93%      { opacity: 0.4; }
+    94%      { opacity: 1; }
+    96%      { opacity: 0.6; }
+    97%      { opacity: 1; }
+  }
+  .vip-badge { animation: vip-flicker 4s ease-in-out infinite; }
+</style>
+
+<section id="kit-carrera" class="relative overflow-hidden border-y border-white/5"
+  style="background: linear-gradient(135deg, #000d24 0%, #001433 40%, #000a1e 100%);">
+
+  <!-- Fondo textura carbon -->
+  <div class="absolute inset-0 opacity-10 pointer-events-none"
+       style="background-image:url('https://www.transparenttextures.com/patterns/carbon-fibre.webp')"></div>
+
+  <!-- Blobs decorativos -->
+  <div class="absolute pointer-events-none"
+       style="top:-80px;left:-60px;width:420px;height:420px;background:radial-gradient(circle,rgba(0,210,255,0.12),transparent 70%);border-radius:50%;filter:blur(40px);"></div>
+  <div class="absolute pointer-events-none"
+       style="bottom:-60px;right:-40px;width:360px;height:360px;background:radial-gradient(circle,rgba(0,100,200,0.10),transparent 70%);border-radius:50%;filter:blur(60px);"></div>
+
+  <div class="max-w-7xl mx-auto px-4 md:px-12 py-16 md:py-20 relative z-10">
+
+    <!-- Eyebrow -->
+    <div class="flex items-center gap-3 mb-10 justify-center md:justify-start">
+      <div style="height:1px;width:40px;background:linear-gradient(90deg,transparent,rgba(0,210,255,0.6));"
+           class="kit-line-animated hidden md:block"></div>
+      <span class="vip-badge inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.5em]"
+            style="border:1px solid rgba(0,210,255,0.4);color:#00D2FF;background:rgba(0,210,255,0.06);">
+        <i class="fa-solid fa-box-open text-[10px]"></i>
+        Kit de Carrera Oficial
+      </span>
+      <div style="height:1px;flex:1;background:linear-gradient(90deg,rgba(0,210,255,0.3),transparent);"
+           class="kit-line-animated hidden md:block"></div>
+    </div>
+
+    <!-- Layout principal: foto + contenido -->
+    <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+
+      <!-- ── FOTO DEL KIT ── -->
+      <div class="lg:w-1/2 w-full flex justify-center">
+        <div class="relative">
+          <!-- Etiqueta flotante -->
+          <div class="absolute -top-4 -left-4 z-20 flex flex-col items-end gap-2">
+  <!-- Badge edición (existente) -->
+  <div class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest"
+       style="background:linear-gradient(135deg,#00D2FF,#0090b3);color:#001E50;box-shadow:0 4px 20px rgba(0,210,255,0.4);">
+    <i class="fa-solid fa-star mr-1"></i> Edición 10K 2026
+  </div>
+  <!-- Badge FOMO nuevo -->
+  <div class="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5"
+       style="background:rgba(255,68,68,0.15);border:1px solid rgba(255,68,68,0.4);color:#ff6b6b;">
+    <i class="fa-solid fa-fire-flame-curved text-[10px]"></i>
+    ¡Últimos cupos!
+  </div>
+</div>
+
+          <!-- Marco con glow pulsante -->
+          <div class="kit-photo-glow rounded-3xl overflow-hidden border"
+               style="border-color:rgba(0,210,255,0.25);max-width:480px;">
+            <img
+              src="img/10k_franela.webp"
+              alt="Kit de carrera oficial 10K 2026 — camiseta, dorsal y medalla"
+              width="480"
+              height="480"
+              loading="lazy"
+              class="w-full h-full object-cover block"
+              style="aspect-ratio:1/1;"
+            />
+          </div>
+
+          <!-- Nota inferior -->
+          <p class="text-center mt-3 text-white/25 text-[9px] uppercase tracking-[0.3em]">
+            Diseño referencial · Sujeto a disponibilidad
+          </p>
+        </div>
+      </div>
+
+      <!-- ── CONTENIDO DERECHO ── -->
+      <div class="lg:w-1/2 w-full text-center lg:text-left">
+
+        <h2 class="font-black uppercase tracking-tighter leading-none mb-3"
+            style="font-size:clamp(2.2rem,5.5vw,4.2rem);">
+          <span class="text-white block">Lo Que</span>
+          <span class="kit-shimmer-text block">Recibes</span>
+        </h2>
+
+        <p class="mb-8 font-light leading-relaxed"
+           style="color:rgba(255,255,255,0.55);font-size:clamp(0.95rem,1.5vw,1.1rem);max-width:460px;">
+          Cada participante de la <strong class="text-white font-semibold">Edición Especial 10K</strong>
+          recibe un kit físico de colección. Tres piezas. Una sola oportunidad.
+        </p>
+
+        <!-- Items del kit -->
+        <div class="flex flex-col gap-4 mb-10">
+
+          <!-- Item 1 -->
+          <div class="kit-item kit-item-1 flex items-center gap-5 rounded-2xl px-6 py-4"
+               style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+            <div class="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center"
+                 style="background:rgba(0,210,255,0.12);border:1px solid rgba(0,210,255,0.2);">
+              <i class="fa-solid fa-shirt" style="color:#00D2FF;font-size:1rem;"></i>
+            </div>
+            <div class="text-left">
+              <p class="font-black text-white text-sm uppercase tracking-wider">Camiseta Técnica Oficial</p>
+              <p class="text-white/40 text-xs mt-0.5">Tela deportiva sublimada · Diseño exclusivo 10K 2026</p>
+            </div>
+            <div class="ml-auto flex-shrink-0">
+              <span class="text-[#00D2FF] font-black text-xs uppercase tracking-widest">INC.</span>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="kit-item kit-item-2 flex items-center gap-5 rounded-2xl px-6 py-4"
+               style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+            <div class="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center"
+                 style="background:rgba(0,210,255,0.12);border:1px solid rgba(0,210,255,0.2);">
+              <i class="fa-solid fa-id-card" style="color:#00D2FF;font-size:1rem;"></i>
+            </div>
+            <div class="text-left">
+              <p class="font-black text-white text-sm uppercase tracking-wider">Dorsal Numerado Oficial</p>
+              <p class="text-white/40 text-xs mt-0.5">Número personalizado · Diseño 10K · 2026</p>
+            </div>
+            <div class="ml-auto flex-shrink-0">
+              <span class="text-[#00D2FF] font-black text-xs uppercase tracking-widest">INC.</span>
+            </div>
+          </div>
+
+          <!-- Item 3 — destacado -->
+          <div class="kit-item kit-item-3 flex items-center gap-5 rounded-2xl px-6 py-4 relative overflow-hidden"
+               style="background:linear-gradient(135deg,rgba(0,210,255,0.10),rgba(0,210,255,0.04));border:1px solid rgba(0,210,255,0.25);">
+            <!-- Brillo diagonal -->
+            <div class="absolute inset-0 pointer-events-none"
+                 style="background:linear-gradient(135deg,rgba(0,210,255,0.06) 0%,transparent 60%);"></div>
+            <div class="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center relative z-10"
+                 style="background:rgba(0,210,255,0.18);border:1px solid rgba(0,210,255,0.35);">
+              <i class="fa-solid fa-medal" style="color:#00D2FF;font-size:1rem;"></i>
+            </div>
+            <div class="text-left relative z-10">
+              <p class="font-black text-white text-sm uppercase tracking-wider">Medalla Metal Macizo</p>
+              <p style="color:rgba(0,210,255,0.7);" class="text-xs mt-0.5 font-medium">
+                Diseño 2 caras · The Iron Series · Ed. Limitada
+              </p>
+            </div>
+            <div class="ml-auto flex-shrink-0 relative z-10">
+              <span class="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider"
+                    style="background:rgba(0,210,255,0.15);color:#00D2FF;border:1px solid rgba(0,210,255,0.3);">
+                PREMIUM
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Separador + CTA -->
+        <!-- Separador + CTA -->
+<div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+  <a href="#registro"
+     class="kit-cta-btn inline-flex items-center gap-2.5 font-black text-sm uppercase tracking-[0.2em] px-8 py-4 rounded-full"
+     style="background:#00D2FF;color:#001E50;">
+    <i class="fa-solid fa-flag-checkered text-xs"></i>
+    Asegurar mi kit
+  </a>
+
+  <!-- FOMO — contador de cupos -->
+  <div class="flex flex-col items-center sm:items-start gap-0.5">
+    <div class="flex items-center gap-1.5">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+              style="background:#ff4444;"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2"
+              style="background:#ff4444;"></span>
+      </span>
+      <span class="text-white font-black text-sm" id="cupos-restantes">--</span>
+      <span class="text-white/50 text-xs">cupos restantes</span>
+    </div>
+    <div class="rounded-full overflow-hidden" style="height:3px;width:120px;background:rgba(255,255,255,0.08);">
+      <div id="cupos-barra" class="h-full rounded-full"
+           style="width:0%;background:linear-gradient(90deg,#ff4444,#ff6b6b);transition:width 1s ease;"></div>
+    </div>
+  </div>
+</div>
+
+    <!-- Franja inferior de stats -->
+    <div class="mt-14 pt-8 grid grid-cols-3 gap-4"
+         style="border-top:1px solid rgba(255,255,255,0.06);">
+      <div class="text-center">
+        <p class="font-black italic text-white" style="font-size:clamp(1.4rem,3vw,2rem);color:#00D2FF;">3</p>
+        <p class="text-white/35 text-[9px] uppercase tracking-[0.25em] mt-1">Piezas en el kit</p>
+      </div>
+      <div class="text-center" style="border-left:1px solid rgba(255,255,255,0.07);border-right:1px solid rgba(255,255,255,0.07);">
+        <p class="font-black italic" style="font-size:clamp(1.4rem,3vw,2rem);color:#00D2FF;">100%</p>
+        <p class="text-white/35 text-[9px] uppercase tracking-[0.25em] mt-1">Metal Macizo</p>
+      </div>
+      <div class="text-center">
+        <p class="font-black italic" style="font-size:clamp(1.4rem,3vw,2rem);color:#00D2FF;">2026</p>
+        <p class="text-white/35 text-[9px] uppercase tracking-[0.25em] mt-1">Ed. Limitada</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ═══════ FIN BANNER KIT ═══════ -->
+<script>
+(function(){
+  const CUPOS_ACTUALES = 22  // ← CAMBIA ESTE número (cupos reales disponibles hoy)
+  const CUPOS_TOTALES  = 100 // ← CAMBIA ESTE número (total de inscritos que aceptas)
+
+  const stored = parseInt(sessionStorage.getItem('rvkupos') || CUPOS_ACTUALES);
+  const cupos = Math.max(stored - Math.floor(Math.random() * 2), 8);
+  sessionStorage.setItem('rvkupos', cupos);
+
+  const el    = document.getElementById('cupos-restantes');
+  const barra = document.getElementById('cupos-barra');
+  if (el) el.textContent = cupos;
+  if (barra) {
+    const pct = Math.min(Math.round((cupos / CUPOS_TOTALES) * 100), 100);
+    setTimeout(() => { barra.style.width = pct + '%'; }, 300);
+  }
+})();
+</script>
+
+<section id="especial-10k" class="py-24 md:py-32 bg-[#001E50] relative overflow-hidden border-y border-white/5">
+
+  <div class="absolute inset-0 opacity-10 pointer-events-none">
+    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.webp')]"></div>
+  </div>
+  <div class="absolute -left-24 top-1/4 w-96 h-96 bg-[#00D2FF]/8 rounded-full blur-[140px] pointer-events-none"></div>
+  <div class="absolute -right-24 bottom-1/4 w-80 h-80 bg-[#00D2FF]/5 rounded-full blur-[120px] pointer-events-none"></div>
+  <div class="shine-dot w-1 h-1 bg-[#00D2FF]/80 top-1/4 left-1/4" style="animation-delay:0s"></div>
+  <div class="shine-dot w-1.5 h-1.5 bg-white/40 top-1/3 right-1/3" style="animation-delay:1.2s"></div>
+  <div class="shine-dot w-1 h-1 bg-[#00D2FF]/60 bottom-1/3 left-2/3" style="animation-delay:.6s"></div>
+
+  <div class="max-w-7xl mx-auto px-4 md:px-12 relative z-10">
+    <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-14">
+
+      <!-- TEXTO -->
+      <div class="lg:w-3/5 text-center lg:text-left r10k">
+        <div class="inline-flex items-center gap-2 iron-badge px-5 py-2 rounded-full mb-7">
+          <i class="fa-solid fa-shield-halved text-[#00D2FF] text-xs"></i>
+          <span class="text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.5em]">The Iron Series</span>
+        </div>
+
+        <h2 class="text-white font-black uppercase leading-none tracking-tighter mb-5">
+          <span class="block" style="font-size:clamp(2.8rem,7.5vw,5.5rem)">EDICIÓN</span>
+          <span class="block italic text-[#00D2FF]" style="font-size:clamp(3.5rem,10vw,7.5rem)">ESPECIAL</span>
+          <span class="block" style="font-size:clamp(3.5rem,10vw,7.5rem)">10K</span>
+        </h2>
+
+        <div class="flex items-center gap-3 justify-center lg:justify-start mb-7">
+          <div class="h-px w-8 bg-[#00D2FF]/40"></div>
+          <h3 class="text-white/35 font-bold text-sm uppercase tracking-[0.3em]">Forjando Leyendas en el Asfalto</h3>
+          <div class="h-px w-8 bg-[#00D2FF]/40"></div>
+        </div>
+
+        <p class="text-white/65 text-base md:text-lg mb-10 font-light leading-relaxed max-w-xl mx-auto lg:mx-0">
+          No es para todos. Es para quienes ya completaron su 5K y quieren probar de qué están hechos. 
+<strong class="text-white font-semibold">Cupos limitados, medalla de metal macizo,</strong> una sola oportunidad en 2026.
+        </p>
+
+        <div class="grid grid-cols-3 gap-3 mb-10 max-w-lg mx-auto lg:mx-0">
+          <div class="stat-card-10k glow-card rounded-2xl p-4 text-center lg:text-left">
+            <span class="grad-text text-2xl md:text-3xl font-black italic leading-none block mb-1">100%</span>
+            <span class="text-white/35 text-[9px] font-bold uppercase tracking-[0.2em]">Metal Macizo</span>
+          </div>
+          <div class="stat-card-10k glow-card rounded-2xl p-4 text-center lg:text-left">
+            <span class="grad-text text-2xl md:text-3xl font-black italic leading-none block mb-1">ELITE</span>
+            <span class="text-white/35 text-[9px] font-bold uppercase tracking-[0.2em]">Ranking Oficial</span>
+          </div>
+          <div class="stat-card-10k glow-card rounded-2xl p-4 text-center lg:text-left">
+            <span class="grad-text text-2xl md:text-3xl font-black italic leading-none block mb-1">2026</span>
+            <span class="text-white/35 text-[9px] font-bold uppercase tracking-[0.2em]">Ed. Limitada</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+          <a href="#registro" class="inline-flex items-center gap-2 bg-[#00D2FF] text-[#001E50] font-black text-sm uppercase tracking-[0.15em] px-7 py-3.5 rounded-full hover:bg-white transition-colors duration-300">
+            <i class="fa-solid fa-flag-checkered text-xs"></i>
+            Inscribirme
+          </a>
+          <a href="#premios" class="inline-flex items-center gap-2 border border-white/20 text-white/60 font-bold text-sm uppercase tracking-[0.15em] px-7 py-3.5 rounded-full hover:border-[#00D2FF]/50 hover:text-white transition-all duration-300">
+            Ver premios
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- MEDALLA FLIP 3D -->
+      <div class="lg:w-2/5 w-full flex flex-col items-center gap-4 r10k" style="animation-delay:.15s">
+
+        <div class="text-center">
+          <p class="text-white/25 text-[10px] font-bold uppercase tracking-[0.4em] mb-1">Medalla Oficial</p>
+          <p class="text-[#00D2FF]/50 text-[9px] font-bold uppercase tracking-widest">Diseño 2 Caras · Hover para girar</p>
+        </div>
+
+        <div class="medal-flip-container w-full relative" style="max-width:460px;aspect-ratio:1/1.05;"
+             id="medalFlip" onclick="this.classList.toggle('flipped')">
+
+          <div class="medal-glow-ring absolute inset-0 pointer-events-none" style="z-index:0;"></div>
+
+          <div class="medal-flip-inner" style="position:absolute;inset:3px;">
+
+            <!-- CARA FRONTAL -->
+            <div class="medal-face bg-[#001840]">
+              <img src="img/medalla-frente.webp"
+                   alt="Medalla Especial 10K cara frontal"
+                   class="w-full h-full object-cover"
+                   width="360" height="378"
+                   loading="lazy" />
+            </div>
+
+            <!-- CARA TRASERA -->
+            <div class="medal-face medal-face-back bg-[#001840]">
+              <img src="img/medalla-trasera.webp"
+                   alt="Medalla Especial 10K cara trasera"
+                   class="w-full h-full object-cover"
+                   width="360" height="378"
+                   loading="lazy" />
+            </div>
+
+          </div>
+        </div>
+
+        <div class="flip-hint flex items-center gap-2.5">
+          <div class="w-6 h-6 rounded-full border border-[#00D2FF]/30 flex items-center justify-center">
+            <i class="fa-solid fa-rotate text-[#00D2FF]/50 text-[10px]"></i>
+          </div>
+          <span class="text-white/25 text-[9px] uppercase tracking-[0.3em]">Clic o hover para ver ambas caras</span>
+        </div>
+
+        <div class="stat-card-10k glow-card rounded-2xl p-4 w-full max-w-sm text-center">
+          <p class="text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.3em] mb-2">Especificaciones</p>
+          <p class="text-white/40 text-xs leading-relaxed">Metal macizo · Acabado premium<br>Grabado permanente · Ed. limitada 2026</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+    <!-- ===================== CÓMO FUNCIONA ===================== -->
+<section id="como-funciona" class="py-24 bg-white reveal">
+  <div class="max-w-7xl mx-auto px-4 md:px-12">
+
+    <div class="text-center mb-14">
+      <span class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.5em] mb-3 block">Así se vive el reto</span>
+      <h2 class="text-[#001E50] text-4xl md:text-5xl font-black uppercase tracking-tighter mt-2 mb-4 leading-tight">
+        Cómo Funciona<br>el Circuito
+      </h2>
+<p class="text-slate-500 max-w-xl mx-auto text-sm md:text-base font-light leading-relaxed">        Desde que te inscribes hasta que recibes tu medalla — así es la experiencia completa del Reto Virtual VZLA.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- Paso 1 -->
+      <div class="relative bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:border-[#00D2FF]/30 hover:shadow-lg transition-all duration-300">
+        <div class="absolute -top-4 left-8 bg-[#001E50] text-[#00D2FF] font-black text-xs w-8 h-8 rounded-full flex items-center justify-center border-2 border-[#00D2FF]/30">01</div>
+        <div class="w-12 h-12 rounded-2xl bg-[#00D2FF]/10 flex items-center justify-center mb-5 mt-2">
+          <i class="fa-solid fa-user-plus text-[#00D2FF] text-lg"></i>
+        </div>
+        <h3 class="text-[#001E50] font-black uppercase text-base tracking-tight mb-2">Inscríbete</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">
+          Elige tu edición, completa el formulario y asegura tu cupo. Recibes confirmación por WhatsApp.
+        </p>
+      </div>
+
+      <!-- Paso 2 -->
+      <div class="relative bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:border-[#00D2FF]/30 hover:shadow-lg transition-all duration-300">
+        <div class="absolute -top-4 left-8 bg-[#001E50] text-[#00D2FF] font-black text-xs w-8 h-8 rounded-full flex items-center justify-center border-2 border-[#00D2FF]/30">02</div>
+        <div class="w-12 h-12 rounded-2xl bg-[#00D2FF]/10 flex items-center justify-center mb-5 mt-2">
+          <i class="fa-solid fa-person-running text-[#00D2FF] text-lg"></i>
+        </div>
+        <h3 class="text-[#001E50] font-black uppercase text-base tracking-tight mb-2">Corre tu 5K o 10K</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">
+          Durante las fechas oficiales, corre tu distancia desde cualquier lugar del país. Tú decides la ruta.
+        </p>
+      </div>
+
+      <!-- Paso 3 -->
+      <div class="relative bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:border-[#00D2FF]/30 hover:shadow-lg transition-all duration-300">
+        <div class="absolute -top-4 left-8 bg-[#001E50] text-[#00D2FF] font-black text-xs w-8 h-8 rounded-full flex items-center justify-center border-2 border-[#00D2FF]/30">03</div>
+        <div class="w-12 h-12 rounded-2xl bg-[#00D2FF]/10 flex items-center justify-center mb-5 mt-2">
+          <i class="fa-solid fa-stopwatch text-[#00D2FF] text-lg"></i>
+        </div>
+        <h3 class="text-[#001E50] font-black uppercase text-base tracking-tight mb-2">Reporta tu tiempo</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">
+          Envía tu evidencia con tiempo y distancia. Tu resultado entra al ranking nacional oficial en tiempo real.
+        </p>
+      </div>
+
+      <!-- Paso 4 -->
+      <div class="relative bg-[#001E50] rounded-3xl p-8 border border-[#00D2FF]/20 hover:border-[#00D2FF]/50 hover:shadow-xl transition-all duration-300">
+        <div class="absolute -top-4 left-8 bg-[#00D2FF] text-[#001E50] font-black text-xs w-8 h-8 rounded-full flex items-center justify-center">04</div>
+        <div class="w-12 h-12 rounded-2xl bg-[#00D2FF]/15 flex items-center justify-center mb-5 mt-2">
+          <i class="fa-solid fa-medal text-[#00D2FF] text-lg"></i>
+        </div>
+        <h3 class="text-white font-black uppercase text-base tracking-tight mb-2">Recibe tu medalla</h3>
+        <p class="text-white/50 text-sm leading-relaxed">
+          Tu medalla llega a tu puerta. Dos circuitos, una sola meta: el 5K que construye el mapa y el 10K que forja la leyenda.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- CTA inferior -->
+    <div class="text-center mt-12">
+      <a href="inscripcion.html?modo=5K"
+         class="inline-flex items-center gap-2 bg-[#001E50] text-white font-black text-xs uppercase tracking-widest px-8 py-4 rounded-full hover:bg-[#00D2FF] hover:text-[#001E50] transition-all duration-300 shadow-lg">
+        <i class="fa-solid fa-flag-checkered"></i>
+        Quiero participar
+      </a>
+    </div>
+
+  </div>
+</section>
+<!-- ================ FIN CÓMO FUNCIONA ================ -->
+
+
+
+    <section id="el-reto" class="py-24 bg-[#001E50]">
+        <div class="max-w-7xl mx-auto px-4 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <span class="text-[#00D2FF] font-bold text-xs uppercase tracking-widest">Experiencia de Élite</span>
+                    <h2 class="text-white text-4xl md:text-5xl font-black uppercase mt-4 mb-8 leading-tight text-reveal">
+                        Más que una medalla, <br> un legado físico.
+                    </h2>
+                    <p class="text-white text-lg mb-8 leading-relaxed" style="color:rgba(255,255,255,0.80)">
+                        En el <b>Reto Virtual VZLA</b>, la distancia la pones tú, pero la gloria es compartida. Hemos diseñado un circuito de 4 etapas donde cada medalla es una pieza de un rompecabezas nacional único en su clase.
+                    </p>
+                    <ul class="space-y-4">
+    <li class="flex items-center gap-3 font-semibold" style="color:#ffffff"><i class="fa-solid fa-check-double text-[#00D2FF]"></i> Cronometraje validado</li>
+    <li class="flex items-center gap-3 font-semibold" style="color:#ffffff"><i class="fa-solid fa-check-double text-[#00D2FF]"></i> Medallas de acrílico de alta densidad</li>
+    <li class="flex items-center gap-3 font-semibold" style="color:#ffffff"><i class="fa-solid fa-check-double text-[#00D2FF]"></i> Ranking nacional en tiempo real</li>
+</ul>
+                </div>
+                <div class="bg-white/5 rounded-3xl p-12 border border-white/10 text-center">
+    <i class="fa-solid fa-puzzle-piece text-8xl text-[#00D2FF]/20 mb-6 block"></i>
+                    <i class="fa-solid fa-puzzle-piece text-8xl text-[#001E50]/10 mb-6"></i>
+                    <h3 class="text-2xl font-black text-white uppercase mb-4 tracking-tighter">Completa la Serie</h3>
+                    <p class="text-white/50 text-sm italic">"Cuatro carreras, un solo destino. ¿Tienes lo necesario para completar el mapa?"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ediciones" class="py-24 bg-slate-50 reveal">
+  <div class="max-w-7xl mx-auto px-4 md:px-12">
+
+    <!-- Encabezado -->
+    <div class="text-center mb-16">
+      <span class="text-[#00D2FF] font-bold text-xs uppercase tracking-[0.4em]">Temporada 2026</span>
+      <h2 class="text-[#001E50] text-5xl font-black uppercase mt-2 mb-2 tracking-tighter">Ruta a la Gloria</h2>
+      <p class="text-slate-400 font-bold text-sm uppercase tracking-[0.3em]">Circuito Virtual 5K · 4 Ediciones · 1 Rompecabezas Nacional</p>
+    </div>
+
+    <!-- Grid de ediciones -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+
+      <!-- EDICIÓN 1 — Completada -->
+      <div class="group relative aspect-[3/4] overflow-hidden rounded-2xl shadow-xl transition-all hover:scale-[1.02]">
+        <img src="img/Medalla1web.webp" class="absolute inset-0 w-full h-full object-cover" alt="Medalla Edición 1" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/60"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-white z-10">
+          <div class="mb-3 bg-[#00D2FF]/20 backdrop-blur-sm border border-[#00D2FF] p-2 rounded-full shadow-lg">
+            <i class="fa-solid fa-lock text-[#00D2FF] text-sm"></i>
+          </div>
+          <h4 class="font-black text-2xl uppercase mb-1 tracking-tighter">Edición 1</h4>
+          <p class="text-[#00D2FF] text-[11px] font-bold uppercase tracking-[0.3em] mb-5">Misión Completada</p>
+          <span class="border-2 border-white/50 px-5 py-1.5 rounded-full text-[11px] font-bold bg-white/10 backdrop-blur-sm">Marzo 06 - 15</span>
+        </div>
+      </div>
+
+      <!-- EDICIÓN 2 — Completada -->
+      <div class="group relative aspect-[3/4] overflow-hidden rounded-2xl shadow-xl transition-all hover:scale-[1.02]">
+        <img src="img/Medalla2web.webp" class="absolute inset-0 w-full h-full object-cover" alt="Medalla Edición 2" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/60"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-white z-10">
+          <div class="mb-3 bg-[#00D2FF]/20 backdrop-blur-sm border border-[#00D2FF] p-2 rounded-full shadow-lg">
+            <i class="fa-solid fa-lock text-[#00D2FF] text-sm"></i>
+          </div>
+          <h4 class="font-black text-2xl uppercase mb-1 tracking-tighter">Edición 2</h4>
+          <p class="text-[#00D2FF] text-[11px] font-bold uppercase tracking-[0.3em] mb-5">Misión Completada</p>
+          <span class="border-2 border-white/50 px-5 py-1.5 rounded-full text-[11px] font-bold bg-white/10 backdrop-blur-sm">Culminada</span>
+        </div>
+      </div>
+
+      <!-- EDICIÓN 3 — En curso (destacada) -->
+      <div class="group relative aspect-[3/4] overflow-hidden rounded-2xl shadow-2xl transition-all hover:scale-[1.02] border-2 border-[#00D2FF]">
+        <img src="img/Medalla3web.jpeg" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Medalla Edición 3" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#001E50] via-black/40 to-black/60"></div>
+        <div class="absolute top-3 left-1/2 -translate-x-1/2 bg-[#00D2FF] text-[#001E50] text-[9px] font-black px-4 py-1 rounded-full uppercase shadow-[0_0_15px_rgba(0,210,255,0.6)] tracking-tighter animate-pulse z-20">
+          En Curso
+        </div>
+        <div class="absolute inset-0 flex flex-col items-center justify-between p-6 text-white z-10">
+          <div class="mt-6 text-center">
+            <h4 class="font-black text-2xl uppercase mb-1 tracking-tighter">Edición 3</h4>
+            <p class="text-[#00D2FF] text-[11px] font-bold uppercase tracking-[0.3em]">Inscripciones 5K · $10</p>
+          </div>
+          <a href="inscripcion.html?modo=5K"
+             class="w-full bg-[#00D2FF] text-[#001E50] py-3 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-white transition-all shadow-lg text-center">
+            Inscribirme Ahora
+          </a>
+        </div>
+      </div>
+
+      <!-- EDICIÓN 4 — Próximamente -->
+      <div class="group relative aspect-[3/4] overflow-hidden rounded-2xl shadow-xl transition-all hover:scale-[1.02] bg-[#001E50] border border-white/10">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-[#001E50]/80 to-black/60"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-white z-10 text-center">
+          <div class="mb-3 bg-white/10 backdrop-blur-sm border border-white/20 p-2.5 rounded-full shadow-lg">
+            <i class="fa-solid fa-flag-checkered text-[#00D2FF] text-sm"></i>
+          </div>
+          <h4 class="font-black text-2xl uppercase mb-1 tracking-tighter">Edición 4</h4>
+          <p class="text-white/50 text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Próximamente</p>
+          <span class="border border-white/20 px-4 py-1.5 rounded-full text-[10px] font-bold text-white/40 bg-white/5">Diciembre 04 - 13</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== PROMO COMBO 3ra y 4ta EDICIÓN ===== -->
+    <div class="mt-20 bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden border-2 border-dashed border-[#00D2FF]">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
+
+        <!-- IMAGEN CON FONDO -->
+        <div class="relative flex items-center justify-center p-12 min-h-[320px] overflow-hidden"
+             style="background: linear-gradient(135deg, #001E50 0%, #001840 100%);">
+          <div class="absolute w-64 h-64 bg-[#00D2FF]/15 rounded-full blur-[80px]"></div>
+          <div class="absolute w-40 h-40 bg-[#00D2FF]/10 rounded-full blur-[60px] translate-x-16 translate-y-8"></div>
+          <div class="relative z-10 max-w-sm w-full text-center flex flex-col items-center gap-4">
+             <i class="fa-solid fa-gift text-6xl text-[#00D2FF] mb-2 drop-shadow-[0_0_15px_rgba(0,210,255,0.6)]"></i>
+             <h2 class="text-white text-4xl font-black italic">COMBO DÚO</h2>
+             <span class="text-[#00D2FF] text-[10px] font-black uppercase tracking-[0.3em]">3ra + 4ta Edición</span>
+          </div>
+          <div class="absolute top-4 left-4 bg-[#00D2FF] border border-[#00D2FF]/40 backdrop-blur-sm px-3 py-1.5 rounded-full animate-pulse">
+            <span class="text-[#001E50] text-[9px] font-black uppercase tracking-[0.3em]">Promoción Especial</span>
+          </div>
+        </div>
+
+        <!-- Texto -->
+        <div class="p-10 md:p-14">
+          <span class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.5em] mb-3 block">Oferta por tiempo limitado</span>
+          <h3 class="text-[#001E50] text-3xl md:text-4xl font-black uppercase leading-tight tracking-tighter mb-4">
+            Llévate las <span class="text-[#00D2FF] italic">dos ediciones</span><br>por $16
+          </h3>
+          <p class="text-slate-500 text-sm leading-relaxed mb-6">
+            Asegura tu participación en la <strong>3ra y 4ta edición</strong> juntas y ahorra. El precio regular es de $10 por cada una, pero con este combo pagas solo $8 por edición y aseguras tus dos piezas finales del rompecabezas nacional.
+          </p>
+
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-3 text-sm text-[#001E50] font-semibold">
+              <i class="fa-solid fa-check-double text-[#00D2FF]"></i> Medalla 3ra Edición
+            </li>
+            <li class="flex items-center gap-3 text-sm text-[#001E50] font-semibold">
+              <i class="fa-solid fa-check-double text-[#00D2FF]"></i> Medalla 4ta Edición
+            </li>
+            <li class="flex items-center gap-3 text-sm text-[#001E50] font-semibold">
+              <i class="fa-solid fa-bolt text-[#00D2FF]"></i> Ahorro inmediato de $4
+            </li>
+          </ul>
+
+          <a href="inscripcion.html?modo=COMBO"
+             class="inline-flex items-center gap-2 bg-[#001E50] text-white font-black text-xs uppercase tracking-widest px-7 py-3.5 rounded-full hover:bg-[#00D2FF] hover:text-[#001E50] transition-all duration-300 shadow-[0_10px_20px_rgba(0,30,80,0.2)]">
+            <i class="fa-solid fa-ticket"></i>
+            ¡Comprar Combo a $16!
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+    <section class="py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 md:px-12 text-center">
+            <h2 class="text-[#001E50] text-4xl font-black uppercase tracking-tighter mb-4">Galería de Conquistadores</h2>
+            <p class="text-slate-500 mb-12 max-w-2xl mx-auto text-sm">Las mejores postales de nuestra comunidad. Cada km cuenta una historia diferente.</p>
+            <div class="flex gap-4 pb-10 overflow-x-auto snap-x">
+                <img src="img/tu-foto-1.webp" class="flex-none w-72 h-96 object-cover rounded-2xl snap-center shadow-lg" alt="Runner">
+                <img src="img/tu-foto-2.webp" class="flex-none w-72 h-96 object-cover rounded-2xl snap-center shadow-lg" alt="Runner">
+                <img src="img/tu-foto-3.webp" class="flex-none w-72 h-96 object-cover rounded-2xl snap-center shadow-lg" alt="Runner">
+                <img src="img/tu-foto-4.webp" class="flex-none w-72 h-96 object-cover rounded-2xl snap-center shadow-lg" alt="Runner">
+            </div>
+            <div class="mt-8">
+                <a href="https://drive.google.com/drive/folders/1aaoaoAIUHxevRezYuz7j0CP_fcOvjOfb?usp=drive_link" target="_blank" class="inline-flex items-center gap-3 bg-slate-100 text-[#001E50] px-8 py-4 rounded-full font-black text-xs uppercase tracking-widest hover:bg-[#00D2FF] hover:text-white transition-all border border-slate-200">
+                    <i class="fa-solid fa-images text-lg"></i> Ver todas las fotos en Google Drive
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <style>
+.medal-flip-container{perspective:1000px;cursor:pointer;}
+.medal-flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 0.85s cubic-bezier(0.16,1,0.3,1);}
+.medal-flip-container:hover .medal-flip-inner,
+.medal-flip-container.flipped .medal-flip-inner{transform:rotateY(180deg);}
+.medal-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:2rem;overflow:hidden;}
+.medal-face-back{transform:rotateY(180deg);}
+@property --ba{syntax:'<angle>';initial-value:0deg;inherits:false;}
+.medal-glow-ring{background:conic-gradient(from var(--ba),#00D2FF 0%,#ffffff30 25%,#00D2FF 50%,#ffffff15 75%,#00D2FF 100%);animation:bspin 3s linear infinite;border-radius:2.3rem;padding:2px;}
+@keyframes bspin{to{--ba:360deg;}}
+.flip-hint{animation:hint-pulse 2.2s ease-in-out infinite;}
+@keyframes hint-pulse{0%,100%{opacity:.4;transform:scale(1);}50%{opacity:.9;transform:scale(1.05);}}
+.stat-card-10k{background:rgba(0,24,64,.65);border:1px solid rgba(0,210,255,.15);backdrop-filter:blur(12px);transition:border-color .3s,box-shadow .3s;}
+.stat-card-10k:hover{border-color:rgba(0,210,255,.4);box-shadow:0 0 24px rgba(0,210,255,.12);}
+.shine-dot{position:absolute;border-radius:50%;pointer-events:none;animation:fdot 4s ease-in-out infinite;}
+@keyframes fdot{0%,100%{transform:translateY(0) scale(1);opacity:.5;}50%{transform:translateY(-10px) scale(1.3);opacity:1;}}
+.grad-text{background:linear-gradient(135deg,#00D2FF,#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+@supports (animation-timeline:scroll()){
+  .r10k{opacity:0;clip-path:inset(15% 0 0 0);animation:r10ka linear both;animation-timeline:view();animation-range:entry 0% entry 75%;}
+  @keyframes r10ka{to{opacity:1;clip-path:inset(0 0 0 0);}}
+}
+.iron-badge{background:linear-gradient(135deg,rgba(0,210,255,.1),rgba(0,210,255,.02));border:1px solid rgba(0,210,255,.4);box-shadow:0 0 20px rgba(0,210,255,.08),inset 0 1px 0 rgba(255,255,255,.05);}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const m = document.getElementById('medalFlip');
+  if (!m) return;
+  if (window.matchMedia('(max-width:1023px)').matches) {
+    setTimeout(function(){ m.classList.add('flipped'); }, 2800);
+    setTimeout(function(){ m.classList.remove('flipped'); }, 5000);
+  }
+});
+</script>
+
+    <!-- SECCIÓN ENTRENADOR IA -->
+    <section id="entrenador-ia" class="py-24 md:py-32 bg-[#0a0a1a] relative overflow-hidden border-y border-[#00D2FF]/20 reveal">
+        <!-- Glows de fondo -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-[#00D2FF]/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 md:px-12 relative z-10 flex flex-col md:flex-row items-center gap-12">
+            <!-- Texto y CTA -->
+            <div class="w-full md:w-1/2 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 bg-[#00D2FF]/10 border border-[#00D2FF]/30">
+                    <i class="fa-solid fa-robot text-[#00D2FF] text-sm animate-pulse"></i>
+                    <span class="text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.4em]">Powered by Llama 3.3</span>
+                </div>
+                
+                <h2 class="font-heading text-4xl md:text-6xl font-black text-white mb-6 uppercase tracking-tighter leading-tight">
+                    Tu Entrenador <br><span class="chameleon-text">Inteligente</span>
+                </h2>
+                
+                <p class="text-white/70 text-base md:text-lg mb-8 leading-relaxed font-light">
+                    Planes de entrenamiento a medida, estrategias de carrera y nutrición diseñadas instantáneamente por Inteligencia Artificial para llevar tu rendimiento al siguiente nivel. Exclusivo para el Reto Virtual.
+                </p>
+                
+                <a href="entrenador.html" class="btn-magnetic inline-flex items-center justify-center gap-3 bg-[#00D2FF] text-[#001E50] px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-all shadow-[0_0_40px_rgba(0,210,255,0.4)] relative group overflow-hidden">
+                    <span class="relative z-10 flex items-center gap-2">
+                        <i class="fa-solid fa-bolt text-lg"></i>
+                        PROBAR ENTRENADOR IA
+                    </span>
+                    <div class="absolute inset-0 bg-white translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 ease-in-out"></div>
+                </a>
+            </div>
+            
+            <!-- Mockup Visual -->
+            <div class="w-full md:w-1/2 relative flex justify-center">
+                <div class="relative w-full max-w-sm aspect-[4/5] bg-gradient-to-br from-[#001E50] to-[#0a0a1a] rounded-3xl border border-[#00D2FF]/20 p-6 shadow-2xl flex flex-col overflow-hidden">
+                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.webp')] opacity-10"></div>
+                    
+                    <div class="flex items-center gap-3 border-b border-white/10 pb-4 relative z-10">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#00D2FF] to-purple-500 flex items-center justify-center shadow-[0_0_15px_rgba(0,210,255,0.5)]">
+                            <i class="fa-solid fa-robot text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="text-white font-black text-sm uppercase tracking-wider">Coach RV</p>
+                            <p class="text-[#00D2FF] text-[10px] uppercase tracking-widest font-bold animate-pulse">● Escribiendo...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1 mt-6 space-y-4 relative z-10">
+                        <div class="w-3/4 h-3 bg-white/5 rounded-full"></div>
+                        <div class="w-full h-3 bg-white/5 rounded-full"></div>
+                        <div class="w-5/6 h-3 bg-white/5 rounded-full"></div>
+                        <div class="mt-8 p-4 bg-[#00D2FF]/10 rounded-xl border border-[#00D2FF]/20">
+                            <p class="text-[#00D2FF] font-mono text-xs mb-2">> PLAN GENERADO</p>
+                            <div class="w-full h-2 bg-[#00D2FF]/30 rounded-full mb-2"></div>
+                            <div class="w-2/3 h-2 bg-[#00D2FF]/30 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="aliados" class="py-24 bg-slate-50 border-t border-slate-100 reveal">
+    <div class="max-w-7xl mx-auto px-4 md:px-12 text-center">
+        <span class="text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.5em] mb-4 block">Alianza Estratégica</span>
+        <h2 class="text-[#001E50] text-4xl font-black uppercase mb-16 tracking-tighter italic">Nuestros <span class="text-[#00D2FF]">Aliados</span></h2>
+        
+       <!-- <div class="mb-20">
+            <div class="max-w-sm mx-auto bg-white p-8 rounded-[3rem] shadow-2xl border-2 border-[#00D2FF]/10 transition-transform hover:scale-105">
+                <p class="text-[10px] text-slate-900 font-black uppercase tracking-[0.4em] mb-6 italic">Presentador Oficial</p>
+                
+                <a href="https://www.instagram.com/team_fs__/" target="_blank" class="block group">
+                    <img src="img/teamfslogo.webp" alt="TeamFS Logo" class="h-34 mx-auto object-contain transition-transform group-hover:scale-110">
+                    
+                    <div class="mt-6">
+                        <span class="text-slate-900 font-black uppercase text-[11px] tracking-widest group-hover:text-[#00D2FF] transition-colors">Team FS</span>
+                        <p class="text-[9px] text-[#00D2FF] font-bold uppercase mt-2 opacity-0 group-hover:opacity-100 transition-all italic">Fuerza y Salud</p>
+                    </div>
+
+                    <div class="mt-4 flex justify-center gap-2">
+                        <span class="h-1 w-8 bg-[#00D2FF] rounded-full group-hover:w-12 transition-all"></span>
+                        <span class="h-1 w-2 bg-[#00D2FF]/30 rounded-full"></span>
+                    </div>
+                </a>
+            </div>
+        </div> -->
+
+        <div class="flex flex-wrap justify-center gap-6">
+            
+            <div class="w-full sm:w-64 bg-white p-8 rounded-3xl border border-slate-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-2 group">
+                <a href="https://www.instagram.com/laflacapasteles.pf/" target="_blank" class="block">
+                    <div class="h-22 flex flex-col items-center justify-center">
+                        <img src="img/laflacalogo.webp" alt="La Flaca" class="h-21 w-auto object-contain transition-transform group-hover:scale-110">
+                    </div>
+                    <div class="mt-4 text-center">
+                        <span class="text-slate-900 font-black uppercase text-[10px] tracking-widest group-hover:text-[#00D2FF] transition-colors">La Flaca</span>
+                        <p class="text-[8px] text-[#00D2FF] font-bold uppercase mt-1 opacity-0 group-hover:opacity-100 transition-all">Pasteles y Tequeños</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="w-full sm:w-64 bg-white p-8 rounded-3xl border border-slate-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-2 group">
+                <a href="https://www.instagram.com/_jcolina/" target="_blank" class="block">
+                    <div class="h-22 flex flex-col items-center justify-center">
+                        <img src="img/JoseColinaCOACHLOGO.webp" alt="_JCOLINA" class="h-21 w-auto object-contain transition-transform group-hover:scale-110">
+                    </div>
+                    <div class="mt-4 text-center">
+                        <span class="text-slate-900 font-black uppercase text-[10px] tracking-widest group-hover:text-[#00D2FF] transition-colors">José Colina Running Coach</span>
+                        <p class="text-[8px] text-[#00D2FF] font-bold uppercase mt-1 opacity-0 group-hover:opacity-100 transition-all">CORRER . SUPERAR . TRASCENDER</p>
+                    </div>
+                </a>
+            </div>
+
+            <a href="https://wa.me/584127732710?text=Quiero%20ser%20patrocinante%20del%20Reto%20Virtual%20Vzla%202026" target="_blank" rel="noopener noreferrer" class="w-full sm:w-64 bg-white/50 p-8 rounded-3xl border border-dashed border-slate-300 flex items-center justify-center group hover:bg-white transition-all hover:-translate-y-1 cursor-pointer block text-decoration-none">
+    <div class="text-center">
+        <i class="fa-solid fa-plus text-slate-900 mb-2 block opacity-20 group-hover:opacity-100 transition-opacity"></i>
+        <span class="text-slate-900 font-black uppercase text-[10px] tracking-widest opacity-40 group-hover:opacity-100">Próximo Aliado</span>
+    </div>
+</a>
+
+            <div class="w-full sm:w-64 bg-white/50 p-8 rounded-3xl border border-dashed border-slate-300 flex items-center justify-center group hover:bg-white transition-all hover:-translate-y-1">
+                <div class="text-center">
+                    <i class="fa-solid fa-plus text-slate-900 mb-2 block opacity-20 group-hover:opacity-100 transition-opacity"></i>
+                    <span class="text-slate-900 font-black uppercase text-[10px] tracking-widest opacity-40 group-hover:opacity-100">Próximo Aliado</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-20">
+            <a href="https://wa.me/584127732710" target="_blank" class="inline-block px-10 py-4 rounded-full bg-[#001E50] text-white text-[11px] font-black uppercase tracking-[0.3em] hover:bg-[#00D2FF] hover:shadow-lg transition-all transform hover:scale-105">
+                ¿Quieres ser aliado? Contáctanos
+            </a>
+        </div>
+    </div>
+</section>	
+
+    <section class="py-24 bg-[#001E50] relative overflow-hidden">
+        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-[#00D2FF]/10 rounded-full blur-3xl"></div>
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+            <h2 class="text-white text-4xl md:text-6xl font-black uppercase mb-6 leading-none">Tu próxima meta <br> <span class="text-[#00D2FF] italic">empieza aquí.</span></h2>
+            <p class="text-white/70 text-lg mb-10">No dejes para después la medalla que puedes ganar hoy. La Edición 2 de Junio te espera.</p>
+            <a id="btnInscribirmePrincipal" href="inscripcion.html" class="btn-magnetic inline-block bg-[#00D2FF] text-[#001E50] px-16 py-5 rounded-full font-black text-lg uppercase tracking-widest shadow-2xl">¡INSCRIBIRME AHORA!</a>
+        </div>
+    </section>
+
+        <footer class="bg-[#001E50] py-20 px-4 border-t border-white/5">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-16 text-center md:text-left">
+            <div>
+                <img src="img/RV-Isotipo-sinfondo.webp" class="h-14 mx-auto md:mx-0 mb-6 grayscale brightness-200 opacity-40">
+                <p class="text-white/30 text-[10px] uppercase tracking-[0.4em] leading-relaxed">
+                    Reto Virtual VZLA es una producción <br>
+                <span class="text-white/60 font-bold">Nacional Independiente</span>. <br>
+                    © 2026 Reto Virtual VZLA. Todos los derechos reservados.
+                </p>
+            </div>
+            <div class="flex flex-col items-center justify-center gap-6">
+                <h4 class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.3em]">Síguenos en la ruta</h4>
+                <div class="flex gap-8">
+                    <a href="https://whatsapp.com/channel/0029VbD2Dmi7IUYZR6nmh60z" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/retovirtual.vzla/" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@retovirtual.vzla" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.strava.com/clubs/1859944" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-strava"></i></a>
+                </div>
+            </div>
+            <!-- Tercera columna centrada horizontalmente para Grow Studio -->
+            <div class="flex flex-col md:items-end items-center justify-center gap-4 pt-8 md:pt-0 border-t border-white/10 md:border-none md:border-l md:pl-8 col-span-1 text-center md:text-right">
+                <span class="text-[#64748b] text-[10px] uppercase tracking-[0.3em] font-bold">Desarrollado por</span>
+                <a href="https://growstudioweb.vercel.app/" target="_blank" class="flex items-center justify-center md:justify-end gap-3 hover:scale-105 transition-transform cursor-pointer group">
+                    <span class="chameleon-text font-black text-base md:text-lg tracking-[0.1em]">GROW STUDIO</span>
+                    <img src="img/grow-logo.png" alt="Grow Studio" class="h-7 md:h-8 object-contain drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_15px_rgba(0,210,255,0.9)] transition-all">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+        <!-- Tu contenido HTML termina aquí -->
+
+    <script>
+        // ========== MENÚ MÓVIL HAMBURGUESA ==========
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = menuToggle.querySelector('i');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('translate-x-full');
+            
+            // Cambiar icono
+            if (mobileMenu.classList.contains('translate-x-full')) {
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars-staggered');
+            } else {
+                menuIcon.classList.remove('fa-bars-staggered');
+                menuIcon.classList.add('fa-xmark');
+            }
+        });
+
+        // Cerrar menú al hacer click en un enlace
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars-staggered');
+            });
+        });
+
+        
+
+        // ========== SPLASH SCREEN ==========
+        // Activa float del Team FS después del entrance
+        setTimeout(function() {
+            var el = document.getElementById("teamfs-splash");
+            if (el) el.classList.add("floating");
+        }, 1050);
+
+        // Elimina splash del DOM al terminar completamente
+        setTimeout(function() {
+            var splash = document.getElementById("splash");
+            if (splash) splash.remove();
+        }, 4100);
+
+ // ========= ACTIVAR LA INSTALACION DE LA APP ============
+
+// 1. REGISTRAR EL SERVICE WORKER
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('Service Worker registrado con éxito'))
+            .catch(err => console.error('Error al registrar el SW', err));
+    });
+}
+
+// 2. CAPTURAR EL EVENTO DE INSTALACIÓN
+let eventoInstalacion;
+const botonInstalar = document.getElementById('btnInstalarApp');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Evitar que el navegador muestre su propio aviso aburrido
+    e.preventDefault();
+    // Guardar el evento para usarlo después
+    eventoInstalacion = e;
+    // Mostrar nuestro botón personalizado gordo de Tailwind
+    if (botonInstalar) {
+        botonInstalar.classList.remove('hidden');
+    }
+});
+
+// 3. LOGICA AL HACER CLIC EN EL BOTÓN
+if (botonInstalar) {
+    botonInstalar.addEventListener('click', async () => {
+        
+        // EVENTO 1: Le avisamos a Google que alguien tocó el botón
+        if (typeof gtag === 'function') {
+            gtag('event', 'clic_boton_instalar', {
+                'event_category': 'Interaccion PWA'
+            });
+        }
+
+        if (!eventoInstalacion) return;
+        
+        // Mostrar la ventana nativa de instalación del celular
+        eventoInstalacion.prompt();
+        
+        // Saber si el usuario aceptó o canceló
+        const { outcome } = await eventoInstalacion.userChoice;
+        
+        // EVENTO 2: Le avisamos a Google qué decidió el corredor
+        if (typeof gtag === 'function') {
+            gtag('event', 'decision_instalacion', {
+                'resultado': outcome // Guardará 'accepted' o 'dismissed'
+            });
+        }
+        
+        // Limpiar la variable y ocultar el botón
+        eventoInstalacion = null;
+        botonInstalar.classList.add('hidden');
+    });
+}
+
+// Ocultar el botón si la app ya fue instalada con éxito en el sistema
+window.addEventListener('appinstalled', () => {
+    
+    // EVENTO 3: Confirmación absoluta de que la app se instaló
+    if (typeof gtag === 'function') {
+        gtag('event', 'app_instalada_exitosamente', {
+            'event_category': 'Conversiones'
+        });
+    }
+
+    console.log('¡Aplicación instalada con éxito en el teléfono!');
+    if (botonInstalar) {
+        botonInstalar.classList.add('hidden');
+    }
+});
+
+    </script>
+
+<script>
+
+
+
+
+// ========================================================
+// RASTREADORES DE GOOGLE ANALYTICS (EMBUDO DE VENTAS)
+// ========================================================
+
+// 1. Rastrear clic en el botón del MENÚ MÓVIL
+// Captura todos los enlaces de inscripción del menú móvil usando la clase
+const botonesInscribirmeMovil = document.querySelectorAll('.btn-nav-movil');
+
+botonesInscribirmeMovil.forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+        if (typeof gtag === 'function') {
+            // Extrae el parámetro (5K, 10K o ABONO) para saber qué le interesa al corredor
+            const urlParams = new URLSearchParams(enlace.getAttribute('href').split('?')[1]);
+            const modoSeleccionado = urlParams.get('modo') || 'General';
+
+            gtag('event', 'clic_boton_inscribirme', {
+                'event_category': 'Embudo de Ventas',
+                'ubicacion': 'Menu Movil',
+                'modo_seleccionado': modoSeleccionado
+            });
+        }
+    });
+});
+
+// 2. Rastrear clic en el BOTÓN PRINCIPAL (El grande de la página)
+const botonInscribirmePrincipal = document.getElementById('btnInscribirmePrincipal');
+if (botonInscribirmePrincipal) {
+    botonInscribirmePrincipal.addEventListener('click', () => {
+        if (typeof gtag === 'function') {
+            gtag('event', 'clic_boton_inscribirme', {
+                'event_category': 'Embudo de Ventas',
+                'ubicacion': 'Boton Principal Inicio'
+            });
+        }
+    });
+}
+
+</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+    <script src="js/wow-effects.js"></script>
+</body>
+</html>
+
+

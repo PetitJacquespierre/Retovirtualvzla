@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenador IA | Reto Virtual VZLA 2026</title>
+    <link rel="icon" type="image/webp" href="img/favicon.webp">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CQ0KVLFL1W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-CQ0KVLFL1W');
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <link rel="stylesheet" href="css/wow-effects.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-heading { font-family: 'Montserrat', sans-serif; }
+
+        /* Tabs */
+        .tab-btn { transition: all 0.3s; }
+        .tab-btn.active {
+            background: #00D2FF;
+            color: #001E50;
+            box-shadow: 0 0 30px rgba(0,210,255,0.4);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Estilos Markdown Pro para Asistente IA */
+        #resultado-texto {
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #resultado-texto h1, #resultado-texto h2 {
+            color: #00D2FF;
+            font-weight: 900;
+            font-size: 1.15rem;
+            margin: 1.5rem 0 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(0,210,255,0.25);
+            padding-bottom: 0.4rem;
+        }
+        #resultado-texto h3, #resultado-texto h4 {
+            color: #00D2FF;
+            font-weight: 800;
+            font-size: 1rem;
+            margin: 1.2rem 0 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        #resultado-texto strong { color: #ffffff; font-weight: 700; }
+        #resultado-texto em { color: #00D2FF; font-style: normal; font-weight: 600; }
+        #resultado-texto p { color: rgba(255,255,255,0.85); margin-bottom: 0.75rem; line-height: 1.7; font-size: 0.92rem; }
+        
+        #resultado-texto ul, #resultado-texto ol {
+            margin: 0.75rem 0 1rem 0.25rem;
+            padding: 0;
+            list-style: none;
+        }
+        #resultado-texto ul li, #resultado-texto ol li {
+            position: relative;
+            padding-left: 1.4rem;
+            margin-bottom: 0.45rem;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+        #resultado-texto ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #00D2FF;
+            font-weight: bold;
+        }
+        #resultado-texto ol {
+            counter-reset: custom-counter;
+        }
+        #resultado-texto ol li {
+            counter-increment: custom-counter;
+        }
+        #resultado-texto ol li::before {
+            content: counter(custom-counter) ".";
+            position: absolute;
+            left: 0;
+            color: #00D2FF;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        /* Bloque de Notas / Tips / Citas */
+        #resultado-texto blockquote {
+            background: linear-gradient(90deg, rgba(0,210,255,0.12), rgba(0,30,80,0.2));
+            border-left: 3px solid #00D2FF;
+            padding: 0.85rem 1.2rem;
+            border-radius: 0 0.85rem 0.85rem 0;
+            margin: 1.2rem 0;
+            color: rgba(255,255,255,0.95);
+            font-size: 0.88rem;
+        }
+        #resultado-texto hr {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,210,255,0.4), transparent);
+            margin: 1.5rem 0;
+        }
+
+        /* TABLAS MODERNAS WOW */
+        #resultado-texto .table-responsive {
+            overflow-x: auto;
+            margin: 1.2rem 0;
+            border-radius: 0.85rem;
+            border: 1px solid rgba(0,210,255,0.25);
+            background: rgba(0,15,40,0.5);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            -webkit-overflow-scrolling: touch;
+        }
+        #resultado-texto table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.82rem;
+        }
+        #resultado-texto th {
+            background: rgba(0,210,255,0.18);
+            color: #00D2FF;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 0.85rem 1rem;
+            border-bottom: 2px solid rgba(0,210,255,0.35);
+            white-space: nowrap;
+        }
+        #resultado-texto td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            color: rgba(255,255,255,0.85);
+            vertical-align: top;
+            line-height: 1.5;
+        }
+        #resultado-texto tr:last-child td {
+            border-bottom: none;
+        }
+        #resultado-texto tr:nth-child(even) td {
+            background: rgba(255,255,255,0.02);
+        }
+        #resultado-texto tr:hover td {
+            background: rgba(0,210,255,0.06);
+        }
+
+        /* Glow animado fondo */
+        .glow-orb {
+            position: absolute; border-radius: 50%; filter: blur(120px);
+            pointer-events: none; animation: orb-move 8s ease-in-out infinite;
+        }
+        @keyframes orb-move {
+            0%,100% { transform: translate(0,0); }
+            50% { transform: translate(40px, -30px); }
+        }
+
+        select, input[type=number], input[type=text] {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: white;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            font-size: 0.875rem;
+            outline: none;
+            transition: border-color 0.3s;
+            appearance: none;
+        }
+        select:focus, input:focus { border-color: rgba(0,210,255,0.5); }
+        select option { background: #001E50; color: white; }
+        label { color: rgba(255,255,255,0.5); font-size: 0.7rem; font-weight: 700;
+                text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.4rem; }
+    </style>
+</head>
+<body class="bg-[#001E50] text-white min-h-screen">
+
+<div class="bg-[#001E50] text-white py-2 text-center text-[10px] font-bold uppercase tracking-[0.4em] z-50 relative border-b border-white/10">
+    Preparación de Alto Rendimiento. Potenciado por Inteligencia Artificial.
+</div>
+
+   <nav class="bg-[#001E50] sticky top-0 z-50 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 md:h-28">
+                
+                <div class="flex items-center gap-3 md:gap-5 cursor-pointer group -ml-2 md:-ml-4" onclick="location.href='index.html'">
+                    <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual" class="h-12 w-auto object-contain brightness-125 md:hidden">
+                    <img src="img/RV Texto Sin fondo.webp" alt="Reto Virtual" class="hidden md:block h-20 lg:h-28 w-auto object-contain brightness-125">
+                </div>
+
+                <div class="hidden lg:flex items-center space-x-4 xl:space-x-6">
+                    <a href="index.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Inicio</a>
+                    <a href="index.html#ediciones" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Calendario</a>
+                    <a href="evidencias2.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Evidencia</a>
+                    <a href="resultados.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Resultados</a>
+                    <a href="entrenador.html" class="chameleon-text text-[10px] xl:text-xs font-black uppercase tracking-widest transition-all drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">Entrenador IA</a>
+
+                    <div class="relative group">
+                        <button class="flex items-center text-white/80 group-hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">
+                            Info <i class="fa-solid fa-chevron-down ml-2 text-[8px]"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-56 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                            <div class="p-2">
+                                <a href="faq.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
+                                    <i class="fa-solid fa-circle-question mr-3 text-sm opacity-70"></i> Preguntas Frecuentes
+                                </a>
+                                <a href="aliados.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
+                                    <i class="fa-solid fa-handshake mr-3 text-sm opacity-70"></i> Aliados
+                                </a>
+                                <a href="tienda.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
+                                    <i class="fa-solid fa-shop mr-3 text-sm opacity-70"></i> Tienda
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative group">
+                        <button class="border-2 border-white text-white px-5 py-2.5 rounded-full font-black text-[10px] xl:text-xs uppercase tracking-widest hover:bg-white hover:text-[#001E50] transition-all shadow-lg flex items-center gap-2">
+                            INSCRIBIRME <i class="fa-solid fa-chevron-down text-[8px]"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-64 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                            <div class="p-2 space-y-1">
+                                <button onclick="window.location.href='inscripcion.html?modo=5K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
+                                    <i class="fa-solid fa-person-running mr-3 text-sm"></i> Tercera Edición 5K / Combo
+                                </button>
+                                <button onclick="window.location.href='inscripcion.html?modo=10K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
+                                    <i class="fa-solid fa-medal mr-3 text-sm"></i> Edición Especial 10K
+                                </button>
+                                <button onclick="window.location.href='inscripcion.html?modo=ABONO'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all border-t border-white/10 pt-2">
+                                    <i class="fa-solid fa-money-bill-wave mr-3 text-sm"></i> Consultar Saldo / Abonar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="menuToggle" class="lg:hidden text-white text-2xl focus:outline-none z-50">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="fixed inset-0 bg-[#001E50] z-40 transform translate-x-full transition-transform duration-300 lg:hidden">
+            <div class="flex flex-col items-center justify-center h-full space-y-5 px-8">
+                <a href="index.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Inicio</a>
+                <a href="index.html#ediciones" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Calendario</a>
+                <a href="evidencias2.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Evidencia</a>
+                <a href="resultados.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Resultados</a>
+                <a href="entrenador.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Entrenador IA</a>
+                
+                <div class="flex flex-wrap justify-center gap-4 mt-2">
+                    <a href="faq.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">FAQ</a>
+                    <a href="aliados.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">Aliados</a>
+                    <a href="tienda.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">Tienda</a>
+                </div>
+                <div class="border-t border-white/20 w-full pt-5 flex flex-col gap-3 text-center">
+                    <a href="inscripcion.html?modo=5K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Tercera Edición 5K / Combo</a>
+                    <a href="inscripcion.html?modo=10K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Edición Especial 10K</a>
+                    <a href="inscripcion.html?modo=ABONO" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-white transition-colors">Consultar Saldo / Abonar</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- CSS MAGICO 3D -->
+    <style>
+        .hero-3d-bg {
+            perspective: 1000px;
+            overflow: hidden;
+        }
+        .grid-3d {
+            position: absolute;
+            bottom: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(to right, rgba(0,210,255,0.2) 1px, transparent 1px),
+                linear-gradient(to top, rgba(0,210,255,0.2) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotateX(75deg) translateY(100px);
+            transform-origin: top center;
+            animation: grid-move 3s linear infinite;
+            mask-image: radial-gradient(ellipse at top, black 20%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at top, black 20%, transparent 70%);
+            z-index: 1;
+        }
+        @keyframes grid-move {
+            0% { transform: rotateX(75deg) translateY(0) translateZ(0); }
+            100% { transform: rotateX(75deg) translateY(50px) translateZ(0); }
+        }
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+
+    <!-- HERO IA WOW -->
+    <section class="relative py-32 md:py-48 px-4 text-left bg-[#050510] border-b border-[#00D2FF]/20 overflow-hidden flex items-center min-h-[80vh]">
+        <!-- Robot Image Background -->
+        <div class="absolute inset-0 bg-[url('img/robot_coach.jpg')] bg-cover bg-center md:bg-right bg-no-repeat opacity-80 mix-blend-screen scale-105" style="filter: contrast(1.2) brightness(0.9);"></div>
+        <!-- Gradient Overlay to make text readable -->
+        <div class="absolute inset-0 bg-gradient-to-r from-[#050510] via-[#050510]/80 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#050510] via-transparent to-[#050510]/50"></div>
+        
+        <!-- Orbes gigantes -->
+        <div class="glow-orb w-[600px] h-[600px] bg-[#00D2FF]/20 top-0 left-0 blur-[150px] z-0"></div>
+        
+        <div class="relative z-10 max-w-2xl ml-4 md:ml-12 lg:ml-24 floating-element">
+            <div class="inline-flex items-center gap-3 border border-[#00D2FF]/50 bg-[#00D2FF]/10 backdrop-blur-md px-8 py-3 rounded-full mb-8 shadow-[0_0_30px_rgba(0,210,255,0.3)]">
+                <i class="fa-solid fa-microchip text-[#00D2FF] text-lg animate-pulse"></i>
+                <span class="text-[#00D2FF] font-black text-xs uppercase tracking-[0.5em]">Motor IA Llama 3.3 (70B)</span>
+            </div>
+            
+            <h1 class="font-heading text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none mb-6 text-white drop-shadow-2xl">
+                INTELIGENCIA <br><span class="chameleon-text drop-shadow-[0_0_20px_rgba(0,210,255,0.8)]">DEPORTIVA</span>
+            </h1>
+            <p class="text-white/80 text-lg md:text-xl font-light leading-relaxed drop-shadow-md">
+                El futuro del entrenamiento ya está aquí. Selecciona a tu especialista IA y domina el Reto Virtual VZLA con estrategias en tiempo real.
+            </p>
+        </div>
+    </section>
+
+    <!-- MAIN -->
+    <section class="max-w-4xl mx-auto px-4 md:px-8 pb-32 -mt-12 relative z-20">
+
+        <!-- TABS -->
+        <div class="flex gap-4 justify-center mb-12 flex-wrap">
+            <button class="tab-btn active group px-2 py-2 pr-6 rounded-full text-xs font-black uppercase tracking-widest border border-[#00D2FF]/40 bg-[#001E50]/80 backdrop-blur-md shadow-[0_0_20px_rgba(0,210,255,0.15)] flex items-center gap-3 transition-all hover:scale-105"
+                    onclick="switchTab('entrenador', this)">
+                <div class="w-10 h-10 rounded-full bg-[#00D2FF] flex items-center justify-center shadow-[0_0_10px_rgba(0,210,255,0.5)]">
+                    <i class="fa-solid fa-person-running text-[#001E50] text-sm"></i>
+                </div>
+                Entrenador
+            </button>
+            <button class="tab-btn group px-2 py-2 pr-6 rounded-full text-xs font-black uppercase tracking-widest border border-white/10 bg-white/5 backdrop-blur-md text-white/60 hover:text-white flex items-center gap-3 transition-all hover:scale-105"
+                    onclick="switchTab('nutricionista', this)">
+                <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-colors group-hover:bg-green-500">
+                    <i class="fa-solid fa-apple-whole text-white text-sm"></i>
+                </div>
+                Nutricionista
+            </button>
+            <button class="tab-btn group px-2 py-2 pr-6 rounded-full text-xs font-black uppercase tracking-widest border border-white/10 bg-white/5 backdrop-blur-md text-white/60 hover:text-white flex items-center gap-3 transition-all hover:scale-105"
+                    onclick="switchTab('estratega', this)">
+                <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-colors group-hover:bg-purple-500">
+                    <i class="fa-solid fa-chess text-white text-sm"></i>
+                </div>
+                Estratega
+            </button>
+        </div>
+
+        <!-- GRID: formulario + resultado -->
+        <div class="flex flex-col gap-8 max-w-2xl mx-auto">
+
+            <!-- COLUMNA IZQUIERDA: formularios -->
+            <div class="bg-white/5 border border-white/10 rounded-3xl p-8">
+
+                <!-- TAB: ENTRENADOR -->
+                <div id="tab-entrenador" class="tab-content active space-y-5">
+                    <div>
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 bg-[#00D2FF]/10 border border-[#00D2FF]/30 rounded-xl flex items-center justify-center">
+                                <i class="fa-solid fa-person-running text-[#00D2FF]"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-black text-base uppercase tracking-tight">Plan de Entrenamiento</h3>
+                                <p class="text-white/30 text-xs">Personalizado para tu próxima edición</p>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label>Tu nivel actual</label>
+                                <select id="ent-nivel">
+                                    <option value="principiante">Principiante (nunca he corrido)</option>
+                                    <option value="intermedio">Intermedio (corro ocasionalmente)</option>
+                                    <option value="avanzado">Avanzado (corro regularmente)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Días disponibles por semana</label>
+                                <select id="ent-dias">
+                                    <option value="2">2 días</option>
+                                    <option value="3" selected>3 días</option>
+                                    <option value="4">4 días</option>
+                                    <option value="5">5 días</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Semanas hasta tu carrera</label>
+                                <select id="ent-semanas">
+                                    <option value="4">4 semanas</option>
+                                    <option value="6" selected>6 semanas</option>
+                                    <option value="8">8 semanas</option>
+                                    <option value="12">12 semanas</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Objetivo</label>
+                                <select id="ent-objetivo">
+   				   <option value="Terminar el 5K">Solo terminar el 5K</option>
+                                   <option value="Mejorar tiempo en 5K">Mejorar mi tiempo en 5K</option>
+                                   <option value="Terminar mi primer 10K">Prepararme para mi primer 10K</option>
+                                   <option value="Mejorar tiempo en 10K">Mejorar mi marca personal en 10K</option>
+</select>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="generarPlan('entrenador')"
+                            class="w-full bg-[#00D2FF] text-[#001E50] py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-[1.02] transition-all shadow-lg mt-2">
+                        <i class="fa-solid fa-bolt mr-2"></i>Generar Mi Plan
+                    </button>
+                </div>
+
+                <!-- TAB: NUTRICIONISTA -->
+                <div id="tab-nutricionista" class="tab-content space-y-5">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-[#00D2FF]/10 border border-[#00D2FF]/30 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-apple-whole text-[#00D2FF]"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-black text-base uppercase tracking-tight">Plan Nutricional</h3>
+                            <p class="text-white/30 text-xs">Alimentación adaptada al corredor venezolano</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label>Tu peso (kg)</label>
+                            <input type="number" id="nut-peso" placeholder="Ej: 70" min="40" max="150">
+                        </div>
+                        <div>
+                            <label>Objetivo nutricional</label>
+                            <select id="nut-objetivo">
+                                <option value="rendimiento">Mejorar rendimiento en carrera</option>
+                                <option value="perder_peso">Perder peso corriendo</option>
+                                <option value="resistencia">Aumentar resistencia</option>
+                                <option value="recuperacion">Mejorar recuperación</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Horario habitual de entrenamiento</label>
+                            <select id="nut-horario">
+                                <option value="mañana">Mañana (6am - 9am)</option>
+                                <option value="medio_dia">Medio día (11am - 1pm)</option>
+                                <option value="tarde">Tarde (4pm - 7pm)</option>
+                                <option value="noche">Noche (7pm en adelante)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>¿Tienes restricciones alimentarias?</label>
+                            <select id="nut-restriccion">
+                                <option value="ninguna">Ninguna</option>
+                                <option value="vegetariano">Vegetariano</option>
+                                <option value="sin_lactosa">Sin lactosa</option>
+                                <option value="diabetico">Diabético</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="generarPlan('nutricionista')"
+                            class="w-full bg-[#00D2FF] text-[#001E50] py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-[1.02] transition-all shadow-lg mt-2">
+                        <i class="fa-solid fa-bolt mr-2"></i>Generar Mi Plan
+                    </button>
+                </div>
+
+                <!-- TAB: ESTRATEGA -->
+                <div id="tab-estratega" class="tab-content space-y-5">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-[#00D2FF]/10 border border-[#00D2FF]/30 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-chess text-[#00D2FF]"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-black text-base uppercase tracking-tight">Estrategia de Carrera</h3>
+                            <p class="text-white/30 text-xs">Pace, ritmo y táctica para tu 5K</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+    <label>Tiempo objetivo en minutos (Ej: 30 para 5K / 60 para 10K)</label>
+    <input type="number" id="est-tiempo" placeholder="Ej: 30" min="15" max="120">
+</div>
+<div>
+    <label>Distancia a correr y tu experiencia</label>
+    <select id="est-experiencia">
+        <option value="5K (Es mi primera vez)">5K (Es mi primera vez)</option>
+        <option value="5K (Ya he corrido antes)">5K (Ya he corrido antes)</option>
+        <option value="10K (Es mi primer 10K)">10K (Mi primer 10K)</option>
+        <option value="10K (Ya tengo experiencia)">10K (Ya tengo experiencia)</option>
+    </select>
+</div>
+                            <label>¿Cómo describes tu estado físico?</label>
+                            <select id="est-estado">
+                                <option value="bajo">Bajo (poco activo)</option>
+                                <option value="regular">Regular (activo a veces)</option>
+                                <option value="bueno">Bueno (activo frecuente)</option>
+                                <option value="excelente">Excelente (atleta)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>¿Qué sueles fallar en carrera?</label>
+                            <select id="est-fallo">
+                                <option value="arranque">Arranco muy rápido y me canso</option>
+                                <option value="final">Me falta energía al final</option>
+                                <option value="respiracion">Problemas de respiración</option>
+                                <option value="mental">Me rindo mentalmente</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="generarPlan('estratega')"
+                            class="w-full bg-[#00D2FF] text-[#001E50] py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-[1.02] transition-all shadow-lg mt-2">
+                        <i class="fa-solid fa-bolt mr-2"></i>Generar Mi Estrategia
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- RESULTADO INFERIOR -->
+            <div id="resultado-columna" class="hidden">
+            <div class="bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col">
+
+                <!-- Header resultado -->
+                <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[#00D2FF] to-purple-500 flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-robot text-white text-xs"></i>
+                    </div>
+                    <div>
+                        <p class="text-white font-black text-sm">Asistente RV VZLA</p>
+                        <p id="estado-ia" class="text-[#00D2FF] text-[10px] uppercase tracking-widest font-bold">â— En espera</p>
+                    </div>
+                    <button id="btn-copiar" onclick="copiarResultado()"
+                            class="ml-auto text-white/20 hover:text-[#00D2FF] text-xs font-bold uppercase tracking-widest transition-all hidden">
+                        <i class="fa-solid fa-copy mr-1"></i>Copiar
+                    </button>
+                </div>
+
+                <!-- Área de resultado -->
+                <div id="resultado-area" class="flex-1 flex flex-col">
+
+                    <!-- Estado vacío -->
+                    <div id="estado-vacio" class="flex-1 flex flex-col items-center justify-center text-center py-12">
+                        <div class="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-robot text-white/10 text-3xl"></i>
+                        </div>
+                        <p class="text-white/50 text-sm font-light">Selecciona un modo y genera tu plan personalizado.</p>
+                        <p class="text-[#00D2FF]/40 text-[10px] uppercase tracking-widest mt-2 font-bold">
+                            <i class="fa-solid fa-microchip mr-1"></i>Motor IA de Alto Rendimiento
+                        </p>
+                    </div>
+
+                    <!-- Loading -->
+                    <div id="estado-loading" class="hidden flex-1 flex flex-col items-center justify-center text-center py-12">
+                        <div class="flex gap-1.5 mb-4">
+                            <div class="w-2 h-2 rounded-full bg-[#00D2FF] animate-bounce" style="animation-delay:0s"></div>
+                            <div class="w-2 h-2 rounded-full bg-[#00D2FF] animate-bounce" style="animation-delay:0.15s"></div>
+                            <div class="w-2 h-2 rounded-full bg-[#00D2FF] animate-bounce" style="animation-delay:0.3s"></div>
+                        </div>
+                        <p class="text-white/40 text-sm">Analizando tu perfil e historial...</p>
+                    </div>
+
+                    <!-- Texto resultado -->
+                    <div id="estado-resultado" class="hidden flex-1 overflow-y-auto">
+                        <div id="resultado-texto" class="text-sm leading-relaxed cursor"></div>
+                    </div>
+
+                </div>
+
+                <!-- Footer resultado -->
+                <p class="text-white/15 text-[9px] uppercase tracking-widest mt-6 text-center">
+                    Las recomendaciones son orientativas · Consulta a un profesional de salud
+                </p>
+
+            </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="mt-6 text-center">
+            <p class="text-white/20 text-[10px] uppercase tracking-widest">
+                <i class="fa-solid fa-shield-halved mr-1 text-[#00D2FF]/30"></i>
+                Tus datos no se almacenan · Conectado de forma segura y privada
+            </p>
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+        <footer class="bg-[#001E50] py-20 px-4 border-t border-white/5">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-16 text-center md:text-left">
+            <div>
+                <img src="img/RV-Isotipo-sinfondo.webp" class="h-14 mx-auto md:mx-0 mb-6 grayscale brightness-200 opacity-40">
+                <p class="text-white/30 text-[10px] uppercase tracking-[0.4em] leading-relaxed">
+                    Reto Virtual VZLA es una producción <br>
+                <span class="text-white/60 font-bold">Nacional Independiente</span>. <br>
+                    © 2026 Reto Virtual VZLA. Todos los derechos reservados.
+                </p>
+            </div>
+            <div class="flex flex-col items-center justify-center gap-6">
+                <h4 class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.3em]">Síguenos en la ruta</h4>
+                <div class="flex gap-8">
+                    <a href="https://whatsapp.com/channel/0029VbD2Dmi7IUYZR6nmh60z" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/retovirtual.vzla/" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@retovirtual.vzla" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.strava.com/clubs/1859944" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-strava"></i></a>
+                </div>
+            </div>
+            <!-- Tercera columna centrada horizontalmente para Grow Studio -->
+            <div class="flex flex-col md:items-end items-center justify-center gap-4 pt-8 md:pt-0 border-t border-white/10 md:border-none md:border-l md:pl-8 col-span-1 text-center md:text-right">
+                <span class="text-[#64748b] text-[10px] uppercase tracking-[0.3em] font-bold">Desarrollado por</span>
+                <a href="https://growstudioweb.vercel.app/" target="_blank" class="flex items-center justify-center md:justify-end gap-3 hover:scale-105 transition-transform cursor-pointer group">
+                    <span class="chameleon-text font-black text-base md:text-lg tracking-[0.1em]">GROW STUDIO</span>
+                    <img src="img/grow-logo.png" alt="Grow Studio" class="h-7 md:h-8 object-contain drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_15px_rgba(0,210,255,0.9)] transition-all">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+
+// ========== MENÚ MÓVIL HAMBURGUESA ==========
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = menuToggle.querySelector('i');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('translate-x-full');
+            
+            // Cambiar icono
+            if (mobileMenu.classList.contains('translate-x-full')) {
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars-staggered');
+            } else {
+                menuIcon.classList.remove('fa-bars-staggered');
+                menuIcon.classList.add('fa-xmark');
+            }
+        });
+
+        // Cerrar menú al hacer click en un enlace
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars-staggered');
+            });
+        });
+
+    // ======= TABS =======
+    function switchTab(nombre, btn) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => {
+            el.classList.remove('active');
+            el.classList.add('text-white/60');
+        });
+        document.getElementById('tab-' + nombre).classList.add('active');
+        btn.classList.add('active');
+        btn.classList.remove('text-white/60');
+        resetResultado();
+    }
+
+    function resetResultado() {
+        document.getElementById('estado-vacio').classList.remove('hidden');
+        document.getElementById('estado-loading').classList.add('hidden');
+        document.getElementById('estado-resultado').classList.add('hidden');
+        document.getElementById('btn-copiar').classList.add('hidden');
+        document.getElementById('estado-ia').textContent = '● En espera';
+        document.getElementById('resultado-texto').innerHTML = '';
+    }
+
+    // ======= PROMPTS =======
+    function armarPrompt(modo) {
+        var base = "Eres el asistente oficial del Reto Virtual VZLA 2026, el circuito de running virtual más importante de Venezuela organizado por TeamFS. Responde en español, usa emojis moderadamente, estructura con subtítulos claros con ###, usa viñetas o tablas markdown limpias cuando sea útil. Sé específico, práctico y motivador. Asegúrate de completar y cerrar todas las secciones y oraciones hasta el final.\n\n";
+
+        if (modo === 'entrenador') {
+            var nivel   = document.getElementById('ent-nivel').value;
+            var dias    = document.getElementById('ent-dias').value;
+            var semanas = document.getElementById('ent-semanas').value;
+            var obj     = document.getElementById('ent-objetivo').value;
+            
+            return base + "Actúa como entrenador de running. Crea un plan de entrenamiento de " + semanas + " semanas para un atleta de nivel " + nivel + " que puede entrenar " + dias + " días por semana. Su objetivo es: " + obj + ". Incluye: qué hacer cada día de entrenamiento (en tabla o lista), días de descanso, progresión semanal y un consejo motivador de cierre.";
+        }
+
+        if (modo === 'nutricionista') {
+            var peso       = document.getElementById('nut-peso').value || '70';
+            var obj        = document.getElementById('nut-objetivo').value;
+            var horario    = document.getElementById('nut-horario').value;
+            var restriccion= document.getElementById('nut-restriccion').value;
+            
+            return base + "Actúa como nutricionista deportiva. El atleta pesa " + peso + "kg, su objetivo es " + obj + ", entrena en horario " + horario + " y tiene restricción: " + restriccion + ". Crea un plan nutricional para corredor venezolano con alimentos accesibles en Venezuela. Incluye: qué comer antes de correr, durante (si aplica, especial para 10K), después y un ejemplo de menú diario completo. Cierra con un tip para la semana de carrera.";
+        }
+
+        if (modo === 'estratega') {
+            var tiempo      = document.getElementById('est-tiempo').value || '30';
+            var experiencia = document.getElementById('est-experiencia').value;
+            var estado      = document.getElementById('est-estado').value;
+            var fallo       = document.getElementById('est-fallo').value;
+            
+            return base + "Actúa como estratega de carrera. El atleta correrá la distancia de: " + experiencia + ". Quiere terminar en " + tiempo + " minutos, su estado físico es " + estado + " y su mayor problema es: " + fallo + ". Define: pace objetivo por km (min/km), estrategia de carrera dividida por tramos (ej: primeros kms conservadores, mitad sostenida, cierre fuerte), cómo resolver su problema principal y 3 tips clave para el día de la carrera.";
+        }
+    }
+
+    // ======= GENERAR =======
+    async function generarPlan(modo) {
+        var prompt = armarPrompt(modo);
+
+        // UI: loading
+        document.getElementById('resultado-columna').classList.remove('hidden');
+        document.getElementById('resultado-columna').scrollIntoView({ behavior: 'smooth' });
+        
+        document.getElementById('estado-vacio').classList.add('hidden');
+        document.getElementById('estado-resultado').classList.add('hidden');
+        document.getElementById('estado-loading').classList.remove('hidden');
+        document.getElementById('estado-ia').textContent = 'â— Analizando...';
+        document.getElementById('btn-copiar').classList.add('hidden');
+
+        try {
+            var res = await fetch('/api/gemini', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt: prompt })
+            });
+
+            var data = await res.json();
+
+            if (!res.ok) throw new Error(data.error || 'Error al procesar la solicitud en el servidor.');
+
+            // Validamos estructura recibida del endpoint mapeado
+            if (!data.candidates || !data.candidates[0]) {
+                throw new Error('La respuesta de la IA no contiene el formato esperado.');
+            }
+
+            var texto = data.candidates[0].content.parts[0].text;
+
+            // UI: mostrar resultado
+            document.getElementById('estado-loading').classList.add('hidden');
+            document.getElementById('estado-resultado').classList.remove('hidden');
+            document.getElementById('estado-ia').textContent = '● Plan listo';
+            document.getElementById('btn-copiar').classList.remove('hidden');
+
+            // Typewriter
+            typewriter(texto);
+
+        } catch (err) {
+            document.getElementById('estado-loading').classList.add('hidden');
+            document.getElementById('estado-vacio').classList.remove('hidden');
+            document.getElementById('estado-ia').textContent = '● Error de conexión';
+            
+            document.getElementById('estado-vacio').querySelector('p').innerHTML = 
+                `<span class="text-red-400 font-bold">Fallo en la comunicación:</span><br>${err.message}<br><br><small class="text-white/30">Verifica las variables de entorno en tu panel de Vercel.</small>`;
+        }
+    }
+
+    // ======= CONVERSOR DE TABLAS Y RENDERIZADOR ROBUSTO =======
+    function renderizarTablaHTML(filas) {
+        if (filas.length < 2) return filas.join('\n');
+        
+        // Fila 0: cabeceras
+        var cabeceras = filas[0].split('|').map(c => c.trim()).filter((c, idx, arr) => idx > 0 && idx < arr.length - 1);
+        
+        // Verificar si la fila 1 es separador (|---|---|)
+        var esSeparador = /^\|?(\s*:?-+:?\s*\|)+\s*$/.test(filas[1]);
+        var inicioDatos = esSeparador ? 2 : 1;
+
+        var html = '<div class="table-responsive"><table><thead><tr>';
+        cabeceras.forEach(function(th) {
+            html += '<th>' + formatearTextoInline(th) + '</th>';
+        });
+        html += '</tr></thead><tbody>';
+
+        for (var r = inicioDatos; r < filas.length; r++) {
+            var celdas = filas[r].split('|').map(c => c.trim()).filter((c, idx, arr) => idx > 0 && idx < arr.length - 1);
+            if (celdas.length === 0) continue;
+            html += '<tr>';
+            for (var c = 0; c < cabeceras.length; c++) {
+                var valor = celdas[c] !== undefined ? celdas[c] : '';
+                html += '<td>' + formatearTextoInline(valor) + '</td>';
+            }
+            html += '</tr>';
+        }
+        html += '</tbody></table></div>';
+        return html;
+    }
+
+    function formatearTextoInline(str) {
+        if (!str) return '';
+        return str
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>');
+    }
+
+    function procesarTablasMarkdown(md) {
+        var lineas = md.split('\n');
+        var resultado = [];
+        var enTabla = false;
+        var tablaBuffer = [];
+
+        for (var i = 0; i < lineas.length; i++) {
+            var linea = lineas[i].trim();
+            if (linea.startsWith('|') && linea.endsWith('|') && linea.split('|').length >= 3) {
+                enTabla = true;
+                tablaBuffer.push(linea);
+            } else {
+                if (enTabla) {
+                    resultado.push(renderizarTablaHTML(tablaBuffer));
+                    tablaBuffer = [];
+                    enTabla = false;
+                }
+                resultado.push(lineas[i]);
+            }
+        }
+        if (enTabla && tablaBuffer.length > 0) {
+            resultado.push(renderizarTablaHTML(tablaBuffer));
+        }
+        return resultado.join('\n');
+    }
+
+    function typewriter(texto) {
+        var contenedor = document.getElementById('resultado-texto');
+        contenedor.innerHTML = '';
+        contenedor.classList.remove('cursor');
+
+        // 1. Convertir tablas directamente para que nunca fallen
+        var textoConTablas = procesarTablasMarkdown(texto);
+
+        // 2. Procesar el resto con marked o fallback
+        if (typeof marked !== 'undefined') {
+            marked.setOptions({
+                gfm: true,
+                breaks: true
+            });
+            contenedor.innerHTML = marked.parse(textoConTablas);
+        } else {
+            contenedor.innerHTML = textoConTablas
+                .replace(/### (.*)/g, '<h3>$1</h3>')
+                .replace(/## (.*)/g, '<h2>$1</h2>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/^> (.*)/gm, '<blockquote>$1</blockquote>')
+                .replace(/\n/g, '<br>');
+        }
+    }
+
+    // ======= COPIAR =======
+    function copiarResultado() {
+        var texto = document.getElementById('resultado-texto').innerText;
+        navigator.clipboard.writeText(texto).then(function() {
+            var btn = document.getElementById('btn-copiar');
+            btn.innerHTML = '<i class="fa-solid fa-check mr-1"></i>Copiado';
+            setTimeout(function() {
+                btn.innerHTML = '<i class="fa-solid fa-copy mr-1"></i>Copiar';
+            }, 2000);
+        });
+    }
+    </script>
+</body>
+</html>

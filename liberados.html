@@ -1,0 +1,810 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACCESO EXCLUSIVO FUNDADORES - Reto Virtual VZLA</title>
+    <link rel="icon" type="image/webp" href="img/favicon.webp">
+
+<!-- Google tag (gtag.js) -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CQ0KVLFL1W"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CQ0KVLFL1W');
+</script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
+        .hidden-step { display: none !important; }
+        input:focus, select:focus, textarea:focus { 
+            border-color: #00D2FF !important; 
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.1); 
+            outline: none;
+        }
+        .req { color: #ef4444; font-weight: bold; margin-left: 2px; }
+        .loader-overlay { background: rgba(0, 30, 80, 0.9); backdrop-filter: blur(5px); }
+    </style>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+    <link rel="stylesheet" href="css/wow-effects.css">
+</head>
+<body class="text-slate-900">
+
+    <div id="loader" class="fixed inset-0 z-[100] loader-overlay flex flex-col items-center justify-center text-white hidden">
+        <i class="fa-solid fa-circle-notch fa-spin text-5xl text-[#00D2FF] mb-4"></i>
+        <p class="font-black uppercase tracking-widest text-sm">Validando y Guardando...</p>
+    </div>
+
+    <div id="pantalla-exito" class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center text-center p-6 hidden">
+        <div class="w-24 h-24 bg-green-100 text-green-500 rounded-full flex items-center justify-center mb-6 text-5xl shadow-inner">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <h2 class="text-3xl font-black text-[#001E50] uppercase italic mb-2 tracking-tighter">¡Inscripción Exitosa!</h2>
+        <p class="text-slate-500 mb-8 max-w-md">Tus datos han sido registrados. Serás redirigido a WhatsApp para enviar tu comprobante.</p>
+        <button onclick="window.location.href='index.html'" class="bg-[#001E50] text-white px-10 py-4 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-[#00D2FF] hover:text-[#001E50] transition-all">
+            Volver al Inicio
+        </button>
+    </div>
+
+    <div class="bg-[#001E50] text-white py-2 text-center text-[10px] font-bold uppercase tracking-[0.4em] z-50 relative border-b border-white/10">
+        DA EL PRIMER PASO. TU MEDALLA TE ESPERA.
+    </div>
+
+    <nav class="bg-[#001E50] sticky top-0 z-50 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 md:h-28">
+                
+                <div class="flex items-center gap-3 md:gap-5 cursor-pointer group -ml-2 md:-ml-4" onclick="location.href='index.html'">
+                    <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual" class="h-12 w-auto object-contain brightness-125 md:hidden">
+                    <img src="img/RV Texto Sin fondo.webp" alt="Reto Virtual" class="hidden md:block h-20 lg:h-28 w-auto object-contain brightness-125">
+                </div>
+
+                <div class="hidden lg:flex items-center space-x-4 xl:space-x-6">
+                    <a href="index.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Inicio</a>
+                    <a href="index.html#ediciones" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Calendario</a>
+                    <a href="evidencias2.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Evidencia</a>
+                    <a href="resultados.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Resultados</a>
+                    <a href="entrenador.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Entrenador IA</a>
+
+                    <div class="relative group">
+                        <button class="flex items-center text-white/80 group-hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">
+                            Info <i class="fa-solid fa-chevron-down ml-2 text-[8px]"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-56 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                            <div class="p-2">
+                                <a href="faq.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
+                                    <i class="fa-solid fa-circle-question mr-3 text-sm opacity-70"></i> Preguntas Frecuentes
+                                </a>
+                                <a href="aliados.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
+                                    <i class="fa-solid fa-handshake mr-3 text-sm opacity-70"></i> Aliados
+                                </a>
+                                <a href="tienda.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
+                                    <i class="fa-solid fa-shop mr-3 text-sm opacity-70"></i> Tienda
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative group">
+                        <button class="border-2 border-white text-white px-5 py-2.5 rounded-full font-black text-[10px] xl:text-xs uppercase tracking-widest hover:bg-white hover:text-[#001E50] transition-all shadow-lg flex items-center gap-2">
+                            INSCRIBIRME <i class="fa-solid fa-chevron-down text-[8px]"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-64 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                            <div class="p-2 space-y-1">
+                                <button onclick="window.location.href='inscripcion.html?modo=5K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
+                                    <i class="fa-solid fa-person-running mr-3 text-sm"></i> Tercera Edición 5K / Combo
+                                </button>
+                                <button onclick="window.location.href='inscripcion.html?modo=10K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
+                                    <i class="fa-solid fa-medal mr-3 text-sm"></i> Edición Especial 10K
+                                </button>
+                                <button onclick="window.location.href='inscripcion.html?modo=ABONO'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all border-t border-white/10 pt-2">
+                                    <i class="fa-solid fa-money-bill-wave mr-3 text-sm"></i> Consultar Saldo / Abonar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="menuToggle" class="lg:hidden text-white text-2xl focus:outline-none z-50">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="fixed inset-0 bg-[#001E50] z-40 transform translate-x-full transition-transform duration-300 lg:hidden">
+            <div class="flex flex-col items-center justify-center h-full space-y-5 px-8">
+                <a href="index.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Inicio</a>
+                <a href="index.html#ediciones" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Calendario</a>
+                <a href="evidencias2.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Evidencia</a>
+                <a href="resultados.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Resultados</a>
+                <a href="entrenador.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Entrenador IA</a>
+                
+                <div class="flex flex-wrap justify-center gap-4 mt-2">
+                    <a href="faq.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">FAQ</a>
+                    <a href="aliados.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">Aliados</a>
+                    <a href="tienda.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">Tienda</a>
+                </div>
+                <div class="border-t border-white/20 w-full pt-5 flex flex-col gap-3 text-center">
+                    <a href="inscripcion.html?modo=5K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Tercera Edición 5K / Combo</a>
+                    <a href="inscripcion.html?modo=10K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Edición Especial 10K</a>
+                    <a href="inscripcion.html?modo=ABONO" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-white transition-colors">Consultar Saldo / Abonar</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <main class="max-w-4xl mx-auto px-6 py-16">
+        
+        
+
+        <div id="paso-fundador" class="space-y-8 animate-fade-in mt-8">
+            
+            <div class="bg-blue-50 border-2 border-[#00D2FF]/50 p-8 rounded-[2rem] text-[#001E50] flex flex-col items-center text-center shadow-sm">
+    <h3 class="font-black uppercase text-2xl tracking-tighter mb-4">¡Cupo Liberado Asegurado!</h3>
+    <p class="text-sm md:text-base font-black text-[#001E50] mb-6 uppercase tracking-widest border-2 border-[#00D2FF] bg-white px-6 py-3 rounded-2xl shadow-sm">
+        ✅ Paquete Evolución: Incluye 5K + Pase 10K
+    </p>
+    <div class="flex flex-col md:flex-row items-center gap-4 bg-white px-8 py-4 rounded-3xl shadow-sm border border-slate-100 w-full justify-between">
+        <div class="text-left">
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Inscripción Base</p>
+            <p class="font-black text-lg">RETO VIRTUAL 5K</p>
+        </div>
+        <div class="flex items-center gap-4">
+            <p id="textoDorsal" class="text-xs font-black uppercase tracking-widest bg-[#001E50] text-white px-4 py-2 rounded-full">Dorsal: AUTO</p>
+            <p class="text-2xl font-black text-[#00D2FF]">$12</p>
+        </div>
+    </div>
+</div>
+
+            <div id="seccion-extras" class="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-xl border border-slate-100 transition-all">
+    <h3 class="text-[#001E50] font-black text-xl mb-2 uppercase italic">Mejora tu Kit 5K (Opcional)</h3>
+    <p class="text-xs text-slate-400 mb-6 font-bold">Agrega prendas textiles exclusivas a tu inscripción de los 5K.</p>
+    
+    <div class="mb-8 flex flex-col items-center">
+        <button type="button" onclick="abrirModalImagen()" class="relative group overflow-hidden rounded-3xl border-2 border-slate-200 hover:border-[#00D2FF] hover:shadow-[0_0_20px_rgba(0,210,255,0.2)] transition-all cursor-pointer w-full max-w-sm h-40 bg-slate-50 flex items-center justify-center">
+            <img src="img/franela_prototipo.webp" alt="Prototipo Franela" class="h-full w-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-[#001E50]/30 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all backdrop-blur-[2px]">
+                <i class="fa-solid fa-magnifying-glass-plus text-white text-4xl drop-shadow-md"></i>
+                <span class="text-white font-bold text-xs uppercase tracking-widest mt-2">Ampliar Diseño</span>
+            </div>
+        </button>
+        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-3"><i class="fa-solid fa-hand-pointer mr-1"></i> Toca la imagen para detallarla</p>
+    </div>
+    
+    <!-- PRENDAS BLOQUEADAS / AGOTADAS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <label class="cursor-not-allowed opacity-60 flex flex-col items-center text-center border-2 border-slate-200 bg-slate-100 p-6 rounded-3xl relative overflow-hidden">
+            <input type="checkbox" id="checkFranelilla" value="10" disabled class="absolute top-4 right-4 w-5 h-5">
+            <div class="w-16 h-16 bg-slate-200 rounded-full flex items-center justify-center mb-3">
+                <i class="fa-solid fa-shirt text-slate-400 text-2xl"></i>
+            </div>
+            <h4 class="font-black text-[#001E50] text-sm uppercase">Franelilla Blanca</h4>
+            <p class="text-[10px] text-slate-400 font-bold">Corte olímpico</p>
+            <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest mt-3 border border-red-200">Agotada</span>
+        </label>
+
+        <label class="cursor-not-allowed opacity-60 flex flex-col items-center text-center border-2 border-slate-200 bg-slate-100 p-6 rounded-3xl relative overflow-hidden">
+            <input type="checkbox" id="checkFranela" value="12" disabled class="absolute top-4 right-4 w-5 h-5">
+            <div class="w-16 h-16 bg-slate-200 rounded-full flex items-center justify-center mb-3">
+                <i class="fa-solid fa-tshirt text-slate-400 text-2xl"></i>
+            </div>
+            <h4 class="font-black text-[#001E50] text-sm uppercase">Franela Blanca</h4>
+            <p class="text-[10px] text-slate-400 font-bold">Tela Everlast c/ mangas</p>
+            <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest mt-3 border border-red-200">Agotada</span>
+        </label>
+    </div>
+
+    <!-- SELECTORES DE TALLA (Ocultos por defecto) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div id="contenedorTallaFranelilla" class="hidden flex flex-col gap-2">
+            <label class="text-[10px] font-bold uppercase text-slate-400">Talla para Franelilla <span class="req">*</span></label>
+            <select id="tallaFranelilla" class="bg-white border-2 border-[#00D2FF] rounded-xl px-4 py-3 font-bold text-sm w-full text-[#001E50] shadow-sm">
+                <option value="" disabled selected>Elegir talla...</option>
+                <option value="S">S - Pequeña</option>
+                <option value="M">M - Mediana</option>
+                <option value="L">L - Grande</option>
+                <option value="XL">XL - Extra Grande</option>
+            </select>
+        </div>
+
+        <div id="contenedorTallaFranela" class="hidden flex flex-col gap-2 md:col-start-2">
+            <label class="text-[10px] font-bold uppercase text-slate-400">Talla para Franela <span class="req">*</span></label>
+            <select id="tallaFranela" class="bg-white border-2 border-[#00D2FF] rounded-xl px-4 py-3 font-bold text-sm w-full text-[#001E50] shadow-sm">
+                <option value="" disabled selected>Elegir talla...</option>
+                <option value="S">S - Pequeña</option>
+                <option value="M">M - Mediana</option>
+                <option value="L">L - Grande</option>
+                <option value="XL">XL - Extra Grande</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+            <div class="mt-12 bg-gradient-to-br from-[#00102A] via-[#001E50] to-slate-900 p-8 md:p-12 rounded-[3rem] shadow-[0_20px_50px_rgba(0,30,80,0.5)] border border-[#00D2FF]/40 relative overflow-hidden group">
+                
+                <div class="absolute top-0 right-0 bg-[#00D2FF] text-[#001E50] text-[10px] font-black uppercase tracking-widest px-8 py-3 rounded-bl-3xl z-10 shadow-lg">
+                    🌟 UPGRADE EXCLUSIVO FUNDADOR
+                </div>
+                
+                <div class="absolute -top-24 -left-24 w-64 h-64 bg-[#00D2FF] rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+
+                <div class="flex flex-col lg:flex-row items-start gap-10 relative z-10">
+                    <div class="w-32 h-32 bg-gradient-to-tr from-white/5 to-white/20 rounded-full flex items-center justify-center flex-shrink-0 border-2 border-white/10 shadow-[0_0_30px_rgba(0,210,255,0.2)] mt-4">
+                        <i class="fa-solid fa-medal text-6xl text-[#00D2FF]"></i>
+                    </div>
+                    
+                    <div class="flex-1 text-left w-full">
+                        <h2 class="text-white font-black text-3xl md:text-4xl uppercase italic tracking-tighter mb-2 drop-shadow-md">Asegura tu Medalla 10K</h2>
+                        <p class="text-white/70 text-sm mb-6 font-medium">Congela el precio de preventa antes de abrir al público general y llévate el paquete completo de la edición especial.</p>
+                        
+                        <div class="bg-black/30 p-5 rounded-2xl border border-white/5 mb-8">
+                            <p class="text-[10px] text-[#00D2FF] font-black uppercase tracking-widest mb-3">Tu pase VIP ($30) Incluye:</p>
+                            <ul class="text-white/90 text-sm space-y-3 font-medium">
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check-circle text-[#00D2FF] text-lg"></i> <b>Medalla de Metal 3D</b> (Coleccionable de lujo)</li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check-circle text-[#00D2FF] text-lg"></i> <b>Prenda Textil Oscura</b> (Franelilla incluida o Franela +$5)</li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check-circle text-[#00D2FF] text-lg"></i> Envío consolidado desde fábrica</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="flex flex-col gap-4">
+    <label class="cursor-pointer flex items-center gap-4 bg-white/5 border border-[#00D2FF] p-4 rounded-2xl hover:bg-white/10 transition-all has-[:checked]:bg-[#00D2FF]/10">
+        <input type="radio" name="opcion10k" value="10" onchange="actualizarTotal()" checked class="w-6 h-6 accent-[#00D2FF]">
+        <span class="text-base font-bold text-white flex-1">Abonar $10 hoy <span class="text-[#00D2FF] text-xs block font-normal mt-1">Obligatorio: Aseguras pase VIP 10K. Restan $20 para julio.</span></span>
+    </label>
+    <label class="cursor-pointer flex items-center gap-4 bg-[#00D2FF]/10 border border-[#00D2FF]/50 p-4 rounded-2xl hover:bg-[#00D2FF]/20 transition-all has-[:checked]:bg-[#00D2FF]/20">
+        <input type="radio" name="opcion10k" value="30" onchange="actualizarTotal()" class="w-6 h-6 accent-[#00D2FF]">
+        <span class="text-base font-black text-[#00D2FF] flex-1">Pagar Total de $30 <span class="text-white/70 text-xs block font-normal mt-1">Pagas completo y sales de esto de una vez.</span></span>
+    </label>
+</div>
+
+                        <div id="selectorTextil10k" class="hidden mt-6 bg-black/40 border border-[#00D2FF]/30 p-6 rounded-2xl animate-fade-in">
+                            <h4 class="text-[#00D2FF] font-black text-xs uppercase tracking-widest mb-4">Personaliza tu prenda 10K</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-[10px] font-bold uppercase text-white/60">Tipo de Prenda <span class="text-[#00D2FF]">*</span></label>
+                                    <select id="tipoTextil10k" onchange="actualizarTotal()" class="bg-[#001E50] border border-white/20 rounded-xl px-4 py-3 font-bold text-sm w-full text-white outline-none focus:border-[#00D2FF]">
+                                        <option value="" disabled selected>Selecciona una opción...</option>
+                                        <option value="Franelilla Oscura">Franelilla Oscura Deportiva</option>
+                                        <option value="Franela Oscura">Franela Oscura con mangas (+$5)</option>
+                                    </select>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-[10px] font-bold uppercase text-white/60">Talla <span class="text-[#00D2FF]">*</span></label>
+                                    <select id="tallaTextil10k" class="bg-[#001E50] border border-white/20 rounded-xl px-4 py-3 font-bold text-sm w-full text-white outline-none focus:border-[#00D2FF]">
+                                        <option value="" disabled selected>Elegir talla...</option>
+                                        <option value="S">S - Pequeña</option>
+                                        <option value="M">M - Mediana</option>
+                                        <option value="L">L - Grande</option>
+                                        <option value="XL">XL - Extra Grande</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="seccion-logistica" class="bg-white p-10 rounded-[2.5rem] shadow-xl border border-slate-100 transition-all mt-8">
+                <h3 class="text-[#001E50] font-black text-2xl mb-8 uppercase italic border-b border-slate-50 pb-4">Tus Datos Logísticos</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] font-bold uppercase text-slate-400 ml-2">Nombre Completo <span class="req">*</span></label>
+                        <input type="text" id="nombreEnvio" class="bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-3 font-bold" required>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] font-bold uppercase text-slate-400 ml-2">Teléfono de Contacto <span class="req">*</span></label>
+                        <input type="text" id="telefonoEnvio" placeholder="0412-0000000" class="bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-3 font-bold" required>
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-span-2">
+                        <label class="text-[10px] font-bold uppercase text-slate-400 ml-2">Estado <span class="req">*</span></label>
+                        <select id="estadoEnvio" onchange="cargarCiudades()" class="bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-3 font-bold" required>
+                            <option value="" disabled selected>Selecciona un estado...</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-span-2">
+                        <label class="text-[10px] font-bold uppercase text-slate-400 ml-2">Ciudad <span class="req">*</span></label>
+                        <select id="ciudadEnvio" class="bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-3 font-bold disabled:opacity-50" disabled required>
+                            <option value="" disabled selected>Primero selecciona un estado</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-span-2">
+                        <label class="text-[10px] font-bold uppercase text-slate-400 ml-2">Agencia o Método de Envío <span class="req">*</span></label>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <label class="flex-1 border-2 border-slate-100 p-3 rounded-xl cursor-pointer flex items-center justify-center gap-2 has-[:checked]:border-[#00D2FF] has-[:checked]:bg-[#00D2FF]/5 transition-all">
+                                <input type="radio" name="agencia" value="ZOOM" checked> <span class="text-xs font-bold">ZOOM</span>
+                            </label>
+                            <label class="flex-1 border-2 border-slate-100 p-3 rounded-xl cursor-pointer flex items-center justify-center gap-2 has-[:checked]:border-[#00D2FF] has-[:checked]:bg-[#00D2FF]/5 transition-all">
+                                <input type="radio" name="agencia" value="MRW"> <span class="text-xs font-bold">MRW</span>
+                            </label>
+                            <label class="flex-1 border-2 border-slate-100 p-3 rounded-xl cursor-pointer flex items-center justify-center gap-2 has-[:checked]:border-[#00D2FF] has-[:checked]:bg-[#00D2FF]/5 transition-all">
+                                <input type="radio" name="agencia" value="Entrega Personal"> <span class="text-xs font-bold text-center">Entrega Personal</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="md:col-span-2 flex flex-col gap-2">
+                        <label class="text-[10px] font-bold uppercase text-slate-400 ml-2">Dirección Exacta <span class="req">*</span></label>
+                        <textarea id="direccionEnvio" rows="2" class="bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-4 font-bold" required></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 bg-slate-50 p-10 rounded-[3rem] shadow-xl border border-slate-200 transition-all">
+                
+                <div class="text-center mb-10 border-b border-slate-200 pb-8">
+                    <h3 class="text-[#001E50] font-black text-3xl uppercase italic leading-none mb-2">Total a Pagar</h3>
+                    <p class="text-slate-500 text-sm mb-6">Este es el monto exacto de tu inscripción + las opciones seleccionadas.</p>
+                    
+                    <div class="inline-flex flex-col items-center bg-white border-2 border-[#00D2FF] p-6 rounded-3xl shadow-sm min-w-[250px]">
+                        <span id="total-usd" class="text-6xl font-black text-[#00D2FF] block tracking-tighter mb-1">$12</span>
+                        <span id="total-bs" class="text-sm font-bold text-slate-500 tracking-widest block mb-2">0.00 Bs.</span>
+                        <p class="text-slate-400 text-[9px] uppercase tracking-[0.3em] border-t border-slate-100 pt-2 w-full text-center mt-2">Tasa BCV: <span id="valor-tasa">--</span> Bs.</p>
+                    </div>
+                </div>
+
+                <h4 class="text-[#001E50] font-black text-lg mb-6 uppercase italic text-center">1. Elige tu método y transfiere</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                    <div class="bg-white border-2 border-slate-200 p-6 rounded-3xl flex flex-col items-center text-center shadow-sm">
+                        <i class="fa-solid fa-mobile-screen-button text-3xl text-[#001E50] mb-3"></i>
+                        <h4 class="font-black text-[#001E50] uppercase tracking-widest text-sm mb-4">Pago Móvil</h4>
+                        <div class="text-xs text-slate-600 space-y-2 font-bold w-full bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <p>Tlf: <span class="text-[#00D2FF] text-sm">0412-7732710</span></p>
+                            <p>C.I: <span class="text-[#001E50]">14.074.229</span></p>
+                            <p>Banco: <span class="text-[#001E50]">Mercantil</span></p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border-2 border-slate-200 p-6 rounded-3xl flex flex-col items-center text-center shadow-sm">
+                        <i class="fa-brands fa-bitcoin text-3xl text-[#FCD535] mb-3"></i>
+                        <h4 class="font-black text-[#001E50] uppercase tracking-widest text-sm mb-4">Binance Pay</h4>
+                        <div class="text-[11px] text-slate-600 font-bold w-full bg-slate-50 p-3 rounded-xl border border-slate-100 break-all">
+                            <p class="mb-1 text-slate-400 uppercase tracking-widest text-[9px]">Correo (USDT)</p>
+                            <p class="text-[#001E50]">petitjacquespierre@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border-2 border-slate-200 p-6 rounded-3xl flex flex-col items-center text-center shadow-sm">
+                        <i class="fa-solid fa-wallet text-3xl text-purple-600 mb-3"></i>
+                        <h4 class="font-black text-[#001E50] uppercase tracking-widest text-sm mb-4">Zinli</h4>
+                        <div class="text-[11px] text-slate-600 font-bold w-full bg-slate-50 p-3 rounded-xl border border-slate-100 break-all">
+                            <p class="mb-1 text-slate-400 uppercase tracking-widest text-[9px]">Correo</p>
+                            <p class="text-[#001E50]">petitjacquespierre@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-200 pt-8">
+                    <h4 class="text-[#001E50] font-black text-lg mb-6 uppercase italic text-center">2. Reporta tu Pago Aquí</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[10px] font-bold uppercase text-slate-400 ml-2">Número de Referencia <span class="req">*</span></label>
+                            <input type="text" id="numReferenciaPago" class="bg-white border-2 border-slate-200 rounded-2xl px-6 py-3 font-bold focus:border-[#00D2FF]" placeholder="Ej: 123456" required>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[10px] font-bold uppercase text-slate-400 ml-2">Fecha de Pago <span class="req">*</span></label>
+                            <input type="date" id="fechaPago" class="bg-white border-2 border-slate-200 rounded-2xl px-6 py-3 text-sm font-bold text-[#001E50] focus:border-[#00D2FF]" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="seccion-checkout" class="bg-[#001E50] p-10 rounded-[3rem] text-white shadow-2xl transition-all mt-8">
+                <div class="mb-8 flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/10">
+                    <div class="flex items-center h-5">
+                        <input id="aceptoReglamento" type="checkbox" class="w-5 h-5 rounded border-slate-300 accent-[#00D2FF] cursor-pointer transition-all">
+                    </div>
+                    <div class="text-sm">
+                        <label for="aceptoReglamento" class="font-medium text-white/90 cursor-pointer">
+                            He leído y acepto el 
+                            <a href="https://drive.google.com/file/d/1fvV-3WW2GPp6MX7ubdsqberHklTZp3MD/view?usp=drive_link" target="_blank" class="text-[#00D2FF] font-bold underline hover:text-white transition-colors">Reglamento y Descargo</a>.
+                        </label>
+                        <p class="text-white/50 text-[10px] mt-1 italic">Declaro que participo de forma voluntaria y estoy en condiciones físicas óptimas.</p>
+                    </div>
+                </div>
+
+                <button id="btnInscribir" onclick="procesarInscripcion()" class="w-full bg-[#00D2FF] text-[#001E50] py-6 rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl flex items-center justify-center gap-4 hover:scale-[1.02] transition-transform">
+                    FINALIZAR INSCRIPCIÓN <i class="fa-brands fa-whatsapp text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-[#001E50] py-20 px-4 border-t border-white/5">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-16 text-center md:text-left">
+            <div>
+                <img src="img/RV-Isotipo-sinfondo.webp" class="h-14 mx-auto md:mx-0 mb-6 grayscale brightness-200 opacity-40">
+                <p class="text-white/30 text-[10px] uppercase tracking-[0.4em] leading-relaxed">
+                    Reto Virtual VZLA es una producción <br>
+                <span class="text-white/60 font-bold">Nacional Independiente</span>. <br>
+                    © 2026 Reto Virtual VZLA. Todos los derechos reservados.
+                </p>
+            </div>
+            <div class="flex flex-col items-center justify-center gap-6">
+                <h4 class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.3em]">Síguenos en la ruta</h4>
+                <div class="flex gap-8">
+                    <a href="https://whatsapp.com/channel/0029VbD2Dmi7IUYZR6nmh60z" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/retovirtual.vzla/" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@retovirtual.vzla" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.strava.com/clubs/1859944" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-strava"></i></a>
+                </div>
+            </div>
+            <!-- Tercera columna centrada horizontalmente para Grow Studio -->
+            <div class="flex flex-col md:items-end items-center justify-center gap-4 pt-8 md:pt-0 border-t border-white/10 md:border-none md:border-l md:pl-8 col-span-1 text-center md:text-right">
+                <span class="text-[#64748b] text-[10px] uppercase tracking-[0.3em] font-bold">Desarrollado por</span>
+                <a href="https://growstudioweb.vercel.app/" target="_blank" class="flex items-center justify-center md:justify-end gap-3 hover:scale-105 transition-transform cursor-pointer group">
+                    <span class="chameleon-text font-black text-base md:text-lg tracking-[0.1em]">GROW STUDIO</span>
+                    <img src="img/grow-logo.png" alt="Grow Studio" class="h-7 md:h-8 object-contain drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_15px_rgba(0,210,255,0.9)] transition-all">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+// ========== MENÚ MÓVIL HAMBURGUESA ==========
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = menuToggle.querySelector('i');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('translate-x-full');
+            
+            // Cambiar icono
+            if (mobileMenu.classList.contains('translate-x-full')) {
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars-staggered');
+            } else {
+                menuIcon.classList.remove('fa-bars-staggered');
+                menuIcon.classList.add('fa-xmark');
+            }
+        });
+
+        // Cerrar menú al hacer click en un enlace
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars-staggered');
+            });
+        });
+
+// ========== TASA BCV AUTOMATIZADA MAESTRA ==========
+        let tasaBCV = parseFloat(localStorage.getItem("reto_bcv_rate")) || 596.78; // Respaldo base o Cache
+        
+        // TU NUEVA API CENTRALIZADA EN VIVO (¡YA ACTIVA!)
+        const urlApiDolarBCV = "https://script.google.com/macros/s/AKfycbwsoD8ahtAQUqfY0TQWf3-dDs29HL8kEJa2t-mjDR3PAo3exTTmtSwXqYuNB2ob5dFpgw/exec";
+
+        const urlCSV_Comparacion = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5yMHsenxCWE5kZBDUZ8UcYqDtdAHstfqXcvWkuYZPQ_4n2xSrfs6ptk7k21r1kcMHHLtWjz8SEHwl/pub?gid=0&single=true&output=csv";
+        const urlBaseDeDatos = "https://script.google.com/macros/s/AKfycbyp-NJc2uozcF4VDYRm3_XhKiKmPwdLfB4jLxJV_L9EFpXSBI7dp1TuMG0hxWzC7dLaCg/exec";
+
+        const venezuela = {
+            "Amazonas": ["Puerto Ayacucho", "San Fernando de Atabapo"],
+            "Anzoátegui": ["Barcelona", "Puerto La Cruz", "Lechería", "El Tigre", "Anaco", "Cantaura"],
+            "Apure": ["San Fernando de Apure", "Guasdualito", "Elorza"],
+            "Aragua": ["Maracay", "Turmero", "La Victoria", "Cagua", "Villa de Cura", "Palo Negro"],
+            "Barinas": ["Barinas", "Socopó", "Santa Bárbara"],
+            "Bolívar": ["Ciudad Guayana (Puerto Ordaz/San Félix)", "Ciudad Bolívar", "Upata", "Tumeremo", "Callao"],
+            "Carabobo": ["Valencia", "Puerto Cabello", "Guacara", "San Diego", "Naguanagua", "Mariara"],
+            "Cojedes": ["San Carlos", "Tinaquillo", "Tinaco"],
+            "Delta Amacuro": ["Tucupita"],
+            "Distrito Capital": ["Caracas"],
+            "Falcón": ["Punto Fijo", "Coro", "Punta Cardón", "Judibana", "Tucacas", "Dabajuro", "Adícora", "Churuguara", "Santa Ana"],
+            "Guárico": ["San Juan de los Morros", "Valle de la Pascua", "Calabozo", "Zaraza"],
+            "La Guaira": ["La Guaira", "Maiquetía", "Catia La Mar", "Caraballeda", "Macuto"],
+            "Lara": ["Barquisimeto", "Cabudare", "Carora", "El Tocuyo", "Quíbor"],
+            "Mérida": ["Mérida", "El Vigía", "Tovar", "Ejido"],
+            "Miranda": ["Los Teques", "Guarenas", "Guatire", "Charallave", "Cúa", "Ocumare del Tuy", "San Antonio de los Altos"],
+            "Monagas": ["Maturín", "Punta de Mata", "Caripito"],
+            "Nueva Esparta": ["Porlamar", "Pampatar", "La Asunción", "Juan Griego"],
+            "Portuguesa": ["Acarigua", "Guanare", "Araure", "Turén"],
+            "Sucre": ["Cumaná", "Carúpano", "Güiria"],
+            "Táchira": ["San Cristóbal", "Táriba", "Rubio", "San Antonio del Táchira", "La Grita"],
+            "Trujillo": ["Valera", "Trujillo", "Boconó", "Pampán"],
+            "Yaracuy": ["San Felipe", "Yaritagua", "Chivacoa"],
+            "Zulia": ["Maracaibo", "San Francisco", "Cabimas", "Ciudad Ojeda", "Machiques", "La Villa del Rosario"]
+        };
+
+        let dorsalActual = "000";
+        let ciValidada = ""; 
+
+        // Función dedicada a consultar tu propia API centralizada en Google Apps Script
+        async function obtenerTasaBCV() {
+            try {
+                const respuesta = await fetch(urlApiDolarBCV);
+                if (respuesta.ok) {
+                    const datos = await respuesta.json();
+                    if (datos && datos.usd) {
+                        // Aquí toma el valor de precisión enviado por tu API
+                        let nuevaTasa = parseFloat(datos.usd); if(nuevaTasa > 10) { tasaBCV = nuevaTasa; localStorage.setItem("reto_bcv_rate", tasaBCV); }
+                        console.log("¡API Sincronizada con éxito!: " + tasaBCV);
+                    }
+                }
+            } catch (error) {
+                console.error("Falló la conexión con la API central, usando tasa base de contingencia.", error);
+            } finally {
+                // Este bloque SE EJECUTA SÍ O SÍ, evitando que se quede estancado
+                if (document.getElementById('valor-tasa')) {
+                    document.getElementById('valor-tasa').innerText = tasaBCV.toFixed(2);
+                }
+                actualizarTotal();
+            }
+        }
+        window.onload = async () => {
+            const selectEstado = document.getElementById('estadoEnvio');
+            Object.keys(venezuela).sort().forEach(est => {
+                let opt = document.createElement('option');
+                opt.value = est;
+                opt.text = est;
+                selectEstado.add(opt);
+            });
+
+            // Capturar cédula desde la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const ciURL = urlParams.get('ci');
+            if(ciURL) {
+                ciValidada = ciURL;
+            } else {
+                alert("⚠️ No se detectó cédula. Redirigiendo al inicio.");
+                window.location.href = "inscripcion.html";
+            }
+
+            dorsalActual = "NUEVO"; 
+            
+            // Llamamos a tu API maestra para traer la tasa del BCV en vivo
+            await obtenerTasaBCV();
+        };
+
+        function cargarCiudades() {
+            const est = document.getElementById('estadoEnvio').value;
+            const selectCiu = document.getElementById('ciudadEnvio');
+            selectCiu.innerHTML = '<option value="" disabled selected>Elige Ciudad...</option>';
+            if(est && venezuela[est]) {
+                selectCiu.disabled = false;
+                venezuela[est].sort().forEach(ciu => {
+                    let opt = document.createElement('option');
+                    opt.value = ciu;
+                    opt.text = ciu;
+                    selectCiu.add(opt);
+                });
+            }
+        }
+
+        function actualizarTotal() {
+            let total = 12; // Precio base inscripción 5K
+            
+            const checkFranelilla = document.getElementById('checkFranelilla').checked;
+            const checkFranela = document.getElementById('checkFranela').checked;
+            const divTallaFranelilla = document.getElementById('contenedorTallaFranelilla');
+            const divTallaFranela = document.getElementById('contenedorTallaFranela');
+
+            if(checkFranelilla) { total += 10; divTallaFranelilla.classList.remove('hidden'); } 
+            else { divTallaFranelilla.classList.add('hidden'); document.getElementById('tallaFranelilla').value = ""; }
+
+            if(checkFranela) { total += 12; divTallaFranela.classList.remove('hidden'); } 
+            else { divTallaFranela.classList.add('hidden'); document.getElementById('tallaFranela').value = ""; }
+
+            // LÓGICA DE LOS 10K VIP
+            const opcion10k = document.querySelector('input[name="opcion10k"]:checked').value;
+            const selectorTextil10k = document.getElementById('selectorTextil10k');
+            const tipoTextil10k = document.getElementById('tipoTextil10k').value;
+            
+            let costoExtra10k = 0;
+
+            if(opcion10k === "10" || opcion10k === "30") {
+                selectorTextil10k.classList.remove('hidden');
+                if(tipoTextil10k === "Franela Oscura") {
+                    costoExtra10k = 5;
+                }
+            } else {
+                selectorTextil10k.classList.add('hidden');
+                document.getElementById('tipoTextil10k').value = "";
+                document.getElementById('tallaTextil10k').value = "";
+            }
+
+            total += parseInt(opcion10k) + costoExtra10k;
+
+            document.getElementById('total-usd').innerText = `$${total}`;
+            document.getElementById('total-bs').innerText = (total * tasaBCV).toFixed(2) + " Bs.";
+        }
+
+        async function validarAtleta() {
+            const btn = document.getElementById('btnVerificar');
+            const ciInput = document.getElementById('cedulaAtleta').value.replace(/\D/g, '').trim();
+            if(ciInput.length < 5) return alert("Ingresa una cédula válida.");
+
+            btn.innerText = "VERIFICANDO...";
+            btn.disabled = true;
+
+            try {
+                const res = await fetch(urlCSV_Comparacion + "&nocache=" + new Date().getTime());
+                const csvText = await res.text();
+                const filas = csvText.split(/\r?\n/);
+                let encontrado = false;
+
+                if (filas.length > 0) {
+                    const headers = filas[0].split(',').map(h => h.trim().toLowerCase());
+                    const idxCI = headers.findIndex(h => h.includes('cedula') || h.includes('ci'));
+                    const idxDorsal = headers.findIndex(h => h.includes('dorsal'));
+                    const idxNombre = headers.findIndex(h => h.includes('nombre'));
+
+                    for(let i = 1; i < filas.length; i++) {
+                        if(!filas[i].trim()) continue;
+
+                        const columnas = filas[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+                        
+                        // Validamos de forma normal como ya te funciona con todos
+                        let filaValida = false;
+                        if(columnas[idxCI] && columnas[idxCI].replace(/\D/g, '').trim() === ciInput) {
+                            filaValida = true;
+                        } 
+                        // RED DE SEGURIDAD: Si el corte de columnas falló por formato en la fila de Maikol, 
+                        // buscamos su cédula directamente en toda la línea de texto
+                        else if(filas[i].includes(ciInput)) {
+                            filaValida = true;
+                        }
+
+                        if(filaValida) {
+                            encontrado = true;
+                            ciValidada = ciInput; 
+                            
+                            // Si la fila se leyó junta, extraemos limpiamente los datos usando comas puras
+                            const partesFila = filas[i].split(',').map(c => c.replace(/^"|"$/g, '').trim());
+                            
+                            dorsalActual = partesFila[idxDorsal] || partesFila[0] || "000";
+                            document.getElementById('nombreEnvio').value = partesFila[idxNombre] || partesFila[2] || "";
+                            document.getElementById('textoDorsal').innerText = "Dorsal Recuperado: #" + dorsalActual;
+                            break;
+                        }
+                    }
+                }
+                
+                if(encontrado) {
+                    document.getElementById('paso-1').classList.add('hidden-step');
+                    document.getElementById('paso-fundador').classList.remove('hidden-step');
+                    document.getElementById('paso-fundador').style.display = 'block';
+                } else {
+                    window.location.href = "espera.html";
+                }
+                
+            } catch (e) {
+                alert("Error conectando.");
+                console.error(e);
+            } finally {
+                btn.innerText = "Verificar Cédula";
+                btn.disabled = false;
+            }
+        }
+
+        function procesarInscripcion() {
+            const nombre = document.getElementById('nombreEnvio').value;
+            const tel = document.getElementById('telefonoEnvio').value;
+            const estado = document.getElementById('estadoEnvio').value;
+            const ciudad = document.getElementById('ciudadEnvio').value;
+            const agencia = document.querySelector('input[name="agencia"]:checked').value;
+            const direccion = document.getElementById('direccionEnvio').value;
+            const refPago = document.getElementById('numReferenciaPago').value;
+            const fechaPago = document.getElementById('fechaPago').value;
+            
+            const checkFranelilla = document.getElementById('checkFranelilla').checked;
+            const checkFranela = document.getElementById('checkFranela').checked;
+            const tallaFranelilla = document.getElementById('tallaFranelilla').value;
+            const tallaFranela = document.getElementById('tallaFranela').value;
+            const totalUSD = document.getElementById('total-usd').innerText;
+    
+            const aceptoReglamento = document.getElementById('aceptoReglamento').checked;
+            if(!aceptoReglamento) {
+                return alert("⚠️ Debes aceptar el Reglamento y Descargo de Responsabilidades.");
+            }
+    
+            if(!nombre || !tel || !estado || !ciudad || !direccion || !refPago || !fechaPago) {
+                return alert("⚠️ ALERTA: Faltan datos logísticos obligatorios (*).");
+            }
+
+            let arrayExtras = [];
+            if(checkFranelilla) {
+                if(!tallaFranelilla) return alert("⚠️ Selecciona la talla de la Franelilla de 5K.");
+                arrayExtras.push(`Franelilla (+10) Talla: ${tallaFranelilla}`);
+            }
+            if(checkFranela) {
+                if(!tallaFranela) return alert("⚠️ Selecciona la talla de la Franela de 5K.");
+                arrayExtras.push(`Franela (+12) Talla: ${tallaFranela}`);
+            }
+            let txtTallaExtra = arrayExtras.length > 0 ? arrayExtras.join(" | ") : "No";
+
+            const opcion10k = document.querySelector('input[name="opcion10k"]:checked').value;
+            let textoReserva = "NO";
+            let saldoPendiente = "$0";
+            let textoTextil10k = "N/A";
+
+            if(opcion10k === "10" || opcion10k === "30") {
+                const tipo10k = document.getElementById('tipoTextil10k').value;
+                const talla10k = document.getElementById('tallaTextil10k').value;
+                
+                if(!tipo10k || !talla10k) {
+                    return alert("⚠️ Selecciona el tipo de prenda y la talla para tu kit VIP de los 10K.");
+                }
+
+                textoTextil10k = `${tipo10k} Talla: ${talla10k}`;
+                
+                if(opcion10k === "10") {
+                    textoReserva = "SÍ - Abonó $10";
+                    saldoPendiente = "$20";
+                } else if(opcion10k === "30") {
+                    textoReserva = "SÍ - Pagó Completo";
+                    saldoPendiente = "$0";
+                }
+            }
+
+            const msg = `🏆 *NUEVA INSCRIPCIÓN*%0A🏃‍♂️ *DORSAL:* #${dorsalActual}%0A👤 *ATLETA:* ${nombre}%0A🆔 *C.I:* ${ciValidada}%0A📍 *UBICACIÓN:* ${ciudad}, ${estado}%0A📦 *ENVÍO:* ${agencia}%0A👕 *TEXTIL 5K:* ${txtTallaExtra}%0A🏅 *10K VIP:* ${textoReserva}%0A💰 *TOTAL PAGADO:* ${totalUSD}%0A🧾 *REFERENCIA:* ${refPago}%0A_Adjunto comprobante..._`;
+
+            document.getElementById('loader').classList.remove('hidden');
+
+            const datos = new FormData();
+            datos.append("Dorsal", dorsalActual);
+            datos.append("Cedula", ciValidada);
+            datos.append("Nombre", nombre);
+            datos.append("Telefono", tel);
+            datos.append("FranelaExtra", txtTallaExtra); 
+            datos.append("Estado", estado);
+            datos.append("Ciudad", ciudad);
+            datos.append("Agencia", agencia);
+            datos.append("Direccion", direccion);
+            datos.append("RefPago", refPago);
+            datos.append("FechaPago", fechaPago);
+            datos.append("Total", totalUSD);
+            
+            datos.append("Reserva10K", textoReserva);      
+            datos.append("SaldoPendiente", saldoPendiente); 
+            datos.append("Textil10K", textoTextil10k);
+
+            fetch(urlBaseDeDatos, { method: 'POST', body: datos, mode: 'no-cors' })
+                .then(() => { mostrarExito(msg); })
+                .catch(() => { mostrarExito(msg); });
+        }
+
+        function mostrarExito(msgTexto) {
+            document.getElementById('loader').classList.add('hidden');
+            document.getElementById('paso-fundador').style.display = 'none'; 
+            document.getElementById('pantalla-exito').classList.remove('hidden');
+            
+            setTimeout(() => {
+                window.open(`https://wa.me/584127732710?text=${msgTexto}`, '_blank');
+            }, 1500);
+        }
+function abrirModalImagen() {
+            const modal = document.getElementById('modal-imagen');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function cerrarModalImagen() {
+            const modal = document.getElementById('modal-imagen');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    </script>
+<div id="modal-imagen" class="fixed inset-0 z-[200] bg-black/95 hidden flex-col items-center justify-center p-4 backdrop-blur-sm transition-opacity" onclick="cerrarModalImagen()">
+        <button class="absolute top-6 right-6 text-white text-4xl hover:text-[#00D2FF] transition-colors"><i class="fa-solid fa-xmark"></i></button>
+        <img src="img/franela_prototipo.webp" class="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-[0_0_40px_rgba(0,210,255,0.3)] border border-white/10" onclick="event.stopPropagation()">
+        <p class="text-white mt-6 font-black tracking-widest uppercase text-sm italic">Diseño Oficial 2da Edición 5K</p>
+        <p class="text-slate-400 text-[10px] uppercase mt-2 font-bold tracking-widest">Toca cualquier parte para cerrar</p>
+    </div>
+</body>
+</html>
+

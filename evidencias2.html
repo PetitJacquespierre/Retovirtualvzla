@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sube tus Evidencias - Reto Virtual VZLA</title>
+    <link rel="icon" type="image/webp" href="img/favicon.webp">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
+    </style>
+    <link rel="stylesheet" href="css/wow-effects.css">
+</head>
+<body class="text-slate-900 bg-slate-50">
+
+    <!-- BARRA SUPERIOR -->
+    <div class="bg-[#001E50] text-white py-2 text-center text-[10px] font-bold uppercase tracking-[0.4em] z-50 relative border-b border-white/10">
+        VALIDACIÓN OFICIAL DE TIEMPOS
+    </div>
+
+    <nav class="bg-[#001E50] sticky top-0 z-50 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 md:h-28">
+                
+                <div class="flex items-center gap-3 md:gap-5 cursor-pointer group -ml-2 md:-ml-4" onclick="location.href='index.html'">
+                    <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual" class="h-12 w-auto object-contain brightness-125 md:hidden">
+                    <img src="img/RV Texto Sin fondo.webp" alt="Reto Virtual" class="hidden md:block h-20 lg:h-28 w-auto object-contain brightness-125">
+                </div>
+
+                <div class="hidden lg:flex items-center space-x-4 xl:space-x-6">
+                    <a href="index.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Inicio</a>
+                    <a href="index.html#ediciones" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Calendario</a>
+                    <a href="evidencias2.html" class="chameleon-text text-[10px] xl:text-xs font-black uppercase tracking-widest transition-all drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">Evidencia</a>
+                    <a href="resultados.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Resultados</a>
+                    <a href="entrenador.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Entrenador IA</a>
+
+                    <div class="relative group">
+                        <button class="flex items-center text-white/80 group-hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">
+                            Info <i class="fa-solid fa-chevron-down ml-2 text-[8px]"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-56 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                            <div class="p-2">
+                                <a href="faq.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
+                                    <i class="fa-solid fa-circle-question mr-3 text-sm opacity-70"></i> Preguntas Frecuentes
+                                </a>
+                                <a href="aliados.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
+                                    <i class="fa-solid fa-handshake mr-3 text-sm opacity-70"></i> Aliados
+                                </a>
+                                <a href="tienda.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
+                                    <i class="fa-solid fa-shop mr-3 text-sm opacity-70"></i> Tienda
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative group">
+                        <button class="border-2 border-white text-white px-5 py-2.5 rounded-full font-black text-[10px] xl:text-xs uppercase tracking-widest hover:bg-white hover:text-[#001E50] transition-all shadow-lg flex items-center gap-2">
+                            INSCRIBIRME <i class="fa-solid fa-chevron-down text-[8px]"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-64 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                            <div class="p-2 space-y-1">
+                                <button onclick="window.location.href='inscripcion.html?modo=5K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
+                                    <i class="fa-solid fa-person-running mr-3 text-sm"></i> Tercera Edición 5K / Combo
+                                </button>
+                                <button onclick="window.location.href='inscripcion.html?modo=10K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
+                                    <i class="fa-solid fa-medal mr-3 text-sm"></i> Edición Especial 10K
+                                </button>
+                                <button onclick="window.location.href='inscripcion.html?modo=ABONO'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all border-t border-white/10 pt-2">
+                                    <i class="fa-solid fa-money-bill-wave mr-3 text-sm"></i> Consultar Saldo / Abonar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="menuToggle" class="lg:hidden text-white text-2xl focus:outline-none z-50">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="fixed inset-0 bg-[#001E50] z-40 transform translate-x-full transition-transform duration-300 lg:hidden">
+            <div class="flex flex-col items-center justify-center h-full space-y-5 px-8">
+                <a href="index.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Inicio</a>
+                <a href="index.html#ediciones" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Calendario</a>
+                <a href="evidencias2.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Evidencia</a>
+                <a href="resultados.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Resultados</a>
+                <a href="entrenador.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Entrenador IA</a>
+                
+                <div class="flex flex-wrap justify-center gap-4 mt-2">
+                    <a href="faq.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">FAQ</a>
+                    <a href="aliados.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">Aliados</a>
+                    <a href="tienda.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">Tienda</a>
+                </div>
+                <div class="border-t border-white/20 w-full pt-5 flex flex-col gap-3 text-center">
+                    <a href="inscripcion.html?modo=5K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Tercera Edición 5K / Combo</a>
+                    <a href="inscripcion.html?modo=10K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Edición Especial 10K</a>
+                    <a href="inscripcion.html?modo=ABONO" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-white transition-colors">Consultar Saldo / Abonar</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SECCIÓN PRINCIPAL (BOTÓN CTA) -->
+    <main class="max-w-3xl mx-auto px-6 py-16 text-center">
+        
+        <div class="bg-white p-10 md:p-16 rounded-[3rem] shadow-2xl border border-slate-100 relative overflow-hidden">
+            
+            <!-- Elemento decorativo de fondo -->
+            <div class="absolute -top-24 -right-24 w-64 h-64 bg-[#00D2FF] rounded-full blur-[100px] opacity-10 pointer-events-none"></div>
+
+            <div class="relative z-10">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-[#001E50] text-[#00D2FF] rounded-full text-4xl mb-6 shadow-xl border-4 border-white">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+                
+                <h1 class="text-[#001E50] font-black text-3xl md:text-5xl uppercase tracking-tighter italic mb-4 leading-none">
+                    Reporta tus <br> Kilómetros
+                </h1>
+                
+                <p class="text-slate-500 text-sm md:text-base font-medium mb-10 max-w-lg mx-auto">
+                    El asfalto ya habló. Es momento de validar tu esfuerzo. Haz clic en el botón de abajo para ingresar tus datos y subir las capturas de tu reloj o app (Strava, Garmin, Nike Run, etc.).
+                </p>
+
+                <!-- BOTÓN DE ACCIÓN GIGANTE CON TU LINK -->
+                <a href="https://forms.gle/BiARj8feGLnqgv9W8" target="_blank" rel="noopener noreferrer" 
+                   class="inline-flex items-center justify-center gap-3 bg-[#00D2FF] text-[#001E50] px-8 py-5 rounded-2xl font-black uppercase tracking-[0.1em] text-sm md:text-base shadow-xl hover:scale-105 transition-all border-2 border-[#00D2FF] hover:bg-white hover:text-[#00D2FF] w-full md:w-auto">
+                    Subir Evidencias Aquí <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-6">
+                    <i class="fa-solid fa-lock mr-1"></i> Formulario seguro de validación
+                </p>
+            </div>
+        </div>
+        
+    </main>
+
+        <footer class="bg-[#001E50] py-20 px-4 border-t border-white/5">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-16 text-center md:text-left">
+            <div>
+                <img src="img/RV-Isotipo-sinfondo.webp" class="h-14 mx-auto md:mx-0 mb-6 grayscale brightness-200 opacity-40">
+                <p class="text-white/30 text-[10px] uppercase tracking-[0.4em] leading-relaxed">
+                    Reto Virtual VZLA es una producción <br>
+                <span class="text-white/60 font-bold">Nacional Independiente</span>. <br>
+                    © 2026 Reto Virtual VZLA. Todos los derechos reservados.
+                </p>
+            </div>
+            <div class="flex flex-col items-center justify-center gap-6">
+                <h4 class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.3em]">Síguenos en la ruta</h4>
+                <div class="flex gap-8">
+                    <a href="https://whatsapp.com/channel/0029VbD2Dmi7IUYZR6nmh60z" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/retovirtual.vzla/" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@retovirtual.vzla" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.strava.com/clubs/1859944" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-strava"></i></a>
+                </div>
+            </div>
+            <!-- Tercera columna centrada horizontalmente para Grow Studio -->
+            <div class="flex flex-col md:items-end items-center justify-center gap-4 pt-8 md:pt-0 border-t border-white/10 md:border-none md:border-l md:pl-8 col-span-1 text-center md:text-right">
+                <span class="text-[#64748b] text-[10px] uppercase tracking-[0.3em] font-bold">Desarrollado por</span>
+                <a href="https://growstudioweb.vercel.app/" target="_blank" class="flex items-center justify-center md:justify-end gap-3 hover:scale-105 transition-transform cursor-pointer group">
+                    <span class="chameleon-text font-black text-base md:text-lg tracking-[0.1em]">GROW STUDIO</span>
+                    <img src="img/grow-logo.png" alt="Grow Studio" class="h-7 md:h-8 object-contain drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_15px_rgba(0,210,255,0.9)] transition-all">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    // ========== MENÚ MÓVIL HAMBURGUESA ==========
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = menuToggle.querySelector('i');
+
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('translate-x-full');
+        
+        // Cambiar icono
+        if (mobileMenu.classList.contains('translate-x-full')) {
+            menuIcon.classList.remove('fa-xmark');
+            menuIcon.classList.add('fa-bars-staggered');
+        } else {
+            menuIcon.classList.remove('fa-bars-staggered');
+            menuIcon.classList.add('fa-xmark');
+        }
+    });
+
+    // Cerrar menú al hacer click en un enlace
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+            menuIcon.classList.remove('fa-xmark');
+            menuIcon.classList.add('fa-bars-staggered');
+        });
+    });
+</script>
+
+</body>
+</html>
+

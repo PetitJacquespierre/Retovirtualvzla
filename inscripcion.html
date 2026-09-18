@@ -186,14 +186,14 @@
                         <i class="fa-solid fa-person-running"></i>
                     </div>
                     <h3 class="font-black text-[#001E50] uppercase text-sm mb-2">Tercera Edición 5K / Combo</h3>
-                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Inscripción Regular</p>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Desde $10 • Envíos 9 Octubre</p>
                 </button>
                 <button onclick="activarFlujo('10K')" class="bg-[#001E50] p-8 rounded-[2rem] shadow-lg border border-slate-100 text-center hover:bg-[#002a70] transition-all group relative overflow-hidden">
                     <div class="w-16 h-16 bg-[#00D2FF] text-[#001E50] rounded-full flex items-center justify-center mx-auto mb-4 text-2xl transition-all">
                         <i class="fa-solid fa-medal"></i>
                     </div>
                     <h3 class="font-black text-white uppercase text-sm mb-2">Edición 10K</h3>
-                    <p class="text-[10px] text-[#00D2FF] font-bold uppercase tracking-widest">Plan 15 y Último</p>
+                    <p class="text-[10px] text-[#00D2FF] font-bold uppercase tracking-widest">Inscripciones Abiertas • Entregas Nov / Dic</p>
                 </button>
                 <button onclick="activarFlujo('ABONO')" class="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-100 text-center hover:border-[#00D2FF] hover:shadow-[#00D2FF]/20 transition-all group">
                     <div class="w-16 h-16 bg-slate-100 group-hover:bg-[#001E50] text-[#001E50] group-hover:text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl transition-all">
@@ -281,7 +281,7 @@
                 <div class="flex items-center justify-between border-b pb-3 mb-6">
                     <div>
                         <h3 class="text-[#001E50] font-black text-xl md:text-2xl uppercase italic tracking-tight">Elige tu Paquete de Inscripción</h3>
-                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mt-0.5">Selecciona una de las 2 opciones para participar</p>
+                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mt-0.5">Fecha de Envíos y Carrera: A partir del 9 de Octubre</p>
                     </div>
                     <span class="hidden md:inline-flex bg-[#001E50] text-[#00D2FF] text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest">
                         Paso Obligatorio
@@ -296,16 +296,17 @@
                             <div class="flex items-center gap-3">
                                 <input type="radio" id="radio-5k" name="paqueteRadio" value="5K" class="w-5 h-5 accent-[#00D2FF] cursor-pointer" onchange="seleccionarPaquete('5K')">
                                 <div>
-                                    <h4 class="font-black text-[#001E50] text-base md:text-lg uppercase">Solo 3ra Edición</h4>
-                                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Modalidad 5K Individual</span>
+                                    <h4 class="font-black text-[#001E50] text-base md:text-lg uppercase">Solo 3ra Edición (5K)</h4>
+                                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Acrílica Oficial • Envío 9 Oct</span>
                                 </div>
                             </div>
                             <span class="text-2xl md:text-3xl font-black text-[#001E50]">$10<span class="text-xs font-bold text-slate-400">.00</span></span>
                         </div>
                         <ul class="text-xs text-slate-600 space-y-2 border-t border-slate-200/80 pt-3">
                             <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span>Dorsal Digital Oficial 3ra Edición</span></li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span>Medalla Física Oficial 3ra Edición</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span>Medalla Acrílica Oficial 3ra Edición</span></li>
                             <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span>Certificado Digital y Ranking Oficial</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-calendar-check text-[#00D2FF] text-xs"></i> <span><b>Envíos y Carrera: 9 de Octubre</b></span></li>
                         </ul>
                     </div>
 
@@ -313,15 +314,15 @@
                     <div id="card-opcion-combo" onclick="seleccionarPaquete('COMBO')" class="cursor-pointer border-2 rounded-2xl p-5 md:p-6 transition-all relative flex flex-col justify-between hover:shadow-lg border-[#00D2FF] bg-gradient-to-br from-blue-50/80 to-cyan-50/40 ring-2 ring-[#00D2FF]/30 group">
                         <!-- Badge Promoción -->
                         <div class="absolute -top-3.5 right-4 bg-gradient-to-r from-[#00D2FF] to-blue-600 text-[#001E50] font-black text-[10px] uppercase px-3 py-1 rounded-full shadow-md tracking-wider flex items-center gap-1">
-                            <i class="fa-solid fa-fire text-amber-500"></i> ¡MÁS POPULAR / AHORRA $4!
+                            <i class="fa-solid fa-fire text-amber-500"></i> ¡UN SOLO ENVÍO / AHORRA $4!
                         </div>
 
                         <div class="flex items-start justify-between gap-3 mb-4">
                             <div class="flex items-center gap-3">
                                 <input type="radio" id="radio-combo" name="paqueteRadio" value="COMBO" checked class="w-5 h-5 accent-[#00D2FF] cursor-pointer" onchange="seleccionarPaquete('COMBO')">
                                 <div>
-                                    <h4 class="font-black text-[#001E50] text-base md:text-lg uppercase">COMBO DÚO</h4>
-                                    <span class="text-[11px] font-black text-[#00D2FF] uppercase tracking-wider">3ra + 4ta Edición</span>
+                                    <h4 class="font-black text-[#001E50] text-base md:text-lg uppercase">COMBO DÚO (5K)</h4>
+                                    <span class="text-[11px] font-black text-[#00D2FF] uppercase tracking-wider">3ra + 4ta Edición Juntas</span>
                                 </div>
                             </div>
                             <div class="text-right">
@@ -331,8 +332,8 @@
                         </div>
                         <ul class="text-xs text-slate-700 space-y-2 border-t border-cyan-200/60 pt-3 font-medium">
                             <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span><b>2 Dorsales Digitales</b> (3ra y 4ta Edición)</span></li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span><b>2 Medallas Físicas</b> Oficiales (Ambas Ediciones)</span></li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span>Garantizas tu cupo y ahorras tiempo y dinero</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span><b>2 Medallas Acrílicas</b> Oficiales (Ambas Ediciones)</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-box text-[#001E50] text-xs"></i> <span><b>Una sola entrega:</b> Te enviamos las 2 medallas juntas el 9 de Octubre</span></li>
                         </ul>
                     </div>
                 </div>
@@ -362,7 +363,7 @@
                     <div class="flex flex-col gap-1 md:col-span-2"><label class="text-[10px] font-bold text-slate-400">Estado <span class="req">*</span></label><select id="estadoEnvio" onchange="cargarCiudades()" class="bg-slate-50 border rounded-xl px-4 py-2.5 font-bold"><option value="" disabled selected>Selecciona Estado</option></select></div>
                     <div class="flex flex-col gap-1 md:col-span-2"><label class="text-[10px] font-bold text-slate-400">Ciudad <span class="req">*</span></label><select id="ciudadEnvio" class="bg-slate-50 border rounded-xl px-4 py-2.5 font-bold" disabled><option value="" disabled selected>Elige Ciudad</option></select></div>
                     <div class="flex flex-col gap-1 md:col-span-2">
-                        <label class="text-[10px] font-bold text-slate-400">Agencia de Envío / Despacho <span class="req">*</span></label>
+                        <label class="text-[10px] font-bold text-slate-400">Agencia de Envío / Despacho (Cobro a Destino) <span class="req">*</span></label>
                         <div class="flex gap-4">
                             <label class="flex-1 border p-2.5 rounded-xl cursor-pointer text-center font-bold text-xs"><input type="radio" name="agencia" value="ZOOM" checked> ZOOM</label>
                             <label class="flex-1 border p-2.5 rounded-xl cursor-pointer text-center font-bold text-xs"><input type="radio" name="agencia" value="MRW"> MRW</label>

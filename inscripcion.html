@@ -266,14 +266,15 @@
                 </div>
                 <div id="selectorTextil10k" class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border">
                     <div class="flex flex-col gap-2">
-                        <label class="text-[10px] font-bold uppercase text-slate-400">Tipo de Prenda <span class="req">*</span></label>
-                        <select id="tipoTextil10k" onchange="actualizarTotal()" class="bg-white border rounded-xl px-4 py-3 font-bold text-sm text-[#001E50]">
-                            <option value="Franelilla Oscura" selected>Franelilla Oscura Olímpica Base ($35.00)</option>
-                            <option value="Franela Oscura">Franela Oscura con mangas (+$5.00)</option>
+                        <label class="text-[10px] font-bold uppercase text-slate-400">Modalidad / Kit 10K <span class="req">*</span></label>
+                        <select id="tipoTextil10k" onchange="cambiarTipoKit10k()" class="bg-white border rounded-xl px-4 py-3 font-bold text-sm text-[#001E50]">
+                            <option value="Solo Medalla" selected>Solo Medalla de Metal 3D + Dorsal ($25.00)</option>
+                            <option value="Franelilla Oscura">Kit Completo + Franelilla Olímpica ($30.00)</option>
+                            <option value="Franela Oscura">Kit Completo + Franela con mangas ($35.00)</option>
                         </select>
                     </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-[10px] font-bold uppercase text-slate-400">Talla <span class="req">*</span></label>
+                    <div id="contenedor-talla-10k" class="hidden flex-col gap-2">
+                        <label class="text-[10px] font-bold uppercase text-slate-400">Talla de Prenda <span class="req">*</span></label>
                         <select id="tallaTextil10k" class="bg-white border rounded-xl px-4 py-3 font-bold text-sm text-[#001E50]">
                             <option value="" disabled selected>Elegir talla...</option>
                             <option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option>
@@ -592,10 +593,9 @@
                 document.getElementById('contenedor-visual-kit').classList.remove('hidden-step');
                 document.getElementById('tituloRuta').innerText = "EDICION ESPECIAL 10K";
                 document.getElementById('labelCarreraActual').innerText = "Kit General 10K";
-                document.getElementById('imgPrototipo').src = "img/10k_franela.webp";
                 document.getElementById('textoBannerPrincipal').innerText = "EDICION ESPECIAL 10K";
-                document.getElementById('textoBannerSecundario').innerText = "Adquiere tu Prenda Oficial y Medalla";
-                actualizarTotal();
+                document.getElementById('textoBannerSecundario').innerText = "Medalla Maciza 3D y Prenda Opcional";
+                cambiarTipoKit10k();
             } 
             else if (modo === 'ABONO') {
                 document.getElementById('seccion-busqueda-abono').classList.remove('hidden-step');
@@ -712,10 +712,43 @@
                 return;
             }
 
+        function cambiarTipoKit10k() {
+            const tipo = document.getElementById('tipoTextil10k').value;
+            const contTalla = document.getElementById('contenedor-talla-10k');
+            const imgProt = document.getElementById('imgPrototipo');
+            
+            if (tipo === "Solo Medalla") {
+                if (contTalla) contTalla.classList.add('hidden');
+                if (contTalla) contTalla.classList.remove('flex');
+                if (imgProt) imgProt.src = "img/medalla-frente.webp";
+            } else {
+                if (contTalla) contTalla.classList.remove('hidden');
+                if (contTalla) contTalla.classList.add('flex');
+                if (imgProt) imgProt.src = "img/10k_franela.webp";
+            }
+            actualizarTotal();
+        }
+
+        function actualizarTotal() {
+            if (flujoActual === "ABONO") return;
+            
+            if (flujoActual === "5K" || flujoActual === "COMBO") {
+                const selectEl = document.getElementById('select-combo-5k');
+                const selectVal = selectEl ? selectEl.value : (flujoActual === 'COMBO' ? 'COMBO' : '5K');
+                const price = selectVal === 'COMBO' ? 16 : 10;
+                document.getElementById('total-usd').innerText = "$" + price.toFixed(2);
+                document.getElementById('total-bs').innerText = formatVE(price * tasaBCV) + " Bs.";
+                return;
+            }
+
             if (flujoActual === "10K") {
-                let costoKitCompleto = 35; 
+                let costoKitCompleto = 25; // Base: Solo Medalla ($25)
                 const tipoTextil = document.getElementById('tipoTextil10k').value;
-                if (tipoTextil === "Franela Oscura") { costoKitCompleto += 5; } 
+                if (tipoTextil === "Franelilla Oscura") {
+                    costoKitCompleto = 30;
+                } else if (tipoTextil === "Franela Oscura") {
+                    costoKitCompleto = 35;
+                }
 
                 const radioPago = document.querySelector('input[name="opcion10k"]:checked');
                 const tipoPago = radioPago ? radioPago.value : "inicial";
@@ -729,10 +762,9 @@
                 } else {
                     netoUSD = 10; 
                     let saldoRestante = costoKitCompleto - netoUSD;
-                    let cuota = saldoRestante / 2;
                     
-                    document.getElementById('label-abono-dinamico').innerText = `Pagas $10 hoy. Restan 2 cuotas de $${cuota.toFixed(2)}`;
-                    campoNota.innerText = `⚠️ Estás abonando la inicial ($10). Tu saldo pendiente de $${saldoRestante.toFixed(2)} se dividirá en: $${cuota.toFixed(2)} el 15 de Agosto y $${cuota.toFixed(2)} el 01 de Septiembre.`;
+                    document.getElementById('label-abono-dinamico').innerText = `Pagas $10 hoy de inicial. Saldo restante: $${saldoRestante.toFixed(2)}`;
+                    campoNota.innerText = `⚠️ Estás abonando la inicial de $10. Tu saldo pendiente de $${saldoRestante.toFixed(2)} debe liquidarse en un plazo máximo de 15 a 30 días hábiles para garantizar la confección y despacho de tu kit.`;
                     campoNota.classList.remove('hidden');
                 }
 
@@ -949,11 +981,18 @@
 
                 if (flujoActual === "10K") {
                     let preTextil = document.getElementById('tipoTextil10k').value;
-                    let tallTextil = document.getElementById('tallaTextil10k').value;
-                    if(!tallTextil) return alert("⚠️ Selecciona tu talla textil.");
-                    
-                    kitTextilFinal = `${preTextil} Talla: ${tallTextil}`;
-                    let costoKitCompleto = (preTextil === "Franela Oscura") ? 40 : 35;
+                    let costoKitCompleto = 25;
+
+                    if (preTextil === "Solo Medalla") {
+                        kitTextilFinal = "Solo Medalla (Sin Prenda)";
+                        costoKitCompleto = 25;
+                    } else {
+                        let tallTextil = document.getElementById('tallaTextil10k').value;
+                        if (!tallTextil) return alert("⚠️ Selecciona tu talla de prenda.");
+                        kitTextilFinal = `${preTextil} Talla: ${tallTextil}`;
+                        costoKitCompleto = (preTextil === "Franela Oscura") ? 35 : 30;
+                    }
+
                     const op = document.querySelector('input[name="opcion10k"]:checked').value;
 
                     if (op === "inicial") { 

@@ -562,6 +562,7 @@
             document.getElementById('seccion-busqueda-abono').classList.add('hidden-step');
             document.getElementById('paso-fundador').classList.add('hidden-step');
             document.getElementById('seccion-upgrade-10k').classList.add('hidden-step');
+            document.getElementById('seccion-combo-5k').classList.add('hidden-step');
             document.getElementById('contenedor-visual-kit').classList.add('hidden-step');
             document.getElementById('notaInformativaPago').classList.add('hidden');
             
@@ -601,6 +602,11 @@
                 document.getElementById('seccion-busqueda-abono').classList.remove('hidden-step');
                 document.getElementById('textoBannerPrincipal').innerText = "PORTAL DE ABONOS";
                 document.getElementById('textoBannerSecundario').innerText = "Consulta y Liquida tu Cuenta";
+            }
+
+            const elDestino = document.getElementById('paso-fundador');
+            if (elDestino && !elDestino.classList.contains('hidden-step')) {
+                elDestino.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
@@ -699,18 +705,6 @@
                 });
             }
         }
-
-        function actualizarTotal() {
-            if (flujoActual === "ABONO") return;
-            
-            if (flujoActual === "5K" || flujoActual === "COMBO") {
-                const selectEl = document.getElementById('select-combo-5k');
-                const selectVal = selectEl ? selectEl.value : (flujoActual === 'COMBO' ? 'COMBO' : '5K');
-                const price = selectVal === 'COMBO' ? 16 : 10;
-                document.getElementById('total-usd').innerText = "$" + price.toFixed(2);
-                document.getElementById('total-bs').innerText = formatVE(price * tasaBCV) + " Bs.";
-                return;
-            }
 
         function cambiarTipoKit10k() {
             const tipo = document.getElementById('tipoTextil10k').value;
@@ -975,8 +969,25 @@
                     .replace(/,/g, ' - ')     
                     .trim();
 
-                if(!cedulaFinal || !nombre || !genero || !tel || !estado || !ciudad || !direccion) {
-                    return alert("⚠️ Faltan datos obligatorios logísticos.");
+                const camposRequeridos = [
+                    { id: 'cedulaCampos', val: cedulaFinal, nombre: 'Cédula de Identidad' },
+                    { id: 'nombreEnvio', val: nombre, nombre: 'Nombre Completo' },
+                    { id: 'generoAtleta', val: genero, nombre: 'Género / Sexo' },
+                    { id: 'telefonoEnvio', val: tel, nombre: 'Teléfono Móvil' },
+                    { id: 'estadoEnvio', val: estado, nombre: 'Estado de Envío' },
+                    { id: 'ciudadEnvio', val: ciudad, nombre: 'Ciudad de Envío' },
+                    { id: 'direccionEnvio', val: direccion, nombre: 'Dirección de la Agencia' }
+                ];
+
+                for (let c of camposRequeridos) {
+                    if (!c.val) {
+                        const el = document.getElementById(c.id);
+                        if (el) {
+                            el.focus();
+                            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                        return alert(`⚠️ Por favor completa el campo obligatorio: ${c.nombre}`);
+                    }
                 }
 
                 if (flujoActual === "10K") {

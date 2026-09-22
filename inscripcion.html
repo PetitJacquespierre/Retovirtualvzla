@@ -218,8 +218,8 @@
                     <div class="w-16 h-16 bg-slate-100 group-hover:bg-[#001E50] text-[#001E50] group-hover:text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl transition-all">
                         <i class="fa-solid fa-money-bill-wave"></i>
                     </div>
-                    <h3 class="font-black text-[#001E50] uppercase text-sm mb-2">Reportar Abono</h3>
-                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Saldar Deuda 10K</p>
+                    <h3 class="font-black text-[#001E50] uppercase text-sm mb-2">Consultar Saldo / Abonar</h3>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Verifica y Salda (5K y 10K)</p>
                 </button>
             </div>
         </div>
@@ -239,12 +239,19 @@
         <div id="seccion-busqueda-abono" class="hidden-step space-y-6 animate-fade-in max-w-lg mx-auto mt-8">
             <div class="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-xl border border-slate-100 text-center">
                 <i class="fa-solid fa-magnifying-glass text-3xl text-[#00D2FF] mb-4"></i>
-                <h3 class="text-[#001E50] font-black text-2xl uppercase italic mb-2">Portal de Abonos</h3>
-                <p class="text-xs text-slate-400 mb-6 font-bold">Introduce tu cédula para conocer tu deuda y reportar tu abono pendiente.</p>
+                <h3 class="text-[#001E50] font-black text-2xl uppercase italic mb-2">Portal de Abonos y Saldos</h3>
+                <p class="text-xs text-slate-400 mb-6 font-bold">Consulta el estatus de tu cuenta en todas las ediciones (5K y 10K) con tu cédula.</p>
                 <div class="flex flex-col gap-4 text-left">
-                    <input type="text" id="cedulaConsulta" placeholder="Ej: 12345678" class="bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-4 font-bold text-center text-lg text-[#001E50]">
-                    <button onclick="consultarSaldoServidor()" class="w-full bg-[#001E50] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#00D2FF] transition-all">
-                        Consultar Deuda y Abonar
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Cédula de Identidad <span class="req">*</span></label>
+                        <input type="text" id="cedulaConsulta" placeholder="Ej: 12345678" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-3.5 font-black text-center text-lg text-[#001E50]">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Teléfono Móvil (Opcional - Validación extra)</label>
+                        <input type="text" id="telefonoConsulta" placeholder="Ej: 04121234567" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-2.5 font-bold text-center text-sm text-[#001E50]">
+                    </div>
+                    <button id="btnConsultarAbono" onclick="consultarSaldoServidor()" class="w-full bg-[#001E50] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#00D2FF] transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-receipt"></i> Consultar Estado de Cuenta
                     </button>
                     <button onclick="volverInicio()" class="w-full text-center text-slate-400 text-xs font-bold uppercase hover:text-[#001E50]">Cancelar</button>
                 </div>
@@ -269,8 +276,8 @@
                         <label class="text-[10px] font-bold uppercase text-slate-400">Modalidad / Kit 10K <span class="req">*</span></label>
                         <select id="tipoTextil10k" onchange="cambiarTipoKit10k()" class="bg-white border rounded-xl px-4 py-3 font-bold text-sm text-[#001E50]">
                             <option value="Solo Medalla" selected>Solo Medalla de Metal 3D + Dorsal ($25.00)</option>
-                            <option value="Franelilla Oscura">Kit Completo + Franelilla Olímpica ($30.00)</option>
-                            <option value="Franela Oscura">Kit Completo + Franela con mangas ($35.00)</option>
+                            <option value="Franelilla Oscura">Kit Completo + Franelilla Olímpica ($35.00)</option>
+                            <option value="Franela Oscura">Kit Completo + Franela con mangas ($40.00)</option>
                         </select>
                     </div>
                     <div id="contenedor-talla-10k" class="hidden flex-col gap-2">
@@ -405,9 +412,16 @@
 
             <div id="opciones-pago-abono" class="hidden-step bg-gradient-to-br from-[#00102A] to-slate-900 p-6 rounded-[2rem] text-white mt-6 mb-6 max-w-lg mx-auto border border-[#00D2FF]/30">
                 <div class="flex justify-between items-center border-b border-white/10 pb-3 mb-4">
-                    <h3 class="text-[#00D2FF] font-black text-sm uppercase tracking-widest">Estado de Cuenta</h3>
-                    <span class="bg-[#00D2FF]/20 text-[#00D2FF] font-black px-3 py-1 rounded-lg text-xs">Deuda: $<span id="label-deuda-actual">0.00</span></span>
+                    <div>
+                        <h3 class="text-[#00D2FF] font-black text-sm uppercase tracking-widest">Estado de Cuenta Oficial</h3>
+                        <p id="label-atleta-encontrado" class="text-[11px] text-white/70 font-semibold"></p>
+                    </div>
+                    <span class="bg-[#00D2FF]/20 text-[#00D2FF] font-black px-3 py-1 rounded-lg text-xs">Total Deuda: $<span id="label-deuda-actual">0.00</span></span>
                 </div>
+
+                <!-- Desglose por carreras -->
+                <div id="desglose-deudas-container" class="space-y-2 mb-4"></div>
+
                 <p class="text-[10px] text-white/60 uppercase tracking-widest font-bold mb-3">¿Cuánto deseas abonar hoy?</p>
                 <div class="flex flex-col gap-3">
                     <label id="contenedor-opcion-mitad" class="cursor-pointer flex items-center gap-3 bg-white/5 border p-3 rounded-xl">
@@ -739,9 +753,9 @@
                 let costoKitCompleto = 25; // Base: Solo Medalla ($25)
                 const tipoTextil = document.getElementById('tipoTextil10k').value;
                 if (tipoTextil === "Franelilla Oscura") {
-                    costoKitCompleto = 30;
-                } else if (tipoTextil === "Franela Oscura") {
                     costoKitCompleto = 35;
+                } else if (tipoTextil === "Franela Oscura") {
+                    costoKitCompleto = 40;
                 }
 
                 const radioPago = document.querySelector('input[name="opcion10k"]:checked');
@@ -783,9 +797,12 @@
 
         async function consultarSaldoServidor() {
             const ci = document.getElementById('cedulaConsulta').value.replace(/\D/g, '').trim();
+            const telFiltro = document.getElementById('telefonoConsulta') ? document.getElementById('telefonoConsulta').value.replace(/\D/g, '').trim() : '';
             if (ci.length < 5) return alert("⚠️ Ingresa una cédula válida.");
 
-            document.getElementById('loader-texto').innerText = "Consultando...";
+            const btn = document.getElementById('btnConsultarAbono');
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Consultando...'; }
+            document.getElementById('loader-texto').innerText = "Consultando cuentas y ediciones...";
             document.getElementById('loader').classList.remove('hidden');
 
             try {
@@ -793,71 +810,147 @@
                 const csvText = await res.text();
                 const filas = csvText.split(/\r?\n/);
 
-                let encontrado = null; 
+                let registrosAtleta = [];
                 if (filas.length > 0) {
                     const headers = filas[0].split(',').map(h => h.trim().toLowerCase());
+                    const idxDorsal = 0;
                     const idxCI = headers.findIndex(h => h.includes('cedula') || h.includes('ci'));
-                    
+                    const idxNombre = headers.findIndex(h => h.includes('nombre'));
+                    const idxTel = headers.findIndex(h => h.includes('telefono') || h.includes('tlf'));
+                    const idxCarrera = headers.findIndex(h => h.includes('carrera'));
+                    const idxSaldo = headers.findIndex(h => h.includes('saldopendiente') || h.includes('saldo'));
+                    const idxTextil = headers.findIndex(h => h.includes('textil'));
+                    const idxTotal = headers.findIndex(h => h.includes('total'));
+                    const idxReserva = headers.findIndex(h => h.includes('reserva'));
+
+                    // Escanear todas las filas de la tabla
                     for(let i = 1; i < filas.length; i++) {
                         if(!filas[i].trim()) continue;
                         const col = filas[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
-                        if (col[idxCI] && col[idxCI].replace(/\D/g, '') === ci) {
-                            encontrado = { dorsal: col[0], nombre: col[2], tel: col[3], saldo: col[13] || "$20.00" };
-                            break;
+                        const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
+                        
+                        if (filaCI === ci) {
+                            const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
+                            // Si el usuario introdujo teléfono para filtrar, verificar coincidencia (mínimo últimos 4 dígitos)
+                            if (telFiltro && telFiltro.length >= 4) {
+                                const ultimos4Usuario = telFiltro.slice(-4);
+                                const ultimos4Fila = filaTel.slice(-4);
+                                if (ultimos4Fila && ultimos4Usuario !== ultimos4Fila) {
+                                    continue; // No coincide con la verificación de teléfono
+                                }
+                            }
+
+                            // Detectar modalidad
+                            let carreraNombre = "Edición 10K";
+                            if (idxCarrera !== -1 && col[idxCarrera]) {
+                                carreraNombre = col[idxCarrera];
+                            } else if (col[idxTextil] && (col[idxTextil].includes('Franela') || col[idxTextil].includes('Solo Medalla'))) {
+                                carreraNombre = "Edición Especial 10K";
+                            } else if (col[idxTotal] && (col[idxTotal].includes('10') || col[idxTotal].includes('16'))) {
+                                carreraNombre = col[idxTotal].includes('16') ? "Combo Dúo 5K (3ra + 4ta)" : "3ra Edición 5K";
+                            }
+
+                            // Detectar deuda numérica
+                            const valorSaldoRaw = String((idxSaldo !== -1 ? col[idxSaldo] : col[13]) || '').trim();
+                            const valUpper = valorSaldoRaw.toUpperCase();
+                            const esSolv = valUpper === 'SOLVENTE' || valUpper === '0' || valUpper === '0.00' || valUpper === '$0' || valUpper === '$0.00' || valUpper === '';
+                            const montoNum = esSolv ? 0 : (parseFloat(valorSaldoRaw.replace(/[^0-9.]/g, '')) || 0);
+
+                            registrosAtleta.push({
+                                dorsal: col[idxDorsal] || 'S/N',
+                                nombre: col[idxNombre] || 'Atleta',
+                                tel: col[idxTel] || '',
+                                carrera: carreraNombre,
+                                saldoNum: montoNum,
+                                saldoRaw: valorSaldoRaw,
+                                esSolvente: esSolv,
+                                textil: col[idxTextil] || '',
+                                reserva: (idxReserva !== -1 ? col[idxReserva] : '')
+                            });
                         }
                     }
                 }
 
-                if (encontrado) {
+                if (registrosAtleta.length > 0) {
                     ciValidada = ci;
+                    // Tomar datos de perfil del registro más reciente
+                    const ultimoRegistro = registrosAtleta[registrosAtleta.length - 1];
                     
-                    // Llenar campos cortos para Abono
                     document.getElementById('cedulaAbono').value = ci;
-                    document.getElementById('nombreAbono').value = encontrado.nombre;
-                    document.getElementById('telefonoAbono').value = encontrado.tel;
-                    
-                    document.getElementById('tituloRuta').innerText = `LIQUIDAR CUENTA - ${encontrado.nombre}`;
-                    
-                    const valorSaldo = String(encontrado.saldo || '').trim().toUpperCase();
-                    const esSolvente = valorSaldo === 'SOLVENTE' || valorSaldo === '0' || valorSaldo === '0.00' || valorSaldo === '$0' || valorSaldo === '$0.00' || valorSaldo === '';
-                    const numSaldo = esSolvente ? 0 : (parseFloat(valorSaldo.replace(/[^0-9.]/g, '')) || 0);
+                    document.getElementById('nombreAbono').value = ultimoRegistro.nombre;
+                    document.getElementById('telefonoAbono').value = ultimoRegistro.tel || (telFiltro || '');
+
+                    document.getElementById('tituloRuta').innerText = `ESTADO DE CUENTA - ${ultimoRegistro.nombre.toUpperCase()}`;
+                    const labelAtleta = document.getElementById('label-atleta-encontrado');
+                    if (labelAtleta) labelAtleta.innerText = `Atleta: ${ultimoRegistro.nombre} (C.I. ${ci})`;
+
+                    // Calcular suma total de deudas en todas las ediciones
+                    let sumaDeudas = 0;
+                    let htmlDesglose = '';
+
+                    registrosAtleta.forEach((reg, index) => {
+                        sumaDeudas += reg.saldoNum;
+                        const badgeColor = reg.esSolvente ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30' : 'text-amber-400 bg-amber-500/10 border-amber-500/30';
+                        const badgeText = reg.esSolvente ? '✅ SOLVENTE' : `⚠️ DEBE: $${reg.saldoNum.toFixed(2)}`;
+                        
+                        htmlDesglose += `
+                            <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 text-xs">
+                                <div>
+                                    <span class="font-black text-white block">${reg.carrera} (Dorsal #${reg.dorsal})</span>
+                                    <span class="text-white/40 text-[10px]">${reg.textil || 'Registro Oficial'}</span>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-lg font-black border ${badgeColor}">${badgeText}</span>
+                            </div>
+                        `;
+                    });
+
+                    const desgloseBox = document.getElementById('desglose-deudas-container');
+                    if (desgloseBox) desgloseBox.innerHTML = htmlDesglose;
+
                     const btnEnviar = document.querySelector('button[onclick="procesarInscripcion()"]');
 
-                    if (esSolvente || numSaldo <= 0) {
-                        document.getElementById('total-usd').innerHTML = `<span style="color:#16a34a; font-size:2rem; font-weight:900; letter-spacing:0.1em;">✅ SOLVENTE</span>`;
-                        document.getElementById('total-bs').innerText = 'No tienes deuda pendiente';
+                    if (sumaDeudas <= 0) {
+                        document.getElementById('total-usd').innerHTML = `<span style="color:#16a34a; font-size:1.8rem; font-weight:900; letter-spacing:0.05em;">✅ 100% SOLVENTE</span>`;
+                        document.getElementById('total-bs').innerText = 'No tienes saldo pendiente en ninguna edición';
                         if (btnEnviar) { btnEnviar.disabled = true; btnEnviar.style.opacity = '0.4'; btnEnviar.style.cursor = 'not-allowed'; btnEnviar.innerText = 'CUENTA SALDADA ✔'; }
-                        document.getElementById('opciones-pago-abono').classList.add('hidden-step');
+                        document.getElementById('opciones-pago-abono').classList.remove('hidden-step');
+                        document.getElementById('label-deuda-actual').innerText = "0.00";
+                        if (document.getElementById('contenedor-opcion-mitad')) document.getElementById('contenedor-opcion-mitad').style.display = 'none';
                     } else {
-                        deudaActual = numSaldo; 
-                        document.getElementById('label-deuda-actual').innerText = deudaActual.toFixed(2); 
+                        deudaActual = sumaDeudas;
+                        document.getElementById('label-deuda-actual').innerText = deudaActual.toFixed(2);
                         document.getElementById('opciones-pago-abono').classList.remove('hidden-step');
                         
                         if (deudaActual <= 15) {
-                            document.getElementById('contenedor-opcion-mitad').style.display = 'none';
-                            document.querySelector('input[name="opcionAbono"][value="completo"]').checked = true;
+                            if (document.getElementById('contenedor-opcion-mitad')) document.getElementById('contenedor-opcion-mitad').style.display = 'none';
+                            const radComp = document.querySelector('input[name="opcionAbono"][value="completo"]');
+                            if (radComp) radComp.checked = true;
                         } else {
-                            document.getElementById('contenedor-opcion-mitad').style.display = 'flex';
+                            if (document.getElementById('contenedor-opcion-mitad')) document.getElementById('contenedor-opcion-mitad').style.display = 'flex';
                         }
                         
-                        actualizarTotalAbono(); 
+                        actualizarTotalAbono();
                         if (btnEnviar) { btnEnviar.disabled = false; btnEnviar.style.opacity = '1'; btnEnviar.style.cursor = 'pointer'; btnEnviar.innerText = 'ENVIAR REPORTE AL SISTEMA'; }
                     }
 
                     document.getElementById('seccion-busqueda-abono').classList.add('hidden-step');
                     document.getElementById('paso-fundador').classList.remove('hidden-step');
-
-                    // OCULTAR LOGÍSTICA COMPLETA Y MOSTRAR SOLO CAMPOS CORTOS
                     document.getElementById('seccion-logistica').classList.add('hidden-step');
                     document.getElementById('campos-abono-solo').classList.remove('hidden-step');
 
+                    const elPaso = document.getElementById('paso-fundador');
+                    if (elPaso) elPaso.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
                 } else {
-                    alert("❌ Tu cédula no registra saldos pendientes.");
+                    let msg = "❌ Tu cédula no registra inscripciones en el sistema.";
+                    if (telFiltro) msg += "\n(Verifica que la cédula y teléfono coincidan con tu registro original).";
+                    alert(msg);
                 }
             } catch (e) { 
-                alert("Error al conectar."); 
+                alert("Error al conectar con la base de datos."); 
             } finally { 
                 document.getElementById('loader').classList.add('hidden'); 
+                if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-receipt"></i> Consultar Estado de Cuenta'; }
             }
         }
 
@@ -1001,7 +1094,7 @@
                         let tallTextil = document.getElementById('tallaTextil10k').value;
                         if (!tallTextil) return alert("⚠️ Selecciona tu talla de prenda.");
                         kitTextilFinal = `${preTextil} Talla: ${tallTextil}`;
-                        costoKitCompleto = (preTextil === "Franela Oscura") ? 35 : 30;
+                        costoKitCompleto = (preTextil === "Franela Oscura") ? 40 : 35;
                     }
 
                     const op = document.querySelector('input[name="opcion10k"]:checked').value;
@@ -1080,18 +1173,26 @@
 
             const NUMERO_ORGANIZADOR = "584127732710";
 
-            let extraMsg = (flujoActual === 'ABONO') 
-                ? "📋 *TIPO:* Liquidación / Abono de Cuenta" 
-                : `🎟️ *DORSAL ASIGNADO:* 👉 *#${dorsal}* 👈`;
+            let extraMsg = "";
+            let modalidad = "";
 
-            let modalidad = (flujoActual === '10K') ? 'Edición Especial 10K' : (carrera === 'COMBO' ? 'Combo Dúo (5K + Medalla Extra)' : '3ra Edición 5K');
+            if (flujoActual === 'ABONO') {
+                modalidad = "Abono / Liquidación de Cuenta";
+                extraMsg = `📋 *TIPO:* Reporte de Abono Realizado%0A` +
+                           `💵 *Monto Abonado Hoy:* ${encodeURIComponent(total)}%0A` +
+                           `📊 *Saldo Restante en Cuenta:* $${encodeURIComponent(deudaActual > 0 ? (document.querySelector('input[name="opcionAbono"]:checked')?.value === 'mitad' ? (deudaActual/2).toFixed(2) : '0.00 (SOLVENTE)') : '0.00')}`;
+            } else {
+                modalidad = (flujoActual === '10K') ? 'Edición Especial 10K' : (carrera === 'COMBO' ? 'Combo Dúo (5K + Medalla Extra)' : '3ra Edición 5K');
+                extraMsg = `🎟️ *DORSAL ASIGNADO:* 👉 *#${dorsal}* 👈`;
+            }
 
             const msgText = `🏃‍♂️ *CONSULTA / SOPORTE - RETO VIRTUAL VZLA* 🇻🇪%0A%0A` +
                 `👤 *Atleta:* ${encodeURIComponent(nombre.toUpperCase())}%0A` +
                 `🆔 *Cédula:* ${encodeURIComponent(cedula || 'N/A')}%0A` +
-                `🏁 *Modalidad:* ${encodeURIComponent(modalidad)}%0A` +
+                `🏁 *Modalidad / Trámite:* ${encodeURIComponent(modalidad)}%0A` +
                 `${extraMsg}%0A` +
-                `🔢 *Ref:* #${encodeURIComponent(ref)}`;
+                `🔢 *Ref Bancaria:* #${encodeURIComponent(ref)}%0A` +
+                `📅 *Fecha de Pago:* ${encodeURIComponent(fecha || 'Hoy')}`;
 
             const waUrl = `https://wa.me/${NUMERO_ORGANIZADOR}?text=${msgText}`;
             

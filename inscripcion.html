@@ -222,6 +222,16 @@
                     <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Verifica y Salda (5K y 10K)</p>
                 </button>
             </div>
+
+            <!-- Soporte WhatsApp -->
+            <div class="bg-blue-50/80 border border-blue-200/80 rounded-2xl p-4 text-center flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-[#001E50]">
+                <span class="inline-flex items-center gap-1.5 font-semibold">
+                    <i class="fa-solid fa-headset text-[#00D2FF] text-base"></i> ¿Presentas algún inconveniente o duda durante tu inscripción?
+                </span>
+                <a href="https://wa.me/584127732710?text=Hola,%20tengo%20una%20duda%20o%20inconveniente%20con%20mi%20inscripci%C3%B3n" target="_blank" class="text-green-600 font-bold hover:text-green-700 underline inline-flex items-center gap-1 transition-colors">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> Escríbenos al 0412-7732710
+                </a>
+            </div>
         </div>
 
         <div id="paso-1" class="hidden-step bg-white p-10 md:p-12 rounded-[2.5rem] shadow-xl border border-slate-100 text-center max-w-md mx-auto mt-8">
@@ -233,6 +243,12 @@
                     Verificar Cédula
                 </button>
                 <button onclick="volverInicio()" class="w-full text-slate-400 text-xs font-bold uppercase mt-2 hover:text-[#001E50]">Cancelar</button>
+                <div class="pt-2 border-t border-slate-100 mt-3 text-[11px] text-slate-400">
+                    ¿Problemas con tu cédula o validación? <br>
+                    <a href="https://wa.me/584127732710?text=Hola,%20tengo%20un%20inconveniente%20con%20mi%20c%C3%A9dula%20en%20la%20inscripci%C3%B3n" target="_blank" class="text-green-600 font-bold hover:underline inline-flex items-center gap-1 mt-1">
+                        <i class="fa-brands fa-whatsapp"></i> Escríbenos al WhatsApp 0412-7732710
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -254,6 +270,12 @@
                         <i class="fa-solid fa-receipt"></i> Consultar Estado de Cuenta
                     </button>
                     <button onclick="volverInicio()" class="w-full text-center text-slate-400 text-xs font-bold uppercase hover:text-[#001E50]">Cancelar</button>
+                    <div class="pt-2 border-t border-slate-100 text-center text-[11px] text-slate-400">
+                        ¿No encuentras tus datos o presentas alguna discrepancia? <br>
+                        <a href="https://wa.me/584127732710?text=Hola,%20tengo%20una%20duda%20con%20mi%20saldo%20o%20abono" target="_blank" class="text-green-600 font-bold hover:underline inline-flex items-center gap-1 mt-1">
+                            <i class="fa-brands fa-whatsapp"></i> Contáctanos vía WhatsApp al 0412-7732710
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -467,6 +489,14 @@
                 <button onclick="procesarInscripcion()" class="w-full bg-[#00D2FF] text-[#001E50] py-4 rounded-xl font-black uppercase text-xs tracking-widest flex items-center justify-center gap-2 transition-transform hover:scale-[1.01]">
                     ENVIAR REPORTE AL SISTEMA <i class="fa-brands fa-whatsapp"></i>
                 </button>
+                <div class="mt-4 pt-3 border-t border-white/10 text-center">
+                    <p class="text-[11px] text-slate-300">
+                        ¿Tienes dudas, algún error o inconveniente con tu pago? 
+                        <a href="https://wa.me/584127732710?text=Hola,%20tengo%20un%20inconveniente%20con%20mi%20inscripci%C3%B3n" target="_blank" class="text-[#00D2FF] font-bold underline hover:text-white inline-flex items-center gap-1 transition-colors ml-1">
+                            <i class="fa-brands fa-whatsapp text-sm"></i> Escríbenos al WhatsApp 0412-7732710
+                        </a>
+                    </p>
+                </div>
             </div>
         </div>
     </main>
@@ -944,10 +974,11 @@
                 } else {
                     let msg = "❌ Tu cédula no registra inscripciones en el sistema.";
                     if (telFiltro) msg += "\n(Verifica que la cédula y teléfono coincidan con tu registro original).";
+                    msg += "\n\nSi consideras que es un error o hiciste tu pago recientemente, contáctanos al WhatsApp 0412-7732710 (+58 412 7732710).";
                     alert(msg);
                 }
             } catch (e) { 
-                alert("Error al conectar con la base de datos."); 
+                alert("Error al conectar con la base de datos.\nPor favor verifica tu conexión o contáctanos por WhatsApp al 0412-7732710 (+58 412 7732710)."); 
             } finally { 
                 document.getElementById('loader').classList.add('hidden'); 
                 if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-receipt"></i> Consultar Estado de Cuenta'; }
@@ -1014,7 +1045,7 @@
                 actualizarTotal();
 
             } catch (e) {
-                alert("Error al verificar la cédula.");
+                alert("Ocurrió un error al verificar la cédula.\nSi el inconveniente persiste, por favor contáctanos vía WhatsApp al 0412-7732710 (+58 412 7732710).");
             } finally { 
                 btn.innerText = "Verificar Cédula"; 
                 btn.disabled = false; 
@@ -1209,5 +1240,14 @@
         function abrirModalImagen() { document.getElementById('modal-imagen').classList.remove('hidden'); document.getElementById('modal-imagen').classList.add('flex'); }
         function cerrarModalImagen() { document.getElementById('modal-imagen').classList.add('hidden'); }
     </script>
+
+    <!-- Botón flotante de asistencia inmediata WhatsApp -->
+    <a href="https://wa.me/584127732710?text=Hola,%20tengo%20una%20duda%20o%20inconveniente%20con%20el%20portal%20de%20inscripciones" 
+       target="_blank" 
+       title="¿Ayuda con tu inscripción? Escríbenos"
+       class="fixed bottom-6 right-6 z-40 bg-[#25D366] hover:bg-[#20ba59] text-white p-3.5 md:px-5 md:py-3.5 rounded-full shadow-2xl flex items-center gap-2.5 transition-all transform hover:scale-105 group border-2 border-white/40">
+        <i class="fa-brands fa-whatsapp text-2xl md:text-xl"></i>
+        <span class="hidden md:inline-block font-black text-xs uppercase tracking-wider">¿Ayuda o dudas?</span>
+    </a>
 </body>
 </html>

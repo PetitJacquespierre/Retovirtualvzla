@@ -552,7 +552,8 @@
         let totalDorsalesRegistrados = 22; 
         let deudaActual = 0; 
 
-        // CONFIGURACIÓN DE CONEXIONES
+        // CONFIGURACIÓN DE CONEXIONES (ESTÁNDAR GROW STUDIO BACKEND)
+        const urlConsultaAtleta = "/api/consultar-atleta";
         const urlCSV_Comparacion = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5yMHsenxCWE5kZBDUZ8UcYqDtdAHstfqXcvWkuYZPQ_4n2xSrfs6ptk7k21r1kcMHHLtWjz8SEHwl/pub?gid=244601533&single=true&output=csv";
         const urlBaseDeDatos = "https://script.google.com/macros/s/AKfycbyO9tDp2GreaVR-PVRIUS7zbJRQYydOv2S6mgPcYwyqHVM6-v0-TSQ1y-5UlWk6KVN8CA/exec"; 
 
@@ -608,6 +609,19 @@
         };
 
         async function actualizarContadorSilencioso() {
+            try {
+                // Primero intentamos el endpoint seguro de Vercel
+                const res = await fetch(`${urlConsultaAtleta}?accion=total_dorsales&t=${Date.now()}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && typeof data.total === 'number' && data.total > 0) {
+                        totalDorsalesRegistrados = data.total;
+                        return;
+                    }
+                }
+            } catch(e) {}
+
+            // Fallback directo seguro si el endpoint no responde
             try {
                 const res = await fetch(urlCSV_Comparacion + "&nocache=" + new Date().getTime());
                 const csvText = await res.text();
@@ -864,67 +878,82 @@
             document.getElementById('loader').classList.remove('hidden');
 
             try {
-                const res = await fetch(urlCSV_Comparacion + "&nocache=" + new Date().getTime());
-                const csvText = await res.text();
-                const filas = csvText.split(/\r?\n/);
-
                 let registrosAtleta = [];
-                if (filas.length > 0) {
-                    const headers = filas[0].split(',').map(h => h.trim().toLowerCase());
-                    const idxDorsal = 0;
-                    const idxCI = headers.findIndex(h => h.includes('cedula') || h.includes('ci'));
-                    const idxNombre = headers.findIndex(h => h.includes('nombre'));
-                    const idxTel = headers.findIndex(h => h.includes('telefono') || h.includes('tlf'));
-                    const idxCarrera = headers.findIndex(h => h.includes('carrera'));
-                    const idxSaldo = headers.findIndex(h => h.includes('saldopendiente') || h.includes('saldo'));
-                    const idxTextil = headers.findIndex(h => h.includes('textil'));
-                    const idxTotal = headers.findIndex(h => h.includes('total'));
-                    const idxReserva = headers.findIndex(h => h.includes('reserva'));
 
-                    // Escanear todas las filas de la tabla
-                    for(let i = 1; i < filas.length; i++) {
-                        if(!filas[i].trim()) continue;
-                        const col = filas[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
-                        const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
-                        
-                        if (filaCI === ci) {
-                            const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
-                            // Si el usuario introdujo teléfono para filtrar, verificar coincidencia (mínimo últimos 4 dígitos)
-                            if (telFiltro && telFiltro.length >= 4) {
-                                const ultimos4Usuario = telFiltro.slice(-4);
-                                const ultimos4Fila = filaTel.slice(-4);
-                                if (ultimos4Fila && ultimos4Usuario !== ultimos4Fila) {
-                                    continue; // No coincide con la verificación de teléfono
+                // 1. Consultar a través del Endpoint Seguro de Grow Studio en Vercel
+                try {
+                    const resSeguro = await fetch(`${urlConsultaAtleta}?ci=${encodeURIComponent(ci)}&tel=${encodeURIComponent(telFiltro)}&t=${Date.now()}`);
+                    if (resSeguro.ok) {
+                        const dataSegura = await resSeguro.json();
+                        if (dataSegura && Array.isArray(dataSegura.registros)) {
+                            registrosAtleta = dataSegura.registros;
+                        }
+                    }
+                } catch(errApi) {
+                    console.warn("Fallo temporal de API segura, ejecutando fallback:", errApi);
+                }
+
+                // 2. Fallback de contingencia al CSV directo
+                if (registrosAtleta.length === 0) {
+                    const res = await fetch(urlCSV_Comparacion + "&nocache=" + new Date().getTime());
+                    const csvText = await res.text();
+                    const filas = csvText.split(/\r?\n/);
+
+                    if (filas.length > 0) {
+                        const headers = filas[0].split(',').map(h => h.trim().toLowerCase());
+                        const idxDorsal = 0;
+                        const idxCI = headers.findIndex(h => h.includes('cedula') || h.includes('ci'));
+                        const idxNombre = headers.findIndex(h => h.includes('nombre'));
+                        const idxTel = headers.findIndex(h => h.includes('telefono') || h.includes('tlf'));
+                        const idxCarrera = headers.findIndex(h => h.includes('carrera'));
+                        const idxSaldo = headers.findIndex(h => h.includes('saldopendiente') || h.includes('saldo'));
+                        const idxTextil = headers.findIndex(h => h.includes('textil'));
+                        const idxTotal = headers.findIndex(h => h.includes('total'));
+                        const idxReserva = headers.findIndex(h => h.includes('reserva'));
+
+                        // Escanear todas las filas de la tabla
+                        for(let i = 1; i < filas.length; i++) {
+                            if(!filas[i].trim()) continue;
+                            const col = filas[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+                            const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
+                            
+                            if (filaCI === ci) {
+                                const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
+                                if (telFiltro && telFiltro.length >= 4) {
+                                    const ultimos4Usuario = telFiltro.slice(-4);
+                                    const ultimos4Fila = filaTel.slice(-4);
+                                    if (ultimos4Fila && ultimos4Usuario !== ultimos4Fila) {
+                                        continue;
+                                    }
                                 }
+
+                                // Detectar modalidad
+                                let carreraNombre = "Edición 10K";
+                                if (idxCarrera !== -1 && col[idxCarrera]) {
+                                    carreraNombre = col[idxCarrera];
+                                } else if (col[idxTextil] && (col[idxTextil].includes('Franela') || col[idxTextil].includes('Solo Medalla'))) {
+                                    carreraNombre = "Edición Especial 10K";
+                                } else if (col[idxTotal] && (col[idxTotal].includes('10') || col[idxTotal].includes('16'))) {
+                                    carreraNombre = col[idxTotal].includes('16') ? "Combo Dúo 5K (3ra + 4ta)" : "3ra Edición 5K";
+                                }
+
+                                const valorSaldoRaw = String((idxSaldo !== -1 ? col[idxSaldo] : col[13]) || '').trim();
+                                const valUpper = valorSaldoRaw.toUpperCase();
+                                const esSolv = valUpper === 'SOLVENTE' || valUpper === '0' || valUpper === '0.00' || valUpper === '$0' || valUpper === '$0.00' || valUpper === '';
+                                const montoNum = esSolv ? 0 : (parseFloat(valorSaldoRaw.replace(/[^0-9.]/g, '')) || 0);
+
+                                registrosAtleta.push({
+                                    dorsal: col[idxDorsal] || 'S/N',
+                                    nombre: col[idxNombre] || 'Atleta',
+                                    tel: filaTel,
+                                    carrera: carreraNombre,
+                                    saldoNum: montoNum,
+                                    saldoRaw: valorSaldoRaw,
+                                    esSolvente: esSolv,
+                                    textil: col[idxTextil] || '',
+                                    reserva: (idxReserva !== -1 ? col[idxReserva] : '')
+                                });
                             }
-
-                            // Detectar modalidad
-                            let carreraNombre = "Edición 10K";
-                            if (idxCarrera !== -1 && col[idxCarrera]) {
-                                carreraNombre = col[idxCarrera];
-                            } else if (col[idxTextil] && (col[idxTextil].includes('Franela') || col[idxTextil].includes('Solo Medalla'))) {
-                                carreraNombre = "Edición Especial 10K";
-                            } else if (col[idxTotal] && (col[idxTotal].includes('10') || col[idxTotal].includes('16'))) {
-                                carreraNombre = col[idxTotal].includes('16') ? "Combo Dúo 5K (3ra + 4ta)" : "3ra Edición 5K";
-                            }
-
-                            // Detectar deuda numérica
-                            const valorSaldoRaw = String((idxSaldo !== -1 ? col[idxSaldo] : col[13]) || '').trim();
-                            const valUpper = valorSaldoRaw.toUpperCase();
-                            const esSolv = valUpper === 'SOLVENTE' || valUpper === '0' || valUpper === '0.00' || valUpper === '$0' || valUpper === '$0.00' || valUpper === '';
-                            const montoNum = esSolv ? 0 : (parseFloat(valorSaldoRaw.replace(/[^0-9.]/g, '')) || 0);
-
-                            registrosAtleta.push({
-                                dorsal: col[idxDorsal] || 'S/N',
-                                nombre: col[idxNombre] || 'Atleta',
-                                tel: col[idxTel] || '',
-                                carrera: carreraNombre,
-                                saldoNum: montoNum,
-                                saldoRaw: valorSaldoRaw,
-                                esSolvente: esSolv,
-                                textil: col[idxTextil] || '',
-                                reserva: (idxReserva !== -1 ? col[idxReserva] : '')
-                            });
                         }
                     }
                 }
@@ -1022,26 +1051,45 @@
             btn.disabled = true;
 
             try {
-                const res = await fetch(urlCSV_Comparacion + "&nocache=" + new Date().getTime());
-                const csvText = await res.text();
-                const filas = csvText.match(/(?:[^\n"]|"(?:\\.|[^"])*")+/g) || [];
-
                 let atletaRegistrado = null;
-                if (filas.length > 0) {
-                    const headers = filas[0].split(',').map(h => h.trim().toLowerCase());
-                    const idxCI = headers.findIndex(h => h.includes('cedula') || h.includes('ci'));
-                    const idxNombre = headers.findIndex(h => h.includes('nombre'));
 
-                    for (let i = 1; i < filas.length; i++) {
-                        if (!filas[i].trim()) continue;
-                        const columnas = filas[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
-                        if (columnas[idxCI] && columnas[idxCI].replace(/\D/g, '').trim() === ciInput) {
+                // 1. Intentar primero con la API segura de Grow Studio en Vercel
+                try {
+                    const resSeguro = await fetch(`${urlConsultaAtleta}?ci=${encodeURIComponent(ciInput)}&t=${Date.now()}`);
+                    if (resSeguro.ok) {
+                        const dataSegura = await resSeguro.json();
+                        if (dataSegura && Array.isArray(dataSegura.registros) && dataSegura.registros.length > 0) {
                             atletaRegistrado = {
-                                nombre: columnas[idxNombre] || ""
+                                nombre: dataSegura.registros[0].nombre || ""
                             };
-                            break;
                         }
                     }
+                } catch (errApi) {}
+
+                // 2. Fallback de contingencia al CSV directo
+                if (!atletaRegistrado) {
+                    try {
+                        const res = await fetch(urlCSV_Comparacion + "&nocache=" + new Date().getTime());
+                        const csvText = await res.text();
+                        const filas = csvText.match(/(?:[^\n"]|"(?:\\.|[^"])*")+/g) || [];
+
+                        if (filas.length > 0) {
+                            const headers = filas[0].split(',').map(h => h.trim().toLowerCase());
+                            const idxCI = headers.findIndex(h => h.includes('cedula') || h.includes('ci'));
+                            const idxNombre = headers.findIndex(h => h.includes('nombre'));
+
+                            for (let i = 1; i < filas.length; i++) {
+                                if (!filas[i].trim()) continue;
+                                const columnas = filas[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+                                if (columnas[idxCI] && columnas[idxCI].replace(/\D/g, '').trim() === ciInput) {
+                                    atletaRegistrado = {
+                                        nombre: columnas[idxNombre] || ""
+                                    };
+                                    break;
+                                }
+                            }
+                        }
+                    } catch(e) {}
                 }
 
                 if (atletaRegistrado && flujoActual === '10K') {

@@ -111,4 +111,57 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* 7. GROW STUDIO - EASTER EGG B: CONSOLA F12 PARA CURIOSOS */
+    const gsBanner = `%c 🎨 CRAFTED BY GROW STUDIO %c 🚀 
+%c¿Te gusta lo que ves? Hablemos de tu próximo proyecto: https://growstudioweb.vercel.app/`;
+    console.log(
+        gsBanner,
+        'background: #001E50; color: #00D2FF; font-size: 14px; font-weight: bold; padding: 8px 12px; border-radius: 6px 0 0 6px; border: 1px solid #00D2FF;',
+        'background: #00D2FF; color: #001E50; font-size: 14px; font-weight: bold; padding: 8px 12px; border-radius: 0 6px 6px 0;',
+        'color: #94a3b8; font-size: 11px; margin-top: 6px;'
+    );
+
+    /* 8. GROW STUDIO - EASTER EGG C: TOQUE MÁGICO DEL LOGO (DOBLE TAP / MANTENER PRESIONADO) */
+    const logos = document.querySelectorAll('nav img[alt*="Reto Virtual"], .rv-logo img');
+    logos.forEach(logo => {
+        let pressTimer;
+        let lastTap = 0;
+
+        const triggerMagic = () => {
+            logo.classList.remove('grow-magic-active');
+            void logo.offsetWidth; // Forzar reflow
+            logo.classList.add('grow-magic-active');
+            setTimeout(() => logo.classList.remove('grow-magic-active'), 1400);
+        };
+
+        // Doble clic / doble toque rápido
+        logo.addEventListener('click', (e) => {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            if (tapLength < 400 && tapLength > 0) {
+                triggerMagic();
+                e.preventDefault();
+            }
+            lastTap = currentTime;
+        });
+
+        // Mantener presionado 1.5s
+        logo.addEventListener('mousedown', () => {
+            pressTimer = setTimeout(triggerMagic, 1200);
+        });
+        logo.addEventListener('mouseup', () => clearTimeout(pressTimer));
+        logo.addEventListener('mouseleave', () => clearTimeout(pressTimer));
+        logo.addEventListener('touchstart', () => {
+            pressTimer = setTimeout(triggerMagic, 1200);
+        }, { passive: true });
+        logo.addEventListener('touchend', () => clearTimeout(pressTimer));
+        logo.addEventListener('touchcancel', () => clearTimeout(pressTimer));
+    });
+
+    /* 9. ACTUALIZACIÓN AUTOMÁTICA DEL AÑO DINÁMICO EN FOOTERS */
+    const currentYear = new Date().getFullYear();
+    document.querySelectorAll('.current-year').forEach(el => {
+        el.textContent = currentYear;
+    });
 });
+

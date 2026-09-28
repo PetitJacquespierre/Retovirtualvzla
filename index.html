@@ -135,7 +135,9 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            animation: splash-exit 0.8s ease-out 1.5s forwards;
+            cursor: pointer;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+            animation: splash-exit 0.5s ease-out 1.5s forwards;
         }
         @keyframes splash-exit {
             0%   { opacity: 1; }
@@ -234,7 +236,7 @@
 <body class="bg-white text-slate-900">
 
     <!-- ===================== SPLASH SCREEN ===================== -->
-    <div id="splash">
+    <div id="splash" title="Toca o haz clic para entrar" class="select-none">
         <div class="splash-scene">
             <div class="splash-particles">
                 <div class="particle p1"></div><div class="particle p2"></div>
@@ -443,8 +445,7 @@
 
         <!-- Texto izquierda -->
         <div class="lg:w-1/2 text-center lg:text-left">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5"
-               style="background:rgba(0,210,255,.08);border:1px solid rgba(0,210,255,.4);">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5 badge-iron-series">
             <i class="fa-solid fa-shield-halved text-[#00D2FF] text-xs"></i>
             <span class="text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.5em]">The Iron Series</span>
           </div>
@@ -1499,7 +1500,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p class="text-white/30 text-[10px] uppercase tracking-[0.4em] leading-relaxed">
                     Reto Virtual VZLA es una producción <br>
                 <span class="text-white/60 font-bold">Nacional Independiente</span>. <br>
-                    © 2026 Reto Virtual VZLA. Todos los derechos reservados.
+                    &copy; <span class="current-year">2026</span> Reto Virtual VZLA. Todos los derechos reservados.
                 </p>
             </div>
             <div class="flex flex-col items-center justify-center gap-6">
@@ -1555,18 +1556,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
         
 
-        // ========== SPLASH SCREEN ==========
-        // Activa float del Team FS después del entrance
-        setTimeout(function() {
-            var el = document.getElementById("teamfs-splash");
-            if (el) el.classList.add("floating");
-        }, 1050);
+        // ========== SPLASH SCREEN (ESTÁNDAR GROW STUDIO) ==========
+        const splashEl = document.getElementById("splash");
+        if (splashEl) {
+            const dismissSplash = () => {
+                splashEl.style.opacity = '0';
+                splashEl.style.pointerEvents = 'none';
+                setTimeout(() => splashEl.remove(), 400);
+            };
 
-        // Elimina splash del DOM al terminar completamente
-        setTimeout(function() {
-            var splash = document.getElementById("splash");
-            if (splash) splash.remove();
-        }, 4100);
+            // Omitir de inmediato al hacer tap o clic
+            splashEl.addEventListener('click', dismissSplash);
+            splashEl.addEventListener('touchstart', dismissSplash, { passive: true });
+
+            // Cierre automático fluido a los 1.5s + fade-out
+            setTimeout(dismissSplash, 1900);
+        }
 
  // ========= ACTIVAR LA INSTALACION DE LA APP ============
 

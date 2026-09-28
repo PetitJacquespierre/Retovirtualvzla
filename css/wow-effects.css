@@ -94,7 +94,7 @@
 /* body { cursor: none; } */
 /* a, button { cursor: none; } */
 
-/* Estilos para el Footer Bottom (Sandía Production) */
+/* Estilos para el Footer Bottom (Sandï¿½a Production) */
 .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; text-align: center; color: #64748b; font-size: 15px; }
 @media (min-width: 768px) { .footer-bottom { border-top: none; border-left: 1px solid rgba(255,255,255,0.1); padding-top: 0; padding-left: 2rem; text-align: right; } }
 .footer-bottom > div:first-child { color: rgba(255,255,255,0.4); font-size: 10px; margin-bottom: 8px; }
@@ -104,3 +104,26 @@
 /* EFECTO CAMALEON (NEON AZUL/NARANJA) */
 .chameleon-text { background: linear-gradient(90deg, #00D2FF, #FF5500, #00D2FF); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: chameleon 3s linear infinite; }
 @keyframes chameleon { 0% { background-position: 0% center; filter: drop-shadow(0 0 5px rgba(0,210,255,0.6)); } 50% { background-position: 100% center; filter: drop-shadow(0 0 5px rgba(255,85,0,0.6)); } 100% { background-position: 200% center; filter: drop-shadow(0 0 5px rgba(0,210,255,0.6)); } }
+
+/* ========================================= */
+/* GROW STUDIO - EASTER EGG C (TOQUE MAGICO) */
+/* ========================================= */
+@keyframes growMagicGlow {
+    0% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 5px rgba(0,210,255,0.4)); }
+    25% { transform: scale(1.15) rotate(-6deg); filter: drop-shadow(0 0 25px rgba(0,210,255,1)) drop-shadow(0 0 35px #FF5500); }
+    50% { transform: scale(1.22) rotate(360deg); filter: drop-shadow(0 0 35px #00D2FF) drop-shadow(0 0 45px #FF007F); }
+    75% { transform: scale(1.1) rotate(365deg); filter: drop-shadow(0 0 20px #00D2FF); }
+    100% { transform: scale(1) rotate(360deg); filter: drop-shadow(0 0 5px rgba(0,210,255,0.4)); }
+}
+.grow-magic-active {
+    animation: growMagicGlow 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+/* Clases CSS semanticas limpias */
+.badge-iron-series {
+    background: rgba(0, 210, 255, 0.08);
+    border: 1px solid rgba(0, 210, 255, 0.4);
+}
+.robot-coach-bg {
+    filter: contrast(1.2) brightness(0.9);
+}

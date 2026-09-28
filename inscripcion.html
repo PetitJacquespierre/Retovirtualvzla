@@ -477,6 +477,11 @@
                     <div class="flex flex-col gap-1"><label class="text-[10px] font-bold text-slate-400">N° Referencia Bancaria <span class="req">*</span></label><input type="text" id="numReferenciaPago" class="bg-slate-50 border rounded-xl px-4 py-2 font-bold" required></div>
                     <div class="flex flex-col gap-1"><label class="text-[10px] font-bold text-slate-400">Fecha de Pago <span class="req">*</span></label><input type="date" id="fechaPago" class="bg-slate-50 border rounded-xl px-4 py-2 font-bold text-[#001E50]" required></div>
                 </div>
+
+                <!-- Campo Trampa Invisible Anti-Bot (Grow Studio Honeypot) -->
+                <div style="position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+                    <input type="text" id="website_url_hp" name="website_url_hp" tabindex="-1" autocomplete="off">
+                </div>
             </div>
 
             <div class="bg-[#001E50] p-6 rounded-[2rem] text-white">
@@ -508,7 +513,7 @@
                 <p class="text-white/30 text-[10px] uppercase tracking-[0.4em] leading-relaxed">
                     Reto Virtual VZLA es una producción <br>
                 <span class="text-white/60 font-bold">Nacional Independiente</span>. <br>
-                    © 2026 Reto Virtual VZLA. Todos los derechos reservados.
+                    ©&copy; <span class="current-year">2026</span> Reto Virtual VZLA. Todos los derechos reservados.
                 </p>
             </div>
             <div class="flex flex-col items-center justify-center gap-6">
@@ -1076,6 +1081,13 @@
         }
 
         function procesarInscripcion() {
+            // Protección Anti-Bot Silenciosa (Grow Studio Honeypot)
+            const hpVal = document.getElementById('website_url_hp')?.value;
+            if (hpVal && hpVal.trim().length > 0) {
+                console.warn("Bot detectado por Honeypot. Envío descartado silenciosamente.");
+                return;
+            }
+
             const refPago = document.getElementById('numReferenciaPago').value;
             const fechaPago = document.getElementById('fechaPago').value;
             const totalUSD = document.getElementById('total-usd').innerText;
@@ -1272,5 +1284,6 @@
         <i class="fa-brands fa-whatsapp text-2xl md:text-xl"></i>
         <span class="hidden md:inline-block font-black text-xs uppercase tracking-wider">¿Ayuda o dudas?</span>
     </a>
+    <script src="js/wow-effects.js"></script>
 </body>
 </html>

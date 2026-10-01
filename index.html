@@ -137,11 +137,13 @@
             z-index: 9999;
             cursor: pointer;
             transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
-            animation: splash-exit 0.5s ease-out 1.5s forwards;
+            animation: splash-exit 0.5s ease-out 1.2s forwards;
+            pointer-events: auto;
         }
         @keyframes splash-exit {
             0%   { opacity: 1; }
-            100% { opacity: 0; pointer-events: none; visibility: hidden; }
+            99%  { opacity: 0; pointer-events: none; }
+            100% { opacity: 0; pointer-events: none; visibility: hidden; display: none; }
         }
         .splash-scene {
             position: relative;
@@ -236,7 +238,7 @@
 <body class="bg-white text-slate-900">
 
     <!-- ===================== SPLASH SCREEN ===================== -->
-    <div id="splash" title="Toca o haz clic para entrar" class="select-none">
+    <div id="splash" title="Toca o haz clic para entrar" class="select-none" onclick="this.style.opacity='0'; this.style.pointerEvents='none'; setTimeout(()=>{this.remove()}, 400);">
         <div class="splash-scene">
             <div class="splash-particles">
                 <div class="particle p1"></div><div class="particle p2"></div>
@@ -254,6 +256,17 @@
         </div>
         <div class="splash-progress"></div>
     </div>
+    <script>
+        // Desvanecimiento garantizado sin importar errores en otros scripts
+        setTimeout(function() {
+            var s = document.getElementById("splash");
+            if (s) {
+                s.style.opacity = '0';
+                s.style.pointerEvents = 'none';
+                setTimeout(function() { if (s && s.parentNode) s.remove(); }, 500);
+            }
+        }, 1600);
+    </script>
     <!-- ================== FIN SPLASH SCREEN =================== -->
 
 

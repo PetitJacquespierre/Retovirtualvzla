@@ -835,7 +835,14 @@
         // Inicialización al cargar la página
         window.addEventListener('DOMContentLoaded', () => {
             try {
-                cargarRanking();
+                // Detectar si viene una edición seleccionada por URL (ej: evidencias2.html?edicion=4ta)
+                const urlParams = new URLSearchParams(window.location.search);
+                const edicionUrl = urlParams.get('edicion');
+                if (edicionUrl === '4ta') {
+                    seleccionarEdicion('4ta');
+                } else {
+                    cargarRanking();
+                }
             } catch (err) {
                 console.warn("Error no bloqueante al cargar ranking inicial:", err);
             }

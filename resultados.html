@@ -169,8 +169,11 @@
                 <select id="selector-edicion" onchange="cambiarEdicion(this.value)" class="w-full bg-[#101626] text-white font-black text-center px-6 py-4 rounded-2xl border-2 border-[#00D2FF]/40 shadow-xl shadow-[#00D2FF]/10 uppercase tracking-widest cursor-pointer focus:outline-none focus:border-[#00D2FF] transition-all">
                     <!-- GRUPO 2026 -->
                     <optgroup label="🏆 TEMPORADA 2026">
-                        <option value="edicion2">5K - 2da Edición (Junio)</option>
-                        <option value="edicion1">5K - 1era Edición (Marzo)</option>
+                        <option value="edicion2">5K - 2da Edición (Junio) • Oficial</option>
+                        <option value="edicion1">5K - 1era Edición (Marzo) • Oficial</option>
+                        <option value="edicion3">5K - 3era Edición • En Curso (Evidencias)</option>
+                        <option value="edicion4">5K - 4ta Edición • Próxima (Evidencias)</option>
+                        <option value="edicion10k">10K - Edición Especial • Noviembre</option>
                     </optgroup>
                 </select>
                 <div class="absolute inset-y-0 right-5 flex items-center pointer-events-none">
@@ -196,6 +199,30 @@
             <div class="text-right">
                 <span id="estado-carrera" class="text-[10px] font-black text-[#00D2FF] uppercase tracking-[0.25em] bg-[#001E50] border border-[#00D2FF]/30 px-5 py-2.5 rounded-full shadow-md">---</span>
             </div>
+        </div>
+
+        <!-- BANNER DE ENLACE INTELIGENTE A EVIDENCIAS (Oculto por defecto, visible para 3ra/4ta) -->
+        <div id="banner-ir-evidencias" class="hidden card-dark rounded-3xl p-6 md:p-8 border border-[#00D2FF]/40 bg-gradient-to-r from-[#001E50] via-[#0A1628] to-[#0A0E1A] shadow-xl shadow-[#00D2FF]/10 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-5 text-left">
+                <div class="w-14 h-14 rounded-2xl bg-[#00D2FF]/20 flex items-center justify-center text-[#00D2FF] text-2xl flex-shrink-0 animate-pulse">
+                    <i class="fa-solid fa-stopwatch"></i>
+                </div>
+                <div>
+                    <span class="inline-block text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.25em] mb-1">
+                        CARRERA EN DESARROLLO • EVIDENCIAS EN VIVO
+                    </span>
+                    <h3 id="banner-evidencias-titulo" class="text-lg md:text-xl font-black text-white uppercase italic">
+                        Esta edición está validando tiempos activamente
+                    </h3>
+                    <p class="text-slate-300 text-xs mt-1">
+                        Los atletas están enviando sus capturas oficiales y consultando su split en el Centro de Evidencias.
+                    </p>
+                </div>
+            </div>
+            <a id="btn-enlace-evidencias" href="evidencias2.html" class="flex-shrink-0 bg-[#00D2FF] text-[#001E50] font-black px-8 py-4 rounded-2xl hover:scale-105 transition-all text-xs uppercase tracking-widest shadow-lg shadow-[#00D2FF]/30 flex items-center gap-2">
+                <span>Ir al Centro de Evidencias</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
         </div>
 
         <!-- FILTROS DE GÉNERO -->
@@ -343,27 +370,32 @@
             },
             "edicion3": {
                 gid: "PENDIENTE", 
-                titulo: "Próximamente",
-                fecha: "3era Edición 2026",
-                estado: "En Planificación",
+                titulo: "3ra Edición 5K",
+                fecha: "3era Edición: Octubre 2026",
+                estado: "Evidencias en Curso",
                 nombreCorto: "2026_Ed3_5K",
-                imagenCertificado: "fondo-certificado-ed3.webp"
+                esEvidencias: true,
+                paramEvidencias: "3ra",
+                imagenCertificado: "fondo-certificado.webp"
             },
             "edicion4": {
                 gid: "PENDIENTE", 
-                titulo: "Próximamente",
-                fecha: "4ta Edición 2026",
-                estado: "En Planificación",
+                titulo: "4ta Edición 5K",
+                fecha: "4ta Edición: Octubre 2026",
+                estado: "Evidencias Abiertas",
                 nombreCorto: "2026_Ed4_5K",
-                imagenCertificado: "fondo-certificado-ed4.webp"
+                esEvidencias: true,
+                paramEvidencias: "4ta",
+                imagenCertificado: "fondo-certificado.webp"
             },
             "edicion10k": {
                 gid: "PENDIENTE", 
-                titulo: "Reto Especial",
-                fecha: "10K: Edición 2026",
-                estado: "En Planificación",
+                titulo: "Edición Especial 10K",
+                fecha: "10K: Noviembre 2026",
+                estado: "Inscripciones Abiertas",
                 nombreCorto: "2026_Ed10K",
-                imagenCertificado: "fondo-certificado-10k.webp"
+                esEvidencias: false,
+                imagenCertificado: "fondo-certificado.webp"
             },
             // TEMPORADA 2027
             "edicion1_2027": {
@@ -372,6 +404,7 @@
                 fecha: "1era Edición 2027",
                 estado: "Próximo Año",
                 nombreCorto: "2027_Ed1_5K",
+                esEvidencias: false,
                 imagenCertificado: "fondo-certificado-2027.webp"
             }
         };
@@ -395,6 +428,19 @@
             document.getElementById('mi-certificado-objetivo').style.display = 'none';
             document.getElementById('btn-descargar').classList.add('hidden');
             document.getElementById('input-dorsal').value = '';
+
+            // Mostrar/Ocultar Banner Cruzado a Evidencias
+            const bannerEv = document.getElementById('banner-ir-evidencias');
+            const btnEnlaceEv = document.getElementById('btn-enlace-evidencias');
+            const bannerTitulo = document.getElementById('banner-evidencias-titulo');
+
+            if (data.esEvidencias) {
+                bannerEv.classList.remove('hidden');
+                btnEnlaceEv.href = `evidencias2.html?edicion=${data.paramEvidencias}`;
+                bannerTitulo.innerText = `Esta ${data.titulo} se valida en tiempo real`;
+            } else {
+                bannerEv.classList.add('hidden');
+            }
 
             cargarDatosDesdeExcel();
         }

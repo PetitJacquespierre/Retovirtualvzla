@@ -177,7 +177,7 @@
             position: absolute; bottom: 0; left: 0;
             height: 3px; width: 0%;
             background: linear-gradient(to right, #00d4ff, #dc32c8, #ffdd00);
-            animation: progress-fill 1.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: progress-fill 2.0s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes progress-fill {
             0%   { width: 0%; }
@@ -1531,13 +1531,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 splashEl.addEventListener('click', dismissSplash);
                 splashEl.addEventListener('touchstart', dismissSplash, { passive: true });
 
-                // Cierre automático seguro tras 1.4 segundos de animación
-                setTimeout(dismissSplash, 1400);
+                // Cierre automático seguro a los 2 segundos exactos
+                setTimeout(dismissSplash, 2000);
 
-                // Salvavidas absoluto a los 3 segundos
+                // Salvavidas absoluto a los 3.5 segundos
                 setTimeout(() => {
                     if (document.getElementById('splash')) dismissSplash();
-                }, 3000);
+                }, 3500);
             }
         }
 

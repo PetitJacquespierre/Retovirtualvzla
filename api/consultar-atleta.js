@@ -1,6 +1,5 @@
 // Endpoint Serverless Seguro — Estándar Grow Studio
-// Oculta el CSV de Google Sheets y filtra la información en el servidor de Vercel.
-// El cliente NUNCA recibe la base de datos completa.
+// Permite consultar atleta, verificar evidencias y obtener ranking público sin exponer el CSV privado.
 
 export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -9,9 +8,11 @@ export default async function handler(req, res) {
 
     if (req.method === 'OPTIONS') return res.status(200).end();
 
-    const GOOGLE_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5yMHsenxCWE5kZBDUZ8UcYqDtdAHstfqXcvWkuYZPQ_4n2xSrfs6ptk7k21r1kcMHHLtWjz8SEHwl/pub?gid=244601533&single=true&output=csv";
+    const SPREADSHEET_ID = "1vg9nwhkFxwN4qVzjkfmXTrIVoHVYxeMH3-PXjqzeWao";
+    const CSV_BASE = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&`;
 
     const accion = req.query.accion || (req.body && req.body.accion) || 'consultar';
+    const edicion = req.query.edicion || (req.body && req.body.edicion) || '3ra';
     const ciRaw = req.query.ci || (req.body && req.body.ci) || '';
     const telRaw = req.query.tel || (req.body && req.body.tel) || '';
 
@@ -19,34 +20,130 @@ export default async function handler(req, res) {
     const telFiltro = String(telRaw).replace(/\D/g, '').trim();
 
     try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 6500);
+        // =========================================================================
+        // ACCIÓN 1: OBTENER RANKING PÚBLICO DE EVIDENCIAS (3ra o 4ta Edición)
+        // =========================================================================
+        if (accion === 'ranking_evidencias') {
+            const sheetName = (edicion === '4ta') ? 'Evidencias_4ta' : 'Evidencias_3ra';
+            const url = `${CSV_BASE}sheet=${encodeURIComponent(sheetName)}&t=${Date.now()}`;
+            
+            const resp = await fetch(url);
+            if (!resp.ok) {
+                return res.status(502).json({ error: 'No se pudo conectar con la hoja de evidencias' });
+            }
+
+            const csvText = await resp.text();
+            const filas = csvText.split(/\r?\n/).filter(f => f.trim().length > 0);
+            
+            if (filas.length <= 1) {
+                return res.status(200).json({ ranking: [] });
+            }
+
+            const parseCsvLine = (line) => line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+            const headers = parseCsvLine(filas[0]).map(h => h.toLowerCase());
+
+            const idxDorsal = headers.findIndex(h => h.includes('dorsal'));
+            const idxNombre = headers.findIndex(h => h.includes('nombre'));
+            const idxGenero = headers.findIndex(h => h.includes('genero') || h.includes('sexo'));
+            const idxTiempo = headers.findIndex(h => h.includes('tiempo'));
+            const idxEstatus = headers.findIndex(h => h.includes('estatus') || h.includes('estado'));
+
+            let lista = [];
+
+            for (let i = 1; i < filas.length; i++) {
+                const cols = parseCsvLine(filas[i]);
+                const dorsal = (idxDorsal !== -1 ? cols[idxDorsal] : cols[3]) || 'S/N';
+                const nombre = (idxNombre !== -1 ? cols[idxNombre] : cols[4]) || 'Corredor';
+                const genero = (idxGenero !== -1 ? cols[idxGenero] : cols[5]) || '-';
+                const tiempo = (idxTiempo !== -1 ? cols[idxTiempo] : cols[6]) || 'Pendiente';
+                const estatus = (idxEstatus !== -1 ? cols[idxEstatus] : cols[8]) || 'Aprobado';
+
+                // Solo incluimos los validados o todos según convenga
+                lista.push({
+                    dorsal: String(dorsal).replace(/\D/g, '').padStart(3, '0'),
+                    nombre: nombre,
+                    genero: genero.toUpperCase().startsWith('F') ? 'FEMENINO' : 'MASCULINO',
+                    tiempo: tiempo,
+                    estatus: estatus
+                });
+            }
+
+            return res.status(200).json({ ranking: lista });
+        }
+
+        // =========================================================================
+        // ACCIÓN 2: VERIFICAR SI CÉDULA YA TIENE EVIDENCIA EN ESA EDICIÓN
+        // =========================================================================
+        if (accion === 'verificar_evidencia') {
+            if (!ci || ci.length < 5) {
+                return res.status(400).json({ error: 'Cédula inválida o requerida' });
+            }
+
+            const sheetName = (edicion === '4ta') ? 'Evidencias_4ta' : 'Evidencias_3ra';
+            const url = `${CSV_BASE}sheet=${encodeURIComponent(sheetName)}&t=${Date.now()}`;
+            
+            const resp = await fetch(url);
+            if (!resp.ok) {
+                return res.status(502).json({ error: 'No se pudo consultar evidencias' });
+            }
+
+            const csvText = await resp.text();
+            const filas = csvText.split(/\r?\n/).filter(f => f.trim().length > 0);
+            
+            let yaSubio = false;
+            let registroPrevio = null;
+
+            for (let i = 1; i < filas.length; i++) {
+                const cols = filas[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+                const filaCI = cols[2] ? cols[2].replace(/\D/g, '').trim() : '';
+
+                if (filaCI === ci) {
+                    yaSubio = true;
+                    registroPrevio = {
+                        dorsal: cols[3] || '',
+                        nombre: cols[4] || '',
+                        tiempo: cols[6] || '',
+                        fecha: cols[0] || '',
+                        estatus: cols[8] || 'Pendiente'
+                    };
+                    break;
+                }
+            }
+
+            return res.status(200).json({
+                yaSubio: yaSubio,
+                registro: registroPrevio
+            });
+        }
+
+        // =========================================================================
+        // ACCIÓN 3: CONSULTA GENERAL DE ATLETA (INSCRIPCIONES / DORSAL / SALDO)
+        // =========================================================================
+        const GOOGLE_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5yMHsenxCWE5kZBDUZ8UcYqDtdAHstfqXcvWkuYZPQ_4n2xSrfs6ptk7k21r1kcMHHLtWjz8SEHwl/pub?gid=244601533&single=true&output=csv";
 
         const response = await fetch(GOOGLE_CSV_URL + "&t=" + Date.now(), {
-            signal: controller.signal,
             headers: { 'User-Agent': 'Vercel-Serverless-Atleta-Fetcher' }
         });
-        clearTimeout(timeoutId);
 
         if (!response.ok) {
-            return res.status(502).json({ error: 'Error al consultar la hoja de cálculo' });
+            return res.status(502).json({ error: 'Error al consultar la hoja de inscripciones' });
         }
 
         const csvText = await response.text();
         const filas = csvText.split(/\r?\n/).filter(f => f.trim().length > 0);
 
-        // Caso 1: Obtener solo el total de dorsales registrados (para el contador silencioso)
         if (accion === 'total_dorsales') {
             const total = filas.length > 1 ? filas.length - 1 : 0;
             return res.status(200).json({ total });
         }
 
-        // Si es consulta de atleta, se requiere cédula
         if (!ci || ci.length < 5) {
             return res.status(400).json({ error: 'Cédula inválida o requerida' });
         }
 
-        const headers = filas[0].split(',').map(h => h.trim().toLowerCase());
+        const parseCsv = (line) => line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+        const headers = parseCsv(filas[0]).map(h => h.toLowerCase());
+
         const idxDorsal = 0;
         const idxCI = headers.findIndex(h => h.includes('cedula') || h.includes('ci'));
         const idxNombre = headers.findIndex(h => h.includes('nombre'));
@@ -60,7 +157,7 @@ export default async function handler(req, res) {
         let registrosAtleta = [];
 
         for (let i = 1; i < filas.length; i++) {
-            const col = filas[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+            const col = parseCsv(filas[i]);
             const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
 
             if (filaCI === ci) {
@@ -91,7 +188,7 @@ export default async function handler(req, res) {
                 registrosAtleta.push({
                     dorsal: col[idxDorsal] || 'S/N',
                     nombre: col[idxNombre] || 'Atleta',
-                    tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '', // Ofuscación de teléfono
+                    tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
                     carrera: carreraNombre,
                     saldoNum: montoNum,
                     saldoRaw: valorSaldoRaw,

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Dorsal 10K Edición Especial - Reto Virtual VZLA 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&family=Oswald:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: radial-gradient(circle at center, #0e1e38 0%, #060b17 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+    padding: 25px;
+    color: white;
+  }
+  .controls-card {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(0, 210, 255, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    padding: 16px 24px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .field-group label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    font-weight: 800;
+  }
+  .controls-card input {
+    background: #020617;
+    border: 1.5px solid #334155;
+    color: #00D2FF;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 900;
+    outline: none;
+    transition: all 0.2s;
+  }
+  .controls-card input:focus {
+    border-color: #00D2FF;
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+  }
+  .btn-descargar {
+    background: linear-gradient(135deg, #00D2FF 0%, #FF007A 100%);
+    color: #FFFFFF;
+    border: none;
+    font-weight: 900;
+    padding: 12px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 13px;
+    box-shadow: 0 4px 20px rgba(255, 0, 122, 0.4);
+    transition: all 0.2s;
+    margin-top: 18px;
+  }
+  .btn-descargar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 0, 122, 0.6);
+  }
+  #dorsal-container {
+    width: 820px;
+    max-width: 95vw;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 210, 255, 0.2);
+    border-radius: 38px;
+    overflow: hidden;
+  }
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>
+    <link rel="stylesheet" href="css/wow-effects.css">
+</head>
+<body>
+
+<div class="controls-card">
+  <div class="field-group">
+    <label>Número de Dorsal</label>
+    <input type="text" id="input-dorsal" value="1001" oninput="actualizar()">
+  </div>
+  <div class="field-group">
+    <label>Nombre del Atleta</label>
+    <input type="text" id="input-nombre" value="MATYOLY MOLINA" size="25" oninput="actualizar()">
+  </div>
+  <button class="btn-descargar" onclick="descargarPNG()">⬇ Descargar PNG HD (2K)</button>
+</div>
+
+<div id="dorsal-container">
+<svg id="svg-dorsal" viewBox="0 0 1024 768" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Ojales metálicos cromados -->
+    <radialGradient id="grommet-metal" cx="45%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="35%" stop-color="#cbd5e1"/>
+      <stop offset="70%" stop-color="#64748b"/>
+      <stop offset="90%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </radialGradient>
+
+    <!-- Gradientes deportivos -->
+    <linearGradient id="grad-bar-left" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#00B4D8"/>
+    </linearGradient>
+
+    <linearGradient id="grad-bar-right" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF0066"/>
+      <stop offset="100%" stop-color="#E60067"/>
+    </linearGradient>
+
+    <clipPath id="clip-card">
+      <rect x="0" y="0" width="1024" height="768" rx="38"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#clip-card)">
+    <!-- 1. Fondo Blanco Nítido -->
+    <rect width="1024" height="768" fill="#FFFFFF"/>
+
+    <!-- 2. Acentos geométricos de velocidad en laterales -->
+    <g opacity="0.9">
+      <polygon points="12,230 32,210 42,285 22,305" fill="#00D2FF" opacity="0.6"/>
+      <polygon points="8,335 22,320 28,390 14,405" fill="#FF007A" opacity="0.6"/>
+      <polygon points="1012,230 992,210 982,285 1002,305" fill="#FF007A" opacity="0.6"/>
+      <polygon points="1016,335 1002,320 996,390 1010,405" fill="#00D2FF" opacity="0.6"/>
+    </g>
+
+    <!-- 3. CABECERA: LOGO OFICIAL DEL EVENTO -->
+    <image href="img/RV_logo_oficial.webp" x="422" y="24" width="180" height="150" preserveAspectRatio="xMidYMid meet"/>
+
+    <!-- 4. NÚMERO DORSAL GIGANTE (Con corte itálico moderno y relieve) -->
+    <text id="dorsal-shadow" x="516" y="446" font-family="'Oswald', sans-serif" font-weight="700" font-size="285" fill="#d1d5db" text-anchor="middle" letter-spacing="-3">1001</text>
+    <text id="dorsal-num" x="512" y="440" font-family="'Oswald', sans-serif" font-weight="700" font-size="285" fill="#001438" text-anchor="middle" letter-spacing="-3">1001</text>
+
+    <!-- 5. NOMBRE DEL ATLETA -->
+    <text id="atleta-nombre" x="512" y="555" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="52" fill="#FF007A" text-anchor="middle" letter-spacing="3">MATYOLY MOLINA</text>
+
+    <!-- 6. FRANJA INFERIOR: EDICIÓN ESPECIAL | 10K 2026 -->
+    <g transform="translate(0, 620)">
+      <!-- Panel Izquierdo: Azul Cian Brillante -->
+      <polygon points="0,0 525,0 445,148 0,148" fill="url(#grad-bar-left)"/>
+
+      <!-- Barras divisorias diagonales de carrera -->
+      <polygon points="535,0 555,0 475,148 455,148" fill="#001438"/>
+      <polygon points="565,0 580,0 500,148 485,148" fill="#00D2FF"/>
+
+      <!-- Panel Derecho: Magenta Neón -->
+      <polygon points="550,0 1024,0 1024,148 470,148" fill="url(#grad-bar-right)"/>
+
+      <!-- TEXTO IZQUIERDO: EDICIÓN ESPECIAL -->
+      <text x="245" y="96" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="46" fill="#001438" text-anchor="middle" letter-spacing="1">EDICIÓN ESPECIAL</text>
+      
+      <!-- TEXTO DERECHO: 10K 2026 -->
+      <text x="765" y="98" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="70" fill="#FFFFFF" text-anchor="middle" letter-spacing="3">10K 2026</text>
+    </g>
+
+    <!-- 7. BORDE EXTERIOR -->
+    <rect x="0" y="0" width="1024" height="768" rx="38" fill="none" stroke="#e2e8f0" stroke-width="4"/>
+
+    <!-- 8. LOS 4 OJALES METÁLICOS -->
+    <circle cx="56" cy="56" r="24" fill="url(#grommet-metal)"/>
+    <circle cx="56" cy="56" r="13" fill="#020617"/>
+    <circle cx="968" cy="56" r="24" fill="url(#grommet-metal)"/>
+    <circle cx="968" cy="56" r="13" fill="#020617"/>
+    <circle cx="56" cy="710" r="24" fill="url(#grommet-metal)"/>
+    <circle cx="56" cy="710" r="13" fill="#020617"/>
+    <circle cx="968" cy="710" r="24" fill="url(#grommet-metal)"/>
+    <circle cx="968" cy="710" r="13" fill="#020617"/>
+  </g>
+</svg>
+</div>
+
+<script>
+function actualizar() {
+  const num = document.getElementById('input-dorsal').value.trim() || '1001';
+  const nom = document.getElementById('input-nombre').value.trim().toUpperCase() || 'ATLETA';
+  document.getElementById('dorsal-num').textContent = num;
+  document.getElementById('dorsal-shadow').textContent = num;
+  document.getElementById('atleta-nombre').textContent = nom;
+}
+
+function descargarPNG() {
+  const svg = document.getElementById('svg-dorsal');
+  const svgData = new XMLSerializer().serializeToString(svg);
+  const canvas = document.createElement('canvas');
+  canvas.width = 2048;
+  canvas.height = 1536;
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  img.onload = function() {
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    const a = document.createElement('a');
+    const num = document.getElementById('dorsal-num').textContent;
+    const nom = document.getElementById('atleta-nombre').textContent.replace(/\s+/g,'_');
+    a.download = `Dorsal_10K_Especial_${num}_${nom}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  };
+  img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+}
+</script>
+
+    <script src="js/wow-effects.js"></script>
+</body>
+</html>

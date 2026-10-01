@@ -3,27 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sube tus Evidencias - Reto Virtual VZLA</title>
+    <title>Portal Oficial de Evidencias y Ranking - Reto Virtual VZLA</title>
     <link rel="icon" type="image/webp" href="img/favicon.webp">
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CQ0KVLFL1W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-CQ0KVLFL1W');
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
+        body { font-family: 'Inter', sans-serif; background-color: #0A0A0C; color: #f8fafc; }
+        h1, h2, h3, h4, .font-heading { font-family: 'Montserrat', sans-serif; }
+
+        .bg-boston-navy { background-color: #001E50; }
+        .text-accent { color: #00D2FF; } 
+        .bg-accent { background-color: #00D2FF; }
+        .border-accent { border-color: #00D2FF; }
+
+        .card-dark {
+            background: linear-gradient(145deg, #101626, #0A0E1A);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+        }
+
+        .input-dark {
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            transition: all 0.25s ease;
+        }
+        .input-dark:focus {
+            outline: none;
+            border-color: #00D2FF;
+            background-color: rgba(0, 210, 255, 0.05);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.25);
+        }
+
+        .time-box {
+            background: rgba(0, 30, 80, 0.5);
+            border: 1.5px solid rgba(0, 210, 255, 0.3);
+            transition: all 0.2s;
+        }
+        .time-box:focus-within {
+            border-color: #00D2FF;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+        }
+
+        /* Estilos del Certificado para html2canvas */
+        .contenedor-certificado-objetivo { 
+            position: relative; 
+            width: 100%; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            display: none; 
+        }
+        .imagen-fondo-certificado { width: 100%; height: auto; display: block; }
+        .texto-nombre-certificado { 
+            position: absolute; 
+            top: 35%; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            color: #FFFFFF; 
+            font-size: clamp(16px, 4.5vw, 36px); 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            margin: 0; 
+            white-space: nowrap; 
+            font-family: 'Montserrat', sans-serif; 
+        }
+        .texto-dorsal-certificado, .texto-tiempo-certificado { 
+            position: absolute; 
+            bottom: 27%; 
+            color: #FFFFFF; 
+            font-size: clamp(14px, 3.5vw, 26px); 
+            font-weight: 800; 
+            margin: 0; 
+            font-family: 'Montserrat', sans-serif; 
+        }
+        .texto-dorsal-certificado { left: 25%; }
+        .texto-tiempo-certificado { right: 10%; }  
     </style>
     <link rel="stylesheet" href="css/wow-effects.css">
 </head>
-<body class="text-slate-900 bg-slate-50">
+<body class="min-h-screen flex flex-col antialiased selection:bg-[#00D2FF] selection:text-[#001E50]">
 
     <!-- BARRA SUPERIOR -->
     <div class="bg-[#001E50] text-white py-2 text-center text-[10px] font-bold uppercase tracking-[0.4em] z-50 relative border-b border-white/10">
-        VALIDACIÓN OFICIAL DE TIEMPOS
+        VALIDACIÓN OFICIAL DE TIEMPOS • TEMPORADA 2026
     </div>
 
-    <nav class="bg-[#001E50] sticky top-0 z-50 shadow-2xl">
+    <!-- NAVBAR OFICIAL -->
+    <nav class="bg-[#001E50] sticky top-0 z-50 shadow-2xl border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20 md:h-28">
                 
@@ -35,7 +117,7 @@
                 <div class="hidden lg:flex items-center space-x-4 xl:space-x-6">
                     <a href="index.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Inicio</a>
                     <a href="index.html#ediciones" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Calendario</a>
-                    <a href="evidencias2.html" class="chameleon-text text-[10px] xl:text-xs font-black uppercase tracking-widest transition-all drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">Evidencia</a>
+                    <a href="evidencias2.html" class="chameleon-text text-[10px] xl:text-xs font-black uppercase tracking-widest transition-all drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">Evidencias</a>
                     <a href="resultados.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Resultados</a>
                     <a href="entrenador.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Entrenador IA</a>
 
@@ -84,11 +166,12 @@
             </div>
         </div>
 
+        <!-- MENÚ MÓVIL -->
         <div id="mobileMenu" class="fixed inset-0 bg-[#001E50] z-40 transform translate-x-full transition-transform duration-300 lg:hidden">
             <div class="flex flex-col items-center justify-center h-full space-y-5 px-8">
                 <a href="index.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Inicio</a>
                 <a href="index.html#ediciones" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Calendario</a>
-                <a href="evidencias2.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Evidencia</a>
+                <a href="evidencias2.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Evidencias</a>
                 <a href="resultados.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Resultados</a>
                 <a href="entrenador.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Entrenador IA</a>
                 
@@ -106,102 +189,654 @@
         </div>
     </nav>
 
-    <!-- SECCIÓN PRINCIPAL (BOTÓN CTA) -->
-    <main class="max-w-3xl mx-auto px-6 py-16 text-center">
-        
-        <div class="bg-white p-10 md:p-16 rounded-[3rem] shadow-2xl border border-slate-100 relative overflow-hidden">
-            
-            <!-- Elemento decorativo de fondo -->
-            <div class="absolute -top-24 -right-24 w-64 h-64 bg-[#00D2FF] rounded-full blur-[100px] opacity-10 pointer-events-none"></div>
+    <!-- HEADER DE PÁGINA -->
+    <header class="relative py-12 md:py-16 px-4 text-center overflow-hidden bg-gradient-to-b from-[#001E50] to-[#0A0A0C]">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#00D2FF]/15 via-transparent to-transparent pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto relative z-10">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[#00D2FF] text-[11px] font-bold uppercase tracking-[0.2em] mb-4">
+                <i class="fa-solid fa-stopwatch animate-pulse"></i> Carga Directa & Ranking en Vivo
+            </span>
+            <h1 class="text-3xl md:text-6xl font-black text-white uppercase tracking-tighter italic mb-4 leading-none">
+                CENTRO DE <span class="text-[#00D2FF]">EVIDENCIAS</span>
+            </h1>
+            <p class="text-slate-400 text-xs md:text-sm max-w-xl mx-auto uppercase tracking-widest font-medium">
+                Sube tu tiempo oficial con captura de pantalla, consulta tu posición en el podio y genera tu diploma de finisher.
+            </p>
 
-            <div class="relative z-10">
-                <div class="inline-flex items-center justify-center w-20 h-20 bg-[#001E50] text-[#00D2FF] rounded-full text-4xl mb-6 shadow-xl border-4 border-white">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                </div>
-                
-                <h1 class="text-[#001E50] font-black text-3xl md:text-5xl uppercase tracking-tighter italic mb-4 leading-none">
-                    Reporta tus <br> Kilómetros
-                </h1>
-                
-                <p class="text-slate-500 text-sm md:text-base font-medium mb-10 max-w-lg mx-auto">
-                    El asfalto ya habló. Es momento de validar tu esfuerzo. Haz clic en el botón de abajo para ingresar tus datos y subir las capturas de tu reloj o app (Strava, Garmin, Nike Run, etc.).
-                </p>
-
-                <!-- BOTÓN DE ACCIÓN GIGANTE CON TU LINK -->
-                <a href="https://forms.gle/BiARj8feGLnqgv9W8" target="_blank" rel="noopener noreferrer" 
-                   class="inline-flex items-center justify-center gap-3 bg-[#00D2FF] text-[#001E50] px-8 py-5 rounded-2xl font-black uppercase tracking-[0.1em] text-sm md:text-base shadow-xl hover:scale-105 transition-all border-2 border-[#00D2FF] hover:bg-white hover:text-[#00D2FF] w-full md:w-auto">
-                    Subir Evidencias Aquí <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
-
-                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-6">
-                    <i class="fa-solid fa-lock mr-1"></i> Formulario seguro de validación
-                </p>
+            <!-- SELECTOR DE CARRERA PRINCIPAL -->
+            <div class="flex flex-wrap justify-center items-center gap-3 mt-8">
+                <button onclick="seleccionarEdicion('3ra')" id="btn-ed-3ra" class="px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-[#00D2FF] text-[#001E50] shadow-lg shadow-[#00D2FF]/20 flex items-center gap-2">
+                    <i class="fa-solid fa-person-running text-sm"></i> 3ra Edición 5K
+                </button>
+                <button onclick="seleccionarEdicion('4ta')" id="btn-ed-4ta" class="px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex items-center gap-2">
+                    <i class="fa-solid fa-fire-flame-curved text-sm"></i> 4ta Edición 5K
+                </button>
+                <button onclick="seleccionarEdicion('10k')" id="btn-ed-10k" class="px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/5 text-white/30 border border-white/5 cursor-not-allowed flex items-center gap-2" title="Disponible en Noviembre">
+                    <i class="fa-solid fa-lock text-xs"></i> 10K Especial <span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-amber-300">Pronto</span>
+                </button>
             </div>
         </div>
-        
-    </main>
+    </header>
 
-        <footer class="bg-[#001E50] py-20 px-4 border-t border-white/5">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-16 text-center md:text-left">
-            <div>
-                <img src="img/RV-Isotipo-sinfondo.webp" class="h-14 mx-auto md:mx-0 mb-6 grayscale brightness-200 opacity-40">
-                <p class="text-white/30 text-[10px] uppercase tracking-[0.4em] leading-relaxed">
-                    Reto Virtual VZLA es una producción <br>
-                <span class="text-white/60 font-bold">Nacional Independiente</span>. <br>
-                    ©&copy; <span class="current-year">2026</span> Reto Virtual VZLA. Todos los derechos reservados.
-                </p>
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full space-y-16">
+
+        <!-- ============================================================== -->
+        <!-- SECCIÓN 1: FORMULARIO DE CARGA DE EVIDENCIA -->
+        <!-- ============================================================== -->
+        <section id="seccion-formulario" class="max-w-3xl mx-auto">
+            <div class="card-dark rounded-[2.5rem] p-6 md:p-12 relative overflow-hidden">
+                
+                <!-- Decoración -->
+                <div class="absolute -right-20 -top-20 w-56 h-56 bg-[#00D2FF]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Cabecera de la tarjeta -->
+                <div class="text-center mb-8">
+                    <span id="badge-edicion-form" class="inline-block bg-[#001E50] text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.25em] px-4 py-1.5 rounded-full border border-[#00D2FF]/30 mb-3">
+                        Reportando para 3ra Edición 5K
+                    </span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white uppercase tracking-tight italic">
+                        Valida tu Tiempo Oficial
+                    </h2>
+                    <p class="text-slate-400 text-xs mt-2 max-w-md mx-auto">
+                        Ingresa tu cédula para ubicar tu dorsal y nombre registrado. Si corriste más de 5K, coloca tu tiempo total y el comité validará el split exacto de los 5.00K.
+                    </p>
+                </div>
+
+                <!-- Formulario -->
+                <form id="formEvidencia" onsubmit="enviarEvidencia(event)" class="space-y-6">
+
+                    <!-- Campo 1: Cédula con verificación de inscripción y duplicados -->
+                    <div>
+                        <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2 flex items-center justify-between">
+                            <span><i class="fa-solid fa-id-card text-[#00D2FF] mr-2"></i>Número de Cédula (V o E)</span>
+                            <span id="estado-ci" class="text-[10px] text-slate-400 font-normal">Solo números</span>
+                        </label>
+                        <div class="relative">
+                            <input type="text" id="inputCedula" required placeholder="Ej: 24788261" onblur="verificarCedula()" 
+                                   class="input-dark w-full px-5 py-4 rounded-2xl text-center md:text-left text-lg font-bold tracking-wider">
+                            <button type="button" onclick="verificarCedula()" class="absolute right-2 top-2 bottom-2 px-4 rounded-xl bg-[#001E50] text-[#00D2FF] text-xs font-black uppercase tracking-wider hover:bg-[#00D2FF] hover:text-[#001E50] transition-all">
+                                Verificar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Datos autocompletados (Nombre y Dorsal) -->
+                    <div id="box-datos-atleta" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+                        <div>
+                            <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider">Atleta</span>
+                            <span id="atleta-nombre" class="font-black text-white text-sm">---</span>
+                        </div>
+                        <div class="sm:text-right">
+                            <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider">Dorsal Asignado</span>
+                            <span id="atleta-dorsal" class="font-black text-[#00D2FF] text-lg">#---</span>
+                        </div>
+                        <input type="hidden" id="hiddenNombre" value="">
+                        <input type="hidden" id="hiddenDorsal" value="">
+                        <input type="hidden" id="hiddenGenero" value="">
+                    </div>
+
+                    <!-- Alerta de ya subida (Pantalla de bloqueo si ya envió) -->
+                    <div id="alerta-ya-subio" class="hidden p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-center space-y-2">
+                        <i class="fa-solid fa-circle-check text-2xl text-amber-400"></i>
+                        <h4 class="font-black uppercase text-sm tracking-wider">¡Evidencia Ya Registrada!</h4>
+                        <p class="text-xs text-amber-200/80" id="mensaje-ya-subio">Ya has enviado tu tiempo para esta edición. Tu reporte se encuentra en revisión oficial.</p>
+                    </div>
+
+                    <!-- Contenedor del resto del formulario (Se bloquea si ya envió) -->
+                    <div id="bloque-inputs-evidencia" class="space-y-6">
+
+                        <!-- Campo 2: Ingreso estructurado de tiempo [HH] [MM] [SS] -->
+                        <div>
+                            <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2">
+                                <i class="fa-solid fa-clock text-[#00D2FF] mr-2"></i>Tiempo Cronometrado
+                            </label>
+                            
+                            <div class="grid grid-cols-3 gap-3 max-w-md mx-auto">
+                                <!-- Horas -->
+                                <div class="time-box rounded-2xl p-3 text-center">
+                                    <span class="block text-[9px] font-black text-[#00D2FF] uppercase tracking-widest mb-1">Horas (HH)</span>
+                                    <input type="number" id="tiempoHH" min="0" max="10" placeholder="00" value="00"
+                                           class="w-full bg-transparent text-center font-black text-2xl text-white focus:outline-none">
+                                </div>
+                                <!-- Minutos -->
+                                <div class="time-box rounded-2xl p-3 text-center">
+                                    <span class="block text-[9px] font-black text-[#00D2FF] uppercase tracking-widest mb-1">Minutos (MM)</span>
+                                    <input type="number" id="tiempoMM" min="0" max="59" placeholder="24" required
+                                           class="w-full bg-transparent text-center font-black text-2xl text-white focus:outline-none">
+                                </div>
+                                <!-- Segundos -->
+                                <div class="time-box rounded-2xl p-3 text-center">
+                                    <span class="block text-[9px] font-black text-[#00D2FF] uppercase tracking-widest mb-1">Segundos (SS)</span>
+                                    <input type="number" id="tiempoSS" min="0" max="59" placeholder="35" required
+                                           class="w-full bg-transparent text-center font-black text-2xl text-white focus:outline-none">
+                                </div>
+                            </div>
+                            <p class="text-center text-[10px] text-slate-400 mt-2 font-medium">
+                                Ejemplo: 00 horas : 24 minutos : 35 segundos = <span class="text-[#00D2FF] font-bold">00:24:35</span>
+                            </p>
+                        </div>
+
+                        <!-- Campo 3: Carga de Captura (Foto a Google Drive) -->
+                        <div>
+                            <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2">
+                                <i class="fa-solid fa-camera text-[#00D2FF] mr-2"></i>Captura de Pantalla (Strava, Garmin, Nike, Reloj)
+                            </label>
+                            
+                            <div class="relative border-2 border-dashed border-white/20 hover:border-[#00D2FF] rounded-2xl p-6 text-center transition-all bg-white/[0.02] cursor-pointer group"
+                                 onclick="document.getElementById('inputCaptura').click()">
+                                <input type="file" id="inputCaptura" accept="image/*" required class="hidden" onchange="previsualizarImagen(event)">
+                                
+                                <div id="preview-placeholder">
+                                    <div class="w-14 h-14 bg-white/5 group-hover:bg-[#00D2FF]/20 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl text-[#00D2FF] transition-all">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    </div>
+                                    <span class="font-bold text-sm text-white block">Toca para seleccionar tu captura</span>
+                                    <span class="text-[11px] text-slate-400 block mt-1">Formatos permitidos: JPG, PNG, WEBP (Máx. 5MB)</span>
+                                </div>
+
+                                <div id="preview-container" class="hidden flex flex-col items-center">
+                                    <img id="imgPreview" src="" alt="Captura de evidencia" class="max-h-48 rounded-xl border border-[#00D2FF]/40 shadow-lg object-contain mb-3">
+                                    <span id="preview-filename" class="text-xs font-bold text-[#00D2FF] truncate max-w-xs">archivo.jpg</span>
+                                    <span class="text-[10px] text-slate-400 mt-1 hover:text-white underline">Cambiar imagen</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botón de Envío -->
+                        <div>
+                            <button type="submit" id="btnSubmitEvidencia" class="w-full bg-[#00D2FF] text-[#001E50] py-4 rounded-2xl font-black uppercase tracking-widest text-sm shadow-xl shadow-[#00D2FF]/20 hover:bg-white hover:text-[#001E50] hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i> Enviar Evidencia a Revisión
+                            </button>
+                        </div>
+
+                        <div id="loaderEnvio" class="hidden text-center py-4 space-y-2">
+                            <i class="fa-solid fa-circle-notch fa-spin text-2xl text-[#00D2FF]"></i>
+                            <p class="text-xs font-bold text-white uppercase tracking-wider">Subiendo captura a Google Drive y registrando tiempo...</p>
+                        </div>
+                    </div>
+
+                </form>
             </div>
-            <div class="flex flex-col items-center justify-center gap-6">
-                <h4 class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.3em]">Síguenos en la ruta</h4>
-                <div class="flex gap-8">
-                    <a href="https://whatsapp.com/channel/0029VbD2Dmi7IUYZR6nmh60z" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="https://www.instagram.com/retovirtual.vzla/" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://www.tiktok.com/@retovirtual.vzla" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="https://www.strava.com/clubs/1859944" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-strava"></i></a>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- SECCIÓN 2: RANKING Y POSICIONES EN VIVO -->
+        <!-- ============================================================== -->
+        <section id="seccion-ranking" class="space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
+                <div>
+                    <span class="text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.3em]">Tabla Oficial</span>
+                    <h2 class="text-2xl md:text-4xl font-black text-white uppercase tracking-tight italic" id="titulo-ranking">
+                        Ranking 3ra Edición 5K
+                    </h2>
+                </div>
+
+                <!-- Filtros de Género -->
+                <div class="flex items-center gap-2 bg-white/5 p-1.5 rounded-full border border-white/10 self-start md:self-auto">
+                    <button onclick="filtrarRanking('GENERAL')" id="btn-rank-general" class="px-5 py-2 rounded-full font-black text-xs uppercase tracking-wider bg-[#00D2FF] text-[#001E50] transition-all">
+                        General
+                    </button>
+                    <button onclick="filtrarRanking('MASCULINO')" id="btn-rank-masculino" class="px-5 py-2 rounded-full font-bold text-xs uppercase tracking-wider text-slate-400 hover:text-white transition-all">
+                        Masculino
+                    </button>
+                    <button onclick="filtrarRanking('FEMENINO')" id="btn-rank-femenino" class="px-5 py-2 rounded-full font-bold text-xs uppercase tracking-wider text-slate-400 hover:text-white transition-all">
+                        Femenino
+                    </button>
                 </div>
             </div>
-            <!-- Tercera columna centrada horizontalmente para Grow Studio -->
-            <div class="flex flex-col md:items-end items-center justify-center gap-4 pt-8 md:pt-0 border-t border-white/10 md:border-none md:border-l md:pl-8 col-span-1 text-center md:text-right">
+
+            <!-- Tabla de Posiciones -->
+            <div class="card-dark rounded-[2rem] overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-white/5 text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] border-b border-white/10">
+                                <th class="py-4 px-4 text-center w-16">Pos</th>
+                                <th class="py-4 px-4 text-center w-24">Dorsal</th>
+                                <th class="py-4 px-4 text-left">Corredor</th>
+                                <th class="py-4 px-4 text-center hidden sm:table-cell w-28">Categoría</th>
+                                <th class="py-4 px-6 text-right w-32">Tiempo Oficial</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-ranking-body" class="divide-y divide-white/5 text-sm">
+                            <tr>
+                                <td colspan="5" class="py-12 text-center text-slate-400">
+                                    <i class="fa-solid fa-circle-notch fa-spin text-2xl text-[#00D2FF] mb-3 block"></i>
+                                    Cargando posiciones oficiales...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- SECCIÓN 3: DESCARGA DE CERTIFICADO DE PARTICIPACIÓN (5K) -->
+        <!-- ============================================================== -->
+        <section id="seccion-certificado" class="bg-gradient-to-br from-[#001E50] to-[#0A1128] rounded-[2.5rem] p-8 md:p-14 text-center relative overflow-hidden border border-white/10 shadow-2xl">
+            <div class="absolute -right-24 -bottom-24 w-72 h-72 bg-[#00D2FF]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-xl mx-auto space-y-4 relative z-10">
+                <div class="w-16 h-16 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center mx-auto text-3xl text-[#00D2FF] shadow-inner">
+                    <i class="fa-solid fa-certificate"></i>
+                </div>
+                <h3 class="text-2xl md:text-3xl font-black text-white uppercase tracking-tight italic">
+                    Descarga tu Certificado Oficial
+                </h3>
+                <p class="text-white/60 text-xs md:text-sm">
+                    Reclama tu diploma conmemorativo. Ingresa tu número de Dorsal o Cédula para generarlo automáticamente.
+                </p>
+
+                <!-- Input de búsqueda de certificado -->
+                <div class="flex flex-col sm:flex-row gap-2 pt-4">
+                    <input type="text" id="inputBuscarCert" placeholder="Ingresa Cédula o Dorsal (ej: 001)" 
+                           class="flex-grow bg-white/10 border border-white/20 rounded-2xl px-6 py-4 text-center text-white font-black text-sm focus:outline-none focus:border-[#00D2FF]">
+                    <button onclick="generarCertificado()" class="bg-[#00D2FF] text-[#001E50] font-black px-8 py-4 rounded-2xl uppercase tracking-widest text-xs hover:bg-white transition-all shadow-lg">
+                        Generar Diploma
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contenedor del Certificado Renderizado para html2canvas -->
+            <div class="contenedor-certificado-objetivo mt-10 shadow-2xl" id="contenedor-certificado">
+                <img src="img/fondo-certificado.webp" alt="Certificado Oficial" class="imagen-fondo-certificado" id="cert-img-fondo">
+                <h2 class="texto-nombre-certificado" id="cert-nombre">ATLETA RETO VIRTUAL</h2>
+                <p class="texto-dorsal-certificado" id="cert-dorsal">000</p>
+                <p class="texto-tiempo-certificado" id="cert-tiempo">00:00:00</p>
+            </div>
+
+            <!-- Botón de Descarga -->
+            <div id="btn-descarga-box" class="hidden mt-8">
+                <button onclick="descargarImagenCertificado()" class="inline-flex items-center gap-3 bg-white text-[#001E50] px-8 py-4 rounded-full font-black uppercase tracking-widest text-xs shadow-2xl hover:scale-105 active:scale-95 transition-all">
+                    <i class="fa-solid fa-download text-[#00D2FF]"></i> Descargar Diploma en Alta Resolución
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER OFICIAL -->
+    <footer class="bg-[#001E50] py-16 px-4 border-t border-white/5 mt-16">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-12 text-center md:text-left">
+            <div>
+                <img src="img/RV-Isotipo-sinfondo.webp" class="h-12 mx-auto md:mx-0 mb-4 grayscale brightness-200 opacity-40">
+                <p class="text-white/30 text-[10px] uppercase tracking-[0.4em] leading-relaxed">
+                    Reto Virtual VZLA es una producción <br>
+                    <span class="text-white/60 font-bold">Nacional Independiente</span>. <br>
+                    © 2026 Reto Virtual VZLA. Todos los derechos reservados.
+                </p>
+            </div>
+            <div class="flex flex-col items-center justify-center gap-4">
+                <h4 class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.3em]">Comunidad Runner</h4>
+                <div class="flex gap-6">
+                    <a href="https://whatsapp.com/channel/0029VbD2Dmi7IUYZR6nmh60z" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-2xl transition-all"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/retovirtual.vzla/" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-2xl transition-all"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@retovirtual.vzla" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-2xl transition-all"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.strava.com/clubs/1859944" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-2xl transition-all"><i class="fa-brands fa-strava"></i></a>
+                </div>
+            </div>
+            <div class="flex flex-col md:items-end items-center justify-center gap-2 pt-6 md:pt-0 border-t border-white/10 md:border-none col-span-1 text-center md:text-right">
                 <span class="text-[#64748b] text-[10px] uppercase tracking-[0.3em] font-bold">Desarrollado por</span>
-                <a href="https://growstudioweb.vercel.app/" target="_blank" class="flex items-center justify-center md:justify-end gap-3 hover:scale-105 transition-transform cursor-pointer group">
-                    <span class="chameleon-text font-black text-base md:text-lg tracking-[0.1em]">GROW STUDIO</span>
-                    <img src="img/grow-logo.png" alt="Grow Studio" class="h-7 md:h-8 object-contain drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_15px_rgba(0,210,255,0.9)] transition-all">
+                <a href="https://growstudioweb.vercel.app/" target="_blank" class="flex items-center justify-center md:justify-end gap-2 hover:scale-105 transition-transform group">
+                    <span class="chameleon-text font-black text-sm tracking-[0.1em]">GROW STUDIO</span>
+                    <img src="img/grow-logo.png" alt="Grow Studio" class="h-6 object-contain">
                 </a>
             </div>
         </div>
     </footer>
 
-<script>
-    // ========== MENÚ MÓVIL HAMBURGUESA ==========
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const menuIcon = menuToggle.querySelector('i');
-
-    menuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('translate-x-full');
+    <!-- LOGICA JAVASCRIPT DEL PORTAL DE EVIDENCIAS -->
+    <script>
+        // CONFIGURACIÓN MAESTRA
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyO9tDp2GreaVR-PVRIUS7zbJRQYydOv2S6mgPcYwyqHVM6-v0-TSQ1y-5UlWk6KVN8CA/exec";
         
-        // Cambiar icono
-        if (mobileMenu.classList.contains('translate-x-full')) {
-            menuIcon.classList.remove('fa-xmark');
-            menuIcon.classList.add('fa-bars-staggered');
-        } else {
-            menuIcon.classList.remove('fa-bars-staggered');
-            menuIcon.classList.add('fa-xmark');
+        let edicionActual = '3ra'; // '3ra' | '4ta'
+        let filtroGeneroActual = 'GENERAL';
+        let atletasRanking = [];
+        let base64Captura = null;
+        let mimeTypeCaptura = 'image/jpeg';
+
+        // 1. Selector de Edición
+        function seleccionarEdicion(edicion) {
+            if (edicion === '10k') {
+                alert("La Edición Especial 10K abrirá su periodo de recepción de evidencias en Noviembre.");
+                return;
+            }
+
+            edicionActual = edicion;
+
+            // Estilos de botones
+            const btn3 = document.getElementById('btn-ed-3ra');
+            const btn4 = document.getElementById('btn-ed-4ta');
+
+            if (edicion === '3ra') {
+                btn3.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-[#00D2FF] text-[#001E50] shadow-lg shadow-[#00D2FF]/20 flex items-center gap-2";
+                btn4.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex items-center gap-2";
+                document.getElementById('badge-edicion-form').innerText = "Reportando para 3ra Edición 5K";
+                document.getElementById('titulo-ranking').innerText = "Ranking 3ra Edición 5K";
+            } else {
+                btn4.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-[#00D2FF] text-[#001E50] shadow-lg shadow-[#00D2FF]/20 flex items-center gap-2";
+                btn3.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex items-center gap-2";
+                document.getElementById('badge-edicion-form').innerText = "Reportando para 4ta Edición 5K";
+                document.getElementById('titulo-ranking').innerText = "Ranking 4ta Edición 5K";
+            }
+
+            // Resetear validación de cédula si la escribió
+            const ci = document.getElementById('inputCedula').value.trim();
+            if (ci) verificarCedula();
+
+            // Cargar ranking de la edición
+            cargarRanking();
         }
-    });
 
-    // Cerrar menú al hacer click en un enlace
-    const mobileLinks = mobileMenu.querySelectorAll('a');
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.add('translate-x-full');
-            menuIcon.classList.remove('fa-xmark');
-            menuIcon.classList.add('fa-bars-staggered');
+        // 2. Previsualización de Imagen y conversión a Base64
+        function previsualizarImagen(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert("La imagen excede los 5MB. Por favor sube una captura más ligera.");
+                event.target.value = "";
+                return;
+            }
+
+            mimeTypeCaptura = file.type || 'image/jpeg';
+            document.getElementById('preview-filename').innerText = file.name;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const fullBase64 = e.target.result;
+                base64Captura = fullBase64.split(',')[1];
+                document.getElementById('imgPreview').src = fullBase64;
+                document.getElementById('preview-placeholder').classList.add('hidden');
+                document.getElementById('preview-container').classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 3. Verificación de Cédula (Inscripción previa y Duplicado)
+        async function verificarCedula() {
+            const ciRaw = document.getElementById('inputCedula').value.trim();
+            const ci = ciRaw.replace(/\D/g, '');
+            const estadoCi = document.getElementById('estado-ci');
+
+            if (!ci || ci.length < 5) return;
+
+            estadoCi.innerHTML = `<span class="text-[#00D2FF]"><i class="fa-solid fa-spinner fa-spin mr-1"></i>Verificando cédula...</span>`;
+
+            try {
+                // 3.1 Verificar si ya subió evidencia
+                const respCheck = await fetch(`/api/consultar-atleta?accion=verificar_evidencia&ci=${ci}&edicion=${edicionActual}`);
+                if (respCheck.ok) {
+                    const dataCheck = await respCheck.json();
+                    if (dataCheck.yaSubio) {
+                        estadoCi.innerHTML = `<span class="text-amber-400 font-bold"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Ya registrada</span>`;
+                        document.getElementById('bloque-inputs-evidencia').classList.add('opacity-40', 'pointer-events-none');
+                        document.getElementById('alerta-ya-subio').classList.remove('hidden');
+                        document.getElementById('mensaje-ya-subio').innerText = `El atleta con cédula ${ci} ya tiene un reporte registrado con tiempo ${dataCheck.registro?.tiempo || ''} (${dataCheck.registro?.estatus || 'En Revisión'}).`;
+                        return;
+                    }
+                }
+
+                // Habilitar inputs si no ha subido
+                document.getElementById('bloque-inputs-evidencia').classList.remove('opacity-40', 'pointer-events-none');
+                document.getElementById('alerta-ya-subio').classList.add('hidden');
+
+                // 3.2 Buscar datos de inscripción del atleta
+                const respAtleta = await fetch(`/api/consultar-atleta?ci=${ci}`);
+                if (respAtleta.ok) {
+                    const dataAtleta = await respAtleta.json();
+                    if (dataAtleta.encontrado && dataAtleta.registros.length > 0) {
+                        const reg = dataAtleta.registros[0];
+                        document.getElementById('box-datos-atleta').classList.remove('hidden');
+                        document.getElementById('atleta-nombre').innerText = reg.nombre;
+                        document.getElementById('atleta-dorsal').innerText = '#' + String(reg.dorsal).padStart(3, '0');
+                        document.getElementById('hiddenNombre').value = reg.nombre;
+                        document.getElementById('hiddenDorsal').value = reg.dorsal;
+                        estadoCi.innerHTML = `<span class="text-green-400 font-bold"><i class="fa-solid fa-check mr-1"></i>Inscrito</span>`;
+                        return;
+                    }
+                }
+
+                document.getElementById('box-datos-atleta').classList.add('hidden');
+                estadoCi.innerHTML = `<span class="text-slate-400">Cédula válida</span>`;
+
+            } catch (err) {
+                console.error("Error al verificar cédula:", err);
+                estadoCi.innerHTML = `<span class="text-slate-400">Verificada</span>`;
+            }
+        }
+
+        // 4. Envío del Formulario a Google Apps Script
+        async function enviarEvidencia(event) {
+            event.preventDefault();
+
+            const ci = document.getElementById('inputCedula').value.replace(/\D/g, '').trim();
+            if (!ci) { alert("Por favor ingresa tu cédula."); return; }
+
+            if (!base64Captura) {
+                alert("Debes adjuntar la captura de pantalla de tu carrera.");
+                return;
+            }
+
+            const hh = String(document.getElementById('tiempoHH').value || '00').padStart(2, '0');
+            const mm = String(document.getElementById('tiempoMM').value || '00').padStart(2, '0');
+            const ss = String(document.getElementById('tiempoSS').value || '00').padStart(2, '0');
+            const tiempoFormateado = `${hh}:${mm}:${ss}`;
+
+            const dorsal = document.getElementById('hiddenDorsal').value || '';
+            const nombre = document.getElementById('hiddenNombre').value || 'Atleta 5K';
+            const genero = document.getElementById('hiddenGenero').value || '';
+
+            const btnSubmit = document.getElementById('btnSubmitEvidencia');
+            const loader = document.getElementById('loaderEnvio');
+
+            btnSubmit.disabled = true;
+            btnSubmit.classList.add('hidden');
+            loader.classList.remove('hidden');
+
+            const payload = new URLSearchParams();
+            payload.append('Carrera', 'EVIDENCIA');
+            payload.append('Edicion', edicionActual);
+            payload.append('Cedula', ci);
+            payload.append('Dorsal', dorsal);
+            payload.append('Nombre', nombre);
+            payload.append('Genero', genero);
+            payload.append('Tiempo', tiempoFormateado);
+            payload.append('ImagenBase64', base64Captura);
+            payload.append('MimeType', mimeTypeCaptura);
+
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: payload
+                });
+
+                const textoRespuesta = await response.text();
+
+                loader.classList.add('hidden');
+                btnSubmit.classList.remove('hidden');
+                btnSubmit.disabled = false;
+
+                if (textoRespuesta.includes("DUPLICADO")) {
+                    alert("⚠️ Ya has enviado tu evidencia anteriormente para esta edición.");
+                    document.getElementById('alerta-ya-subio').classList.remove('hidden');
+                    return;
+                }
+
+                alert("🎉 ¡Tu evidencia ha sido enviada con éxito! La captura se guardó en Google Drive y tu tiempo pasó al ranking en estado de revisión.");
+                
+                // Limpiar formulario y recargar ranking
+                document.getElementById('formEvidencia').reset();
+                document.getElementById('preview-container').classList.add('hidden');
+                document.getElementById('preview-placeholder').classList.remove('hidden');
+                base64Captura = null;
+                document.getElementById('box-datos-atleta').classList.add('hidden');
+
+                cargarRanking();
+
+            } catch (err) {
+                console.error("Error al enviar evidencia:", err);
+                loader.classList.add('hidden');
+                btnSubmit.classList.remove('hidden');
+                btnSubmit.disabled = false;
+                alert("Hubo un error de conexión al enviar la evidencia. Por favor intenta de nuevo.");
+            }
+        }
+
+        // 5. Carga y Filtrado del Ranking
+        async function cargarRanking() {
+            const tbody = document.getElementById('tabla-ranking-body');
+            tbody.innerHTML = `<tr><td colspan="5" class="py-12 text-center text-slate-400"><i class="fa-solid fa-circle-notch fa-spin text-2xl text-[#00D2FF] mb-3 block"></i>Cargando posiciones oficiales...</td></tr>`;
+
+            try {
+                const res = await fetch(`/api/consultar-atleta?accion=ranking_evidencias&edicion=${edicionActual}`);
+                if (!res.ok) throw new Error("Error al obtener ranking");
+
+                const data = await res.json();
+                atletasRanking = data.ranking || [];
+
+                pintarTablaRanking();
+
+            } catch (e) {
+                console.error("Error ranking:", e);
+                tbody.innerHTML = `<tr><td colspan="5" class="py-10 text-center text-slate-500 font-bold">Aún no hay tiempos validados para esta edición.</td></tr>`;
+            }
+        }
+
+        function pintarTablaRanking() {
+            const tbody = document.getElementById('tabla-ranking-body');
+            tbody.innerHTML = '';
+
+            let filtrados = [...atletasRanking];
+
+            if (filtroGeneroActual === 'MASCULINO') {
+                filtrados = filtrados.filter(a => a.genero.startsWith('M'));
+            } else if (filtroGeneroActual === 'FEMENINO') {
+                filtrados = filtrados.filter(a => a.genero.startsWith('F'));
+            }
+
+            // Ordenamiento por tiempo (menor a mayor)
+            filtrados.sort((a, b) => {
+                const parseSegundos = (t) => {
+                    if (!t || t.toLowerCase() === 'pendiente') return 999999;
+                    const partes = t.split(':').map(Number);
+                    if (partes.length === 3) return partes[0] * 3600 + partes[1] * 60 + partes[2];
+                    if (partes.length === 2) return partes[0] * 60 + partes[1];
+                    return 999999;
+                };
+                return parseSegundos(a.tiempo) - parseSegundos(b.tiempo);
+            });
+
+            if (filtrados.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-12 text-center text-slate-400 font-bold uppercase tracking-wider text-xs">No hay corredores registrados en esta categoría aún.</td></tr>`;
+                return;
+            }
+
+            filtrados.forEach((atleta, idx) => {
+                const esPendiente = atleta.tiempo.toLowerCase() === 'pendiente';
+                let posBadge = `<span class="font-black text-slate-400 text-sm">${idx + 1}</span>`;
+
+                if (!esPendiente) {
+                    if (idx === 0) posBadge = `<span class="text-xl">🥇</span>`;
+                    else if (idx === 1) posBadge = `<span class="text-xl">🥈</span>`;
+                    else if (idx === 2) posBadge = `<span class="text-xl">🥉</span>`;
+                }
+
+                const fila = document.createElement('tr');
+                fila.className = "hover:bg-white/5 transition-colors border-b border-white/5";
+                fila.innerHTML = `
+                    <td class="py-4 px-4 text-center">${posBadge}</td>
+                    <td class="py-4 px-4 text-center font-black text-[#00D2FF] text-sm">#${atleta.dorsal}</td>
+                    <td class="py-4 px-4 font-bold text-white uppercase tracking-tight text-sm">${atleta.nombre}</td>
+                    <td class="py-4 px-4 text-center hidden sm:table-cell text-slate-400 font-bold text-xs uppercase">${atleta.genero}</td>
+                    <td class="py-4 px-6 text-right font-mono font-bold text-[#00D2FF] text-sm">${atleta.tiempo}</td>
+                `;
+                tbody.appendChild(fila);
+            });
+        }
+
+        function filtrarRanking(genero) {
+            filtroGeneroActual = genero;
+            const botones = {
+                'GENERAL': document.getElementById('btn-rank-general'),
+                'MASCULINO': document.getElementById('btn-rank-masculino'),
+                'FEMENINO': document.getElementById('btn-rank-femenino')
+            };
+
+            Object.keys(botones).forEach(g => {
+                if (g === genero) {
+                    botones[g].className = "px-5 py-2 rounded-full font-black text-xs uppercase tracking-wider bg-[#00D2FF] text-[#001E50] transition-all";
+                } else {
+                    botones[g].className = "px-5 py-2 rounded-full font-bold text-xs uppercase tracking-wider text-slate-400 hover:text-white transition-all";
+                }
+            });
+
+            pintarTablaRanking();
+        }
+
+        // 6. Generación y Descarga de Certificado Oficial
+        function generarCertificado() {
+            const raw = document.getElementById('inputBuscarCert').value.trim();
+            if (!raw) {
+                alert("Por favor ingresa tu número de cédula o dorsal.");
+                return;
+            }
+
+            const busqueda = raw.replace(/\D/g, '');
+            const dorsalPad = busqueda.padStart(3, '0');
+
+            // Buscar en el ranking cargado
+            const atleta = atletasRanking.find(a => a.dorsal === dorsalPad || a.dorsal === busqueda);
+
+            if (atleta) {
+                document.getElementById('cert-nombre').innerText = atleta.nombre;
+                document.getElementById('cert-dorsal').innerText = atleta.dorsal;
+                document.getElementById('cert-tiempo').innerText = atleta.tiempo;
+
+                document.getElementById('contenedor-certificado').style.display = 'block';
+                document.getElementById('btn-descarga-box').classList.remove('hidden');
+
+                // Scroll suave al certificado
+                document.getElementById('contenedor-certificado').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert(`No se encontró un corredor con el identificador "${raw}" en la ${edicionActual} Edición.`);
+            }
+        }
+
+        function descargarImagenCertificado() {
+            const contenedor = document.getElementById('contenedor-certificado');
+            const numDorsal = document.getElementById('cert-dorsal').innerText;
+
+            html2canvas(contenedor, { scale: 2, useCORS: true, logging: false }).then(canvas => {
+                const enlace = document.createElement('a');
+                enlace.download = `Certificado-RetoVirtual-${edicionActual}Edicion-Dorsal${numDorsal}.png`;
+                enlace.href = canvas.toDataURL('image/png');
+                enlace.click();
+            });
+        }
+
+        // Menú hamburguesa móvil
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = menuToggle.querySelector('i');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('translate-x-full');
+            if (mobileMenu.classList.contains('translate-x-full')) {
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars-staggered');
+            } else {
+                menuIcon.classList.remove('fa-bars-staggered');
+                menuIcon.classList.add('fa-xmark');
+            }
         });
-    });
-</script>
 
-    <script src="js/wow-effects.js"></script>
+        // Inicialización al cargar la página
+        window.onload = () => {
+            cargarRanking();
+        };
+    </script>
 </body>
 </html>
-

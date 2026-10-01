@@ -93,11 +93,10 @@
             font-family: 'Montserrat', sans-serif; 
         }
         .texto-dorsal-certificado { left: 25%; }
-        .texto-tiempo-certificado { right: 10%; }  
+        .texto-tiempo-certificado { right: 10%; }
     </style>
-    <link rel="stylesheet" href="css/wow-effects.css">
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-[#00D2FF] selection:text-[#001E50]">
+<body style="background-color: #0A0A0C !important; color: #f8fafc !important;" class="min-h-screen flex flex-col antialiased selection:bg-[#00D2FF] selection:text-[#001E50] bg-[#0A0A0C] text-slate-100">
 
     <!-- BARRA SUPERIOR -->
     <div class="bg-[#001E50] text-white py-2 text-center text-[10px] font-bold uppercase tracking-[0.4em] z-50 relative border-b border-white/10">
@@ -834,9 +833,13 @@
         });
 
         // Inicialización al cargar la página
-        window.onload = () => {
-            cargarRanking();
-        };
+        window.addEventListener('DOMContentLoaded', () => {
+            try {
+                cargarRanking();
+            } catch (err) {
+                console.warn("Error no bloqueante al cargar ranking inicial:", err);
+            }
+        });
     </script>
 </body>
 </html>

@@ -125,6 +125,64 @@
             background: linear-gradient(to bottom, rgba(0,30,80,0.95), rgba(0,30,80,0.6), rgba(0,30,80,0.98));
         }
 
+        /* ========== SPLASH SCREEN OPTIMIZADO ========== */
+        #splash {
+            position: fixed;
+            inset: 0;
+            background: #080c18;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            cursor: pointer;
+            transition: opacity 0.45s ease-out, visibility 0.45s ease-out;
+            will-change: opacity, visibility;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .splash-scene {
+            position: relative;
+            width: min(700px, 92vw);
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .rv-logo { width: clamp(160px, 32vw, 240px); height: clamp(160px, 32vw, 240px); flex-shrink: 0; }
+        .rv-logo img {
+            width: 100%; height: 100%; object-fit: contain; display: block;
+            animation: rv-float 2.4s ease-in-out infinite;
+        }
+        @keyframes rv-float {
+            0%   { transform: translateY(0px);    filter: drop-shadow(0 0 10px rgba(0,210,255,0.5)) drop-shadow(0 0 25px rgba(220,50,200,0.3)); }
+            50%  { transform: translateY(-10px);  filter: drop-shadow(0 0 24px rgba(0,210,255,0.95)) drop-shadow(0 0 45px rgba(220,50,200,0.7)); }
+            100% { transform: translateY(0px);    filter: drop-shadow(0 0 10px rgba(0,210,255,0.5)) drop-shadow(0 0 25px rgba(220,50,200,0.3)); }
+        }
+        .splash-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+        .particle { position: absolute; border-radius: 50%; animation: particle-move linear infinite; opacity: 0; }
+        @keyframes particle-move {
+            0%   { transform: translateY(100%)   translateX(0);    opacity: 0; }
+            15%  { opacity: 0.8; }
+            85%  { opacity: 0.6; }
+            100% { transform: translateY(-120%) translateX(20px); opacity: 0; }
+        }
+        .p1  { width:4px;height:4px;background:#00d4ff;left:10%;animation-duration:2.8s;animation-delay:0s; }
+        .p2  { width:3px;height:3px;background:#dc32c8;left:25%;animation-duration:2.5s;animation-delay:0.4s; }
+        .p3  { width:5px;height:5px;background:#ffdd00;left:40%;animation-duration:3.2s;animation-delay:0.8s; }
+        .p4  { width:3px;height:3px;background:#00d4ff;left:60%;animation-duration:2.6s;animation-delay:0.2s; }
+        .p5  { width:4px;height:4px;background:#dc32c8;left:75%;animation-duration:3.0s;animation-delay:0.6s; }
+        .p6  { width:3px;height:3px;background:#00ffcc;left:88%;animation-duration:2.7s;animation-delay:1.1s; }
+        .splash-progress {
+            position: absolute; bottom: 0; left: 0;
+            height: 3px; width: 0%;
+            background: linear-gradient(to right, #00d4ff, #dc32c8, #ffdd00);
+            animation: progress-fill 1.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @keyframes progress-fill {
+            0%   { width: 0%; }
+            100% { width: 100%; }
+        }
     </style>
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
@@ -134,13 +192,28 @@
 </head>
 <body class="bg-white text-slate-900">
 
+    <!-- ===================== SPLASH SCREEN ===================== -->
+    <div id="splash" role="banner" aria-label="Pantalla de bienvenida">
+        <div class="splash-scene">
+            <div class="splash-particles">
+                <div class="particle p1"></div><div class="particle p2"></div>
+                <div class="particle p3"></div><div class="particle p4"></div>
+                <div class="particle p5"></div><div class="particle p6"></div>
+            </div>
+            <div class="rv-logo">
+                <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual VZLA" width="240" height="240">
+            </div>
+        </div>
+        <div class="splash-progress"></div>
+    </div>
+    <!-- ================== FIN SPLASH SCREEN =================== -->
 
     <div class="bg-[#00D2FF] text-[#001E50] py-2.5 text-center text-[10px] font-black uppercase tracking-[0.25em] z-50 relative">
-    <i class="fa-solid fa-fire mr-2"></i>
-    3ra & 4ta Edición 5K Activas (Inicio: 09 de Octubre) · Cupos 10K Abiertos —
-    <a href="inscripcion.html?modo=5K" class="underline underline-offset-2 hover:opacity-80 transition-opacity ml-1">Inscríbete Aquí</a>
-    <i class="fa-solid fa-fire ml-2"></i>
-</div>
+        <i class="fa-solid fa-fire mr-2"></i>
+        3ra & 4ta Edición 5K Activas (Inicio: 09 de Octubre) · Cupos 10K Abiertos —
+        <a href="inscripcion.html?modo=5K" class="underline underline-offset-2 hover:opacity-80 transition-opacity ml-1">Inscríbete Aquí</a>
+        <i class="fa-solid fa-fire ml-2"></i>
+    </div>
 
     <nav class="bg-[#001E50] sticky top-0 z-50 shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
@@ -1434,21 +1507,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
         
 
-        // ========== SPLASH SCREEN (ESTÁNDAR GROW STUDIO) ==========
+        // ========== SPLASH SCREEN OPTIMIZADO (ESTÁNDAR GROW STUDIO) ==========
         const splashEl = document.getElementById("splash");
         if (splashEl) {
-            const dismissSplash = () => {
-                splashEl.style.opacity = '0';
-                splashEl.style.pointerEvents = 'none';
-                setTimeout(() => splashEl.remove(), 400);
-            };
+            // Si el usuario ya vio el splash en esta sesión de navegación, removerlo inmediatamente
+            if (sessionStorage.getItem('rv_splash_shown') === 'true') {
+                splashEl.style.display = 'none';
+                splashEl.remove();
+            } else {
+                let splashDismissed = false;
+                const dismissSplash = () => {
+                    if (splashDismissed) return;
+                    splashDismissed = true;
+                    try { sessionStorage.setItem('rv_splash_shown', 'true'); } catch (e) {}
+                    splashEl.style.opacity = '0';
+                    splashEl.style.pointerEvents = 'none';
+                    setTimeout(() => {
+                        if (splashEl && splashEl.parentNode) splashEl.remove();
+                    }, 450);
+                };
 
-            // Omitir de inmediato al hacer tap o clic
-            splashEl.addEventListener('click', dismissSplash);
-            splashEl.addEventListener('touchstart', dismissSplash, { passive: true });
+                // Omitir de inmediato al tocar o hacer clic
+                splashEl.addEventListener('click', dismissSplash);
+                splashEl.addEventListener('touchstart', dismissSplash, { passive: true });
 
-            // Cierre automático fluido a los 1.5s + fade-out
-            setTimeout(dismissSplash, 1900);
+                // Cierre automático seguro tras 1.4 segundos de animación
+                setTimeout(dismissSplash, 1400);
+
+                // Salvavidas absoluto a los 3 segundos
+                setTimeout(() => {
+                    if (document.getElementById('splash')) dismissSplash();
+                }, 3000);
+            }
         }
 
  // ========= ACTIVAR LA INSTALACION DE LA APP ============

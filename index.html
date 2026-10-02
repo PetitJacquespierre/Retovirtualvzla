@@ -814,30 +814,44 @@ const heroCarousel = (function() {
         </div>
 
         <!-- Separador + CTA -->
-        <!-- Separador + CTA -->
-<div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+        <!-- Separador + CTA con FOMO en tiempo real -->
+<div class="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start">
   <a href="inscripcion.html?modo=10K"
-     class="kit-cta-btn inline-flex items-center gap-2.5 font-black text-sm uppercase tracking-[0.2em] px-8 py-4 rounded-full"
+     class="kit-cta-btn inline-flex items-center gap-2.5 font-black text-sm uppercase tracking-[0.2em] px-8 py-4 rounded-full shadow-[0_0_25px_rgba(0,210,255,0.35)] hover:shadow-[0_0_35px_rgba(0,210,255,0.6)] hover:scale-105 transition-all duration-300"
      style="background:#00D2FF;color:#001E50;">
     <i class="fa-solid fa-flag-checkered text-xs"></i>
     Asegurar mi kit
   </a>
 
-  <!-- FOMO — contador de cupos -->
-  <div class="flex flex-col items-center sm:items-start gap-0.5">
-    <div class="flex items-center gap-1.5">
-      <span class="relative flex h-2 w-2">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-              style="background:#ff4444;"></span>
-        <span class="relative inline-flex rounded-full h-2 w-2"
-              style="background:#ff4444;"></span>
+  <!-- FOMO — indicador dinámico conectado a Google Sheets -->
+  <div class="bg-black/40 backdrop-blur-md border border-white/10 px-4 py-3 rounded-2xl flex flex-col gap-2 min-w-[240px] shadow-lg">
+    <div class="flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500 shadow-[0_0_8px_#ef4444]"></span>
+        </span>
+        <span class="text-xs uppercase font-extrabold tracking-wider text-red-400" id="cupos-badge">
+          <span id="cupos-pct">42%</span> AGOTADO
+        </span>
+      </div>
+      <span class="text-[11px] font-bold text-white/90 bg-white/10 px-2 py-0.5 rounded-full border border-white/10">
+        <span id="cupos-restantes" class="text-cyan-400 font-black">58</span> restantes
       </span>
-      <span class="text-white font-black text-sm" id="cupos-restantes">--</span>
-      <span class="text-white/50 text-xs">cupos restantes</span>
     </div>
-    <div class="rounded-full overflow-hidden" style="height:3px;width:120px;background:rgba(255,255,255,0.08);">
-      <div id="cupos-barra" class="h-full rounded-full"
-           style="width:0%;background:linear-gradient(90deg,#ff4444,#ff6b6b);transition:width 1s ease;"></div>
+
+    <!-- Barra de progreso -->
+    <div class="relative w-full rounded-full overflow-hidden bg-white/10 h-2">
+      <div id="cupos-barra" class="h-full rounded-full transition-all duration-1000 ease-out"
+           style="width:42%;background:linear-gradient(90deg, #00D2FF 0%, #ff5757 100%);box-shadow: 0 0 10px rgba(255, 87, 87, 0.5);"></div>
+    </div>
+
+    <!-- Microcopy persuasivo para los próximos 2 meses -->
+    <div class="flex items-center justify-between text-[10px] text-white/50 tracking-tight font-medium">
+      <span id="cupos-meta-text">42 inscritos de 100 cupos</span>
+      <span class="text-amber-400/90 font-semibold flex items-center gap-1">
+        <i class="fa-solid fa-stopwatch text-[9px]"></i> Cierre de lote
+      </span>
     </div>
   </div>
 </div>
@@ -863,20 +877,44 @@ const heroCarousel = (function() {
 </section>
 <!-- ═══════ FIN BANNER KIT ═══════ -->
 <script>
-(function(){
-  const CUPOS_ACTUALES = 22  // ← CAMBIA ESTE número (cupos reales disponibles hoy)
-  const CUPOS_TOTALES  = 100 // ← CAMBIA ESTE número (total de inscritos que aceptas)
+(async function initCuposFOMO(){
+  const CUPOS_TOTALES = 100;
+  const elRestantes   = document.getElementById('cupos-restantes');
+  const elPct         = document.getElementById('cupos-pct');
+  const elBarra       = document.getElementById('cupos-barra');
+  const elMetaText    = document.getElementById('cupos-meta-text');
 
-  const stored = parseInt(sessionStorage.getItem('rvkupos') || CUPOS_ACTUALES);
-  const cupos = Math.max(stored - Math.floor(Math.random() * 2), 8);
-  sessionStorage.setItem('rvkupos', cupos);
+  function renderCupos(inscritos) {
+    const totalInscritos = Math.max(0, parseInt(inscritos, 10) || 0);
+    const restantes = Math.max(0, CUPOS_TOTALES - totalInscritos);
+    const pct = Math.min(Math.round((totalInscritos / CUPOS_TOTALES) * 100), 100);
 
-  const el    = document.getElementById('cupos-restantes');
-  const barra = document.getElementById('cupos-barra');
-  if (el) el.textContent = cupos;
-  if (barra) {
-    const pct = Math.min(Math.round((cupos / CUPOS_TOTALES) * 100), 100);
-    setTimeout(() => { barra.style.width = pct + '%'; }, 300);
+    if (elRestantes) elRestantes.textContent = restantes;
+    if (elPct) elPct.textContent = pct + '%';
+    if (elMetaText) elMetaText.textContent = totalInscritos + ' inscritos de ' + CUPOS_TOTALES + ' cupos';
+    if (elBarra) {
+      setTimeout(() => {
+        elBarra.style.width = pct + '%';
+      }, 150);
+    }
+  }
+
+  // 1. Render inmediato con caché o valor por defecto para cero parpadeo
+  const cachedInscritos = sessionStorage.getItem('rv_inscritos_10k') || '42';
+  renderCupos(cachedInscritos);
+
+  // 2. Consulta en vivo al backend conectado con Google Sheets
+  try {
+    const res = await fetch('/api/consultar-atleta?accion=total_dorsales', { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && typeof data.total !== 'undefined') {
+        sessionStorage.setItem('rv_inscritos_10k', data.total);
+        renderCupos(data.total);
+      }
+    }
+  } catch (err) {
+    console.warn('FOMO Cupos: usando caché local', err);
   }
 })();
 </script>

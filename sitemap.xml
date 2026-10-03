@@ -1,26 +1,50 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Página Principal -->
   <url>
-    <loc>https://retovirtualvzla.com/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://www.retovirtualvzla.com/</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   
-  <!-- Página de Inscripciones -->
+  <!-- Inscripciones 5K y 10K -->
   <url>
-    <loc>https://retovirtualvzla.com/inscripcion.html</loc>
-    <lastmod>2026-09-18</lastmod>
+    <loc>https://www.retovirtualvzla.com/inscripcion.html</loc>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- Resultados y Ranking -->
+  <!-- Portal de Evidencias y Ranking en Vivo -->
   <url>
-    <loc>https://retovirtualvzla.com/resultados.html</loc>
-    <lastmod>2026-09-18</lastmod>
+    <loc>https://www.retovirtualvzla.com/evidencias2.html</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Resultados Históricos y Certificados -->
+  <url>
+    <loc>https://www.retovirtualvzla.com/resultados.html</loc>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <!-- Preguntas Frecuentes -->
+  <url>
+    <loc>https://www.retovirtualvzla.com/faq.html</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Aliados -->
+  <url>
+    <loc>https://www.retovirtualvzla.com/aliados.html</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>

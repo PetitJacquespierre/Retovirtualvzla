@@ -35,14 +35,13 @@
 
 ## 🔍 3. AUDITORÍA EXHAUSTIVA DE TU EXCEL (10K Y 5K)
 
-### A. Edición 10K (42 Atletas Registrados)
+### A. Edición 10K (43 Atletas Registrados)
 * **Atletas Solventes (Marcados en Verde):** **17 corredores** cancelaron el 100% de su kit.
-* **Atletas con Abono Pendiente:** **25 corredores**.
+* **Atletas con Abono Pendiente:** **26 corredores** (incluye nuevo registro de Carabobo con abono inicial de **+$10.00 USD** pagados hoy 03/10/2026).
 * **Pestaña `Abono` del Excel:** Corresponde directamente a los pagos web de reserva/abonos que alimentan y restan el saldo de la hoja principal de 10K (conciliado).
-* **Total Exacto por Cobrar en 10K:** **$489.00 USD**.
-  *(Maikol Rodríguez debe $27, Juan José Ocando debe $30, Howle Guevara debe $20, Jenmy Lamon debe $25, Ysis Coronado debe $15, etc.)*.
-* **Producción Franelas:** 38 franelas/franelillas solicitadas en total.
-  > ⚠️ **REGLA DE CONTRALORÍA:** No enviar a confección masiva las franelas de los 25 deudores hasta que liquiden sus $489.00 USD para que el lote textil se autofinancie al 100%.
+* **Total Exacto por Cobrar en 10K:** Ajustado a las cuentas por cobrar pendientes con saldo a favor de abono inicial recibido.
+* **Producción Franelas:** 39 franelas/franelillas solicitadas en total.
+  > ⚠️ **REGLA DE CONTRALORÍA:** No enviar a confección masiva las franelas de los 26 deudores hasta que liquiden sus saldos pendientes para que el lote textil se autofinancie al 100%.
 
 ### B. Edición 5K (3ra y 4ta Edición)
 * **Costo Real Unitario Medalla:** **$3.10 USD** ($248 USD total / 80 unidades a tasa BCV).

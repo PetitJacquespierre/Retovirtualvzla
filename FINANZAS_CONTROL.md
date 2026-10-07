@@ -9,55 +9,103 @@
 
 | Cuenta / Concepto | Monto Total ($ USD) | Destino / Dueño Real | Instrucción de Blindaje |
 | :--- | :--- | :--- | :--- |
-| **Dinero Hermana** | **$100.00 USD** | Familiar (Intocable) | Binance Earn Flexible (Cero riesgo) |
-| **Dinero Personal (Remanente Tía/Laptop)** | **$100.00 USD** | Personal / Casa | Billetera Spot / Gastos personales |
-| **Reto Virtual Vzla (Capital Operativo)** | **$123.00 USD** | Negocio Eventos | Billetera Fondos (Air Ocean / Proveedores) |
-| **Mercantil Bs (Inscripciones)** | 129.825,56 Bs (~$124 USD) | Negocio 5K | Pago 50% Maderitas |
-| **Mercantil Especial ($)** | $40.00 USD | Negocio Eventos | Consolidación |
-| **Zinli Digital** | $9.17 USD | Negocio (Pauta) | Meta Ads / Mantenimiento |
-| **TOTAL LÍQUIDO DEL NEGOCIO (RETO VZLA):** | **~$296.17 USD** | Flujo 100% propio del negocio | **Pasivo inmediato $184 cubierto con superávit de +$112** |
+| **Dinero Hermana (Saldo Intocable)** | **$0.00 USD** | Familiar | **¡100% LIQUIDADO HOY!** ($30 tía Chita + $20 papá pagados) |
+| **Dinero Personal (Remanente Tía/Laptop)** | **$130.94 USD** | Personal / Fondo Moto | Preservado íntegro en ahorro |
+| **Reto Virtual Vzla (Capital Operativo)** | **$123.00 USD** | Negocio Eventos | Billetera Fondos (Air Ocean / Proveedores) INTOCABLE |
+| **Mercantil Bs (Saldo Conciliado)** | **20.456,52 Bs** | Negocio / Inscripciones | 23.149,69 Bs - Deuda $3 (2.677,17 Bs) - Com. (16 Bs) |
+| **Zinli Digital** | **$58.50 - $63.17 USD** | Fondo Pauta 10K | **+$20.00 USD recarga desde Mercantil M/E** (Saldo disponible: ~$63 USD) |
+| **Cuenta por Cobrar Préstamo Familiar** | **$0.00 USD** | Liquidado | ¡100% COBRADO Y RECUPERADO! ($45.00 USD) |
+| **TOTAL LÍQUIDO DISPONIBLE DEL NEGOCIO:** | **~$181.50 - $186.17 USD** | Flujo propio del negocio | **Deuda 5K en $0 | Flete 10K $60 cubierto** |
 
 ---
 
 ## 🛡️ 2. ESTADO DE OBLIGACIONES INMEDIATAS ("COSTO SAGRADO")
 
-| Obligación Pendiente | Monto a Pagar ($) | Fondos Asignados | Estado de Pago |
-| :--- | :--- | :--- | :--- |
-| **Flete Medallas 10K (Air Ocean Import)** | **$60.00 USD** | $60.00 USD (Binance) | **EN TRÁNSITO MARÍTIMO.** Tránsito: 45 a 60 días. Saldo fijo confirmado: $60.00 USD. Fondos 100% listos. |
-| **50% Saldo Medallas 5K (Maderitas)** | **$124.00 USD** | 129.825,56 Bs en Mercantil | **¡100% CUBIERTO!** Listo contra entrega física |
-| **Fábrica Medallas 10K (China)** | $0.00 USD | Pagado al 100% | **TOTALMENTE LIQUIDADO** |
-| **TOTAL PASIVO INMEDIATO:** | **$184.00 USD** | **Fondos en caja: ~$296.17** | **SUPERÁVIT DE COBERTURA: +$112.17 USD** |
+| Obligación / Proveedor | Monto Total ($) | Pagado a la Fecha | **Saldo Pendiente** | Estado de Auditoría |
+| :--- | :--- | :--- | :--- | :--- |
+| **Medallas 5K (Maderitas - 80 und)** | $248.00 USD | $248.00 USD | **$0.00 USD** | **¡100% LIQUIDADO Y CANCELADO!** |
+| **10 Portamedallas (Maderitas)** | $35.00 USD | $35.00 USD | **$0.00 USD** | **¡100% PAGADO!** Viaja gratis el lunes |
+| **Fábrica Medallas 10K (China)** | Pagadas 100% | Pagadas 100% | **$0.00 USD** | **TOTALMENTE LIQUIDADO** |
+| **Flete Medallas 10K (Air Ocean Import)** | $60.00 USD | $0.00 USD | **$60.00 USD** | En tránsito marítimo / Fondos listos en Binance |
+| **TOTAL PASIVO INMEDIATO PENDIENTE:** | — | — | **$60.00 USD** | **¡REDUCCIÓN DEL 67% DE LA DEUDA TOTAL!** |
 
-> ✅ **DICTAMEN DE CONTRALORÍA:**  
-> Tu operación a corto plazo está **100% solvente y blindada**. Tienes el dinero exacto para pagar a Maderitas y a Air Ocean Import sin pedir prestado ni poner en riesgo tu capital.
+> 🏆 **DICTAMEN DE CONTRALORÍA:**  
+> **¡Operación 5K 100% libre de deudas de fabricación!**  
+> Ya no le debes un solo centavo a Maderitas. Las 80 medallas y los 10 portamedallas están pagos y listos para despacho. Tu único pasivo futuro son los $60 del flete marítimo del 10K, los cuales ya están garantizados en tu tesorería.
 
 ---
 
 ## 🔍 3. AUDITORÍA EXHAUSTIVA DE TU EXCEL (10K Y 5K)
 
-### A. Edición 10K (43 Atletas Registrados)
+### A. Edición 10K (44 Atletas Registrados)
 * **Atletas Solventes (Marcados en Verde):** **17 corredores** cancelaron el 100% de su kit.
-* **Atletas con Abono Pendiente:** **26 corredores** (incluye nuevo registro de Carabobo con abono inicial de **+$10.00 USD** pagados hoy 03/10/2026).
-* **Pestaña `Abono` del Excel:** Corresponde directamente a los pagos web de reserva/abonos que alimentan y restan el saldo de la hoja principal de 10K (conciliado).
-* **Total Exacto por Cobrar en 10K:** Ajustado a las cuentas por cobrar pendientes con saldo a favor de abono inicial recibido.
-* **Producción Franelas:** 39 franelas/franelillas solicitadas en total.
-  > ⚠️ **REGLA DE CONTRALORÍA:** No enviar a confección masiva las franelas de los 26 deudores hasta que liquiden sus saldos pendientes para que el lote textil se autofinancie al 100%.
+* **Atletas con Abono Pendiente:** **27 corredores** (Dorsales 001 al 044).
+  - Dorsal 041: Franchesca Villanueva ($10 inicial - debe $25 - Franelilla M).
+  - Dorsal 042: Juan Toloza ($10 inicial - debe $25 - Franelilla M).
+  - Dorsal 043: **Jully Sabrina Polanco Pérez** (Carabobo, San Diego) - **Abonó $10.00 USD inicial** (Debe $25 - Franelilla M).
+  - Dorsal 044: **Eglic Andreina Aguillón** (Zulia, Colón) - **Abonó $10.00 USD inicial** (Debe $25 - Franelilla M).
+* **Total Cobrado en Abonos 10K (Abono Inicial):** **~$440.00 USD acumulados**.
+* **Cuentas por Cobrar Pendientes 10K:** **~$539.00 USD** (por liquidar antes del 15 de noviembre).
+* **Cupos Restantes para Sold Out 10K (Meta 100):** **56 cupos disponibles**.
 
-### B. Edición 5K (3ra y 4ta Edición)
+### B. Edición 5K (3ra y 4ta Edición) — CONCILIACIÓN EXACTA
 * **Costo Real Unitario Medalla:** **$3.10 USD** ($248 USD total / 80 unidades a tasa BCV).
-* **Costo Empaque (Bolsas Kraft):**
-  - Paquete de 100 bolsas kraft 12x20 cm (Solo Medalla / 5K): **$13.40 USD** ($0.134 c/u).
-  - Paquete de 100 bolsas kraft 23x35 cm (Kit 10K Medalla + Franela): **$29.50 USD** ($0.295 c/u).
-  - Stock actual remanente en mano: ~20 a 50 unidades de 12x20 cm.
-* **Costo Directo Total Unitario 5K (Medalla + Bolsa Kraft + Insumos):** **~$3.25 USD c/u**.
-* **Margen Neto Directo por Medalla vendida a $5 (1ra/2da):** **+$1.75 USD limpios** (~35% margen neto).
-* **Margen Neto Directo en Combo $16 ($8 c/u - $3.25 costo):** **+$4.75 USD** por medalla / **+$9.50 USD por combo** (~59% margen neto real).
-* **3ra Edición:** 24 corredores en lista (¡Nuevo Dúo Carabobo registrado! +$16.00 USD).
-* **4ta Edición:** 24 corredores en lista.
-* **Cupos Restantes para Sold Out 5K (Límite 40 c/u):** **16 cupos en 3ra** y **16 cupos en 4ta** (32 medallas disponibles).
+* **Costo Empaque (Bolsas Kraft):** ~$0.15 USD c/u.
+* **Costo Directo Total Unitario 5K:** **~$3.25 USD c/u**.
+* **3ra Edición:** **29 corredores en lista** (Fila 30 del Excel: **Cinthia Oliveira** desde Bolívar/Gran Sabana con **+$10.00 USD**).
+  - **¡72.5% de la 3ra Edición AGOTADA!**
+  - **Cupos restantes para Sold Out 3ra Edición:** **Solo 11 cupos disponibles** (de 40).
+* **4ta Edición:** **25 corredores en lista** (Fila 26 del Excel: Luis Ramón Betancourt Palma).
+  - **Cupos restantes para Sold Out 4ta Edición:** **15 cupos disponibles** (de 40).
+* **Atletas con Solo 3ra Edición (Oportunidad de Combo Dúo):**
+  1. Clara Esther Trejo (Dorsal 072 - Caracas)
+  2. Cinthia Oliveira (Dorsal 074 - Bolívar)
+  3. Corredor previo individual.
 * **Cuentas por cobrar:**
-  - **Ibrahim Jiménez (Dorsal 001):** Pendiente **$8.00 USD** (Concesión acordada; pendiente por liquidar).
-  - Diferencias menores de $1.00 (Jhonny González $15, Ysis Coronado $15).
+  - **Ibrahim Jiménez (Dorsal 001):** Pendiente **$8.00 USD** (Concesión acordada).
+
+---
+
+### 📦 C. AUDITORÍA PORTAMEDALLAS (INVERSIÓN $35.00 USD - 10 UNIDADES)
+* **Costo de Producción Pagado a Maderitas:** **$35.00 USD** ($3.50 c/u - 100% Pagado).
+* **Asignación Oficial del Lote:**
+  - **3 unidades:** Premiación Podio 5K (Costo: $10.50).
+  - **1 unidad:** Muestra personal de auditoría / marketing (Costo: $3.50).
+  - **6 unidades iniciales para venta:** Precio fijado en **$7.00 USD c/u**.
+* **VENTAS EJECUTADAS HOY (04/10/2026):**
+  - **Zarahyt Páez (Lara - Dorsal 018):** Compró **2 unidades** = **12.200,00 Bs ($14.00 USD a tasa BCV)** recibidos por Pago Móvil Mercantil (17:24 hrs).
+  - **Compromiso Próxima Semana:** Promesa de pago de **2 unidades adicionales** ($14.00 USD).
+* **Inventario Remanente Disponible para Venta:** **Solo 4 unidades físicas disponibles** (¡y 2 reservadas!).
+* **RECUPERACIÓN DE CAPITAL:** Ya recuperaste **$14.00 USD de los $35.00 invertidos** el primer día. Al cobrar los 2 de la próxima semana, habrás recuperado **$28.00 USD (80% de la inversión total)** con solo 4 ventas.
+
+---
+
+## 📢 4. AUDITORÍA OFICIAL PAUTA META ADS (ZINLI) — CIERRE DEFINITIVO 5K
+
+| Campaña Publicitaria Meta Ads | Fecha de Cierre | Inversión / Gasto Real | Estatus Contable |
+| :--- | :--- | :--- | :--- |
+| **Pauta 1 (Feed / Tráfico Web)** | Finalizada 21 Sep 2026 | **$8.89 USD** | Facturado y pagado |
+| **Pauta 2 ("¡CORRE A TU RITMO...")** | Finalizada 25 Sep 2026 | **$8.97 USD** | Facturado y pagado |
+| **Pauta 3 ("🚨 ÚLTIMOS CUPOS 5K...")** | Finalizada 06 Oct 2026 | **$6.81 USD** | Facturado y pagado |
+| **GASTO TOTAL DEFINITIVO MARKETING 5K:**| — | **$24.67 USD** | **Campaña 5K 100% Finalizada y Cerrada** |
+
+* **Conciliación de Pagos Zinli:**
+  - Facturado en Septiembre: $14.00 USD (micro-cobros de $2.00).
+  - Facturado el 04 de Octubre (`LU748AE7G4`): $6.00 USD.
+  - Débito final cierre de ciclo: $4.67 USD.
+  - **Saldo Actual Disponible en Tarjeta Zinli:** **$38.50 USD** (100% libre para la gran campaña del 10K).
+
+---
+
+### 📈 RETORNO DE INVERSIÓN PUBLICITARIA 5K (ROAS & CAC):
+* **Inversión Total en Publicidad:** **$24.67 USD**.
+* **Atletas Registrados 5K:** 29 en 3ra edición + 25 en 4ta edición = **54 inscripciones totales**.
+* **Ingresos Brutos Estimados 5K:** **~$450.00 USD**.
+* **Costo de Adquisición por Cliente (CAC):**  
+  $$\$24.67 \div 54 \text{ atletas} = \mathbf{\$0.45\text{ USD por atleta inscrito}}$$
+* **Retorno del Gasto Publicitario (ROAS):**  
+  $$\$450.00 \div \$24.67 = \mathbf{18.2\text{X}}$$  
+  *(Por cada $1.00 USD invertido en anuncios, el evento generó **$18.20 USD en ventas**).*
 
 ---
 

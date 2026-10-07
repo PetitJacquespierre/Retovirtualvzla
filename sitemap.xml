@@ -43,8 +43,24 @@
   <!-- Aliados -->
   <url>
     <loc>https://www.retovirtualvzla.com/aliados.html</loc>
-    <lastmod>2026-10-03</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+
+  <!-- Entrenador IA -->
+  <url>
+    <loc>https://www.retovirtualvzla.com/entrenador.html</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Tienda Oficial -->
+  <url>
+    <loc>https://www.retovirtualvzla.com/tienda.html</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

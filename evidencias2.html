@@ -767,33 +767,59 @@
                     paceAppDetectado = `${matchPaceApp[1]}:${matchPaceApp[2]} min/km`;
                 }
 
-                // 3. Extraer Tiempo Cronometrado Oficial
-                // Regla de Oro Strava: PRIORIDAD ABSOLUTA a "Tiempo en movimiento" sobre "Tiempo transcurrido"
-                let tiempoEncontrado = null;
+                // Intento 0: Detección de "MEJORES TIEMPOS" / "ESTIMATED BEST EFFORTS" de Strava (PR 5 km / 10 km)
+                // Si el usuario sube la captura de medallas/récords personales de la actividad:
+                // Ej: "5 km (28:20)" o "5k (28:20)" o "5 km 28:20"
+                const matchMejor5K = textoLimpio.match(/(?:5\s*km|5k)[^\d]{0,10}[\(]?(\d{1,2}):(\d{2})(?::(\d{2}))?[\)]?/i);
+                if (matchMejor5K) {
+                    let hh = 0, mm = 0, ss = 0;
+                    if (matchMejor5K[3] !== undefined && matchMejor5K[3] !== "") {
+                        hh = parseInt(matchMejor5K[1], 10);
+                        mm = parseInt(matchMejor5K[2], 10);
+                        ss = parseInt(matchMejor5K[3], 10);
+                    } else {
+                        mm = parseInt(matchMejor5K[1], 10);
+                        ss = parseInt(matchMejor5K[2], 10);
+                    }
+                    const totalSeg = (hh * 3600) + (mm * 60) + ss;
+                    if (totalSeg >= 780 && totalSeg <= 5400) {
+                        distanciaDetectadaKm = 5.0;
+                        const paceSegundos = Math.round(totalSeg / 5.0);
+                        const pMin = Math.floor(paceSegundos / 60);
+                        const pSec = paceSegundos % 60;
+                        paceAppDetectado = `${pMin}:${String(pSec).padStart(2, '0')} min/km`;
+                        tiempoEncontrado = {
+                            hh, mm, ss, totalSeg,
+                            esMejorTiempo: true
+                        };
+                        console.log("Detectado Mejor Tiempo 5K Oficial de Strava:", tiempoEncontrado);
+                    }
+                }
 
                 // Intento A: Buscar número HH:MM:SS o MM:SS asociado a "movimiento" o "tiempo en movimiento"
                 // En OCR de Strava, el número suele estar justo encima o al lado: "32:09 \n Tiempo en movimiento" o "32:09 movimiento"
-                const matchMovimiento = textoLimpio.match(/(\d{1,2}):(\d{2})(?::(\d{2}))?[\s\n\r]*(?:tiempo\s*(?:en)?\s*movimiento|movimiento)/i) ||
-                                        textoLimpio.match(/(?:tiempo\s*(?:en)?\s*movimiento|movimiento)[^\d]{0,15}(\d{1,2}):(\d{2})(?::(\d{2}))?/i);
+                if (!tiempoEncontrado) {
+                    const matchMovimiento = textoLimpio.match(/(\d{1,2}):(\d{2})(?::(\d{2}))?[\s\n\r]*(?:tiempo\s*(?:en)?\s*movimiento|movimiento)/i) ||
+                                            textoLimpio.match(/(?:tiempo\s*(?:en)?\s*movimiento|movimiento)[^\d]{0,15}(\d{1,2}):(\d{2})(?::(\d{2}))?/i);
 
-                if (matchMovimiento) {
-                    let hh = 0, mm = 0, ss = 0;
-                    if (matchMovimiento[3] !== undefined && matchMovimiento[3] !== "") {
-                        hh = parseInt(matchMovimiento[1], 10);
-                        mm = parseInt(matchMovimiento[2], 10);
-                        ss = parseInt(matchMovimiento[3], 10);
-                    } else {
-                        mm = parseInt(matchMovimiento[1], 10);
-                        ss = parseInt(matchMovimiento[2], 10);
-                    }
-                    const totalSeg = (hh * 3600) + (mm * 60) + ss;
-                    if (totalSeg >= 780 && totalSeg <= 8100) {
-                        tiempoEncontrado = { hh, mm, ss, totalSeg };
+                    if (matchMovimiento) {
+                        let hh = 0, mm = 0, ss = 0;
+                        if (matchMovimiento[3] !== undefined && matchMovimiento[3] !== "") {
+                            hh = parseInt(matchMovimiento[1], 10);
+                            mm = parseInt(matchMovimiento[2], 10);
+                            ss = parseInt(matchMovimiento[3], 10);
+                        } else {
+                            mm = parseInt(matchMovimiento[1], 10);
+                            ss = parseInt(matchMovimiento[2], 10);
+                        }
+                        const totalSeg = (hh * 3600) + (mm * 60) + ss;
+                        if (totalSeg >= 780 && totalSeg <= 8100) {
+                            tiempoEncontrado = { hh, mm, ss, totalSeg };
+                        }
                     }
                 }
 
                 // Intento B: Si la app tiene cabecera clásica de Strava: [Distancia] [Tiempo] [Ritmo]
-                // Busca un tiempo MM:SS que esté antes de un ritmo tipo "5:49" o "/km"
                 if (!tiempoEncontrado) {
                     const matchFilaMetricas = textoSinZapatillas.match(/(\d{1,2}):(\d{2})(?::(\d{2}))?[\s\n\r]+(\d{1,2})[:.](\d{2})\s*(?:\/km|min)/i);
                     if (matchFilaMetricas) {
@@ -814,68 +840,63 @@
                 }
 
                 // Intento C: Detección y Suma de Tabla de Parciales / Splits (ej: Strava "Parciales")
-                // Si el corredor sube la captura de splits (KM 1, 2, 3, 4, 5... Ritmo):
-                let tiempoParciales = null;
-                const esTablaParciales = /parciales|splits/i.test(textoLimpio) || /\bKM\b[^\n\r]*(?:ritmo|pace)/i.test(textoLimpio);
-                
-                // Buscar pares de (KM y Ritmo MM:SS) en la tabla
-                // Ejemplo de líneas: "1  6:19 /km", "2  4:39 /km", "3  5:31 /km", "4  6:37 /km", "5  6:08 /km", "0,53  5:28 /km"
-                const regexSplit = /(?:^|[\n\r\s])(?:(\d{1,2}(?:[.,]\d{1,2})?))\s+(\d{1,2})[:'’](\d{2})\s*(?:\/km)?/gmi;
-                let matchSp;
-                let splitsDetectados = [];
-                while ((matchSp = regexSplit.exec(textoLimpio)) !== null) {
-                    const kmVal = parseFloat(matchSp[1].replace(',', '.'));
-                    const mVal = parseInt(matchSp[2], 10);
-                    const sVal = parseInt(matchSp[3], 10);
-                    // Validar ritmo coherente (entre 2:00 y 15:00 min/km)
-                    if (mVal >= 2 && mVal <= 18) {
-                        splitsDetectados.push({
-                            dist: kmVal,
-                            ritmoSegundos: (mVal * 60) + sVal,
-                            minStr: matchSp[2],
-                            secStr: matchSp[3]
-                        });
-                    }
-                }
-
-                if (splitsDetectados.length >= 3) {
-                    console.log("Tabla de Parciales detectada:", splitsDetectados);
-                    // Si tenemos al menos 5 parciales de 1 km, sumamos los 5 primeros (5K oficial)
-                    let totalSegSplits = 0;
-                    let kmAcumulado = 0;
-                    for (let sp of splitsDetectados) {
-                        if (kmAcumulado < 5.0) {
-                            if (sp.dist === 1 || sp.dist > 0.8) {
-                                totalSegSplits += sp.ritmoSegundos;
-                                kmAcumulado += 1.0;
-                            } else {
-                                // Parcial fracción
-                                totalSegSplits += Math.round(sp.ritmoSegundos * sp.dist);
-                                kmAcumulado += sp.dist;
-                            }
+                if (!tiempoEncontrado) {
+                    let tiempoParciales = null;
+                    // Buscar pares de (KM y Ritmo MM:SS) en la tabla
+                    // Ejemplo de líneas: "1  6:19 /km", "2  4:39 /km", "3  5:31 /km", "4  6:37 /km", "5  6:08 /km", "0,53  5:28 /km"
+                    const regexSplit = /(?:^|[\n\r\s])(?:(\d{1,2}(?:[.,]\d{1,2})?))\s+(\d{1,2})[:'’](\d{2})\s*(?:\/km)?/gmi;
+                    let matchSp;
+                    let splitsDetectados = [];
+                    while ((matchSp = regexSplit.exec(textoLimpio)) !== null) {
+                        const kmVal = parseFloat(matchSp[1].replace(',', '.'));
+                        const mVal = parseInt(matchSp[2], 10);
+                        const sVal = parseInt(matchSp[3], 10);
+                        if (mVal >= 2 && mVal <= 18) {
+                            splitsDetectados.push({
+                                dist: kmVal,
+                                ritmoSegundos: (mVal * 60) + sVal,
+                                minStr: matchSp[2],
+                                secStr: matchSp[3]
+                            });
                         }
                     }
 
-                    if (totalSegSplits > 0) {
-                        const hhSp = Math.floor(totalSegSplits / 3600);
-                        const mmSp = Math.floor((totalSegSplits % 3600) / 60);
-                        const ssSp = totalSegSplits % 60;
-                        tiempoParciales = {
-                            hh: hhSp,
-                            mm: mmSp,
-                            ss: ssSp,
-                            totalSeg: totalSegSplits,
-                            esDeSplits: true,
-                            kmCalculados: kmAcumulado
-                        };
-                        
-                        // Si es de parciales 5K, calculamos su ritmo promedio exacto
-                        const ritmoPromSeg = Math.round(totalSegSplits / kmAcumulado);
-                        const rMin = Math.floor(ritmoPromSeg / 60);
-                        const rSec = ritmoPromSeg % 60;
-                        paceAppDetectado = `${rMin}:${String(rSec).padStart(2, '0')} min/km`;
-                        distanciaDetectadaKm = kmAcumulado;
-                        tiempoEncontrado = tiempoParciales;
+                    if (splitsDetectados.length >= 3) {
+                        console.log("Tabla de Parciales detectada:", splitsDetectados);
+                        let totalSegSplits = 0;
+                        let kmAcumulado = 0;
+                        for (let sp of splitsDetectados) {
+                            if (kmAcumulado < 5.0) {
+                                if (sp.dist === 1 || sp.dist > 0.8) {
+                                    totalSegSplits += sp.ritmoSegundos;
+                                    kmAcumulado += 1.0;
+                                } else {
+                                    totalSegSplits += Math.round(sp.ritmoSegundos * sp.dist);
+                                    kmAcumulado += sp.dist;
+                                }
+                            }
+                        }
+
+                        if (totalSegSplits > 0) {
+                            const hhSp = Math.floor(totalSegSplits / 3600);
+                            const mmSp = Math.floor((totalSegSplits % 3600) / 60);
+                            const ssSp = totalSegSplits % 60;
+                            tiempoParciales = {
+                                hh: hhSp,
+                                mm: mmSp,
+                                ss: ssSp,
+                                totalSeg: totalSegSplits,
+                                esDeSplits: true,
+                                kmCalculados: kmAcumulado
+                            };
+                            
+                            const ritmoPromSeg = Math.round(totalSegSplits / kmAcumulado);
+                            const rMin = Math.floor(ritmoPromSeg / 60);
+                            const rSec = ritmoPromSeg % 60;
+                            paceAppDetectado = `${rMin}:${String(rSec).padStart(2, '0')} min/km`;
+                            distanciaDetectadaKm = kmAcumulado;
+                            tiempoEncontrado = tiempoParciales;
+                        }
                     }
                 }
 
@@ -960,7 +981,9 @@
 
                     ocrLoading.classList.add('hidden');
                     ocrSuccess.classList.remove('hidden');
-                    if (tiempoEncontrado.esDeSplits) {
+                    if (tiempoEncontrado.esMejorTiempo) {
+                        ocrPaceEl.innerText = `Récord Personal (PR) de 5K detectado: ${String(tiempoEncontrado.mm).padStart(2, '0')}:${String(tiempoEncontrado.ss).padStart(2, '0')} (Ritmo: ${paceFinal}). Cronómetro auto-completado con éxito.`;
+                    } else if (tiempoEncontrado.esDeSplits) {
                         ocrPaceEl.innerText = `Parciales detectados y calculados: Suma 5K oficial de ${String(tiempoEncontrado.mm).padStart(2, '0')}:${String(tiempoEncontrado.ss).padStart(2, '0')} (Ritmo promedio: ${paceFinal}). Cronómetro auto-completado con éxito.`;
                     } else {
                         ocrPaceEl.innerText = `Ritmo detectado: ${paceFinal} (Distancia: ${distanciaDetectadaKm.toFixed(2)} Km). Cronómetro auto-completado con éxito.`;
@@ -968,7 +991,7 @@
 
                     const display = document.getElementById('calculo-pace-display');
                     if (display) {
-                        const origenTexto = tiempoEncontrado.esDeSplits ? "Tiempo suma parciales (5K)" : "Tiempo en movimiento oficial";
+                        const origenTexto = tiempoEncontrado.esMejorTiempo ? "Mejor Tiempo 5K (PR)" : (tiempoEncontrado.esDeSplits ? "Tiempo suma parciales (5K)" : "Tiempo en movimiento oficial");
                         display.innerHTML = `${origenTexto}: <strong class="text-[#00D2FF] font-black">${String(tiempoEncontrado.hh).padStart(2, '0')}:${String(tiempoEncontrado.mm).padStart(2, '0')}:${String(tiempoEncontrado.ss).padStart(2, '0')}</strong> • Ritmo: <strong class="text-white">${paceFinal}</strong>`;
                     }
                 } else {

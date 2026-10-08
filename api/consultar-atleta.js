@@ -153,6 +153,7 @@ export default async function handler(req, res) {
         const idxTextil = headers.findIndex(h => h.includes('textil'));
         const idxTotal = headers.findIndex(h => h.includes('total'));
         const idxReserva = headers.findIndex(h => h.includes('reserva'));
+        const idxGeneroAtleta = headers.findIndex(h => h.includes('genero') || h.includes('sexo'));
 
         let registrosAtleta = [];
 
@@ -185,6 +186,9 @@ export default async function handler(req, res) {
                 const esSolv = valUpper === 'SOLVENTE' || valUpper === '0' || valUpper === '0.00' || valUpper === '$0' || valUpper === '$0.00' || valUpper === '';
                 const montoNum = esSolv ? 0 : (parseFloat(valorSaldoRaw.replace(/[^0-9.]/g, '')) || 0);
 
+                const rawGen = (idxGeneroAtleta !== -1 ? col[idxGeneroAtleta] : '') || '';
+                const generoFormateado = rawGen.toUpperCase().startsWith('F') ? 'FEMENINO' : 'MASCULINO';
+
                 registrosAtleta.push({
                     dorsal: col[idxDorsal] || 'S/N',
                     nombre: col[idxNombre] || 'Atleta',
@@ -194,7 +198,8 @@ export default async function handler(req, res) {
                     saldoRaw: valorSaldoRaw,
                     esSolvente: esSolv,
                     textil: col[idxTextil] || '',
-                    reserva: (idxReserva !== -1 ? col[idxReserva] : '')
+                    reserva: (idxReserva !== -1 ? col[idxReserva] : ''),
+                    genero: generoFormateado
                 });
             }
         }

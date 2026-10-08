@@ -596,6 +596,7 @@
                         document.getElementById('atleta-dorsal').innerText = '#' + String(reg.dorsal).padStart(3, '0');
                         document.getElementById('hiddenNombre').value = reg.nombre;
                         document.getElementById('hiddenDorsal').value = reg.dorsal;
+                        document.getElementById('hiddenGenero').value = reg.genero || 'MASCULINO';
                         estadoCi.innerHTML = `<span class="text-green-400 font-bold"><i class="fa-solid fa-check mr-1"></i>Inscrito</span>`;
                         return;
                     }

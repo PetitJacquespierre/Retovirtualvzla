@@ -62,42 +62,53 @@
             box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
         }
 
-        /* Estilos del Certificado para html2canvas */
-        .contenedor-certificado-objetivo { 
-            position: relative; 
-            width: 100%; 
-            max-width: 800px; 
-            margin: 0 auto; 
-            border-radius: 12px; 
-            overflow: hidden; 
-            display: none; 
+        /* Estilos del Certificado Vectorial HD para html2canvas */
+        .contenedor-diploma-wrapper {
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto;
+            display: none;
         }
-        .imagen-fondo-certificado { width: 100%; height: auto; display: block; }
-        .texto-nombre-certificado { 
-            position: absolute; 
-            top: 35%; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            color: #FFFFFF; 
-            font-size: clamp(16px, 4.5vw, 36px); 
-            font-weight: 800; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            margin: 0; 
-            white-space: nowrap; 
-            font-family: 'Montserrat', sans-serif; 
+        .diploma-card {
+            width: 100%;
+            aspect-ratio: 16 / 11;
+            min-height: 520px;
+            position: relative;
+            background: radial-gradient(circle at 50% 20%, #0d1e3d 0%, #050b18 70%, #02050b 100%);
+            border: 8px solid #00D2FF;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 210, 255, 0.25);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: clamp(20px, 4vw, 45px);
+            box-sizing: border-box;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
         }
-        .texto-dorsal-certificado, .texto-tiempo-certificado { 
-            position: absolute; 
-            bottom: 27%; 
-            color: #FFFFFF; 
-            font-size: clamp(14px, 3.5vw, 26px); 
-            font-weight: 800; 
-            margin: 0; 
-            font-family: 'Montserrat', sans-serif; 
+        .diploma-card.edicion-4ta {
+            border-color: #f59e0b;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 30px rgba(245, 158, 11, 0.3);
+            background: radial-gradient(circle at 50% 20%, #2b1803 0%, #120902 70%, #050301 100%);
         }
-        .texto-dorsal-certificado { left: 25%; }
-        .texto-tiempo-certificado { right: 10%; }
+        .diploma-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48%;
+            opacity: 0.05;
+            pointer-events: none;
+            user-select: none;
+        }
+        .diploma-inner-border {
+            position: absolute;
+            inset: 12px;
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body style="background-color: #0A0A0C !important; color: #f8fafc !important;" class="min-h-screen flex flex-col antialiased selection:bg-[#00D2FF] selection:text-[#001E50] bg-[#0A0A0C] text-slate-100">
@@ -518,17 +529,99 @@
             </div>
 
             <!-- Contenedor del Certificado Renderizado para html2canvas -->
-            <div class="contenedor-certificado-objetivo mt-10 shadow-2xl" id="contenedor-certificado">
-                <img src="img/fondo-certificado.webp" alt="Certificado Oficial" class="imagen-fondo-certificado" id="cert-img-fondo">
-                <h2 class="texto-nombre-certificado" id="cert-nombre">ATLETA RETO VIRTUAL</h2>
-                <p class="texto-dorsal-certificado" id="cert-dorsal">000</p>
-                <p class="texto-tiempo-certificado" id="cert-tiempo">00:00:00</p>
+            <div class="contenedor-diploma-wrapper mt-10 shadow-2xl" id="contenedor-certificado">
+                <div class="diploma-card" id="diploma-card-body">
+                    <!-- Marca de Agua de Fondo -->
+                    <img src="img/RV-Isotipo-sinfondo.webp" alt="Marca de agua" class="diploma-watermark">
+                    <div class="diploma-inner-border"></div>
+
+                    <!-- Cabecera del Certificado -->
+                    <div class="relative z-10 flex items-center justify-between border-b border-white/10 pb-4">
+                        <div class="flex items-center gap-3">
+                            <img src="img/RV-Isotipo-sinfondo.webp" alt="Logo RV" class="h-12 w-auto object-contain">
+                            <div class="text-left">
+                                <span class="block text-[11px] md:text-xs font-black tracking-[0.3em] uppercase text-white/70">Reto Virtual Venezuela</span>
+                                <span id="cert-edicion-badge" class="inline-block text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/30 mt-0.5">3ra Edición 5K</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[9px] md:text-[10px] uppercase font-bold tracking-[0.25em] text-white/50 block">Temporada</span>
+                            <span class="text-sm md:text-base font-black tracking-widest text-white">2026</span>
+                        </div>
+                    </div>
+
+                    <!-- Cuerpo Central del Certificado -->
+                    <div class="relative z-10 text-center my-auto py-4">
+                        <div class="inline-flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-medal text-amber-400 text-sm"></i>
+                            <span class="text-[10px] md:text-xs uppercase font-black tracking-[0.35em] text-white/70">Certificado Oficial de Finalista</span>
+                            <i class="fa-solid fa-medal text-amber-400 text-sm"></i>
+                        </div>
+                        
+                        <p class="text-[10px] md:text-xs text-white/60 tracking-wider uppercase mb-1">
+                            Este reconocimiento se otorga con el más alto honor deportivo a:
+                        </p>
+
+                        <!-- Nombre del Atleta -->
+                        <h2 id="cert-nombre" class="text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-[#00D2FF] to-white py-2">
+                            ATLETA RETO VIRTUAL
+                        </h2>
+
+                        <!-- Leyenda Oficial -->
+                        <p class="text-[10px] md:text-xs text-white/70 max-w-xl mx-auto leading-relaxed mt-1 font-medium">
+                            Por completar con valentía, disciplina y pasión el desafío de 5 Kilómetros, dejando constancia de su espíritu deportivo inquebrantable.
+                        </p>
+
+                        <!-- Métricas del Corredor: Dorsal, Tiempo Oficial, Ritmo -->
+                        <div class="flex items-center justify-center gap-4 md:gap-8 mt-5">
+                            <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-2.5 text-center min-w-[100px]">
+                                <span class="block text-[8px] md:text-[9px] uppercase font-black tracking-widest text-white/50">Dorsal</span>
+                                <span id="cert-dorsal" class="text-base md:text-xl font-black text-[#00D2FF]">#000</span>
+                            </div>
+                            <div class="bg-white/5 border border-white/10 rounded-2xl px-6 py-2.5 text-center min-w-[130px]">
+                                <span class="block text-[8px] md:text-[9px] uppercase font-black tracking-widest text-white/50">Tiempo Oficial</span>
+                                <span id="cert-tiempo" class="text-base md:text-xl font-black text-white font-mono">00:00:00</span>
+                            </div>
+                            <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-2.5 text-center min-w-[100px]">
+                                <span class="block text-[8px] md:text-[9px] uppercase font-black tracking-widest text-white/50">Distancia</span>
+                                <span class="text-base md:text-xl font-black text-amber-400">5.00 KM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pie del Certificado: Firma y Fecha -->
+                    <div class="relative z-10 flex items-end justify-between border-t border-white/10 pt-4 mt-auto">
+                        <!-- Firma Digital Director General -->
+                        <div class="text-left">
+                            <div class="font-serif italic text-lg md:text-2xl text-white font-bold tracking-wider opacity-90 border-b border-white/20 pb-0.5 inline-block">
+                                Jacquespierre Petit
+                            </div>
+                            <span class="block text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[#00D2FF] mt-1">Director General</span>
+                            <span class="block text-[7px] md:text-[8px] text-white/40 uppercase tracking-widest">Reto Virtual Venezuela</span>
+                        </div>
+
+                        <!-- Sello de Autenticidad Central -->
+                        <div class="hidden sm:flex flex-col items-center">
+                            <div class="w-12 h-12 rounded-full border-2 border-[#00D2FF]/40 bg-[#00D2FF]/10 flex items-center justify-center text-[#00D2FF] text-lg shadow-inner">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <span class="text-[7px] text-white/50 uppercase tracking-widest mt-1 font-bold">Oficial Verificado</span>
+                        </div>
+
+                        <!-- Fecha de Emisión -->
+                        <div class="text-right">
+                            <span class="block text-[8px] md:text-[9px] uppercase font-bold tracking-widest text-white/50">Fecha de Validación</span>
+                            <span id="cert-fecha" class="text-xs md:text-sm font-black uppercase tracking-wider text-white">Octubre, 2026</span>
+                            <span id="cert-modalidad-badge" class="block text-[8px] text-slate-400 uppercase tracking-widest mt-0.5">Modalidad Running</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Botón de Descarga -->
             <div id="btn-descarga-box" class="hidden mt-8">
-                <button onclick="descargarImagenCertificado()" class="inline-flex items-center gap-3 bg-white text-[#001E50] px-8 py-4 rounded-full font-black uppercase tracking-widest text-xs shadow-2xl hover:scale-105 active:scale-95 transition-all">
-                    <i class="fa-solid fa-download text-[#00D2FF]"></i> Descargar Diploma en Alta Resolución
+                <button onclick="descargarImagenCertificado()" class="inline-flex items-center gap-3 bg-[#00D2FF] text-[#001E50] px-8 py-4 rounded-full font-black uppercase tracking-widest text-xs shadow-2xl hover:scale-105 active:scale-95 transition-all">
+                    <i class="fa-solid fa-download text-[#001E50]"></i> Descargar Diploma en Alta Resolución
                 </button>
             </div>
         </section>
@@ -1315,8 +1408,30 @@
 
             if (atleta) {
                 document.getElementById('cert-nombre').innerText = atleta.nombre;
-                document.getElementById('cert-dorsal').innerText = atleta.dorsal.replace('#', '');
+                document.getElementById('cert-dorsal').innerText = '#' + String(atleta.dorsal).replace('#', '');
                 document.getElementById('cert-tiempo').innerText = atleta.tiempo;
+
+                // Dinamismo de Edición 3ra vs 4ta
+                const cardBody = document.getElementById('diploma-card-body');
+                const badgeEd = document.getElementById('cert-edicion-badge');
+                const fechaEl = document.getElementById('cert-fecha');
+                const modEl = document.getElementById('cert-modalidad-badge');
+
+                if (edicionActual === '4ta') {
+                    cardBody.classList.add('edicion-4ta');
+                    badgeEd.className = "inline-block text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 mt-0.5";
+                    badgeEd.innerText = "4ta Edición 5K";
+                    fechaEl.innerText = "Diciembre, 2026";
+                } else {
+                    cardBody.classList.remove('edicion-4ta');
+                    badgeEd.className = "inline-block text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/30 mt-0.5";
+                    badgeEd.innerText = "3ra Edición 5K";
+                    fechaEl.innerText = "Octubre, 2026";
+                }
+
+                if (atleta.modalidad) {
+                    modEl.innerText = `Modalidad ${atleta.modalidad}`;
+                }
 
                 const contenedor = document.getElementById('contenedor-certificado');
                 contenedor.style.display = 'block';
@@ -1330,14 +1445,24 @@
         }
 
         function descargarImagenCertificado() {
-            const contenedor = document.getElementById('contenedor-certificado');
-            const numDorsal = document.getElementById('cert-dorsal').innerText;
+            const cardElement = document.getElementById('diploma-card-body');
+            const numDorsal = document.getElementById('cert-dorsal').innerText.replace('#', '');
+            const nombreAtleta = document.getElementById('cert-nombre').innerText.trim().replace(/\s+/g, '_');
 
-            html2canvas(contenedor, { scale: 2, useCORS: true, logging: false }).then(canvas => {
+            // Renderizado en ultra alta resolución (escala 3x para nitidez de impresión)
+            html2canvas(cardElement, { 
+                scale: 3, 
+                useCORS: true, 
+                backgroundColor: null,
+                logging: false 
+            }).then(canvas => {
                 const enlace = document.createElement('a');
-                enlace.download = `Certificado-RetoVirtual-${edicionActual}Edicion-Dorsal${numDorsal}.png`;
+                enlace.download = `Diploma_Oficial_${edicionActual}Edicion_${nombreAtleta}_Dorsal${numDorsal}.png`;
                 enlace.href = canvas.toDataURL('image/png');
                 enlace.click();
+            }).catch(err => {
+                console.error("Error al generar imagen de diploma:", err);
+                alert("Ocurrió un detalle al descargar el diploma. Por favor intenta de nuevo.");
             });
         }
 

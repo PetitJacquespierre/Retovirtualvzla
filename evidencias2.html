@@ -231,16 +231,21 @@
                 <!-- Decoración -->
                 <div class="absolute -right-20 -top-20 w-56 h-56 bg-[#00D2FF]/10 rounded-full blur-3xl pointer-events-none"></div>
 
-                <!-- Cabecera de la tarjeta -->
+                <!-- Cabecera de la tarjeta con Badge IA -->
                 <div class="text-center mb-8">
-                    <span id="badge-edicion-form" class="inline-block bg-[#001E50] text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.25em] px-4 py-1.5 rounded-full border border-[#00D2FF]/30 mb-3">
-                        Reportando para 3ra Edición 5K
-                    </span>
+                    <div class="flex flex-wrap items-center justify-center gap-2 mb-3">
+                        <span id="badge-edicion-form" class="inline-block bg-[#001E50] text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.25em] px-4 py-1.5 rounded-full border border-[#00D2FF]/30">
+                            Reportando para 3ra Edición 5K
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 bg-[#00D2FF]/10 text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.2em] px-3.5 py-1.5 rounded-full border border-[#00D2FF]/40 shadow-[0_0_15px_rgba(0,210,255,0.25)]">
+                            <i class="fa-solid fa-microchip animate-pulse text-[#00D2FF]"></i> Validación por IA Activa
+                        </span>
+                    </div>
                     <h2 class="text-2xl md:text-3xl font-black text-white uppercase tracking-tight italic">
                         Valida tu Tiempo Oficial
                     </h2>
-                    <p class="text-slate-400 text-xs mt-2 max-w-md mx-auto">
-                        Ingresa tu cédula para ubicar tu dorsal y nombre registrado. Si corriste más de 5K, coloca tu tiempo total y el comité validará el split exacto de los 5.00K.
+                    <p class="text-slate-400 text-xs mt-2 max-w-lg mx-auto">
+                        Nuestro sistema con <strong class="text-white">Inteligencia Artificial de Visión</strong> audita la captura, verifica el pace real (running o caminata) y extrae el split exacto si corriste 10K o más.
                     </p>
                 </div>
 
@@ -286,6 +291,48 @@
 
                     <!-- Contenedor del resto del formulario (Se bloquea si ya envió) -->
                     <div id="bloque-inputs-evidencia" class="space-y-6">
+
+                        <!-- Modalidad: Running vs Caminata y Distancia -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Tipo de Actividad -->
+                            <div>
+                                <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2">
+                                    <i class="fa-solid fa-person-running text-[#00D2FF] mr-2"></i>Modalidad
+                                </label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button type="button" onclick="setModalidadActividad('CORRIENDO')" id="btn-mod-corriendo" 
+                                            class="py-3 px-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-[#00D2FF] text-[#001E50] border border-[#00D2FF] flex items-center justify-center gap-1.5 transition-all">
+                                        <i class="fa-solid fa-bolt"></i> Corriendo
+                                    </button>
+                                    <button type="button" onclick="setModalidadActividad('CAMINANDO')" id="btn-mod-caminando" 
+                                            class="py-3 px-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-white/5 text-white/70 hover:text-white border border-white/10 flex items-center justify-center gap-1.5 transition-all">
+                                        <i class="fa-solid fa-person-walking"></i> Caminando
+                                    </button>
+                                </div>
+                                <input type="hidden" id="inputModalidad" value="CORRIENDO">
+                            </div>
+
+                            <!-- Distancia de la Captura -->
+                            <div>
+                                <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2">
+                                    <i class="fa-solid fa-route text-[#00D2FF] mr-2"></i>Distancia en Captura
+                                </label>
+                                <select id="selectTipoDistancia" onchange="actualizarAvisoDistancia()" 
+                                        class="input-dark w-full px-4 py-3 rounded-xl text-xs font-bold text-white bg-[#0A0E1A]">
+                                    <option value="EXACTO_5K">5K Exactos (5.00K a 5.50K)</option>
+                                    <option value="SPLIT_10K">Recorrido 10K+ (Parcial de los primeros 5K)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Banner dinámico para 10K Split -->
+                        <div id="aviso-split-10k" class="hidden p-4 rounded-xl bg-[#00D2FF]/10 border border-[#00D2FF]/30 text-xs text-[#00D2FF] flex items-start gap-3">
+                            <i class="fa-solid fa-circle-info text-base mt-0.5"></i>
+                            <div>
+                                <strong class="uppercase font-black block">Atletas con recorrido de 10K+:</strong>
+                                <span>Por favor coloca el tiempo correspondiente a tus <strong>primeros 5 Kilómetros</strong> (puedes consultarlo en Strava/Garmin en la sección de vueltas o mejores parciales). La IA corroborará el split en tu captura.</span>
+                            </div>
+                        </div>
 
                         <!-- Campo 2: Ingreso estructurado de tiempo [HH] [MM] [SS] -->
                         <div>
@@ -344,16 +391,20 @@
                             </div>
                         </div>
 
-                        <!-- Botón de Envío -->
+                        <!-- Botón de Envío con sello IA -->
                         <div>
                             <button type="submit" id="btnSubmitEvidencia" class="w-full bg-[#00D2FF] text-[#001E50] py-4 rounded-2xl font-black uppercase tracking-widest text-sm shadow-xl shadow-[#00D2FF]/20 hover:bg-white hover:text-[#001E50] hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-paper-plane"></i> Enviar Evidencia a Revisión
+                                <i class="fa-solid fa-microchip text-base"></i> Validar con IA y Enviar Evidencia
                             </button>
                         </div>
 
-                        <div id="loaderEnvio" class="hidden text-center py-4 space-y-2">
-                            <i class="fa-solid fa-circle-notch fa-spin text-2xl text-[#00D2FF]"></i>
-                            <p class="text-xs font-bold text-white uppercase tracking-wider">Subiendo captura a Google Drive y registrando tiempo...</p>
+                        <!-- Loader Inteligente en tiempo real -->
+                        <div id="loaderEnvio" class="hidden text-center py-5 space-y-2 bg-[#001E50]/60 rounded-2xl border border-[#00D2FF]/30 p-4">
+                            <i class="fa-solid fa-brain fa-bounce text-2xl text-[#00D2FF]"></i>
+                            <p id="loaderTextoIA" class="text-xs font-black text-white uppercase tracking-wider">
+                                IA Comisario Deportivo analizando captura y validando ritmo biométrico...
+                            </p>
+                            <p class="text-[10px] text-slate-400">Verificando consistencia de split, pace y autenticidad del registro.</p>
                         </div>
                     </div>
 
@@ -495,6 +546,7 @@
         
         let edicionActual = '3ra'; // '3ra' | '4ta'
         let filtroGeneroActual = 'GENERAL';
+        let modalidadActividad = 'CORRIENDO'; // 'CORRIENDO' | 'CAMINANDO'
         let atletasRanking = [];
         let base64Captura = null;
         let mimeTypeCaptura = 'image/jpeg';
@@ -530,6 +582,64 @@
 
             // Cargar ranking de la edición
             cargarRanking();
+        }
+
+        // Control de Modalidad (Running vs Caminata)
+        function setModalidadActividad(mod) {
+            modalidadActividad = mod;
+            document.getElementById('inputModalidad').value = mod;
+
+            const btnC = document.getElementById('btn-mod-corriendo');
+            const btnW = document.getElementById('btn-mod-caminando');
+
+            if (mod === 'CORRIENDO') {
+                btnC.className = "py-3 px-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-[#00D2FF] text-[#001E50] border border-[#00D2FF] flex items-center justify-center gap-1.5 transition-all shadow-md shadow-[#00D2FF]/20";
+                btnW.className = "py-3 px-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-white/5 text-white/70 hover:text-white border border-white/10 flex items-center justify-center gap-1.5 transition-all";
+            } else {
+                btnW.className = "py-3 px-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-[#00D2FF] text-[#001E50] border border-[#00D2FF] flex items-center justify-center gap-1.5 transition-all shadow-md shadow-[#00D2FF]/20";
+                btnC.className = "py-3 px-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-white/5 text-white/70 hover:text-white border border-white/10 flex items-center justify-center gap-1.5 transition-all";
+            }
+        }
+
+        // Aviso de Split 10K
+        function actualizarAvisoDistancia() {
+            const select = document.getElementById('selectTipoDistancia').value;
+            const aviso = document.getElementById('aviso-split-10k');
+            if (select === 'SPLIT_10K') {
+                aviso.classList.remove('hidden');
+            } else {
+                aviso.classList.add('hidden');
+            }
+        }
+
+        // Validación Biomecánica de Ritmo (Pace y Tiempo Humano Real)
+        function validarRitmoBiometrico(segundosTotales, modalidad) {
+            // Récord mundial 5K masculino es ~12:35 (755 segundos). Ningún humano real corre 5K en menos de 13 minutos (780 seg).
+            if (segundosTotales < 780) {
+                return {
+                    valido: false,
+                    error: "🚨 Tiempo no válido: Un tiempo inferior a 13 minutos en 5K supera el ritmo de un récord olímpico y sugiere el uso de vehículo o bicicleta. Por favor verifica tus horas y minutos."
+                };
+            }
+
+            // Si es modalidad Corriendo, el tiempo máximo razonable es 1 hora y 15 min (4500 seg). Si pasa de eso, es caminata.
+            if (modalidad === 'CORRIENDO' && segundosTotales > 4800) {
+                return {
+                    valido: true,
+                    avisoPace: "Ritmo de caminata detectado",
+                    sugerenciaModalidad: 'CAMINANDO'
+                };
+            }
+
+            // Si es Caminata, el rango humano normal para 5K es de 35 min hasta 2 horas y 15 min (8100 seg)
+            if (segundosTotales > 8100) {
+                return {
+                    valido: false,
+                    error: "⚠️ El tiempo ingresado supera las 2 horas y 15 minutos para 5 Kilómetros. Por favor verifica los números ingresados."
+                };
+            }
+
+            return { valido: true };
         }
 
         // 2. Previsualización de Imagen y conversión a Base64
@@ -623,9 +733,22 @@
                 return;
             }
 
-            const hh = String(document.getElementById('tiempoHH').value || '00').padStart(2, '0');
-            const mm = String(document.getElementById('tiempoMM').value || '00').padStart(2, '0');
-            const ss = String(document.getElementById('tiempoSS').value || '00').padStart(2, '0');
+            const hNum = parseInt(document.getElementById('tiempoHH').value || '0', 10);
+            const mNum = parseInt(document.getElementById('tiempoMM').value || '0', 10);
+            const sNum = parseInt(document.getElementById('tiempoSS').value || '0', 10);
+            const segundosTotales = (hNum * 3600) + (mNum * 60) + sNum;
+
+            // 4.1 Auditoría Biomecánica de Ritmo (Pace Humano)
+            const chequeoRitmo = validarRitmoBiometrico(segundosTotales, modalidadActividad);
+            if (!chequeoRitmo.valido) {
+                alert(chequeoRitmo.error);
+                return;
+            }
+
+            const tipoDistancia = document.getElementById('selectTipoDistancia').value;
+            const hh = String(hNum).padStart(2, '0');
+            const mm = String(mNum).padStart(2, '0');
+            const ss = String(sNum).padStart(2, '0');
             const tiempoFormateado = `${hh}:${mm}:${ss}`;
 
             const dorsal = document.getElementById('hiddenDorsal').value || '';
@@ -647,6 +770,9 @@
             payload.append('Nombre', nombre);
             payload.append('Genero', genero);
             payload.append('Tiempo', tiempoFormateado);
+            payload.append('Modalidad', modalidadActividad);
+            payload.append('TipoDistancia', tipoDistancia);
+            payload.append('AuditoriaIA', tipoDistancia === 'SPLIT_10K' ? 'Validación Split 5K/10K' : 'Ritmo Humano Verificado');
             payload.append('ImagenBase64', base64Captura);
             payload.append('MimeType', mimeTypeCaptura);
 

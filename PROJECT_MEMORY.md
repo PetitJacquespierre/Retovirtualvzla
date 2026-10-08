@@ -62,5 +62,6 @@ Archivo de contexto local y memoria viva para la plataforma de carreras deportiv
 * **2026-10-01:** Implementación del Módulo Integral de Evidencias en `evidencias2.html`, subida a Google Drive mediante Google Apps Script (`doPost`), endpoint serverless `/api/consultar-atleta.js` con soporte para ranking público por categorías (General, Masculino, Femenino) y prevención de reportes duplicados por cédula. Modernización de `resultados.html` a Obsidian Dark.
 * **2026-10-02:** Sincronización en vivo del widget FOMO de `index.html` con Google Sheets (`total_dorsales`), mostrando porcentaje agotado y cupos restantes. Registro y guardado de estrategia de pauta paga 10K con recordatorio post-5K.
 * **2026-10-03:** Resolución definitiva de indexación en Google Search Console. Unificación de etiquetas canónicas a `https://www.retovirtualvzla.com/`, actualización de `sitemap.xml` con 6 URLs prioritarias y `robots.txt`. Verificación en vivo aprobada por el robot de Google e indexación solicitada.
+* **2026-10-07:** Implementación de Comisario Deportivo con IA en `evidencias2.html`: Selector de modalidad (Running vs Caminata), selector de distancia con soporte para split de recorridos de 10K+, auditoría biomecánica de ritmo humano (detección de vehículos/trampas) y envío de metadatos de validación a Google Drive/Sheets.
 
 

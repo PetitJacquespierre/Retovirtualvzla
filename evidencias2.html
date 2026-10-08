@@ -735,13 +735,20 @@
                 // Normalizar texto
                 const textoLimpio = texto.replace(/\r/g, '');
 
-                // 1. Extraer Distancia real (ej: "5,53 km", "5.53 km", "10.02 km")
+                // 1. Extraer Distancia real de la carrera
+                // IMPORTANTE: Ignorar kilometraje acumulado de zapatillas (ej: "Zapatillas: ... (30,3 km)")
+                let textoSinZapatillas = textoLimpio.replace(/zapatillas?[^\n\r]*\(\d+[,.]\d+\s*km\)/gi, '');
+                textoSinZapatillas = textoSinZapatillas.replace(/\(\d+[,.]\d+\s*km\)/gi, '');
+
                 let distanciaDetectadaKm = 5.0;
-                const matchDist = textoLimpio.match(/(?:distancia[^\d]{0,10})?(\d{1,2}[.,]\d{1,2})\s*(?:km|k|kil[oó]metros)/i) || 
-                                  textoLimpio.match(/(\d{1,2}[.,]\d{1,2})\s*(?:km|k)\b/i);
+                // Buscar distancia cerca de "Distancia" o con "km"
+                const matchDist = textoSinZapatillas.match(/(\d{1,2}[.,]\d{1,2})\s*km\s*(?:[\n\r\s]*distancia)?/i) || 
+                                  textoSinZapatillas.match(/(?:distancia[^\d]{0,10})?(\d{1,2}[.,]\d{1,2})\s*km/i);
+                
                 if (matchDist) {
                     const parsedDist = parseFloat(matchDist[1].replace(',', '.'));
-                    if (parsedDist >= 2.0 && parsedDist <= 50.0) {
+                    // Una carrera 5K o 10K razonable está entre 3km y 25km
+                    if (parsedDist >= 3.0 && parsedDist <= 25.0) {
                         distanciaDetectadaKm = parsedDist;
                         if (distanciaDetectadaKm >= 9.5) {
                             document.getElementById('selectTipoDistancia').value = 'SPLIT_10K';
@@ -753,27 +760,30 @@
                     }
                 }
 
-                // 2. Extraer Ritmo / Pace reportado por la app si existe (ej: "5:49 /km" o "5'49\"")
+                // 2. Extraer Ritmo / Pace reportado por la app (ej: "5:49 /km" o "5'49\"")
                 let paceAppDetectado = null;
                 const matchPaceApp = textoLimpio.match(/(\d{1,2})[:'’](\d{2})\s*(?:\/km|min\/km|ritmo)/i);
                 if (matchPaceApp) {
                     paceAppDetectado = `${matchPaceApp[1]}:${matchPaceApp[2]} min/km`;
                 }
 
-                // 3. Extraer Tiempo en Movimiento / Cronometrado
-                // Primero buscamos si la app indica explícitamente "tiempo", "tiempo en movimiento" o "transcurrido"
+                // 3. Extraer Tiempo Cronometrado Oficial
+                // Regla de Oro Strava: PRIORIDAD ABSOLUTA a "Tiempo en movimiento" sobre "Tiempo transcurrido"
                 let tiempoEncontrado = null;
-                const matchTiempoContextual = textoLimpio.match(/(?:tiempo(?:\s+en\s+movimiento|\s+transcurrido)?[^\d]{0,15})(\d{1,2}):(\d{2})(?::(\d{2}))?/i);
-                
-                if (matchTiempoContextual) {
+
+                // Intento A: Buscar "Tiempo en movimiento" (ej: "32:09 Tiempo en movimiento" o "Tiempo en movimiento 32:09")
+                const matchMovimiento = textoLimpio.match(/(?:tiempo\s+en\s+movimiento[^\d]{0,15})(\d{1,2}):(\d{2})(?::(\d{2}))?/i) ||
+                                        textoLimpio.match(/(\d{1,2}):(\d{2})(?::(\d{2}))?[\s\n\r]*(?:tiempo\s+en\s+movimiento)/i);
+
+                if (matchMovimiento) {
                     let hh = 0, mm = 0, ss = 0;
-                    if (matchTiempoContextual[3] !== undefined) {
-                        hh = parseInt(matchTiempoContextual[1], 10);
-                        mm = parseInt(matchTiempoContextual[2], 10);
-                        ss = parseInt(matchTiempoContextual[3], 10);
+                    if (matchMovimiento[3] !== undefined) {
+                        hh = parseInt(matchMovimiento[1], 10);
+                        mm = parseInt(matchMovimiento[2], 10);
+                        ss = parseInt(matchMovimiento[3], 10);
                     } else {
-                        mm = parseInt(matchTiempoContextual[1], 10);
-                        ss = parseInt(matchTiempoContextual[2], 10);
+                        mm = parseInt(matchMovimiento[1], 10);
+                        ss = parseInt(matchMovimiento[2], 10);
                     }
                     const totalSeg = (hh * 3600) + (mm * 60) + ss;
                     if (totalSeg >= 780 && totalSeg <= 8100) {
@@ -781,16 +791,57 @@
                     }
                 }
 
-                // Si no se encontró por contexto, buscar todos los tiempos filtrando horas del día (ej: "17:41 del sábado" o "17:41")
+                // Intento B: Si no se halló por la etiqueta de movimiento, buscar el bloque central de estadísticas
+                // En Strava la cabecera es: [Distancia] [Tiempo en movimiento] [Ritmo] -> ej: "5,53 km  32:09  5:49 /km"
+                if (!tiempoEncontrado) {
+                    const matchBloquePrincipal = textoSinZapatillas.match(/\d{1,2}[.,]\d{1,2}\s*km[\s\n\r]+(\d{1,2}):(\d{2})(?::(\d{2}))?[\s\n\r]+\d{1,2}[:.]\d{2}/i);
+                    if (matchBloquePrincipal) {
+                        let hh = 0, mm = 0, ss = 0;
+                        if (matchBloquePrincipal[3] !== undefined) {
+                            hh = parseInt(matchBloquePrincipal[1], 10);
+                            mm = parseInt(matchBloquePrincipal[2], 10);
+                            ss = parseInt(matchBloquePrincipal[3], 10);
+                        } else {
+                            mm = parseInt(matchBloquePrincipal[1], 10);
+                            ss = parseInt(matchBloquePrincipal[2], 10);
+                        }
+                        const totalSeg = (hh * 3600) + (mm * 60) + ss;
+                        if (totalSeg >= 780 && totalSeg <= 8100) {
+                            tiempoEncontrado = { hh, mm, ss, totalSeg };
+                        }
+                    }
+                }
+
+                // Intento C: Buscar "Tiempo transcurrido" como segundo fallback
+                if (!tiempoEncontrado) {
+                    const matchTranscurrido = textoLimpio.match(/(?:tiempo\s+transcurrido[^\d]{0,15})(\d{1,2}):(\d{2})(?::(\d{2}))?/i);
+                    if (matchTranscurrido) {
+                        let hh = 0, mm = 0, ss = 0;
+                        if (matchTranscurrido[3] !== undefined) {
+                            hh = parseInt(matchTranscurrido[1], 10);
+                            mm = parseInt(matchTranscurrido[2], 10);
+                            ss = parseInt(matchTranscurrido[3], 10);
+                        } else {
+                            mm = parseInt(matchTranscurrido[1], 10);
+                            ss = parseInt(matchTranscurrido[2], 10);
+                        }
+                        const totalSeg = (hh * 3600) + (mm * 60) + ss;
+                        if (totalSeg >= 780 && totalSeg <= 8100) {
+                            tiempoEncontrado = { hh, mm, ss, totalSeg };
+                        }
+                    }
+                }
+
+                // Intento D: Escaneo general descartando horas de inicio de carrera
                 if (!tiempoEncontrado) {
                     const regexTiempos = /\b(?:(\d{1,2})[:.])?(\d{2})[:.](\d{2})\b/g;
                     let m;
                     let candidatos = [];
-                    while ((m = regexTiempos.exec(textoLimpio)) !== null) {
+                    while ((m = regexTiempos.exec(textoSinZapatillas)) !== null) {
                         const indexMatch = m.index;
-                        const entorno = textoLimpio.substring(Math.max(0, indexMatch - 20), Math.min(textoLimpio.length, indexMatch + 35)).toLowerCase();
+                        const entorno = textoSinZapatillas.substring(Math.max(0, indexMatch - 25), Math.min(textoSinZapatillas.length, indexMatch + 35)).toLowerCase();
                         
-                        // Ignorar horas del día (ej: "17:41 del sábado", "17:41 h", "am", "pm")
+                        // Ignorar horas del día
                         if (entorno.includes('del ') || entorno.includes('sábado') || entorno.includes('domingo') || 
                             entorno.includes('lunes') || entorno.includes('martes') || entorno.includes('miércoles') || 
                             entorno.includes('jueves') || entorno.includes('viernes') || entorno.includes('am') || 
@@ -798,7 +849,7 @@
                             continue;
                         }
 
-                        // Ignorar si coincide exactamente con el ritmo
+                        // Ignorar si coincide con el ritmo (/km)
                         if (entorno.includes('/km') || entorno.includes('ritmo')) {
                             continue;
                         }
@@ -814,14 +865,12 @@
                         }
 
                         const totalSeg = (hh * 3600) + (mm * 60) + ss;
-                        // Rango biomecánico válido para 5K (13 min a 2h15m)
                         if (totalSeg >= 780 && totalSeg <= 8100) {
                             candidatos.push({ hh, mm, ss, totalSeg });
                         }
                     }
 
                     if (candidatos.length > 0) {
-                        // Si hay varios, preferir el que esté más cercano a un 5K o que tenga segundos definidos
                         tiempoEncontrado = candidatos[0];
                     }
                 }
@@ -831,13 +880,15 @@
                     document.getElementById('tiempoMM').value = String(tiempoEncontrado.mm).padStart(2, '0');
                     document.getElementById('tiempoSS').value = String(tiempoEncontrado.ss).padStart(2, '0');
 
-                    // Cálculo del Pace real: segundos totales / distancia real
-                    const baseKm = distanciaDetectadaKm > 0 ? distanciaDetectadaKm : 5.0;
-                    const paceSegundosPorKm = Math.round(tiempoEncontrado.totalSeg / baseKm);
-                    const paceMin = Math.floor(paceSegundosPorKm / 60);
-                    const paceSec = paceSegundosPorKm % 60;
-                    const paceCalculado = `${paceMin}:${String(paceSec).padStart(2, '0')} min/km`;
-                    const paceFinal = paceAppDetectado || paceCalculado;
+                    // Cálculo del Pace: preferir el ritmo oficial de la app si fue detectado
+                    let paceFinal = paceAppDetectado;
+                    if (!paceFinal) {
+                        const baseKm = distanciaDetectadaKm > 0 ? distanciaDetectadaKm : 5.0;
+                        const paceSegundosPorKm = Math.round(tiempoEncontrado.totalSeg / baseKm);
+                        const paceMin = Math.floor(paceSegundosPorKm / 60);
+                        const paceSec = paceSegundosPorKm % 60;
+                        paceFinal = `${paceMin}:${String(paceSec).padStart(2, '0')} min/km`;
+                    }
 
                     ocrLoading.classList.add('hidden');
                     ocrSuccess.classList.remove('hidden');
@@ -845,7 +896,7 @@
 
                     const display = document.getElementById('calculo-pace-display');
                     if (display) {
-                        display.innerHTML = `Tiempo oficial extraído: <strong class="text-[#00D2FF] font-black">${String(tiempoEncontrado.hh).padStart(2, '0')}:${String(tiempoEncontrado.mm).padStart(2, '0')}:${String(tiempoEncontrado.ss).padStart(2, '0')}</strong> • Ritmo: <strong class="text-white">${paceFinal}</strong>`;
+                        display.innerHTML = `Tiempo en movimiento oficial: <strong class="text-[#00D2FF] font-black">${String(tiempoEncontrado.hh).padStart(2, '0')}:${String(tiempoEncontrado.mm).padStart(2, '0')}:${String(tiempoEncontrado.ss).padStart(2, '0')}</strong> • Ritmo: <strong class="text-white">${paceFinal}</strong>`;
                     }
                 } else {
                     ocrLoading.classList.add('hidden');

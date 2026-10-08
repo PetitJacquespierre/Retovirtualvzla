@@ -262,19 +262,19 @@
                     <div>
                         <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2 flex items-center justify-between">
                             <span><i class="fa-solid fa-id-card text-[#00D2FF] mr-2"></i>Número de Cédula (V o E)</span>
-                            <span id="estado-ci" class="text-[10px] text-slate-400 font-normal">Solo números</span>
+                            <span id="estado-ci" class="text-[10px] text-amber-400 font-bold">Verifica tu inscripción</span>
                         </label>
                         <div class="relative">
-                            <input type="text" id="inputCedula" required placeholder="Ej: 24788261" onblur="verificarCedula()" 
+                            <input type="text" id="inputCedula" required placeholder="Ej: 24788261" onblur="verificarCedula()" oninput="alCambiarCedula()"
                                    class="input-dark w-full px-5 py-4 rounded-2xl text-center md:text-left text-lg font-bold tracking-wider">
-                            <button type="button" onclick="verificarCedula()" class="absolute right-2 top-2 bottom-2 px-4 rounded-xl bg-[#001E50] text-[#00D2FF] text-xs font-black uppercase tracking-wider hover:bg-[#00D2FF] hover:text-[#001E50] transition-all">
-                                Verificar
+                            <button type="button" onclick="verificarCedula()" class="absolute right-2 top-2 bottom-2 px-5 rounded-xl bg-[#00D2FF] text-[#001E50] text-xs font-black uppercase tracking-wider hover:bg-white hover:text-[#001E50] transition-all shadow-md">
+                                <i class="fa-solid fa-magnifying-glass mr-1"></i> Verificar
                             </button>
                         </div>
                     </div>
 
                     <!-- Datos autocompletados (Nombre y Dorsal) -->
-                    <div id="box-datos-atleta" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+                    <div id="box-datos-atleta" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-[#001E50]/60 border border-[#00D2FF]/30 shadow-lg">
                         <div>
                             <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider">Atleta</span>
                             <span id="atleta-nombre" class="font-black text-white text-sm">---</span>
@@ -295,8 +295,8 @@
                         <p class="text-xs text-amber-200/80" id="mensaje-ya-subio">Ya has enviado tu tiempo para esta edición. Tu reporte se encuentra en revisión oficial.</p>
                     </div>
 
-                    <!-- Contenedor del resto del formulario (Se bloquea si ya envió) -->
-                    <div id="bloque-inputs-evidencia" class="space-y-6">
+                    <!-- Contenedor del resto del formulario (Se desbloquea SOLO cuando la cédula está verificada) -->
+                    <div id="bloque-inputs-evidencia" class="space-y-6 opacity-40 pointer-events-none transition-all">
 
                         <!-- Modalidad: Running vs Caminata y Distancia -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -732,68 +732,126 @@
                 const texto = result.data.text || '';
                 console.log("Texto detectado por OCR:", texto);
 
-                // Regex para extraer tiempo: HH:MM:SS o MM:SS
-                const regexTiempo = /\b(?:(\d{1,2})[:.])?(\d{2})[:.](\d{2})\b/g;
-                let match;
-                let tiemposEncontrados = [];
+                // Normalizar texto
+                const textoLimpio = texto.replace(/\r/g, '');
 
-                while ((match = regexTiempo.exec(texto)) !== null) {
-                    let hh = 0, mm = 0, ss = 0;
-                    if (match[1] !== undefined) {
-                        hh = parseInt(match[1], 10);
-                        mm = parseInt(match[2], 10);
-                        ss = parseInt(match[3], 10);
-                    } else {
-                        mm = parseInt(match[2], 10);
-                        ss = parseInt(match[3], 10);
-                    }
-
-                    const segs = (hh * 3600) + (mm * 60) + ss;
-                    // Rango biomecánico válido para 5K (entre 13 min y 2h15m)
-                    if (segs >= 780 && segs <= 8100) {
-                        tiemposEncontrados.push({ hh, mm, ss, segs });
-                    }
-                }
-
-                // Extraer distancia si aparece (ej: 5.00 km, 5.02, 10.05, 5km)
-                const regexDist = /\b(5[.,]\d{1,2}|10[.,]\d{1,2}|5)\s*(?:k|km|kil[oó]metros)?\b/i;
-                const matchDist = texto.match(regexDist);
+                // 1. Extraer Distancia real (ej: "5,53 km", "5.53 km", "10.02 km")
+                let distanciaDetectadaKm = 5.0;
+                const matchDist = textoLimpio.match(/(?:distancia[^\d]{0,10})?(\d{1,2}[.,]\d{1,2})\s*(?:km|k|kil[oó]metros)/i) || 
+                                  textoLimpio.match(/(\d{1,2}[.,]\d{1,2})\s*(?:km|k)\b/i);
                 if (matchDist) {
-                    const distNum = parseFloat(matchDist[1].replace(',', '.'));
-                    if (distNum >= 9.5) {
-                        document.getElementById('selectTipoDistancia').value = 'SPLIT_10K';
-                        actualizarAvisoDistancia();
-                    } else if (distNum >= 4.8) {
-                        document.getElementById('selectTipoDistancia').value = 'EXACTO_5K';
-                        actualizarAvisoDistancia();
+                    const parsedDist = parseFloat(matchDist[1].replace(',', '.'));
+                    if (parsedDist >= 2.0 && parsedDist <= 50.0) {
+                        distanciaDetectadaKm = parsedDist;
+                        if (distanciaDetectadaKm >= 9.5) {
+                            document.getElementById('selectTipoDistancia').value = 'SPLIT_10K';
+                            actualizarAvisoDistancia();
+                        } else if (distanciaDetectadaKm >= 4.8) {
+                            document.getElementById('selectTipoDistancia').value = 'EXACTO_5K';
+                            actualizarAvisoDistancia();
+                        }
                     }
                 }
 
-                if (tiemposEncontrados.length > 0) {
-                    const mejor = tiemposEncontrados[0];
-                    document.getElementById('tiempoHH').value = String(mejor.hh).padStart(2, '0');
-                    document.getElementById('tiempoMM').value = String(mejor.mm).padStart(2, '0');
-                    document.getElementById('tiempoSS').value = String(mejor.ss).padStart(2, '0');
+                // 2. Extraer Ritmo / Pace reportado por la app si existe (ej: "5:49 /km" o "5'49\"")
+                let paceAppDetectado = null;
+                const matchPaceApp = textoLimpio.match(/(\d{1,2})[:'’](\d{2})\s*(?:\/km|min\/km|ritmo)/i);
+                if (matchPaceApp) {
+                    paceAppDetectado = `${matchPaceApp[1]}:${matchPaceApp[2]} min/km`;
+                }
 
-                    // Cálculo automático de Pace (min/km) para 5K
-                    const paceSegundosPorKm = Math.round(mejor.segs / 5);
+                // 3. Extraer Tiempo en Movimiento / Cronometrado
+                // Primero buscamos si la app indica explícitamente "tiempo", "tiempo en movimiento" o "transcurrido"
+                let tiempoEncontrado = null;
+                const matchTiempoContextual = textoLimpio.match(/(?:tiempo(?:\s+en\s+movimiento|\s+transcurrido)?[^\d]{0,15})(\d{1,2}):(\d{2})(?::(\d{2}))?/i);
+                
+                if (matchTiempoContextual) {
+                    let hh = 0, mm = 0, ss = 0;
+                    if (matchTiempoContextual[3] !== undefined) {
+                        hh = parseInt(matchTiempoContextual[1], 10);
+                        mm = parseInt(matchTiempoContextual[2], 10);
+                        ss = parseInt(matchTiempoContextual[3], 10);
+                    } else {
+                        mm = parseInt(matchTiempoContextual[1], 10);
+                        ss = parseInt(matchTiempoContextual[2], 10);
+                    }
+                    const totalSeg = (hh * 3600) + (mm * 60) + ss;
+                    if (totalSeg >= 780 && totalSeg <= 8100) {
+                        tiempoEncontrado = { hh, mm, ss, totalSeg };
+                    }
+                }
+
+                // Si no se encontró por contexto, buscar todos los tiempos filtrando horas del día (ej: "17:41 del sábado" o "17:41")
+                if (!tiempoEncontrado) {
+                    const regexTiempos = /\b(?:(\d{1,2})[:.])?(\d{2})[:.](\d{2})\b/g;
+                    let m;
+                    let candidatos = [];
+                    while ((m = regexTiempos.exec(textoLimpio)) !== null) {
+                        const indexMatch = m.index;
+                        const entorno = textoLimpio.substring(Math.max(0, indexMatch - 20), Math.min(textoLimpio.length, indexMatch + 35)).toLowerCase();
+                        
+                        // Ignorar horas del día (ej: "17:41 del sábado", "17:41 h", "am", "pm")
+                        if (entorno.includes('del ') || entorno.includes('sábado') || entorno.includes('domingo') || 
+                            entorno.includes('lunes') || entorno.includes('martes') || entorno.includes('miércoles') || 
+                            entorno.includes('jueves') || entorno.includes('viernes') || entorno.includes('am') || 
+                            entorno.includes('pm') || entorno.includes(' hrs') || entorno.includes('hora')) {
+                            continue;
+                        }
+
+                        // Ignorar si coincide exactamente con el ritmo
+                        if (entorno.includes('/km') || entorno.includes('ritmo')) {
+                            continue;
+                        }
+
+                        let hh = 0, mm = 0, ss = 0;
+                        if (m[1] !== undefined) {
+                            hh = parseInt(m[1], 10);
+                            mm = parseInt(m[2], 10);
+                            ss = parseInt(m[3], 10);
+                        } else {
+                            mm = parseInt(m[2], 10);
+                            ss = parseInt(m[3], 10);
+                        }
+
+                        const totalSeg = (hh * 3600) + (mm * 60) + ss;
+                        // Rango biomecánico válido para 5K (13 min a 2h15m)
+                        if (totalSeg >= 780 && totalSeg <= 8100) {
+                            candidatos.push({ hh, mm, ss, totalSeg });
+                        }
+                    }
+
+                    if (candidatos.length > 0) {
+                        // Si hay varios, preferir el que esté más cercano a un 5K o que tenga segundos definidos
+                        tiempoEncontrado = candidatos[0];
+                    }
+                }
+
+                if (tiempoEncontrado) {
+                    document.getElementById('tiempoHH').value = String(tiempoEncontrado.hh).padStart(2, '0');
+                    document.getElementById('tiempoMM').value = String(tiempoEncontrado.mm).padStart(2, '0');
+                    document.getElementById('tiempoSS').value = String(tiempoEncontrado.ss).padStart(2, '0');
+
+                    // Cálculo del Pace real: segundos totales / distancia real
+                    const baseKm = distanciaDetectadaKm > 0 ? distanciaDetectadaKm : 5.0;
+                    const paceSegundosPorKm = Math.round(tiempoEncontrado.totalSeg / baseKm);
                     const paceMin = Math.floor(paceSegundosPorKm / 60);
                     const paceSec = paceSegundosPorKm % 60;
-                    const paceTexto = `${paceMin}:${String(paceSec).padStart(2, '0')} min/km`;
+                    const paceCalculado = `${paceMin}:${String(paceSec).padStart(2, '0')} min/km`;
+                    const paceFinal = paceAppDetectado || paceCalculado;
 
                     ocrLoading.classList.add('hidden');
                     ocrSuccess.classList.remove('hidden');
-                    ocrPaceEl.innerText = `Ritmo detectado: ${paceTexto} (Base 5 Km). Cronómetro auto-completado con éxito.`;
+                    ocrPaceEl.innerText = `Ritmo detectado: ${paceFinal} (Distancia: ${distanciaDetectadaKm.toFixed(2)} Km). Cronómetro auto-completado con éxito.`;
 
                     const display = document.getElementById('calculo-pace-display');
                     if (display) {
-                        display.innerHTML = `Tiempo oficial extraído: <strong class="text-[#00D2FF] font-black">${String(mejor.hh).padStart(2, '0')}:${String(mejor.mm).padStart(2, '0')}:${String(mejor.ss).padStart(2, '0')}</strong> • Ritmo: <strong class="text-white">${paceTexto}</strong>`;
+                        display.innerHTML = `Tiempo oficial extraído: <strong class="text-[#00D2FF] font-black">${String(tiempoEncontrado.hh).padStart(2, '0')}:${String(tiempoEncontrado.mm).padStart(2, '0')}:${String(tiempoEncontrado.ss).padStart(2, '0')}</strong> • Ritmo: <strong class="text-white">${paceFinal}</strong>`;
                     }
                 } else {
                     ocrLoading.classList.add('hidden');
                     ocrSuccess.classList.remove('hidden');
                     ocrSuccess.className = "flex flex-col items-center gap-1 text-xs text-amber-300 font-bold";
-                    ocrSuccess.innerHTML = `<span><i class="fa-solid fa-circle-info mr-1"></i>Captura cargada. Por favor corrobora o ajusta las casillas de tiempo abajo si tu app tiene un formato no estándar.</span>`;
+                    ocrSuccess.innerHTML = `<span><i class="fa-solid fa-circle-info mr-1"></i>Captura cargada. Por favor confirma o ajusta las casillas de tiempo abajo (Horas, Minutos, Segundos).</span>`;
                 }
             } catch (err) {
                 console.error("Error en OCR:", err);
@@ -802,14 +860,30 @@
         }
 
         // 3. Verificación de Cédula (Inscripción previa y Duplicado)
+        let atletaVerificadoConExito = false;
+
+        function alCambiarCedula() {
+            atletaVerificadoConExito = false;
+            document.getElementById('bloque-inputs-evidencia').classList.add('opacity-40', 'pointer-events-none');
+            document.getElementById('box-datos-atleta').classList.add('hidden');
+            document.getElementById('hiddenNombre').value = '';
+            document.getElementById('hiddenDorsal').value = '';
+            document.getElementById('estado-ci').innerHTML = `<span class="text-amber-400 font-bold">Presiona Verificar</span>`;
+        }
+
         async function verificarCedula() {
             const ciRaw = document.getElementById('inputCedula').value.trim();
             const ci = ciRaw.replace(/\D/g, '');
             const estadoCi = document.getElementById('estado-ci');
+            atletaVerificadoConExito = false;
 
-            if (!ci || ci.length < 5) return;
+            if (!ci || ci.length < 5) {
+                alCambiarCedula();
+                estadoCi.innerHTML = `<span class="text-slate-400">Ingresa tu cédula</span>`;
+                return;
+            }
 
-            estadoCi.innerHTML = `<span class="text-[#00D2FF]"><i class="fa-solid fa-spinner fa-spin mr-1"></i>Verificando cédula...</span>`;
+            estadoCi.innerHTML = `<span class="text-[#00D2FF]"><i class="fa-solid fa-spinner fa-spin mr-1"></i>Buscando en lista oficial...</span>`;
 
             try {
                 // 3.1 Verificar si ya subió evidencia
@@ -825,33 +899,41 @@
                     }
                 }
 
-                // Habilitar inputs si no ha subido
-                document.getElementById('bloque-inputs-evidencia').classList.remove('opacity-40', 'pointer-events-none');
-                document.getElementById('alerta-ya-subio').classList.add('hidden');
-
-                // 3.2 Buscar datos de inscripción del atleta
+                // 3.2 Buscar datos de inscripción del atleta en la base de datos
                 const respAtleta = await fetch(`/api/consultar-atleta?ci=${ci}`);
                 if (respAtleta.ok) {
                     const dataAtleta = await respAtleta.json();
                     if (dataAtleta.encontrado && dataAtleta.registros.length > 0) {
                         const reg = dataAtleta.registros[0];
+                        atletaVerificadoConExito = true;
+
+                        // Habilitar inputs
+                        document.getElementById('bloque-inputs-evidencia').classList.remove('opacity-40', 'pointer-events-none');
+                        document.getElementById('alerta-ya-subio').classList.add('hidden');
+
                         document.getElementById('box-datos-atleta').classList.remove('hidden');
                         document.getElementById('atleta-nombre').innerText = reg.nombre;
                         document.getElementById('atleta-dorsal').innerText = '#' + String(reg.dorsal).padStart(3, '0');
                         document.getElementById('hiddenNombre').value = reg.nombre;
                         document.getElementById('hiddenDorsal').value = reg.dorsal;
                         document.getElementById('hiddenGenero').value = reg.genero || 'MASCULINO';
-                        estadoCi.innerHTML = `<span class="text-green-400 font-bold"><i class="fa-solid fa-check mr-1"></i>Inscrito</span>`;
+                        estadoCi.innerHTML = `<span class="text-green-400 font-bold"><i class="fa-solid fa-circle-check mr-1"></i>Inscrito (${reg.carrera || '5K'})</span>`;
                         return;
                     }
                 }
 
+                // ATLETA NO ENCONTRADO EN LA BASE DE DATOS -> BLOQUEAR ENVÍO
+                atletaVerificadoConExito = false;
                 document.getElementById('box-datos-atleta').classList.add('hidden');
-                estadoCi.innerHTML = `<span class="text-slate-400">Cédula válida</span>`;
+                document.getElementById('hiddenNombre').value = '';
+                document.getElementById('hiddenDorsal').value = '';
+                document.getElementById('bloque-inputs-evidencia').classList.add('opacity-40', 'pointer-events-none');
+                estadoCi.innerHTML = `<span class="text-rose-400 font-bold"><i class="fa-solid fa-circle-xmark mr-1"></i>No inscrito en base de datos</span>`;
+                alert(`⚠️ La cédula ${ci} no aparece registrada en la lista oficial de corredores.\n\nPara poder subir evidencias, debes haber completado tu inscripción previa. Si te inscribiste recientemente, contacta al soporte por WhatsApp.`);
 
             } catch (err) {
                 console.error("Error al verificar cédula:", err);
-                estadoCi.innerHTML = `<span class="text-slate-400">Verificada</span>`;
+                estadoCi.innerHTML = `<span class="text-rose-400">Error de conexión al verificar</span>`;
             }
         }
 
@@ -861,6 +943,11 @@
 
             const ci = document.getElementById('inputCedula').value.replace(/\D/g, '').trim();
             if (!ci) { alert("Por favor ingresa tu cédula."); return; }
+
+            if (!atletaVerificadoConExito) {
+                alert("🚨 No puedes enviar evidencia: Tu cédula no aparece registrada en la base de datos oficial de participantes.");
+                return;
+            }
 
             if (!base64Captura) {
                 alert("Debes adjuntar la captura de pantalla de tu carrera.");
@@ -886,8 +973,13 @@
             const tiempoFormateado = `${hh}:${mm}:${ss}`;
 
             const dorsal = document.getElementById('hiddenDorsal').value || '';
-            const nombre = document.getElementById('hiddenNombre').value || 'Atleta 5K';
-            const genero = document.getElementById('hiddenGenero').value || '';
+            const nombre = document.getElementById('hiddenNombre').value || '';
+            const genero = document.getElementById('hiddenGenero').value || 'MASCULINO';
+
+            if (!nombre || !dorsal) {
+                alert("No se pudieron validar tus datos de corredor. Por favor vuelve a escribir tu cédula y presiona Verificar.");
+                return;
+            }
 
             const btnSubmit = document.getElementById('btnSubmitEvidencia');
             const loader = document.getElementById('loaderEnvio');
@@ -936,6 +1028,7 @@
                 document.getElementById('preview-placeholder').classList.remove('hidden');
                 base64Captura = null;
                 document.getElementById('box-datos-atleta').classList.add('hidden');
+                atletaVerificadoConExito = false;
 
                 cargarRanking();
 

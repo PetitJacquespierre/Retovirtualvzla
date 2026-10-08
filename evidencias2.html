@@ -389,7 +389,7 @@
                         <div>
                             <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2 flex items-center justify-between">
                                 <span><i class="fa-solid fa-clock text-[#00D2FF] mr-2"></i>Tiempo Cronometrado</span>
-                                <span class="text-[10px] text-slate-400 font-normal">Auto-completado por IA o editable</span>
+                                <span class="text-[10px] text-amber-300 font-bold"><i class="fa-solid fa-pen mr-1"></i>Puedes ajustar manualmente si lo requieres</span>
                             </label>
                             
                             <div class="grid grid-cols-3 gap-3 max-w-md mx-auto">
@@ -413,7 +413,7 @@
                                 </div>
                             </div>
                             <p class="text-center text-[10px] text-slate-400 mt-2 font-medium" id="calculo-pace-display">
-                                Ejemplo: 00 horas : 24 minutos : 35 segundos = <span class="text-[#00D2FF] font-bold">00:24:35</span>
+                                💡 <span class="text-white/80">La IA lee tu captura automáticamente, pero si tu app tiene un diseño distinto, puedes corregir las casillas de tiempo con total libertad.</span>
                             </p>
                         </div>
 
@@ -771,13 +771,14 @@
                 // Regla de Oro Strava: PRIORIDAD ABSOLUTA a "Tiempo en movimiento" sobre "Tiempo transcurrido"
                 let tiempoEncontrado = null;
 
-                // Intento A: Buscar "Tiempo en movimiento" (ej: "32:09 Tiempo en movimiento" o "Tiempo en movimiento 32:09")
-                const matchMovimiento = textoLimpio.match(/(?:tiempo\s+en\s+movimiento[^\d]{0,15})(\d{1,2}):(\d{2})(?::(\d{2}))?/i) ||
-                                        textoLimpio.match(/(\d{1,2}):(\d{2})(?::(\d{2}))?[\s\n\r]*(?:tiempo\s+en\s+movimiento)/i);
+                // Intento A: Buscar número HH:MM:SS o MM:SS asociado a "movimiento" o "tiempo en movimiento"
+                // En OCR de Strava, el número suele estar justo encima o al lado: "32:09 \n Tiempo en movimiento" o "32:09 movimiento"
+                const matchMovimiento = textoLimpio.match(/(\d{1,2}):(\d{2})(?::(\d{2}))?[\s\n\r]*(?:tiempo\s*(?:en)?\s*movimiento|movimiento)/i) ||
+                                        textoLimpio.match(/(?:tiempo\s*(?:en)?\s*movimiento|movimiento)[^\d]{0,15}(\d{1,2}):(\d{2})(?::(\d{2}))?/i);
 
                 if (matchMovimiento) {
                     let hh = 0, mm = 0, ss = 0;
-                    if (matchMovimiento[3] !== undefined) {
+                    if (matchMovimiento[3] !== undefined && matchMovimiento[3] !== "") {
                         hh = parseInt(matchMovimiento[1], 10);
                         mm = parseInt(matchMovimiento[2], 10);
                         ss = parseInt(matchMovimiento[3], 10);
@@ -791,19 +792,19 @@
                     }
                 }
 
-                // Intento B: Si no se halló por la etiqueta de movimiento, buscar el bloque central de estadísticas
-                // En Strava la cabecera es: [Distancia] [Tiempo en movimiento] [Ritmo] -> ej: "5,53 km  32:09  5:49 /km"
+                // Intento B: Si la app tiene cabecera clásica de Strava: [Distancia] [Tiempo] [Ritmo]
+                // Busca un tiempo MM:SS que esté antes de un ritmo tipo "5:49" o "/km"
                 if (!tiempoEncontrado) {
-                    const matchBloquePrincipal = textoSinZapatillas.match(/\d{1,2}[.,]\d{1,2}\s*km[\s\n\r]+(\d{1,2}):(\d{2})(?::(\d{2}))?[\s\n\r]+\d{1,2}[:.]\d{2}/i);
-                    if (matchBloquePrincipal) {
+                    const matchFilaMetricas = textoSinZapatillas.match(/(\d{1,2}):(\d{2})(?::(\d{2}))?[\s\n\r]+(\d{1,2})[:.](\d{2})\s*(?:\/km|min)/i);
+                    if (matchFilaMetricas) {
                         let hh = 0, mm = 0, ss = 0;
-                        if (matchBloquePrincipal[3] !== undefined) {
-                            hh = parseInt(matchBloquePrincipal[1], 10);
-                            mm = parseInt(matchBloquePrincipal[2], 10);
-                            ss = parseInt(matchBloquePrincipal[3], 10);
+                        if (matchFilaMetricas[3] !== undefined && matchFilaMetricas[3] !== "") {
+                            hh = parseInt(matchFilaMetricas[1], 10);
+                            mm = parseInt(matchFilaMetricas[2], 10);
+                            ss = parseInt(matchFilaMetricas[3], 10);
                         } else {
-                            mm = parseInt(matchBloquePrincipal[1], 10);
-                            ss = parseInt(matchBloquePrincipal[2], 10);
+                            mm = parseInt(matchFilaMetricas[1], 10);
+                            ss = parseInt(matchFilaMetricas[2], 10);
                         }
                         const totalSeg = (hh * 3600) + (mm * 60) + ss;
                         if (totalSeg >= 780 && totalSeg <= 8100) {
@@ -812,12 +813,13 @@
                     }
                 }
 
-                // Intento C: Buscar "Tiempo transcurrido" como segundo fallback
+                // Intento C: Buscar "Tiempo transcurrido" como segundo fallback solo si no hay tiempo en movimiento
                 if (!tiempoEncontrado) {
-                    const matchTranscurrido = textoLimpio.match(/(?:tiempo\s+transcurrido[^\d]{0,15})(\d{1,2}):(\d{2})(?::(\d{2}))?/i);
+                    const matchTranscurrido = textoLimpio.match(/(?:tiempo\s*transcurrido|transcurrido)[^\d]{0,15}(\d{1,2}):(\d{2})(?::(\d{2}))?/i) ||
+                                              textoLimpio.match(/(\d{1,2}):(\d{2})(?::(\d{2}))?[\s\n\r]*(?:tiempo\s*transcurrido|transcurrido)/i);
                     if (matchTranscurrido) {
                         let hh = 0, mm = 0, ss = 0;
-                        if (matchTranscurrido[3] !== undefined) {
+                        if (matchTranscurrido[3] !== undefined && matchTranscurrido[3] !== "") {
                             hh = parseInt(matchTranscurrido[1], 10);
                             mm = parseInt(matchTranscurrido[2], 10);
                             ss = parseInt(matchTranscurrido[3], 10);
@@ -855,7 +857,7 @@
                         }
 
                         let hh = 0, mm = 0, ss = 0;
-                        if (m[1] !== undefined) {
+                        if (m[1] !== undefined && m[1] !== "") {
                             hh = parseInt(m[1], 10);
                             mm = parseInt(m[2], 10);
                             ss = parseInt(m[3], 10);

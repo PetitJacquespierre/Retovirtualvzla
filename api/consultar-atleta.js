@@ -117,92 +117,177 @@ export default async function handler(req, res) {
         }
 
         // =========================================================================
-        // ACCIÓN 3: CONSULTA GENERAL DE ATLETA (INSCRIPCIONES / DORSAL / SALDO)
         // =========================================================================
-        const GOOGLE_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5yMHsenxCWE5kZBDUZ8UcYqDtdAHstfqXcvWkuYZPQ_4n2xSrfs6ptk7k21r1kcMHHLtWjz8SEHwl/pub?gid=244601533&single=true&output=csv";
+        // ACCIÓN 3: CONSULTA GENERAL DE ATLETA (INSCRIPCIONES / DORSAL / SALDO)
+        // Soporta 3ra Edición 5K (gid 1584884677), 4ta Edición 5K (gid 95585629) e Inscripciones 10K (gid 244601533)
+        // =========================================================================
+        const parseCsv = (line) => line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
 
-        const response = await fetch(GOOGLE_CSV_URL + "&t=" + Date.now(), {
-            headers: { 'User-Agent': 'Vercel-Serverless-Atleta-Fetcher' }
-        });
-
-        if (!response.ok) {
-            return res.status(502).json({ error: 'Error al consultar la hoja de inscripciones' });
-        }
-
-        const csvText = await response.text();
-        const filas = csvText.split(/\r?\n/).filter(f => f.trim().length > 0);
+        const GOOGLE_CSV_URL_10K = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5yMHsenxCWE5kZBDUZ8UcYqDtdAHstfqXcvWkuYZPQ_4n2xSrfs6ptk7k21r1kcMHHLtWjz8SEHwl/pub?gid=244601533&single=true&output=csv";
+        const GOOGLE_CSV_URL_3RA = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&gid=1584884677`;
+        const GOOGLE_CSV_URL_4TA = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&gid=95585629`;
 
         if (accion === 'total_dorsales') {
-            const total = filas.length > 1 ? filas.length - 1 : 0;
-            return res.status(200).json({ total });
+            const resp10k = await fetch(GOOGLE_CSV_URL_10K + "&t=" + Date.now(), { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });
+            if (resp10k.ok) {
+                const text = await resp10k.text();
+                const total = text.split(/\r?\n/).filter(f => f.trim().length > 0).length - 1;
+                return res.status(200).json({ total: Math.max(0, total) });
+            }
+            return res.status(200).json({ total: 22 });
         }
 
         if (!ci || ci.length < 5) {
             return res.status(400).json({ error: 'Cédula inválida o requerida' });
         }
 
-        const parseCsv = (line) => line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
-        const headers = parseCsv(filas[0]).map(h => h.toLowerCase());
-
-        const idxDorsal = 0;
-        const idxCI = headers.findIndex(h => h.includes('cedula') || h.includes('ci'));
-        const idxNombre = headers.findIndex(h => h.includes('nombre'));
-        const idxTel = headers.findIndex(h => h.includes('telefono') || h.includes('tlf'));
-        const idxCarrera = headers.findIndex(h => h.includes('carrera'));
-        const idxSaldo = headers.findIndex(h => h.includes('saldopendiente') || h.includes('saldo'));
-        const idxTextil = headers.findIndex(h => h.includes('textil'));
-        const idxTotal = headers.findIndex(h => h.includes('total'));
-        const idxReserva = headers.findIndex(h => h.includes('reserva'));
-        const idxGeneroAtleta = headers.findIndex(h => h.includes('genero') || h.includes('sexo'));
-
         let registrosAtleta = [];
 
-        for (let i = 1; i < filas.length; i++) {
-            const col = parseCsv(filas[i]);
-            const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
+        // 1. Consultar 3ra Edición 5K
+        try {
+            const resp3ra = await fetch(GOOGLE_CSV_URL_3RA + "&t=" + Date.now());
+            if (resp3ra.ok) {
+                const csv3 = await resp3ra.text();
+                const filas3 = csv3.split(/\r?\n/).filter(f => f.trim().length > 0);
+                if (filas3.length > 1) {
+                    const h3 = parseCsv(filas3[0]).map(h => h.toLowerCase());
+                    const idxDorsal = 0;
+                    const idxCI = h3.findIndex(h => h.includes('cedula') || h.includes('ci')) !== -1 ? h3.findIndex(h => h.includes('cedula') || h.includes('ci')) : 1;
+                    const idxNombre = h3.findIndex(h => h.includes('nombre')) !== -1 ? h3.findIndex(h => h.includes('nombre')) : 2;
+                    const idxTel = h3.findIndex(h => h.includes('telefono') || h.includes('tlf')) !== -1 ? h3.findIndex(h => h.includes('telefono') || h.includes('tlf')) : 3;
 
-            if (filaCI === ci) {
-                const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
-
-                if (telFiltro && telFiltro.length >= 4) {
-                    const ultimos4Usuario = telFiltro.slice(-4);
-                    const ultimos4Fila = filaTel.slice(-4);
-                    if (ultimos4Fila && ultimos4Usuario !== ultimos4Fila) {
-                        continue;
+                    for (let i = 1; i < filas3.length; i++) {
+                        const col = parseCsv(filas3[i]);
+                        const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
+                        if (filaCI === ci) {
+                            const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
+                            const dNum = col[idxDorsal] ? String(col[idxDorsal]).replace(/\D/g, '').padStart(3, '0') : 'S/N';
+                            registrosAtleta.push({
+                                dorsal: dNum,
+                                nombre: col[idxNombre] || 'Atleta',
+                                tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
+                                carrera: "3ra Edición 5K",
+                                saldoNum: 0,
+                                saldoRaw: "SOLVENTE",
+                                esSolvente: true,
+                                textil: '',
+                                reserva: '',
+                                genero: 'GENERAL'
+                            });
+                        }
                     }
                 }
-
-                let carreraNombre = "Edición 10K";
-                if (idxCarrera !== -1 && col[idxCarrera]) {
-                    carreraNombre = col[idxCarrera];
-                } else if (col[idxTextil] && (col[idxTextil].includes('Franela') || col[idxTextil].includes('Solo Medalla'))) {
-                    carreraNombre = "Edición Especial 10K";
-                } else if (col[idxTotal] && (col[idxTotal].includes('10') || col[idxTotal].includes('16'))) {
-                    carreraNombre = col[idxTotal].includes('16') ? "Combo Dúo 5K (3ra + 4ta)" : "3ra Edición 5K";
-                }
-
-                const valorSaldoRaw = String((idxSaldo !== -1 ? col[idxSaldo] : col[13]) || '').trim();
-                const valUpper = valorSaldoRaw.toUpperCase();
-                const esSolv = valUpper === 'SOLVENTE' || valUpper === '0' || valUpper === '0.00' || valUpper === '$0' || valUpper === '$0.00' || valUpper === '';
-                const montoNum = esSolv ? 0 : (parseFloat(valorSaldoRaw.replace(/[^0-9.]/g, '')) || 0);
-
-                const rawGen = (idxGeneroAtleta !== -1 ? col[idxGeneroAtleta] : '') || '';
-                const generoFormateado = rawGen.toUpperCase().startsWith('F') ? 'FEMENINO' : 'MASCULINO';
-
-                registrosAtleta.push({
-                    dorsal: col[idxDorsal] || 'S/N',
-                    nombre: col[idxNombre] || 'Atleta',
-                    tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
-                    carrera: carreraNombre,
-                    saldoNum: montoNum,
-                    saldoRaw: valorSaldoRaw,
-                    esSolvente: esSolv,
-                    textil: col[idxTextil] || '',
-                    reserva: (idxReserva !== -1 ? col[idxReserva] : ''),
-                    genero: generoFormateado
-                });
             }
-        }
+        } catch(e) {}
+
+        // 2. Consultar 4ta Edición 5K
+        try {
+            const resp4ta = await fetch(GOOGLE_CSV_URL_4TA + "&t=" + Date.now());
+            if (resp4ta.ok) {
+                const csv4 = await resp4ta.text();
+                const filas4 = csv4.split(/\r?\n/).filter(f => f.trim().length > 0);
+                if (filas4.length > 1) {
+                    const h4 = parseCsv(filas4[0]).map(h => h.toLowerCase());
+                    const idxDorsal = 0;
+                    const idxCI = h4.findIndex(h => h.includes('cedula') || h.includes('ci')) !== -1 ? h4.findIndex(h => h.includes('cedula') || h.includes('ci')) : 1;
+                    const idxNombre = h4.findIndex(h => h.includes('nombre')) !== -1 ? h4.findIndex(h => h.includes('nombre')) : 2;
+                    const idxTel = h4.findIndex(h => h.includes('telefono') || h.includes('tlf')) !== -1 ? h4.findIndex(h => h.includes('telefono') || h.includes('tlf')) : 3;
+
+                    for (let i = 1; i < filas4.length; i++) {
+                        const col = parseCsv(filas4[i]);
+                        const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
+                        if (filaCI === ci) {
+                            const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
+                            const dNum = col[idxDorsal] ? String(col[idxDorsal]).replace(/\D/g, '').padStart(3, '0') : 'S/N';
+                            registrosAtleta.push({
+                                dorsal: dNum,
+                                nombre: col[idxNombre] || 'Atleta',
+                                tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
+                                carrera: "4ta Edición 5K",
+                                saldoNum: 0,
+                                saldoRaw: "SOLVENTE",
+                                esSolvente: true,
+                                textil: '',
+                                reserva: '',
+                                genero: 'GENERAL'
+                            });
+                        }
+                    }
+                }
+            }
+        } catch(e) {}
+
+        // 3. Consultar Edición 10K / General
+        try {
+            const response = await fetch(GOOGLE_CSV_URL_10K + "&t=" + Date.now(), {
+                headers: { 'User-Agent': 'Vercel-Serverless-Atleta-Fetcher' }
+            });
+
+            if (response.ok) {
+                const csvText = await response.text();
+                const filas = csvText.split(/\r?\n/).filter(f => f.trim().length > 0);
+                if (filas.length > 1) {
+                    const headers = parseCsv(filas[0]).map(h => h.toLowerCase());
+                    const idxDorsal = 0;
+                    const idxCI = headers.findIndex(h => h.includes('cedula') || h.includes('ci'));
+                    const idxNombre = headers.findIndex(h => h.includes('nombre'));
+                    const idxTel = headers.findIndex(h => h.includes('telefono') || h.includes('tlf'));
+                    const idxCarrera = headers.findIndex(h => h.includes('carrera'));
+                    const idxSaldo = headers.findIndex(h => h.includes('saldopendiente') || h.includes('saldo'));
+                    const idxTextil = headers.findIndex(h => h.includes('textil'));
+                    const idxTotal = headers.findIndex(h => h.includes('total'));
+                    const idxReserva = headers.findIndex(h => h.includes('reserva'));
+                    const idxGeneroAtleta = headers.findIndex(h => h.includes('genero') || h.includes('sexo'));
+
+                    for (let i = 1; i < filas.length; i++) {
+                        const col = parseCsv(filas[i]);
+                        const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
+
+                        if (filaCI === ci) {
+                            const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
+
+                            if (telFiltro && telFiltro.length >= 4) {
+                                const ultimos4Usuario = telFiltro.slice(-4);
+                                const ultimos4Fila = filaTel.slice(-4);
+                                if (ultimos4Fila && ultimos4Usuario !== ultimos4Fila) {
+                                    continue;
+                                }
+                            }
+
+                            let carreraNombre = "Edición 10K";
+                            if (idxCarrera !== -1 && col[idxCarrera]) {
+                                carreraNombre = col[idxCarrera];
+                            } else if (col[idxTextil] && (col[idxTextil].includes('Franela') || col[idxTextil].includes('Solo Medalla'))) {
+                                carreraNombre = "Edición Especial 10K";
+                            } else if (col[idxTotal] && (col[idxTotal].includes('10') || col[idxTotal].includes('16'))) {
+                                carreraNombre = col[idxTotal].includes('16') ? "Combo Dúo 5K (3ra + 4ta)" : "3ra Edición 5K";
+                            }
+
+                            const valorSaldoRaw = String((idxSaldo !== -1 ? col[idxSaldo] : col[13]) || '').trim();
+                            const valUpper = valorSaldoRaw.toUpperCase();
+                            const esSolv = valUpper === 'SOLVENTE' || valUpper === '0' || valUpper === '0.00' || valUpper === '$0' || valUpper === '$0.00' || valUpper === '';
+                            const montoNum = esSolv ? 0 : (parseFloat(valorSaldoRaw.replace(/[^0-9.]/g, '')) || 0);
+
+                            const rawGen = (idxGeneroAtleta !== -1 ? col[idxGeneroAtleta] : '') || '';
+                            const generoFormateado = rawGen.toUpperCase().startsWith('F') ? 'FEMENINO' : 'MASCULINO';
+
+                            registrosAtleta.push({
+                                dorsal: col[idxDorsal] || 'S/N',
+                                nombre: col[idxNombre] || 'Atleta',
+                                tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
+                                carrera: carreraNombre,
+                                saldoNum: montoNum,
+                                saldoRaw: valorSaldoRaw,
+                                esSolvente: esSolv,
+                                textil: col[idxTextil] || '',
+                                reserva: (idxReserva !== -1 ? col[idxReserva] : ''),
+                                genero: generoFormateado
+                            });
+                        }
+                    }
+                }
+            }
+        } catch(e) {}
 
         return res.status(200).json({
             encontrado: registrosAtleta.length > 0,

@@ -20,6 +20,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -323,9 +324,9 @@
                                     <i class="fa-solid fa-route text-[#00D2FF] mr-2"></i>Distancia en Captura
                                 </label>
                                 <select id="selectTipoDistancia" onchange="actualizarAvisoDistancia()" 
-                                        class="input-dark w-full px-4 py-3 rounded-xl text-xs font-bold text-white bg-[#0A0E1A]">
-                                    <option value="EXACTO_5K">5K Exactos (5.00K a 5.50K)</option>
-                                    <option value="SPLIT_10K">Recorrido 10K+ (Parcial de los primeros 5K)</option>
+                                        class="input-dark w-full px-4 py-3 rounded-xl text-xs font-bold text-white bg-[#0A0E1A] border border-white/20 focus:border-[#00D2FF] appearance-none cursor-pointer">
+                                    <option value="EXACTO_5K" class="bg-[#0A0E1A] text-white py-2">5K Exactos (5.00K a 5.50K)</option>
+                                    <option value="SPLIT_10K" class="bg-[#0A0E1A] text-white py-2">Recorrido 10K+ (Parcial de los primeros 5K)</option>
                                 </select>
                             </div>
                         </div>
@@ -339,10 +340,56 @@
                             </div>
                         </div>
 
-                        <!-- Campo 2: Ingreso estructurado de tiempo [HH] [MM] [SS] -->
+                        <!-- Campo 2: Carga de Captura (Foto a Google Drive y Auto-detección por IA) -->
                         <div>
-                            <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2">
-                                <i class="fa-solid fa-clock text-[#00D2FF] mr-2"></i>Tiempo Cronometrado
+                            <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2 flex items-center justify-between">
+                                <span><i class="fa-solid fa-camera text-[#00D2FF] mr-2"></i>Captura de Pantalla (Strava, Garmin, Nike, Reloj)</span>
+                                <span class="text-[10px] text-[#00D2FF] font-black uppercase tracking-widest"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Auto-Lectura IA</span>
+                            </label>
+                            
+                            <div class="relative border-2 border-dashed border-white/20 hover:border-[#00D2FF] rounded-2xl p-6 text-center transition-all bg-white/[0.02] cursor-pointer group"
+                                 onclick="document.getElementById('inputCaptura').click()">
+                                <input type="file" id="inputCaptura" accept="image/*" required class="hidden" onchange="previsualizarImagen(event)">
+                                
+                                <div id="preview-placeholder">
+                                    <div class="w-14 h-14 bg-white/5 group-hover:bg-[#00D2FF]/20 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl text-[#00D2FF] transition-all">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    </div>
+                                    <span class="font-bold text-sm text-white block">Toca para seleccionar tu captura</span>
+                                    <span class="text-[11px] text-slate-400 block mt-1">Formatos permitidos: JPG, PNG, WEBP (Máx. 5MB)</span>
+                                    <span class="inline-block mt-2 px-3 py-1 rounded-full bg-[#00D2FF]/10 text-[#00D2FF] text-[10px] font-bold">
+                                        ⚡ La IA detectará automáticamente tu tiempo y ritmo de carrera
+                                    </span>
+                                </div>
+
+                                <div id="preview-container" class="hidden flex flex-col items-center">
+                                    <img id="imgPreview" src="" alt="Captura de evidencia" class="max-h-52 rounded-xl border border-[#00D2FF]/40 shadow-lg object-contain mb-3">
+                                    <span id="preview-filename" class="text-xs font-bold text-[#00D2FF] truncate max-w-xs">archivo.jpg</span>
+                                    <span class="text-[10px] text-slate-400 mt-1 hover:text-white underline">Cambiar imagen</span>
+                                </div>
+                            </div>
+
+                            <!-- Estado de Escaneo OCR por IA -->
+                            <div id="ocr-status-box" class="hidden mt-3 p-3 rounded-xl bg-[#001E50] border border-[#00D2FF]/30 text-center space-y-1.5 transition-all">
+                                <div id="ocr-loading" class="flex items-center justify-center gap-2 text-xs font-bold text-[#00D2FF]">
+                                    <i class="fa-solid fa-brain fa-spin"></i>
+                                    <span>IA escaneando números, cronómetro y ritmo en tu captura...</span>
+                                </div>
+                                <div id="ocr-success" class="hidden flex flex-col items-center gap-1 text-xs text-green-400 font-bold">
+                                    <div class="flex items-center gap-2">
+                                        <i class="fa-solid fa-circle-check text-green-400"></i>
+                                        <span id="ocr-msg-success">¡Tiempo detectado y cronómetro auto-completado!</span>
+                                    </div>
+                                    <span id="ocr-detected-pace" class="text-[11px] text-[#00D2FF] font-semibold"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Campo 3: Ingreso estructurado de tiempo [HH] [MM] [SS] -->
+                        <div>
+                            <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2 flex items-center justify-between">
+                                <span><i class="fa-solid fa-clock text-[#00D2FF] mr-2"></i>Tiempo Cronometrado</span>
+                                <span class="text-[10px] text-slate-400 font-normal">Auto-completado por IA o editable</span>
                             </label>
                             
                             <div class="grid grid-cols-3 gap-3 max-w-md mx-auto">
@@ -365,35 +412,9 @@
                                            class="w-full bg-transparent text-center font-black text-2xl text-white focus:outline-none">
                                 </div>
                             </div>
-                            <p class="text-center text-[10px] text-slate-400 mt-2 font-medium">
+                            <p class="text-center text-[10px] text-slate-400 mt-2 font-medium" id="calculo-pace-display">
                                 Ejemplo: 00 horas : 24 minutos : 35 segundos = <span class="text-[#00D2FF] font-bold">00:24:35</span>
                             </p>
-                        </div>
-
-                        <!-- Campo 3: Carga de Captura (Foto a Google Drive) -->
-                        <div>
-                            <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2">
-                                <i class="fa-solid fa-camera text-[#00D2FF] mr-2"></i>Captura de Pantalla (Strava, Garmin, Nike, Reloj)
-                            </label>
-                            
-                            <div class="relative border-2 border-dashed border-white/20 hover:border-[#00D2FF] rounded-2xl p-6 text-center transition-all bg-white/[0.02] cursor-pointer group"
-                                 onclick="document.getElementById('inputCaptura').click()">
-                                <input type="file" id="inputCaptura" accept="image/*" required class="hidden" onchange="previsualizarImagen(event)">
-                                
-                                <div id="preview-placeholder">
-                                    <div class="w-14 h-14 bg-white/5 group-hover:bg-[#00D2FF]/20 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl text-[#00D2FF] transition-all">
-                                        <i class="fa-solid fa-cloud-arrow-up"></i>
-                                    </div>
-                                    <span class="font-bold text-sm text-white block">Toca para seleccionar tu captura</span>
-                                    <span class="text-[11px] text-slate-400 block mt-1">Formatos permitidos: JPG, PNG, WEBP (Máx. 5MB)</span>
-                                </div>
-
-                                <div id="preview-container" class="hidden flex flex-col items-center">
-                                    <img id="imgPreview" src="" alt="Captura de evidencia" class="max-h-48 rounded-xl border border-[#00D2FF]/40 shadow-lg object-contain mb-3">
-                                    <span id="preview-filename" class="text-xs font-bold text-[#00D2FF] truncate max-w-xs">archivo.jpg</span>
-                                    <span class="text-[10px] text-slate-400 mt-1 hover:text-white underline">Cambiar imagen</span>
-                                </div>
-                            </div>
                         </div>
 
                         <!-- Botón de Envío con sello IA -->
@@ -651,8 +672,8 @@
             return { valido: true };
         }
 
-        // 2. Previsualización de Imagen y conversión a Base64
-        function previsualizarImagen(event) {
+        // 2. Previsualización de Imagen y Procesamiento OCR Inteligente con IA
+        async function previsualizarImagen(event) {
             const file = event.target.files[0];
             if (!file) return;
 
@@ -666,14 +687,118 @@
             document.getElementById('preview-filename').innerText = file.name;
 
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = async function(e) {
                 const fullBase64 = e.target.result;
                 base64Captura = fullBase64.split(',')[1];
                 document.getElementById('imgPreview').src = fullBase64;
                 document.getElementById('preview-placeholder').classList.add('hidden');
                 document.getElementById('preview-container').classList.remove('hidden');
+
+                // Iniciar Escaneo Automático por IA (OCR)
+                ejecutarVisionOCR(fullBase64);
             };
             reader.readAsDataURL(file);
+        }
+
+        // Función de extracción por IA (Tesseract OCR)
+        async function ejecutarVisionOCR(imageSrc) {
+            const ocrBox = document.getElementById('ocr-status-box');
+            const ocrLoading = document.getElementById('ocr-loading');
+            const ocrSuccess = document.getElementById('ocr-success');
+            const ocrPaceEl = document.getElementById('ocr-detected-pace');
+
+            if (!ocrBox) return;
+
+            ocrBox.classList.remove('hidden');
+            ocrLoading.classList.remove('hidden');
+            ocrSuccess.classList.add('hidden');
+
+            try {
+                if (typeof Tesseract === 'undefined') {
+                    console.warn("Tesseract no cargado aún.");
+                    ocrBox.classList.add('hidden');
+                    return;
+                }
+
+                const result = await Tesseract.recognize(imageSrc, 'eng', {
+                    logger: m => {
+                        if (m.status === 'recognizing text' && m.progress) {
+                            const pct = Math.round(m.progress * 100);
+                            ocrLoading.querySelector('span').innerText = `IA analizando imagen y tiempos (${pct}%)...`;
+                        }
+                    }
+                });
+
+                const texto = result.data.text || '';
+                console.log("Texto detectado por OCR:", texto);
+
+                // Regex para extraer tiempo: HH:MM:SS o MM:SS
+                const regexTiempo = /\b(?:(\d{1,2})[:.])?(\d{2})[:.](\d{2})\b/g;
+                let match;
+                let tiemposEncontrados = [];
+
+                while ((match = regexTiempo.exec(texto)) !== null) {
+                    let hh = 0, mm = 0, ss = 0;
+                    if (match[1] !== undefined) {
+                        hh = parseInt(match[1], 10);
+                        mm = parseInt(match[2], 10);
+                        ss = parseInt(match[3], 10);
+                    } else {
+                        mm = parseInt(match[2], 10);
+                        ss = parseInt(match[3], 10);
+                    }
+
+                    const segs = (hh * 3600) + (mm * 60) + ss;
+                    // Rango biomecánico válido para 5K (entre 13 min y 2h15m)
+                    if (segs >= 780 && segs <= 8100) {
+                        tiemposEncontrados.push({ hh, mm, ss, segs });
+                    }
+                }
+
+                // Extraer distancia si aparece (ej: 5.00 km, 5.02, 10.05, 5km)
+                const regexDist = /\b(5[.,]\d{1,2}|10[.,]\d{1,2}|5)\s*(?:k|km|kil[oó]metros)?\b/i;
+                const matchDist = texto.match(regexDist);
+                if (matchDist) {
+                    const distNum = parseFloat(matchDist[1].replace(',', '.'));
+                    if (distNum >= 9.5) {
+                        document.getElementById('selectTipoDistancia').value = 'SPLIT_10K';
+                        actualizarAvisoDistancia();
+                    } else if (distNum >= 4.8) {
+                        document.getElementById('selectTipoDistancia').value = 'EXACTO_5K';
+                        actualizarAvisoDistancia();
+                    }
+                }
+
+                if (tiemposEncontrados.length > 0) {
+                    const mejor = tiemposEncontrados[0];
+                    document.getElementById('tiempoHH').value = String(mejor.hh).padStart(2, '0');
+                    document.getElementById('tiempoMM').value = String(mejor.mm).padStart(2, '0');
+                    document.getElementById('tiempoSS').value = String(mejor.ss).padStart(2, '0');
+
+                    // Cálculo automático de Pace (min/km) para 5K
+                    const paceSegundosPorKm = Math.round(mejor.segs / 5);
+                    const paceMin = Math.floor(paceSegundosPorKm / 60);
+                    const paceSec = paceSegundosPorKm % 60;
+                    const paceTexto = `${paceMin}:${String(paceSec).padStart(2, '0')} min/km`;
+
+                    ocrLoading.classList.add('hidden');
+                    ocrSuccess.classList.remove('hidden');
+                    ocrPaceEl.innerText = `Ritmo detectado: ${paceTexto} (Base 5 Km). Cronómetro auto-completado con éxito.`;
+
+                    const display = document.getElementById('calculo-pace-display');
+                    if (display) {
+                        display.innerHTML = `Tiempo oficial extraído: <strong class="text-[#00D2FF] font-black">${String(mejor.hh).padStart(2, '0')}:${String(mejor.mm).padStart(2, '0')}:${String(mejor.ss).padStart(2, '0')}</strong> • Ritmo: <strong class="text-white">${paceTexto}</strong>`;
+                    }
+                } else {
+                    ocrLoading.classList.add('hidden');
+                    ocrSuccess.classList.remove('hidden');
+                    ocrSuccess.className = "flex flex-col items-center gap-1 text-xs text-amber-300 font-bold";
+                    ocrSuccess.innerHTML = `<span><i class="fa-solid fa-circle-info mr-1"></i>Captura cargada. Por favor corrobora o ajusta las casillas de tiempo abajo si tu app tiene un formato no estándar.</span>`;
+                }
+            } catch (err) {
+                console.error("Error en OCR:", err);
+                ocrBox.classList.add('hidden');
+            }
         }
 
         // 3. Verificación de Cédula (Inscripción previa y Duplicado)
@@ -915,7 +1040,7 @@
         }
 
         // 6. Generación y Descarga de Certificado Oficial
-        function generarCertificado() {
+        async function generarCertificado() {
             const raw = document.getElementById('inputBuscarCert').value.trim();
             if (!raw) {
                 alert("Por favor ingresa tu número de cédula o dorsal.");
@@ -925,21 +1050,42 @@
             const busqueda = raw.replace(/\D/g, '');
             const dorsalPad = busqueda.padStart(3, '0');
 
-            // Buscar en el ranking cargado
-            const atleta = atletasRanking.find(a => a.dorsal === dorsalPad || a.dorsal === busqueda);
+            // 1. Buscar en el ranking cargado (atletas con evidencia registrada)
+            let atleta = atletasRanking.find(a => a.dorsal === dorsalPad || a.dorsal === busqueda);
+
+            // 2. Si no ha subido evidencia o el ranking está vacío, consultar inscripción oficial
+            if (!atleta) {
+                try {
+                    const resp = await fetch(`/api/consultar-atleta?ci=${busqueda}`);
+                    if (resp.ok) {
+                        const data = await resp.json();
+                        if (data.encontrado && data.registros.length > 0) {
+                            const reg = data.registros[0];
+                            atleta = {
+                                nombre: reg.nombre,
+                                dorsal: '#' + String(reg.dorsal).padStart(3, '0'),
+                                tiempo: "FINISHER OFICIAL"
+                            };
+                        }
+                    }
+                } catch(e) {
+                    console.error("Error consultando para certificado:", e);
+                }
+            }
 
             if (atleta) {
                 document.getElementById('cert-nombre').innerText = atleta.nombre;
-                document.getElementById('cert-dorsal').innerText = atleta.dorsal;
+                document.getElementById('cert-dorsal').innerText = atleta.dorsal.replace('#', '');
                 document.getElementById('cert-tiempo').innerText = atleta.tiempo;
 
-                document.getElementById('contenedor-certificado').style.display = 'block';
+                const contenedor = document.getElementById('contenedor-certificado');
+                contenedor.style.display = 'block';
                 document.getElementById('btn-descarga-box').classList.remove('hidden');
 
                 // Scroll suave al certificado
-                document.getElementById('contenedor-certificado').scrollIntoView({ behavior: 'smooth' });
+                contenedor.scrollIntoView({ behavior: 'smooth' });
             } else {
-                alert(`No se encontró un corredor con el identificador "${raw}" en la ${edicionActual} Edición.`);
+                alert(`No se encontró un corredor con la Cédula o Dorsal "${raw}". Por favor verifica el número ingresado.`);
             }
         }
 

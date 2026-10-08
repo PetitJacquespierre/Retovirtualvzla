@@ -205,18 +205,23 @@
                 Sube tu tiempo oficial con captura de pantalla, consulta tu posición en el podio y genera tu diploma de finisher.
             </p>
 
-            <!-- SELECTOR DE CARRERA PRINCIPAL -->
+            <!-- SELECTOR DE CARRERA PRINCIPAL CON PLAZOS OFICIALES -->
             <div class="flex flex-wrap justify-center items-center gap-3 mt-8">
-                <button onclick="seleccionarEdicion('3ra')" id="btn-ed-3ra" class="px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-[#00D2FF] text-[#001E50] shadow-lg shadow-[#00D2FF]/20 flex items-center gap-2">
-                    <i class="fa-solid fa-person-running text-sm"></i> 3ra Edición 5K
+                <button onclick="seleccionarEdicion('3ra')" id="btn-ed-3ra" class="px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-[#00D2FF] text-[#001E50] shadow-lg shadow-[#00D2FF]/20 flex flex-col sm:flex-row items-center gap-2">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-person-running text-sm"></i> 3ra Edición 5K</span>
+                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-[#001E50] text-[#00D2FF] font-bold">Todo Octubre</span>
                 </button>
-                <button onclick="seleccionarEdicion('4ta')" id="btn-ed-4ta" class="px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex items-center gap-2">
-                    <i class="fa-solid fa-fire-flame-curved text-sm"></i> 4ta Edición 5K
+                <button onclick="seleccionarEdicion('4ta')" id="btn-ed-4ta" class="px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex flex-col sm:flex-row items-center gap-2">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-fire-flame-curved text-sm"></i> 4ta Edición 5K</span>
+                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-amber-300 font-bold">Hasta Diciembre</span>
                 </button>
                 <button onclick="seleccionarEdicion('10k')" id="btn-ed-10k" class="px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/5 text-white/30 border border-white/5 cursor-not-allowed flex items-center gap-2" title="Disponible en Noviembre">
-                    <i class="fa-solid fa-lock text-xs"></i> 10K Especial <span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-amber-300">Pronto</span>
+                    <i class="fa-solid fa-lock text-xs"></i> 10K Especial <span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-slate-400">Noviembre</span>
                 </button>
             </div>
+            <p class="text-center text-[11px] text-white/40 mt-3 font-semibold">
+                ⚠️ Si adquiriste el <strong class="text-[#00D2FF]">Combo Dúo (3ra + 4ta)</strong>, debes enviar <strong class="text-white">dos evidencias separadas</strong>: una seleccionando la 3ra Edición y otra seleccionando la 4ta Edición.
+            </p>
         </div>
     </header>
 
@@ -565,14 +570,18 @@
             const btn4 = document.getElementById('btn-ed-4ta');
 
             if (edicion === '3ra') {
-                btn3.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-[#00D2FF] text-[#001E50] shadow-lg shadow-[#00D2FF]/20 flex items-center gap-2";
-                btn4.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex items-center gap-2";
-                document.getElementById('badge-edicion-form').innerText = "Reportando para 3ra Edición 5K";
+                btn3.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-[#00D2FF] text-[#001E50] shadow-lg shadow-[#00D2FF]/20 flex flex-col sm:flex-row items-center gap-2";
+                btn3.innerHTML = `<span class="flex items-center gap-2"><i class="fa-solid fa-person-running text-sm"></i> 3ra Edición 5K</span><span class="text-[9px] px-2 py-0.5 rounded-full bg-[#001E50] text-[#00D2FF] font-bold">Todo Octubre</span>`;
+                btn4.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex flex-col sm:flex-row items-center gap-2";
+                btn4.innerHTML = `<span class="flex items-center gap-2"><i class="fa-solid fa-fire-flame-curved text-sm"></i> 4ta Edición 5K</span><span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-amber-300 font-bold">Hasta Diciembre</span>`;
+                document.getElementById('badge-edicion-form').innerText = "Reportando para 3ra Edición 5K (Plazo: Todo Octubre)";
                 document.getElementById('titulo-ranking').innerText = "Ranking 3ra Edición 5K";
             } else {
-                btn4.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-[#00D2FF] text-[#001E50] shadow-lg shadow-[#00D2FF]/20 flex items-center gap-2";
-                btn3.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex items-center gap-2";
-                document.getElementById('badge-edicion-form').innerText = "Reportando para 4ta Edición 5K";
+                btn4.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-[#00D2FF] text-[#001E50] shadow-lg shadow-[#00D2FF]/20 flex flex-col sm:flex-row items-center gap-2";
+                btn4.innerHTML = `<span class="flex items-center gap-2"><i class="fa-solid fa-fire-flame-curved text-sm"></i> 4ta Edición 5K</span><span class="text-[9px] px-2 py-0.5 rounded-full bg-[#001E50] text-[#00D2FF] font-bold">Hasta Diciembre</span>`;
+                btn3.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex flex-col sm:flex-row items-center gap-2";
+                btn3.innerHTML = `<span class="flex items-center gap-2"><i class="fa-solid fa-person-running text-sm"></i> 3ra Edición 5K</span><span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-amber-300 font-bold">Todo Octubre</span>`;
+                document.getElementById('badge-edicion-form').innerText = "Reportando para 4ta Edición 5K (Plazo: Hasta Diciembre)";
                 document.getElementById('titulo-ranking').innerText = "Ranking 4ta Edición 5K";
             }
 

@@ -888,10 +888,29 @@
                         const r = dataIA.resultado;
                         const d = dataIA.datos || {};
 
-                        // Rellenar casillas
-                        document.getElementById('tiempoHH').value = String(r.hh).padStart(2, '0');
-                        document.getElementById('tiempoMM').value = String(r.mm).padStart(2, '0');
-                        document.getElementById('tiempoSS').value = String(r.ss).padStart(2, '0');
+                        // Rellenar casillas del cronómetro
+                        const inputHH = document.getElementById('tiempoHH');
+                        const inputMM = document.getElementById('tiempoMM');
+                        const inputSS = document.getElementById('tiempoSS');
+                        inputHH.value = String(r.hh).padStart(2, '0');
+                        inputMM.value = String(r.mm).padStart(2, '0');
+                        inputSS.value = String(r.ss).padStart(2, '0');
+
+                        // Disparar eventos para asegurar reactividad en el DOM
+                        [inputHH, inputMM, inputSS].forEach(inp => {
+                            inp.dispatchEvent(new Event('input', { bubbles: true }));
+                            inp.dispatchEvent(new Event('change', { bubbles: true }));
+                        });
+
+                        // Efecto visual de resaltado para confirmar la auto-actualización
+                        [inputHH.parentElement, inputMM.parentElement, inputSS.parentElement].forEach(box => {
+                            if (box) {
+                                box.classList.add('ring-2', 'ring-[#00D2FF]', 'bg-[#00D2FF]/20');
+                                setTimeout(() => {
+                                    box.classList.remove('ring-2', 'ring-[#00D2FF]', 'bg-[#00D2FF]/20');
+                                }, 2500);
+                            }
+                        });
 
                         // Ajustar selector de distancia
                         if (r.distancia_km >= 9.5) {
@@ -1200,9 +1219,28 @@
                 }
 
                 if (tiempoEncontrado) {
-                    document.getElementById('tiempoHH').value = String(tiempoEncontrado.hh).padStart(2, '0');
-                    document.getElementById('tiempoMM').value = String(tiempoEncontrado.mm).padStart(2, '0');
-                    document.getElementById('tiempoSS').value = String(tiempoEncontrado.ss).padStart(2, '0');
+                    const inputHH = document.getElementById('tiempoHH');
+                    const inputMM = document.getElementById('tiempoMM');
+                    const inputSS = document.getElementById('tiempoSS');
+                    inputHH.value = String(tiempoEncontrado.hh).padStart(2, '0');
+                    inputMM.value = String(tiempoEncontrado.mm).padStart(2, '0');
+                    inputSS.value = String(tiempoEncontrado.ss).padStart(2, '0');
+
+                    // Disparar eventos para asegurar reactividad en el DOM
+                    [inputHH, inputMM, inputSS].forEach(inp => {
+                        inp.dispatchEvent(new Event('input', { bubbles: true }));
+                        inp.dispatchEvent(new Event('change', { bubbles: true }));
+                    });
+
+                    // Efecto visual de resaltado
+                    [inputHH.parentElement, inputMM.parentElement, inputSS.parentElement].forEach(box => {
+                        if (box) {
+                            box.classList.add('ring-2', 'ring-[#00D2FF]', 'bg-[#00D2FF]/20');
+                            setTimeout(() => {
+                                box.classList.remove('ring-2', 'ring-[#00D2FF]', 'bg-[#00D2FF]/20');
+                            }, 2500);
+                        }
+                    });
 
                     // Cálculo del Pace: preferir el ritmo oficial de la app si fue detectado
                     let paceFinal = paceAppDetectado;

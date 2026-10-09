@@ -171,40 +171,50 @@ function calcularTiempo5K(d) {
 
 // ---------- Proveedores de visión ----------
 async function analizarConGemini(apiKey, base64, mime) {
-    const modelo = 'gemini-3.8-flash';
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent`;
+    // Modelos estables con soporte de visión
+    const modelos = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro'];
     let ultimoError = null;
-    // Primer intento con esquema estricto; si la API lo rechaza, reintento solo con JSON.
-    for (const conEsquema of [true, false]) {
-        const generationConfig = { temperature: 0 };
-        generationConfig.responseFormat = conEsquema
-            ? { text: { mimeType: 'application/json', schema: SCHEMA } }
-            : { text: { mimeType: 'application/json' } };
-        const resp = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
-            body: JSON.stringify({
-                contents: [{
-                    parts: [
-                        { inline_data: { mime_type: mime, data: base64 } },
-                        { text: PROMPT }
-                    ]
-                }],
-                generationConfig
-            })
-        });
-        const data = await resp.json();
-        if (!resp.ok) {
-            ultimoError = data.error?.message || `Gemini HTTP ${resp.status}`;
-            if (resp.status === 400 && conEsquema) continue;
-            throw new Error(ultimoError);
+
+    for (const modelo of modelos) {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${encodeURIComponent(apiKey)}`;
+        for (const conEsquema of [true, false]) {
+            try {
+                const generationConfig = { temperature: 0.1 };
+                if (conEsquema) {
+                    generationConfig.responseMimeType = 'application/json';
+                }
+
+                const resp = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [
+                                { inline_data: { mime_type: mime, data: base64 } },
+                                { text: PROMPT }
+                            ]
+                        }],
+                        generationConfig
+                    })
+                });
+
+                const data = await resp.json();
+                if (!resp.ok) {
+                    ultimoError = `${modelo}: ${data.error?.message || resp.status}`;
+                    if (resp.status === 400 && conEsquema) continue; // reintentar sin schema
+                    break; // pasar al siguiente modelo si es 404 u otro error
+                }
+
+                const texto = (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('');
+                const json = extraerJSON(texto);
+                if (json) return { datos: json, proveedor: 'gemini', modelo };
+                ultimoError = `${modelo}: respuesta sin JSON válido`;
+            } catch (err) {
+                ultimoError = `${modelo}: ${err.message}`;
+            }
         }
-        const texto = (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('');
-        const json = extraerJSON(texto);
-        if (json) return { datos: json, proveedor: 'gemini', modelo };
-        ultimoError = 'Gemini no devolvió JSON válido';
     }
-    throw new Error(ultimoError);
+    throw new Error(ultimoError || 'No se pudo obtener respuesta de Gemini');
 }
 
 async function analizarConGroq(apiKey, base64, mime) {
@@ -217,18 +227,18 @@ async function analizarConGroq(apiKey, base64, mime) {
             const ld = await lista.json();
             candidatos = (ld.data || [])
                 .map(m => m.id)
-                .filter(id => /llama-4|vision|scout|maverick|-vl|qwen.*vl|gemma-3/i.test(id));
+                .filter(id => /vision|scout|maverick|-vl|qwen.*vl|gemma-3|llama-3\.2/i.test(id));
         }
     } catch (e) { /* usar valores por defecto */ }
 
     const preferidos = [
+        'llama-3.2-11b-vision-preview',
+        'llama-3.2-90b-vision-preview',
         'meta-llama/llama-4-maverick-17b-128e-instruct',
         'meta-llama/llama-4-scout-17b-16e-instruct'
     ];
     const orden = [
-        ...candidatos.filter(id => /maverick/i.test(id)),
-        ...candidatos.filter(id => /scout/i.test(id)),
-        ...candidatos.filter(id => !/maverick|scout/i.test(id)),
+        ...candidatos,
         ...preferidos
     ].filter((id, i, arr) => arr.indexOf(id) === i);
 
@@ -238,7 +248,7 @@ async function analizarConGroq(apiKey, base64, mime) {
             try {
                 const body = {
                     model: modelo,
-                    temperature: 0,
+                    temperature: 0.1,
                     max_tokens: 1500,
                     messages: [{
                         role: 'user',

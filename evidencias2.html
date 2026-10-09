@@ -337,6 +337,9 @@
                                 <i class="fa-solid fa-magnifying-glass mr-1"></i> Verificar
                             </button>
                         </div>
+                        <p class="text-[11px] text-white/50 mt-1.5 text-center md:text-left">
+                            ¿Tu cédula no aparece o tienes algún inconveniente? <a href="https://wa.me/584127732710?text=Hola,%20tengo%20un%20inconveniente%20con%20mi%20c%C3%A9dula%20en%20el%20portal%20de%20evidencias" target="_blank" rel="noopener noreferrer" class="text-[#00D2FF] hover:underline font-bold inline-flex items-center gap-1"><i class="fa-brands fa-whatsapp text-xs text-[#25D366]"></i> WhatsApp 0412-7732710</a>
+                        </p>
                     </div>
 
                     <!-- Datos autocompletados (Nombre y Dorsal) -->
@@ -359,6 +362,11 @@
                         <i class="fa-solid fa-circle-check text-2xl text-amber-400"></i>
                         <h4 class="font-black uppercase text-sm tracking-wider">¡Evidencia Ya Registrada!</h4>
                         <p class="text-xs text-amber-200/80" id="mensaje-ya-subio">Ya has enviado tu tiempo para esta edición. Tu reporte se encuentra en revisión oficial.</p>
+                        <div class="pt-2">
+                            <a href="https://wa.me/584127732710?text=Hola,%20ya%20sub%C3%AD%20mi%20evidencia%20pero%20necesito%20corregir%20un%20dato" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-[#00D2FF] font-bold hover:underline">
+                                <i class="fa-brands fa-whatsapp text-sm text-[#25D366]"></i> ¿Necesitas corregir tu tiempo? Escríbenos al 0412-7732710
+                            </a>
+                        </div>
                     </div>
 
                     <!-- Contenedor del resto del formulario (Se desbloquea SOLO cuando la cédula está verificada) -->
@@ -498,6 +506,20 @@
                             </p>
                             <p class="text-[10px] text-slate-400">Verificando consistencia de split, pace y autenticidad del registro.</p>
                         </div>
+
+                        <!-- Bloque de Soporte WhatsApp para Dudas o Inconvenientes -->
+                        <div class="mt-4 p-4 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#00D2FF]/40 text-center transition-all">
+                            <div class="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-white/80">
+                                <span class="inline-flex items-center gap-1.5 font-medium">
+                                    <i class="fa-solid fa-headset text-[#00D2FF]"></i> ¿Tienes algún inconveniente con tu reporte o tiempo?
+                                </span>
+                                <a href="https://wa.me/584127732710?text=Hola,%20tengo%20un%20inconveniente%20con%20el%20reporte%20de%20mi%20evidencia" 
+                                   target="_blank" rel="noopener noreferrer" 
+                                   class="text-[#25D366] font-black hover:text-[#00D2FF] inline-flex items-center gap-1.5 transition-colors underline sm:no-underline sm:bg-[#25D366]/10 sm:px-3 sm:py-1 sm:rounded-full sm:border sm:border-[#25D366]/30">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Escríbenos al 0412-7732710
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
                 </form>
@@ -581,6 +603,9 @@
                         Generar Diploma
                     </button>
                 </div>
+                <p class="text-[11px] text-white/50 pt-1">
+                    ¿Problemas con tu diploma o datos? <a href="https://wa.me/584127732710?text=Hola,%20tengo%20un%20inconveniente%20con%20mi%20certificado%20de%20carrera" target="_blank" rel="noopener noreferrer" class="text-[#00D2FF] hover:underline font-bold inline-flex items-center gap-1"><i class="fa-brands fa-whatsapp text-xs text-[#25D366]"></i> Soporte WhatsApp 0412-7732710</a>
+                </p>
             </div>
 
             <!-- Contenedor del Certificado Renderizado para html2canvas -->
@@ -1371,7 +1396,7 @@
                 document.getElementById('hiddenDorsal').value = '';
                 document.getElementById('bloque-inputs-evidencia').classList.add('opacity-40', 'pointer-events-none');
                 estadoCi.innerHTML = `<span class="text-rose-400 font-bold"><i class="fa-solid fa-circle-xmark mr-1"></i>No inscrito en base de datos</span>`;
-                alert(`⚠️ La cédula ${ci} no aparece registrada en la lista oficial de corredores.\n\nPara poder subir evidencias, debes haber completado tu inscripción previa. Si te inscribiste recientemente, contacta al soporte por WhatsApp.`);
+                alert(`⚠️ La cédula ${ci} no aparece registrada en la lista oficial de corredores.\n\nPara poder subir evidencias, debes haber completado tu inscripción previa. Si te inscribiste recientemente o presentas algún inconveniente, escríbenos al WhatsApp: 0412-7732710.`);
 
             } catch (err) {
                 console.error("Error al verificar cédula:", err);
@@ -1656,7 +1681,7 @@
                 // Scroll suave al certificado
                 contenedor.scrollIntoView({ behavior: 'smooth' });
             } else {
-                alert(`No se encontró un corredor con la Cédula o Dorsal "${raw}". Por favor verifica el número ingresado.`);
+                alert(`No se encontró un corredor con la Cédula o Dorsal "${raw}".\n\nSi ya completaste tu carrera o tienes dudas con tu registro, escríbenos por WhatsApp al 0412-7732710 para asistirte.`);
             }
         }
 

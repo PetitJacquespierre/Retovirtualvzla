@@ -97,10 +97,12 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 48%;
-            opacity: 0.05;
+            width: 65%;
+            max-width: 480px;
+            opacity: 0.35;
             pointer-events: none;
             user-select: none;
+            filter: drop-shadow(0 0 25px rgba(0, 210, 255, 0.2));
         }
         .diploma-inner-border {
             position: absolute;
@@ -537,15 +539,15 @@
 
                     <!-- Cabecera del Certificado -->
                     <div class="relative z-10 flex items-center justify-between border-b border-white/10 pb-4">
-                        <div class="flex items-center gap-3">
-                            <img src="img/RV-Isotipo-sinfondo.webp" alt="Logo RV" class="h-12 w-auto object-contain">
+                        <div class="flex items-center gap-4">
+                            <img src="img/RV-Isotipo-sinfondo.webp" alt="Logo RV" class="h-16 md:h-20 w-auto object-contain drop-shadow-[0_0_15px_rgba(0,210,255,0.4)]">
                             <div class="text-left">
-                                <span class="block text-[11px] md:text-xs font-black tracking-[0.3em] uppercase text-white/70">Reto Virtual Venezuela</span>
-                                <span id="cert-edicion-badge" class="inline-block text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/30 mt-0.5">3ra Edición 5K</span>
+                                <span class="block text-xs md:text-sm font-black tracking-[0.25em] uppercase text-white">Reto Virtual VZLA</span>
+                                <span id="cert-edicion-badge" class="inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/40 mt-1 shadow-sm">3ra Edición 5K</span>
                             </div>
                         </div>
                         <div class="text-right">
-                            <span class="text-[9px] md:text-[10px] uppercase font-bold tracking-[0.25em] text-white/50 block">Temporada</span>
+                            <span class="text-[9px] md:text-[10px] uppercase font-bold tracking-[0.25em] text-white/50 block">Temporada Oficial</span>
                             <span class="text-sm md:text-base font-black tracking-widest text-white">2026</span>
                         </div>
                     </div>
@@ -567,45 +569,46 @@
                             ATLETA RETO VIRTUAL
                         </h2>
 
-                        <!-- Leyenda Oficial -->
-                        <p class="text-[10px] md:text-xs text-white/70 max-w-xl mx-auto leading-relaxed mt-1 font-medium">
-                            Por completar con valentía, disciplina y pasión el desafío de 5 Kilómetros, dejando constancia de su espíritu deportivo inquebrantable.
+                        <!-- Leyenda Oficial Dinámica por Edición -->
+                        <p id="cert-leyenda-edicion" class="text-[10px] md:text-xs text-white/80 max-w-xl mx-auto leading-relaxed mt-1 font-medium">
+                            Por superar el desafío de los 5 Kilómetros con determinación, pasión y constancia, coronando con orgullo la 3ra Edición del Reto Virtual VZLA.
                         </p>
 
                         <!-- Métricas del Corredor: Dorsal, Tiempo Oficial, Ritmo -->
                         <div class="flex items-center justify-center gap-4 md:gap-8 mt-5">
-                            <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-2.5 text-center min-w-[100px]">
+                            <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-2.5 text-center min-w-[100px] backdrop-blur-sm">
                                 <span class="block text-[8px] md:text-[9px] uppercase font-black tracking-widest text-white/50">Dorsal</span>
                                 <span id="cert-dorsal" class="text-base md:text-xl font-black text-[#00D2FF]">#000</span>
                             </div>
-                            <div class="bg-white/5 border border-white/10 rounded-2xl px-6 py-2.5 text-center min-w-[130px]">
+                            <div class="bg-white/5 border border-white/10 rounded-2xl px-6 py-2.5 text-center min-w-[130px] backdrop-blur-sm">
                                 <span class="block text-[8px] md:text-[9px] uppercase font-black tracking-widest text-white/50">Tiempo Oficial</span>
                                 <span id="cert-tiempo" class="text-base md:text-xl font-black text-white font-mono">00:00:00</span>
                             </div>
-                            <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-2.5 text-center min-w-[100px]">
+                            <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-2.5 text-center min-w-[100px] backdrop-blur-sm">
                                 <span class="block text-[8px] md:text-[9px] uppercase font-black tracking-widest text-white/50">Distancia</span>
                                 <span class="text-base md:text-xl font-black text-amber-400">5.00 KM</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Pie del Certificado: Firma y Fecha -->
+                    <!-- Pie del Certificado: Firma, QR y Fecha -->
                     <div class="relative z-10 flex items-end justify-between border-t border-white/10 pt-4 mt-auto">
-                        <!-- Firma Digital Director General -->
+                        <!-- Firma Digital Jacquespierre Petit -->
                         <div class="text-left">
                             <div class="font-serif italic text-lg md:text-2xl text-white font-bold tracking-wider opacity-90 border-b border-white/20 pb-0.5 inline-block">
                                 Jacquespierre Petit
                             </div>
                             <span class="block text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[#00D2FF] mt-1">Director General</span>
-                            <span class="block text-[7px] md:text-[8px] text-white/40 uppercase tracking-widest">Reto Virtual Venezuela</span>
+                            <span class="block text-[7px] md:text-[8px] text-white/50 uppercase tracking-widest">Reto Virtual VZLA</span>
                         </div>
 
-                        <!-- Sello de Autenticidad Central -->
-                        <div class="hidden sm:flex flex-col items-center">
-                            <div class="w-12 h-12 rounded-full border-2 border-[#00D2FF]/40 bg-[#00D2FF]/10 flex items-center justify-center text-[#00D2FF] text-lg shadow-inner">
-                                <i class="fa-solid fa-shield-halved"></i>
+                        <!-- Código QR Dinámico de Verificación Oficial -->
+                        <div class="flex flex-col items-center">
+                            <div class="p-1.5 bg-white rounded-xl shadow-lg border border-white/20">
+                                <img id="cert-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fwww.retovirtualvzla.com%2Fevidencias2.html" 
+                                     alt="QR Validación" class="w-12 h-12 md:w-14 md:h-14 object-contain">
                             </div>
-                            <span class="text-[7px] text-white/50 uppercase tracking-widest mt-1 font-bold">Oficial Verificado</span>
+                            <span class="text-[7px] md:text-[8px] text-white/60 uppercase tracking-widest mt-1 font-black">Escanea para Validar</span>
                         </div>
 
                         <!-- Fecha de Emisión -->
@@ -1416,17 +1419,31 @@
                 const badgeEd = document.getElementById('cert-edicion-badge');
                 const fechaEl = document.getElementById('cert-fecha');
                 const modEl = document.getElementById('cert-modalidad-badge');
+                const leyendaEl = document.getElementById('cert-leyenda-edicion');
+                const qrImg = document.getElementById('cert-qr-img');
+
+                const dorsalLimpio = String(atleta.dorsal).replace('#', '');
+                const urlValidacion = `https://www.retovirtualvzla.com/evidencias2.html?edicion=${edicionActual}&dorsal=${dorsalLimpio}`;
+                if (qrImg) {
+                    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(urlValidacion)}`;
+                }
 
                 if (edicionActual === '4ta') {
                     cardBody.classList.add('edicion-4ta');
-                    badgeEd.className = "inline-block text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 mt-0.5";
+                    badgeEd.className = "inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40 mt-1 shadow-sm";
                     badgeEd.innerText = "4ta Edición 5K";
                     fechaEl.innerText = "Diciembre, 2026";
+                    if (leyendaEl) {
+                        leyendaEl.innerText = "Por conquistar con garra, disciplina y perseverancia los 5 Kilómetros, dejando huella indeleble en la Gran 4ta Edición del Reto Virtual VZLA.";
+                    }
                 } else {
                     cardBody.classList.remove('edicion-4ta');
-                    badgeEd.className = "inline-block text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/30 mt-0.5";
+                    badgeEd.className = "inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/40 mt-1 shadow-sm";
                     badgeEd.innerText = "3ra Edición 5K";
                     fechaEl.innerText = "Octubre, 2026";
+                    if (leyendaEl) {
+                        leyendaEl.innerText = "Por superar el desafío de los 5 Kilómetros con determinación, pasión y constancia, coronando con orgullo la 3ra Edición del Reto Virtual VZLA.";
+                    }
                 }
 
                 if (atleta.modalidad) {

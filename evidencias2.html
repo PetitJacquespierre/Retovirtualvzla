@@ -972,6 +972,7 @@
                     return;
                 }
 
+                let tiempoEncontrado = null;
                 ocrLoading.querySelector('span').innerText = 'IA analizando texto con OCR local...';
 
                 const result = await Tesseract.recognize(imageSrc, 'eng', {

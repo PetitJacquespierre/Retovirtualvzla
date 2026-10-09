@@ -227,15 +227,14 @@ async function analizarConGroq(apiKey, base64, mime) {
             const ld = await lista.json();
             candidatos = (ld.data || [])
                 .map(m => m.id)
-                .filter(id => /vision|scout|maverick|-vl|qwen.*vl|gemma-3|llama-3\.2/i.test(id));
+                .filter(id => /vision|-vl\b|qwen.*vl/i.test(id) && !/whisper|guard/i.test(id));
         }
     } catch (e) { /* usar valores por defecto */ }
 
+    // Modelos de visión de Groq
     const preferidos = [
         'llama-3.2-11b-vision-preview',
-        'llama-3.2-90b-vision-preview',
-        'meta-llama/llama-4-maverick-17b-128e-instruct',
-        'meta-llama/llama-4-scout-17b-16e-instruct'
+        'llama-3.2-90b-vision-preview'
     ];
     const orden = [
         ...candidatos,
@@ -269,7 +268,7 @@ async function analizarConGroq(apiKey, base64, mime) {
                 if (!resp.ok) {
                     ultimoError = `${modelo}: ${data.error?.message || resp.status}`;
                     if (resp.status === 401 || resp.status === 403) throw new Error(ultimoError);
-                    continue;
+                    break; // pasar al siguiente modelo
                 }
                 const json = extraerJSON(data.choices?.[0]?.message?.content);
                 if (json) return { datos: json, proveedor: 'groq', modelo };
@@ -277,6 +276,7 @@ async function analizarConGroq(apiKey, base64, mime) {
             } catch (e) {
                 ultimoError = e.message;
                 if (/401|403/.test(e.message)) throw e;
+                break; // pasar al siguiente modelo
             }
         }
     }

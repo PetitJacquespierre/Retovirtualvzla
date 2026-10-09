@@ -331,18 +331,22 @@
 
                     <!-- Campo 1: Cédula con verificación de inscripción y duplicados -->
                     <div>
-                        <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2 flex items-center justify-between">
-                            <span><i class="fa-solid fa-id-card text-[#00D2FF] mr-2"></i>Número de Cédula (V o E)</span>
-                            <span id="estado-ci" class="text-[10px] text-amber-400 font-bold">Verifica tu inscripción</span>
-                        </label>
-                        <div class="relative">
-                            <input type="text" id="inputCedula" required placeholder="Ej: 24788261" onblur="verificarCedula()" oninput="alCambiarCedula()"
-                                   class="input-dark w-full px-5 py-4 rounded-2xl text-center md:text-left text-lg font-bold tracking-wider">
-                            <button type="button" onclick="verificarCedula()" class="absolute right-2 top-2 bottom-2 px-5 rounded-xl bg-[#00D2FF] text-[#001E50] text-xs font-black uppercase tracking-wider hover:bg-white hover:text-[#001E50] transition-all shadow-md">
-                                <i class="fa-solid fa-magnifying-glass mr-1"></i> Verificar
+                        <div class="flex items-center justify-between gap-2 mb-2">
+                            <label class="text-white/80 text-[11px] font-black uppercase tracking-widest flex items-center">
+                                <i class="fa-solid fa-id-card text-[#00D2FF] mr-2"></i>Cédula de Identidad
+                            </label>
+                            <span id="estado-ci" class="text-[10px] text-amber-400 font-bold shrink-0">Verifica tu inscripción</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <div class="relative flex-grow">
+                                <input type="text" id="inputCedula" required placeholder="Ej: 24788261" onblur="verificarCedula()" oninput="alCambiarCedula()"
+                                       class="input-dark w-full px-5 py-3.5 rounded-2xl text-left text-base sm:text-lg font-bold tracking-wider placeholder:text-slate-500">
+                            </div>
+                            <button type="button" onclick="verificarCedula()" class="px-6 py-3.5 rounded-2xl bg-[#00D2FF] text-[#001E50] text-xs font-black uppercase tracking-wider hover:bg-white hover:text-[#001E50] transition-all shadow-md flex items-center justify-center gap-1.5 shrink-0">
+                                <i class="fa-solid fa-magnifying-glass"></i> Verificar
                             </button>
                         </div>
-                        <p class="text-[11px] text-white/50 mt-1.5 text-center md:text-left">
+                        <p class="text-[11px] text-white/50 mt-1.5 text-left">
                             ¿Tu cédula no aparece o tienes algún inconveniente? <a href="https://wa.me/584127732710?text=Hola,%20tengo%20un%20inconveniente%20con%20mi%20c%C3%A9dula%20en%20el%20portal%20de%20evidencias" target="_blank" rel="noopener noreferrer" class="text-[#00D2FF] hover:underline font-bold inline-flex items-center gap-1"><i class="fa-brands fa-whatsapp text-sm text-[#25D366]"></i> WhatsApp</a>
                         </p>
                     </div>

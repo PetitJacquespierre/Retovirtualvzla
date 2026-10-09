@@ -210,8 +210,8 @@
 
     <div class="bg-[#00D2FF] text-[#001E50] py-2.5 text-center text-[10px] font-black uppercase tracking-[0.25em] z-50 relative">
         <i class="fa-solid fa-fire mr-2"></i>
-        3ra & 4ta Edición 5K Activas (Inicio: 09 de Octubre) · Cupos 10K Abiertos —
-        <a href="inscripcion.html?modo=5K" class="underline underline-offset-2 hover:opacity-80 transition-opacity ml-1">Inscríbete Aquí</a>
+        🔥 3RA EDICIÓN 5K ¡SOLD OUT TOTAL! GRACIAS POR EL APOYO · ÚLTIMOS CUPOS COMBO DÚO & 10K —
+        <a href="inscripcion.html?modo=COMBO" class="underline underline-offset-2 hover:opacity-80 transition-opacity ml-1">Asegurar Combo Dúo</a>
         <i class="fa-solid fa-fire ml-2"></i>
     </div>
 
@@ -1186,29 +1186,32 @@ const heroCarousel = (function() {
         </div>
       </div>
 
-      <!-- EDICIÓN 3 — En curso (destacada) -->
-      <div class="group relative aspect-[3/4] overflow-hidden rounded-2xl shadow-2xl transition-all hover:scale-[1.02] border-2 border-[#00D2FF]">
-        <img src="img/Medalla3web.jpeg" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Medalla Edición 3" loading="lazy">
-        <div class="absolute inset-0 bg-gradient-to-t from-[#001E50] via-black/40 to-black/60"></div>
-        <div class="absolute top-3 left-1/2 -translate-x-1/2 bg-[#00D2FF] text-[#001E50] text-[9px] font-black px-4 py-1 rounded-full uppercase shadow-[0_0_15px_rgba(0,210,255,0.6)] tracking-tighter animate-pulse z-20">
-          En Curso
+      <!-- EDICIÓN 3 — SOLD OUT / EN CURSO -->
+      <div class="group relative aspect-[3/4] overflow-hidden rounded-2xl shadow-2xl transition-all hover:scale-[1.02] border-2 border-amber-400/80">
+        <img src="img/Medalla3web.jpeg" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale contrast-125" alt="Medalla Edición 3" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#001E50] via-black/60 to-black/75"></div>
+        
+        <div class="absolute top-3 left-1/2 -translate-x-1/2 bg-red-600 text-white text-[9px] font-black px-4 py-1 rounded-full uppercase shadow-[0_0_15px_rgba(239,68,68,0.7)] tracking-wider z-20 flex items-center gap-1.5">
+          <i class="fa-solid fa-lock text-[8px]"></i> ¡SOLD OUT! CUPOS AGOTADOS
         </div>
         
-        <!-- Bloque central idéntico a Edición 1 y 2 para alinear perfectamente "Inicio: 09 de Octubre" a la altura de "Culminada" -->
-        <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-white z-10">
-          <div class="mb-3 opacity-0 pointer-events-none p-2">
-            <i class="fa-solid fa-lock text-sm"></i>
+        <!-- Bloque central con mensaje de agradecimiento -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-white z-10 text-center">
+          <div class="mb-2 bg-amber-400/20 backdrop-blur-sm border border-amber-400 p-2.5 rounded-full shadow-lg">
+            <i class="fa-solid fa-trophy text-amber-400 text-base"></i>
           </div>
           <h4 class="font-black text-2xl uppercase mb-1 tracking-tighter">Edición 3</h4>
-          <p class="text-[#00D2FF] text-[11px] font-bold uppercase tracking-[0.3em] mb-5">Inscripciones 5K · $10</p>
-          <span class="border-2 border-white/50 px-5 py-1.5 rounded-full text-[11px] font-bold bg-white/10 backdrop-blur-sm">Inicio: 09 de Octubre</span>
+          <p class="text-amber-300 text-[10px] font-black uppercase tracking-[0.25em] mb-3">¡Inscripciones Cerradas!</p>
+          <span class="border border-white/30 px-3 py-1.5 rounded-xl text-[10px] font-bold bg-black/40 backdrop-blur-sm text-slate-200 leading-tight">
+            ¡Mil gracias a todos por el apoyo masivo! ❤️
+          </span>
         </div>
 
-        <!-- Botón de Inscripción fijo en la parte inferior -->
-        <div class="absolute bottom-6 left-6 right-6 z-20">
-          <a href="inscripcion.html?modo=5K"
-             class="block w-full bg-[#00D2FF] text-[#001E50] py-3 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-white transition-all shadow-lg text-center">
-            Inscribirme Ahora
+        <!-- Botón inferior invitando al Combo Dúo -->
+        <div class="absolute bottom-5 left-5 right-5 z-20">
+          <a href="inscripcion.html?modo=COMBO"
+             class="block w-full bg-gradient-to-r from-amber-400 to-amber-500 text-[#001E50] py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider hover:brightness-110 transition-all shadow-lg text-center">
+            <i class="fa-solid fa-fire mr-1"></i> Disponible en Combo Dúo
           </a>
         </div>
       </div>
@@ -1249,12 +1252,15 @@ const heroCarousel = (function() {
 
         <!-- Texto -->
         <div class="p-10 md:p-14">
-          <span class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.5em] mb-3 block">Oferta por tiempo limitado</span>
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.5em] block">Últimos Cupos Disponibles</span>
+            <span class="bg-red-500/10 text-red-500 border border-red-500/20 text-[9px] font-black uppercase px-2.5 py-0.5 rounded-full">¡Pocas Medallas!</span>
+          </div>
           <h3 class="text-[#001E50] text-3xl md:text-4xl font-black uppercase leading-tight tracking-tighter mb-4">
             Llévate las <span class="text-[#00D2FF] italic">dos ediciones</span><br>por $16
           </h3>
           <p class="text-slate-500 text-sm leading-relaxed mb-6">
-            Asegura tu participación en la <strong>3ra y 4ta edición</strong> juntas y ahorra. El precio regular es de $10 por cada una, pero con este combo pagas solo $8 por edición y aseguras tus dos piezas del rompecabezas nacional. <strong>Ambas medallas se envían juntas en un solo paquete a partir del 09 de Octubre</strong> (ahorras también en el costo de envío).
+            Con la 3ra Edición individual ya <strong>completamente agotada</strong>, este Combo Dúo es la <strong>única forma de acceder</strong> a ambas medallas y completar tu rompecabezas nacional. Quedan muy pocas piezas de la 4ta edición. <strong>Ambas medallas se envían juntas en un solo paquete a partir de hoy 09 de Octubre</strong> (ahorras también en el costo de envío).
           </p>
 
           <ul class="space-y-3 mb-8">

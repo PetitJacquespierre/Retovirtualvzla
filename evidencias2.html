@@ -1628,59 +1628,68 @@
 
         function pintarTablaRanking() {
             const tbody = document.getElementById('tabla-ranking-body');
+            if (!tbody) return;
             tbody.innerHTML = '';
 
-            let filtrados = [...atletasRanking];
+            try {
+                let filtrados = [...(atletasRanking || [])];
 
-            if (filtroGeneroActual === 'MASCULINO') {
-                filtrados = filtrados.filter(a => a.genero.startsWith('M'));
-            } else if (filtroGeneroActual === 'FEMENINO') {
-                filtrados = filtrados.filter(a => a.genero.startsWith('F'));
-            }
-
-            // Ordenamiento por tiempo (menor a mayor)
-            filtrados.sort((a, b) => {
-                const parseSegundos = (t) => {
-                    if (!t || t.toLowerCase() === 'pendiente') return 999999;
-                    const partes = t.split(':').map(Number);
-                    if (partes.length === 3) return partes[0] * 3600 + partes[1] * 60 + partes[2];
-                    if (partes.length === 2) return partes[0] * 60 + partes[1];
-                    return 999999;
-                };
-                return parseSegundos(a.tiempo) - parseSegundos(b.tiempo);
-            });
-
-            if (filtrados.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="py-12 text-center text-slate-400 font-bold uppercase tracking-wider text-xs">No hay corredores registrados en esta categoría aún.</td></tr>`;
-                return;
-            }
-
-            filtrados.forEach((atleta, idx) => {
-                const esPendiente = atleta.tiempo.toLowerCase() === 'pendiente';
-                let posBadge = `<span class="font-black text-slate-400 text-sm">${idx + 1}</span>`;
-
-                if (!esPendiente) {
-                    if (idx === 0) posBadge = `<span class="text-xl">🥇</span>`;
-                    else if (idx === 1) posBadge = `<span class="text-xl">🥈</span>`;
-                    else if (idx === 2) posBadge = `<span class="text-xl">🥉</span>`;
+                if (filtroGeneroActual === 'MASCULINO') {
+                    filtrados = filtrados.filter(a => (a && a.genero) ? a.genero.toUpperCase().startsWith('M') : false);
+                } else if (filtroGeneroActual === 'FEMENINO') {
+                    filtrados = filtrados.filter(a => (a && a.genero) ? a.genero.toUpperCase().startsWith('F') : false);
                 }
 
-                const isFem = atleta.genero && atleta.genero.startsWith('F');
-                const badgeGenero = isFem 
-                    ? `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-pink-500/15 text-pink-300 border border-pink-500/30"><i class="fa-solid fa-venus text-[9px]"></i> Fem</span>`
-                    : `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/30"><i class="fa-solid fa-mars text-[9px]"></i> Masc</span>`;
+                // Ordenamiento por tiempo (menor a mayor)
+                filtrados.sort((a, b) => {
+                    const parseSegundos = (t) => {
+                        if (!t) return 999999;
+                        const tStr = String(t).trim().toLowerCase();
+                        if (tStr === 'pendiente' || tStr === '') return 999999;
+                        const partes = tStr.split(':').map(Number);
+                        if (partes.length === 3 && !partes.some(isNaN)) return partes[0] * 3600 + partes[1] * 60 + partes[2];
+                        if (partes.length === 2 && !partes.some(isNaN)) return partes[0] * 60 + partes[1];
+                        return 999999;
+                    };
+                    return parseSegundos(a?.tiempo) - parseSegundos(b?.tiempo);
+                });
 
-                const fila = document.createElement('tr');
-                fila.className = "hover:bg-white/5 transition-colors border-b border-white/5";
-                fila.innerHTML = `
-                    <td class="py-4 px-4 text-center">${posBadge}</td>
-                    <td class="py-4 px-4 text-center font-black text-[#00D2FF] text-sm">#${atleta.dorsal}</td>
-                    <td class="py-4 px-4 font-bold text-white uppercase tracking-tight text-sm">${atleta.nombre}</td>
-                    <td class="py-4 px-4 text-center hidden sm:table-cell">${badgeGenero}</td>
-                    <td class="py-4 px-6 text-right font-mono font-bold text-[#00D2FF] text-sm">${atleta.tiempo}</td>
-                `;
-                tbody.appendChild(fila);
-            });
+                if (filtrados.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="py-12 text-center text-slate-400 font-bold uppercase tracking-wider text-xs">No hay corredores registrados en esta categoría aún.</td></tr>`;
+                    return;
+                }
+
+                filtrados.forEach((atleta, idx) => {
+                    const tiempoStr = atleta.tiempo ? String(atleta.tiempo) : 'Pendiente';
+                    const esPendiente = tiempoStr.toLowerCase() === 'pendiente';
+                    let posBadge = `<span class="font-black text-slate-400 text-sm">${idx + 1}</span>`;
+
+                    if (!esPendiente) {
+                        if (idx === 0) posBadge = `<span class="text-xl">🥇</span>`;
+                        else if (idx === 1) posBadge = `<span class="text-xl">🥈</span>`;
+                        else if (idx === 2) posBadge = `<span class="text-xl">🥉</span>`;
+                    }
+
+                    const isFem = atleta.genero && atleta.genero.toUpperCase().startsWith('F');
+                    const badgeGenero = isFem 
+                        ? `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-pink-500/15 text-pink-300 border border-pink-500/30"><i class="fa-solid fa-venus text-[9px]"></i> Fem</span>`
+                        : `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/30"><i class="fa-solid fa-mars text-[9px]"></i> Masc</span>`;
+
+                    const fila = document.createElement('tr');
+                    fila.className = "hover:bg-white/5 transition-colors border-b border-white/5";
+                    fila.innerHTML = `
+                        <td class="py-4 px-4 text-center">${posBadge}</td>
+                        <td class="py-4 px-4 text-center font-black text-[#00D2FF] text-sm">#${atleta.dorsal || '---'}</td>
+                        <td class="py-4 px-4 font-bold text-white uppercase tracking-tight text-sm">${atleta.nombre || 'Atleta'}</td>
+                        <td class="py-4 px-4 text-center hidden sm:table-cell">${badgeGenero}</td>
+                        <td class="py-4 px-6 text-right font-mono font-bold text-[#00D2FF] text-sm">${tiempoStr}</td>
+                    `;
+                    tbody.appendChild(fila);
+                });
+            } catch (err) {
+                console.error("Error al pintar tabla de ranking:", err);
+                tbody.innerHTML = `<tr><td colspan="5" class="py-10 text-center text-slate-500 font-bold">Ocurrió un error al procesar los resultados. Por favor recarga la página.</td></tr>`;
+            }
         }
 
         function filtrarRanking(genero) {
@@ -1692,10 +1701,12 @@
             };
 
             Object.keys(botones).forEach(g => {
-                if (g === genero) {
-                    botones[g].className = "px-5 py-2 rounded-full font-black text-xs uppercase tracking-wider bg-[#00D2FF] text-[#001E50] transition-all";
-                } else {
-                    botones[g].className = "px-5 py-2 rounded-full font-bold text-xs uppercase tracking-wider text-slate-400 hover:text-white transition-all";
+                if (botones[g]) {
+                    if (g === genero) {
+                        botones[g].className = "px-5 py-2 rounded-full font-black text-xs uppercase tracking-wider bg-[#00D2FF] text-[#001E50] transition-all";
+                    } else {
+                        botones[g].className = "px-5 py-2 rounded-full font-bold text-xs uppercase tracking-wider text-slate-400 hover:text-white transition-all";
+                    }
                 }
             });
 
@@ -1714,7 +1725,7 @@
             const dorsalPad = busqueda.padStart(3, '0');
 
             // 1. Buscar en el ranking cargado (atletas con evidencia registrada)
-            let atleta = atletasRanking.find(a => a.dorsal === dorsalPad || a.dorsal === busqueda);
+            let atleta = atletasRanking.find(a => a && (a.dorsal === dorsalPad || a.dorsal === busqueda));
 
             // 2. Si no ha subido evidencia o el ranking está vacío, consultar inscripción oficial
             if (!atleta) {
@@ -1722,7 +1733,7 @@
                     const resp = await fetch(`/api/consultar-atleta?ci=${busqueda}`);
                     if (resp.ok) {
                         const data = await resp.json();
-                        if (data.encontrado && data.registros.length > 0) {
+                        if (data.encontrado && data.registros && data.registros.length > 0) {
                             const reg = data.registros[0];
                             atleta = {
                                 nombre: reg.nombre,
@@ -1737,15 +1748,18 @@
             }
 
             if (atleta) {
-                let nombreFinal = atleta.nombre;
-                const dorsalLimpio = String(atleta.dorsal).replace(/\D/g, '').padStart(3, '0');
+                let nombreFinal = atleta.nombre || '';
+                const dorsalLimpio = String(atleta.dorsal || '').replace(/\D/g, '').padStart(3, '0');
                 if (dorsalLimpio === '070' || nombreFinal.toUpperCase().includes('CARLOS ANTONIO NATER')) {
                     nombreFinal = 'CARLOS ANTONIO NATERA CANELO';
                 }
 
-                document.getElementById('cert-nombre').innerText = nombreFinal;
-                document.getElementById('cert-dorsal').innerText = '#' + dorsalLimpio;
-                document.getElementById('cert-tiempo').innerText = atleta.tiempo;
+                const certNombre = document.getElementById('cert-nombre');
+                const certDorsal = document.getElementById('cert-dorsal');
+                const certTiempo = document.getElementById('cert-tiempo');
+                if (certNombre) certNombre.innerText = nombreFinal;
+                if (certDorsal) certDorsal.innerText = '#' + dorsalLimpio;
+                if (certTiempo) certTiempo.innerText = atleta.tiempo || 'FINISHER OFICIAL';
 
                 // Dinamismo de Edición 3ra vs 4ta
                 const cardBody = document.getElementById('diploma-card-body');
@@ -1755,7 +1769,6 @@
                 const leyendaEl = document.getElementById('cert-leyenda-edicion');
                 const qrImg = document.getElementById('cert-qr-img');
 
-                const dorsalLimpio = String(atleta.dorsal).replace('#', '');
                 const urlValidacion = `https://www.retovirtualvzla.com/evidencias2.html?edicion=${edicionActual}&dorsal=${dorsalLimpio}`;
                 if (qrImg) {
                     qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(urlValidacion)}`;

@@ -347,16 +347,37 @@
                         </p>
                     </div>
 
-                    <!-- Datos autocompletados (Nombre y Dorsal) -->
-                    <div id="box-datos-atleta" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-[#001E50]/60 border border-[#00D2FF]/30 shadow-lg">
-                        <div>
-                            <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider">Atleta</span>
-                            <span id="atleta-nombre" class="font-black text-white text-sm">---</span>
+                    <!-- Datos autocompletados (Nombre, Dorsal y Categoría de Género) -->
+                    <div id="box-datos-atleta" class="hidden p-4 rounded-2xl bg-[#001E50]/60 border border-[#00D2FF]/30 shadow-lg space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider">Atleta</span>
+                                <span id="atleta-nombre" class="font-black text-white text-sm">---</span>
+                            </div>
+                            <div class="sm:text-right">
+                                <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider">Dorsal Asignado</span>
+                                <span id="atleta-dorsal" class="font-black text-[#00D2FF] text-lg">#---</span>
+                            </div>
                         </div>
-                        <div class="sm:text-right">
-                            <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider">Dorsal Asignado</span>
-                            <span id="atleta-dorsal" class="font-black text-[#00D2FF] text-lg">#---</span>
+
+                        <!-- Selector de Género para Categoría y Ranking -->
+                        <div class="pt-2 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <div>
+                                <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider">Categoría de Competencia</span>
+                                <span class="text-[11px] text-white/60">Confirma tu categoría para el ranking oficial</span>
+                            </div>
+                            <div class="inline-flex rounded-xl bg-white/5 p-1 border border-white/10">
+                                <button type="button" id="btn-genero-fem" onclick="seleccionarGenero('FEMENINO')" 
+                                        class="px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all text-slate-400 hover:text-white">
+                                    <i class="fa-solid fa-venus mr-1 text-pink-400"></i> Femenino
+                                </button>
+                                <button type="button" id="btn-genero-masc" onclick="seleccionarGenero('MASCULINO')" 
+                                        class="px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all text-slate-400 hover:text-white">
+                                    <i class="fa-solid fa-mars mr-1 text-[#00D2FF]"></i> Masculino
+                                </button>
+                            </div>
                         </div>
+
                         <input type="hidden" id="hiddenNombre" value="">
                         <input type="hidden" id="hiddenDorsal" value="">
                         <input type="hidden" id="hiddenGenero" value="">
@@ -1375,12 +1396,29 @@
         // 3. Verificación de Cédula (Inscripción previa y Duplicado)
         let atletaVerificadoConExito = false;
 
+        function seleccionarGenero(genero) {
+            const gen = (genero && genero.startsWith('F')) ? 'FEMENINO' : 'MASCULINO';
+            document.getElementById('hiddenGenero').value = gen;
+
+            const btnFem = document.getElementById('btn-genero-fem');
+            const btnMasc = document.getElementById('btn-genero-masc');
+
+            if (gen === 'FEMENINO') {
+                if (btnFem) btnFem.className = "px-4 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider transition-all bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-md shadow-pink-500/30";
+                if (btnMasc) btnMasc.className = "px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all text-slate-400 hover:text-white";
+            } else {
+                if (btnMasc) btnMasc.className = "px-4 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider transition-all bg-[#00D2FF] text-[#001E50] shadow-md shadow-[#00D2FF]/30";
+                if (btnFem) btnFem.className = "px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all text-slate-400 hover:text-white";
+            }
+        }
+
         function alCambiarCedula() {
             atletaVerificadoConExito = false;
             document.getElementById('bloque-inputs-evidencia').classList.add('opacity-40', 'pointer-events-none');
             document.getElementById('box-datos-atleta').classList.add('hidden');
             document.getElementById('hiddenNombre').value = '';
             document.getElementById('hiddenDorsal').value = '';
+            document.getElementById('hiddenGenero').value = '';
             document.getElementById('estado-ci').innerHTML = `<span class="text-amber-400 font-bold">Presiona Verificar</span>`;
         }
 
@@ -1429,7 +1467,11 @@
                         document.getElementById('atleta-dorsal').innerText = '#' + String(reg.dorsal).padStart(3, '0');
                         document.getElementById('hiddenNombre').value = reg.nombre;
                         document.getElementById('hiddenDorsal').value = reg.dorsal;
-                        document.getElementById('hiddenGenero').value = reg.genero || 'MASCULINO';
+
+                        // Asignar género: si ya viene de la hoja se preselecciona; si viene vacío se deja Femenino o Masculino con confirmación
+                        const genDetectado = (reg.genero && reg.genero.startsWith('F')) ? 'FEMENINO' : ((reg.genero && reg.genero.startsWith('M')) ? 'MASCULINO' : 'MASCULINO');
+                        seleccionarGenero(genDetectado);
+
                         estadoCi.innerHTML = `<span class="text-green-400 font-bold"><i class="fa-solid fa-circle-check mr-1"></i>Inscrito (${reg.carrera || '5K'})</span>`;
                         return;
                     }
@@ -1440,6 +1482,7 @@
                 document.getElementById('box-datos-atleta').classList.add('hidden');
                 document.getElementById('hiddenNombre').value = '';
                 document.getElementById('hiddenDorsal').value = '';
+                document.getElementById('hiddenGenero').value = '';
                 document.getElementById('bloque-inputs-evidencia').classList.add('opacity-40', 'pointer-events-none');
                 estadoCi.innerHTML = `<span class="text-rose-400 font-bold"><i class="fa-solid fa-circle-xmark mr-1"></i>No inscrito en base de datos</span>`;
                 alert(`⚠️ La cédula ${ci} no aparece registrada en la lista oficial de corredores.\n\nPara poder subir evidencias, debes haber completado tu inscripción previa. Si te inscribiste recientemente o presentas algún inconveniente, contáctanos por WhatsApp.`);
@@ -1618,13 +1661,18 @@
                     else if (idx === 2) posBadge = `<span class="text-xl">🥉</span>`;
                 }
 
+                const isFem = atleta.genero && atleta.genero.startsWith('F');
+                const badgeGenero = isFem 
+                    ? `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-pink-500/15 text-pink-300 border border-pink-500/30"><i class="fa-solid fa-venus text-[9px]"></i> Fem</span>`
+                    : `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/30"><i class="fa-solid fa-mars text-[9px]"></i> Masc</span>`;
+
                 const fila = document.createElement('tr');
                 fila.className = "hover:bg-white/5 transition-colors border-b border-white/5";
                 fila.innerHTML = `
                     <td class="py-4 px-4 text-center">${posBadge}</td>
                     <td class="py-4 px-4 text-center font-black text-[#00D2FF] text-sm">#${atleta.dorsal}</td>
                     <td class="py-4 px-4 font-bold text-white uppercase tracking-tight text-sm">${atleta.nombre}</td>
-                    <td class="py-4 px-4 text-center hidden sm:table-cell text-slate-400 font-bold text-xs uppercase">${atleta.genero}</td>
+                    <td class="py-4 px-4 text-center hidden sm:table-cell">${badgeGenero}</td>
                     <td class="py-4 px-6 text-right font-mono font-bold text-[#00D2FF] text-sm">${atleta.tiempo}</td>
                 `;
                 tbody.appendChild(fila);

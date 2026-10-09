@@ -155,6 +155,7 @@ export default async function handler(req, res) {
                     const idxCI = h3.findIndex(h => h.includes('cedula') || h.includes('ci')) !== -1 ? h3.findIndex(h => h.includes('cedula') || h.includes('ci')) : 1;
                     const idxNombre = h3.findIndex(h => h.includes('nombre')) !== -1 ? h3.findIndex(h => h.includes('nombre')) : 2;
                     const idxTel = h3.findIndex(h => h.includes('telefono') || h.includes('tlf')) !== -1 ? h3.findIndex(h => h.includes('telefono') || h.includes('tlf')) : 3;
+                    const idxGen3 = h3.findIndex(h => h.includes('genero') || h.includes('sexo'));
 
                     for (let i = 1; i < filas3.length; i++) {
                         const col = parseCsv(filas3[i]);
@@ -162,6 +163,11 @@ export default async function handler(req, res) {
                         if (filaCI === ci) {
                             const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
                             const dNum = col[idxDorsal] ? String(col[idxDorsal]).replace(/\D/g, '').padStart(3, '0') : 'S/N';
+                            const rawGen = idxGen3 !== -1 && col[idxGen3] ? col[idxGen3].trim() : '';
+                            let genFinal = '';
+                            if (rawGen.toUpperCase().startsWith('F')) genFinal = 'FEMENINO';
+                            else if (rawGen.toUpperCase().startsWith('M')) genFinal = 'MASCULINO';
+
                             registrosAtleta.push({
                                 dorsal: dNum,
                                 nombre: col[idxNombre] || 'Atleta',
@@ -172,7 +178,7 @@ export default async function handler(req, res) {
                                 esSolvente: true,
                                 textil: '',
                                 reserva: '',
-                                genero: 'GENERAL'
+                                genero: genFinal
                             });
                         }
                     }
@@ -192,6 +198,7 @@ export default async function handler(req, res) {
                     const idxCI = h4.findIndex(h => h.includes('cedula') || h.includes('ci')) !== -1 ? h4.findIndex(h => h.includes('cedula') || h.includes('ci')) : 1;
                     const idxNombre = h4.findIndex(h => h.includes('nombre')) !== -1 ? h4.findIndex(h => h.includes('nombre')) : 2;
                     const idxTel = h4.findIndex(h => h.includes('telefono') || h.includes('tlf')) !== -1 ? h4.findIndex(h => h.includes('telefono') || h.includes('tlf')) : 3;
+                    const idxGen4 = h4.findIndex(h => h.includes('genero') || h.includes('sexo'));
 
                     for (let i = 1; i < filas4.length; i++) {
                         const col = parseCsv(filas4[i]);
@@ -199,6 +206,11 @@ export default async function handler(req, res) {
                         if (filaCI === ci) {
                             const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
                             const dNum = col[idxDorsal] ? String(col[idxDorsal]).replace(/\D/g, '').padStart(3, '0') : 'S/N';
+                            const rawGen = idxGen4 !== -1 && col[idxGen4] ? col[idxGen4].trim() : '';
+                            let genFinal = '';
+                            if (rawGen.toUpperCase().startsWith('F')) genFinal = 'FEMENINO';
+                            else if (rawGen.toUpperCase().startsWith('M')) genFinal = 'MASCULINO';
+
                             registrosAtleta.push({
                                 dorsal: dNum,
                                 nombre: col[idxNombre] || 'Atleta',
@@ -209,7 +221,7 @@ export default async function handler(req, res) {
                                 esSolvente: true,
                                 textil: '',
                                 reserva: '',
-                                genero: 'GENERAL'
+                                genero: genFinal
                             });
                         }
                     }

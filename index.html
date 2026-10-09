@@ -1463,12 +1463,46 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </section>	
 
-    <section class="py-24 bg-[#001E50] relative overflow-hidden">
-        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-[#00D2FF]/10 rounded-full blur-3xl"></div>
+    <section class="py-24 bg-gradient-to-b from-[#001433] via-[#001E50] to-[#000d24] relative overflow-hidden border-t border-[#00D2FF]/20">
+        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-[#00D2FF]/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        
         <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
-            <h2 class="text-white text-4xl md:text-6xl font-black uppercase mb-6 leading-none">Tu próxima meta <br> <span class="text-[#00D2FF] italic">empieza aquí.</span></h2>
-            <p class="text-white/70 text-lg mb-10">No dejes para después la medalla que puedes ganar hoy. La 3ra y 4ta Edición Nacional te esperan.</p>
-            <a id="btnInscribirmePrincipal" href="inscripcion.html?modo=5K" class="btn-magnetic inline-block bg-[#00D2FF] text-[#001E50] px-16 py-5 rounded-full font-black text-lg uppercase tracking-widest shadow-2xl">¡INSCRIBIRME AHORA!</a>
+            <!-- Badge 10K -->
+            <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-6 bg-[#00D2FF]/10 border border-[#00D2FF]/30 shadow-lg">
+                <i class="fa-solid fa-medal text-[#00D2FF] text-sm animate-pulse"></i>
+                <span class="text-[#00D2FF] font-black text-xs uppercase tracking-[0.4em]">El Gran Reto de Venezuela</span>
+            </div>
+
+            <h2 class="text-white text-4xl md:text-6xl font-black uppercase mb-6 leading-tight tracking-tight">
+                Tu próxima meta <br> <span class="text-[#00D2FF] italic">es la Edición Especial 10K.</span>
+            </h2>
+
+            <p class="text-white/80 text-base md:text-xl mb-8 font-light max-w-2xl mx-auto leading-relaxed">
+                Con el circuito 5K totalmente culminado, ahora el desafío sube de nivel. <strong class="text-white font-semibold">10 Kilómetros de pura gloria</strong> con medalla conmemorativa de metal macizo 3D, dorsal numerado y camiseta técnica opcional.
+            </p>
+
+            <!-- Mini badges de atributos del 10K -->
+            <div class="flex flex-wrap items-center justify-center gap-4 text-xs font-bold text-white/90 mb-10 uppercase tracking-wider">
+                <span class="bg-white/5 border border-white/15 px-4 py-2 rounded-full flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-[#00D2FF]"></i> Medalla Metal Macizo 3D
+                </span>
+                <span class="bg-white/5 border border-white/15 px-4 py-2 rounded-full flex items-center gap-2">
+                    <i class="fa-solid fa-truck-fast text-[#00D2FF]"></i> Envíos a Toda Venezuela
+                </span>
+                <span class="bg-white/5 border border-white/15 px-4 py-2 rounded-full flex items-center gap-2">
+                    <i class="fa-solid fa-stopwatch text-[#00D2FF]"></i> Ranking Nacional Oficial
+                </span>
+            </div>
+
+            <a id="btnInscribirmePrincipal" href="inscripcion.html?modo=10K" class="btn-magnetic inline-flex items-center justify-center gap-3 bg-[#00D2FF] text-[#001E50] px-14 py-5 rounded-full font-black text-base md:text-lg uppercase tracking-widest shadow-[0_0_35px_rgba(0,210,255,0.4)] hover:bg-white hover:scale-105 transition-all">
+                <i class="fa-solid fa-flag-checkered text-xl"></i>
+                ¡ASEGURAR MI CUPO 10K!
+            </a>
+
+            <p class="text-white/40 text-[11px] font-bold uppercase tracking-widest mt-4">
+                Edición Limitada 2026 · Cupos Limitados
+            </p>
         </div>
     </section>
 

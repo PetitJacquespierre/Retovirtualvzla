@@ -228,18 +228,15 @@ async function analizarConGroq(apiKey, base64, mime) {
             // Solo modelos activos y compatibles con visión, excluyendo modelos descontinuados
             candidatos = (ld.data || [])
                 .map(m => m.id)
-                .filter(id => /vision|-vl\b|qwen.*vl/i.test(id) && !/whisper|guard|90b-vision/i.test(id) && m.active !== false);
+                .filter(id => /vision|-vl\b|qwen.*vl/i.test(id) && !/whisper|guard|90b-vision|11b-vision|scout|maverick/i.test(id) && m.active !== false);
         }
     } catch (e) { /* usar valores por defecto */ }
 
-    // Modelos de visión de Groq activos
-    const preferidos = [
-        'llama-3.2-11b-vision-preview'
-    ];
-    const orden = [
-        ...candidatos,
-        ...preferidos
-    ].filter((id, i, arr) => arr.indexOf(id) === i && !/90b-vision|scout|maverick/i.test(id));
+    const orden = candidatos;
+
+    if (orden.length === 0) {
+        throw new Error('Groq: Actualmente no hay modelos de visión disponibles en Groq para procesar imágenes.');
+    }
 
     let ultimoError = null;
     for (const modelo of orden) {

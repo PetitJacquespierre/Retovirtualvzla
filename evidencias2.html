@@ -21,7 +21,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Alex+Brush&family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -72,25 +72,53 @@
         .diploma-card {
             width: 100%;
             aspect-ratio: 16 / 11;
-            min-height: 520px;
+            min-height: 540px;
             position: relative;
-            background: radial-gradient(circle at 50% 20%, #0d1e3d 0%, #050b18 70%, #02050b 100%);
-            border: 8px solid #00D2FF;
-            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 210, 255, 0.25);
-            border-radius: 20px;
+            background: 
+                radial-gradient(ellipse at 85% 15%, rgba(0, 210, 255, 0.28) 0%, transparent 45%),
+                radial-gradient(ellipse at 15% 85%, rgba(0, 102, 255, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(0, 210, 255, 0.08) 0%, transparent 60%),
+                linear-gradient(135deg, #091326 0%, #030814 50%, #01040a 100%);
+            border: 6px solid #00D2FF;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 210, 255, 0.35);
+            border-radius: 24px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: clamp(20px, 4vw, 45px);
+            padding: clamp(24px, 4vw, 48px);
             box-sizing: border-box;
             color: #ffffff;
             font-family: 'Montserrat', sans-serif;
         }
         .diploma-card.edicion-4ta {
             border-color: #f59e0b;
-            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 30px rgba(245, 158, 11, 0.3);
-            background: radial-gradient(circle at 50% 20%, #2b1803 0%, #120902 70%, #050301 100%);
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.95), 0 0 40px rgba(245, 158, 11, 0.4);
+            background: 
+                radial-gradient(ellipse at 85% 15%, rgba(245, 158, 11, 0.3) 0%, transparent 45%),
+                radial-gradient(ellipse at 15% 85%, rgba(234, 88, 12, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 60%),
+                linear-gradient(135deg, #241303 0%, #120801 50%, #050200 100%);
+        }
+        .diploma-splash-1 {
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.22) 0%, rgba(0, 210, 255, 0.02) 65%, transparent 75%);
+            filter: blur(25px);
+            pointer-events: none;
+        }
+        .diploma-splash-2 {
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 240px;
+            height: 240px;
+            background: radial-gradient(circle, rgba(0, 102, 255, 0.25) 0%, rgba(0, 210, 255, 0.05) 60%, transparent 75%);
+            filter: blur(30px);
+            pointer-events: none;
         }
         .diploma-watermark {
             position: absolute;
@@ -107,9 +135,17 @@
         .diploma-inner-border {
             position: absolute;
             inset: 12px;
-            border: 1px dashed rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
+            border: 1.5px dashed rgba(255, 255, 255, 0.18);
+            border-radius: 16px;
             pointer-events: none;
+        }
+        .firma-cursiva {
+            font-family: 'Great Vibes', 'Alex Brush', cursive;
+            font-size: clamp(26px, 3.2vw, 42px);
+            line-height: 1;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -533,6 +569,10 @@
             <!-- Contenedor del Certificado Renderizado para html2canvas -->
             <div class="contenedor-diploma-wrapper mt-10 shadow-2xl" id="contenedor-certificado">
                 <div class="diploma-card" id="diploma-card-body">
+                    <!-- Salpicaduras de Pintura Deportiva (Fondos Neón de alto impacto) -->
+                    <div class="diploma-splash-1"></div>
+                    <div class="diploma-splash-2"></div>
+
                     <!-- Marca de Agua de Fondo -->
                     <img src="img/RV-Isotipo-sinfondo.webp" alt="Marca de agua" class="diploma-watermark">
                     <div class="diploma-inner-border"></div>
@@ -553,69 +593,70 @@
                     </div>
 
                     <!-- Cuerpo Central del Certificado -->
-                    <div class="relative z-10 text-center my-auto py-4">
-                        <div class="inline-flex items-center gap-2 mb-2">
-                            <i class="fa-solid fa-medal text-amber-400 text-sm"></i>
-                            <span class="text-[10px] md:text-xs uppercase font-black tracking-[0.35em] text-white/70">Certificado Oficial de Finalista</span>
-                            <i class="fa-solid fa-medal text-amber-400 text-sm"></i>
+                    <div class="relative z-10 text-center my-auto py-5">
+                        <div class="inline-flex items-center gap-2.5 mb-2.5">
+                            <i class="fa-solid fa-medal text-amber-400 text-base md:text-lg"></i>
+                            <span class="text-xs md:text-sm uppercase font-black tracking-[0.35em] text-[#00D2FF]">Certificado Oficial de Finalista</span>
+                            <i class="fa-solid fa-medal text-amber-400 text-base md:text-lg"></i>
                         </div>
                         
-                        <p class="text-[10px] md:text-xs text-white/60 tracking-wider uppercase mb-1">
+                        <p class="text-xs md:text-sm text-white/80 tracking-wider uppercase mb-1 font-semibold">
                             Este reconocimiento se otorga con el más alto honor deportivo a:
                         </p>
 
                         <!-- Nombre del Atleta -->
-                        <h2 id="cert-nombre" class="text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-[#00D2FF] to-white py-2">
+                        <h2 id="cert-nombre" class="text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-[#00D2FF] to-white py-2">
                             ATLETA RETO VIRTUAL
                         </h2>
 
                         <!-- Leyenda Oficial Dinámica por Edición -->
-                        <p id="cert-leyenda-edicion" class="text-[10px] md:text-xs text-white/80 max-w-xl mx-auto leading-relaxed mt-1 font-medium">
+                        <p id="cert-leyenda-edicion" class="text-xs md:text-sm text-white/90 max-w-2xl mx-auto leading-relaxed mt-2 font-medium">
                             Por superar el desafío de los 5 Kilómetros con determinación, pasión y constancia, coronando con orgullo la 3ra Edición del Reto Virtual VZLA.
                         </p>
 
-                        <!-- Métricas del Corredor: Dorsal, Tiempo Oficial, Ritmo -->
-                        <div class="flex items-center justify-center gap-4 md:gap-8 mt-5">
-                            <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-2.5 text-center min-w-[100px] backdrop-blur-sm">
-                                <span class="block text-[8px] md:text-[9px] uppercase font-black tracking-widest text-white/50">Dorsal</span>
-                                <span id="cert-dorsal" class="text-base md:text-xl font-black text-[#00D2FF]">#000</span>
+                        <!-- Métricas del Corredor: Dorsal, Tiempo Oficial, Distancia -->
+                        <div class="flex items-center justify-center gap-4 md:gap-8 mt-6">
+                            <div class="bg-white/5 border border-white/10 rounded-2xl px-6 py-3 text-center min-w-[110px] backdrop-blur-sm">
+                                <span class="block text-[9px] md:text-[10px] uppercase font-black tracking-widest text-white/50">Dorsal</span>
+                                <span id="cert-dorsal" class="text-lg md:text-2xl font-black text-[#00D2FF]">#000</span>
                             </div>
-                            <div class="bg-white/5 border border-white/10 rounded-2xl px-6 py-2.5 text-center min-w-[130px] backdrop-blur-sm">
-                                <span class="block text-[8px] md:text-[9px] uppercase font-black tracking-widest text-white/50">Tiempo Oficial</span>
-                                <span id="cert-tiempo" class="text-base md:text-xl font-black text-white font-mono">00:00:00</span>
+                            <div class="bg-white/5 border border-white/10 rounded-2xl px-8 py-3 text-center min-w-[150px] backdrop-blur-sm">
+                                <span class="block text-[9px] md:text-[10px] uppercase font-black tracking-widest text-white/50">Tiempo Oficial</span>
+                                <span id="cert-tiempo" class="text-lg md:text-2xl font-black text-white font-mono">00:00:00</span>
                             </div>
-                            <div class="bg-white/5 border border-white/10 rounded-2xl px-5 py-2.5 text-center min-w-[100px] backdrop-blur-sm">
-                                <span class="block text-[8px] md:text-[9px] uppercase font-black tracking-widest text-white/50">Distancia</span>
-                                <span class="text-base md:text-xl font-black text-amber-400">5.00 KM</span>
+                            <div class="bg-white/5 border border-white/10 rounded-2xl px-6 py-3 text-center min-w-[110px] backdrop-blur-sm">
+                                <span class="block text-[9px] md:text-[10px] uppercase font-black tracking-widest text-white/50">Distancia</span>
+                                <span class="text-lg md:text-2xl font-black text-amber-400">5.00 KM</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Pie del Certificado: Firma, QR y Fecha -->
-                    <div class="relative z-10 flex items-end justify-between border-t border-white/10 pt-4 mt-auto">
-                        <!-- Firma Digital Jacquespierre Petit -->
+                    <!-- Pie del Certificado: FECHA (Izquierda) • FIRMA DIRECTOR (Centro) • QR (Derecha) -->
+                    <div class="relative z-10 grid grid-cols-3 items-end border-t border-white/10 pt-4 mt-auto">
+                        <!-- Izquierda: Fecha de Validación y Modalidad -->
                         <div class="text-left">
-                            <div class="font-serif italic text-lg md:text-2xl text-white font-bold tracking-wider opacity-90 border-b border-white/20 pb-0.5 inline-block">
-                                Jacquespierre Petit
-                            </div>
-                            <span class="block text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[#00D2FF] mt-1">Director General</span>
-                            <span class="block text-[7px] md:text-[8px] text-white/50 uppercase tracking-widest">Reto Virtual VZLA</span>
+                            <span class="block text-[8px] md:text-[10px] uppercase font-bold tracking-widest text-white/50">Fecha de Validación</span>
+                            <span id="cert-fecha" class="text-xs md:text-sm font-black uppercase tracking-wider text-white">Octubre, 2026</span>
+                            <span id="cert-modalidad-badge" class="block text-[8px] md:text-[9px] text-[#00D2FF] uppercase tracking-widest mt-0.5 font-bold">Modalidad Running</span>
                         </div>
 
-                        <!-- Código QR Dinámico de Verificación Oficial -->
-                        <div class="flex flex-col items-center">
-                            <div class="p-1.5 bg-white rounded-xl shadow-lg border border-white/20">
+                        <!-- Centro: Firma Cursiva del Director General -->
+                        <div class="text-center flex flex-col items-center">
+                            <div class="firma-cursiva mb-0.5">
+                                Jacques Pierre Petit
+                            </div>
+                            <div class="w-32 md:w-44 border-b border-white/20 mb-1"></div>
+                            <span class="block text-[9px] md:text-[11px] font-black uppercase tracking-[0.2em] text-[#00D2FF]">Director General</span>
+                            <span class="block text-[8px] md:text-[9px] text-white/50 uppercase tracking-widest">Reto Virtual VZLA</span>
+                        </div>
+
+                        <!-- Derecha: Código QR Dinámico de Validación -->
+                        <div class="text-right flex flex-col items-end">
+                            <div class="p-1.5 bg-white rounded-xl shadow-lg border border-white/20 inline-block">
                                 <img id="cert-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fwww.retovirtualvzla.com%2Fevidencias2.html" 
                                      alt="QR Validación" class="w-12 h-12 md:w-14 md:h-14 object-contain">
                             </div>
-                            <span class="text-[7px] md:text-[8px] text-white/60 uppercase tracking-widest mt-1 font-black">Escanea para Validar</span>
-                        </div>
-
-                        <!-- Fecha de Emisión -->
-                        <div class="text-right">
-                            <span class="block text-[8px] md:text-[9px] uppercase font-bold tracking-widest text-white/50">Fecha de Validación</span>
-                            <span id="cert-fecha" class="text-xs md:text-sm font-black uppercase tracking-wider text-white">Octubre, 2026</span>
-                            <span id="cert-modalidad-badge" class="block text-[8px] text-slate-400 uppercase tracking-widest mt-0.5">Modalidad Running</span>
+                            <span class="text-[7px] md:text-[8px] text-white/60 uppercase tracking-widest mt-1 font-black block">Escanear para Validar</span>
                         </div>
                     </div>
                 </div>

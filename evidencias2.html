@@ -68,11 +68,15 @@
             max-width: 950px;
             margin: 0 auto;
             display: none;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 12px;
         }
         .diploma-card {
             width: 100%;
+            min-width: 760px; /* Garantiza proporción apaisada horizontal idéntica a PC en cualquier teléfono */
             aspect-ratio: 16 / 11;
-            min-height: 540px;
+            min-height: 520px;
             position: relative;
             background: 
                 radial-gradient(ellipse at 85% 15%, rgba(0, 210, 255, 0.28) 0%, transparent 45%),
@@ -86,7 +90,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: clamp(24px, 4vw, 48px);
+            padding: 36px 44px;
             box-sizing: border-box;
             color: #ffffff;
             font-family: 'Montserrat', sans-serif;
@@ -155,10 +159,11 @@
             background: none !important;
             -webkit-background-clip: unset !important;
             background-clip: unset !important;
+            word-break: break-word;
         }
         .firma-cursiva {
             font-family: 'Great Vibes', 'Alex Brush', cursive;
-            font-size: clamp(17px, 2vw, 24px);
+            font-size: 24px;
             line-height: 1.1;
             color: rgba(255, 255, 255, 0.85);
             letter-spacing: 0.5px;
@@ -586,8 +591,13 @@
                 </p>
             </div>
 
+            <!-- Indicador para móviles (solo visible en pantallas pequeñas) -->
+            <p id="hint-rotar-cert" class="hidden text-[11px] text-[#00D2FF] font-bold mt-6 mb-2 sm:hidden items-center justify-center gap-2 animate-pulse">
+                <i class="fa-solid fa-arrows-left-right"></i> Desliza horizontalmente o gira tu pantalla para ver el diploma completo
+            </p>
+
             <!-- Contenedor del Certificado Renderizado para html2canvas -->
-            <div class="contenedor-diploma-wrapper mt-10 shadow-2xl" id="contenedor-certificado">
+            <div class="contenedor-diploma-wrapper mt-4 shadow-2xl" id="contenedor-certificado">
                 <div class="diploma-card" id="diploma-card-body">
                     <!-- Salpicaduras de Pintura Deportiva (Fondos Neón de alto impacto) -->
                     <div class="diploma-splash-1"></div>
@@ -625,7 +635,7 @@
                             Este reconocimiento se otorga con el más alto honor deportivo a:
                         </p>
 
-                        <!-- Nombre del Atleta (Corregido sin franja blanca) -->
+                        <!-- Nombre del Atleta -->
                         <h2 id="cert-nombre" class="texto-atleta-diploma text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-wider py-2">
                             ATLETA RETO VIRTUAL
                         </h2>
@@ -1717,6 +1727,11 @@
 
                 const contenedor = document.getElementById('contenedor-certificado');
                 contenedor.style.display = 'block';
+                const hintRotar = document.getElementById('hint-rotar-cert');
+                if (hintRotar) {
+                    hintRotar.classList.remove('hidden');
+                    hintRotar.classList.add('flex');
+                }
                 document.getElementById('btn-descarga-box').classList.remove('hidden');
 
                 // Scroll suave al certificado

@@ -41,8 +41,23 @@
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
         }
 
-        .contenedor-certificado-objetivo { position: relative; width: 100%; max-width: 800px; margin: 0 auto; border-radius: 16px; overflow: hidden; display: none; }
-        .imagen-fondo-certificado { width: 100%; height: auto; display: block; }
+        .contenedor-certificado-objetivo { 
+            position: relative; 
+            width: 100%; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            border-radius: 16px; 
+            overflow: hidden; 
+            display: none; 
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .imagen-fondo-certificado { 
+            width: 100%; 
+            min-width: 600px;
+            height: auto; 
+            display: block; 
+        }
         .texto-nombre-certificado { position: absolute; top: 35%; left: 50%; transform: translateX(-50%); color: #FFFFFF; font-size: clamp(16px, 4.5vw, 36px); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin: 0; white-space: nowrap; font-family: 'Montserrat', sans-serif; }
         .texto-dorsal-certificado, .texto-tiempo-certificado { position: absolute; bottom: 27%; color: #FFFFFF; font-size: clamp(14px, 3.5vw, 26px); font-weight: 800; margin: 0; font-family: 'Montserrat', sans-serif; }
         .texto-dorsal-certificado { left: 25%; }

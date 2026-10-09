@@ -10,26 +10,28 @@
 // =====================================================================
 
 export const config = {
-    api: { bodyParser: { sizeLimit: '4mb' } }
+    api: { bodyParser: { sizeLimit: '10mb' } }
 };
 
 const PROMPT = `Eres un comisario deportivo experto en leer capturas de pantalla de apps de running y caminata (Strava, Garmin Connect, Nike Run Club, Adidas Running, Apple Fitness, Samsung Health, Coros, Polar, Huawei, relojes, etc.).
 
-Extrae EXACTAMENTE los valores visibles en la imagen. NO inventes ni calcules nada. Si un dato no aparece, usa null.
+Se te pueden enviar una o varias imágenes de la misma actividad (por ejemplo: la captura 1 con el resumen general de distancia/tiempo y la captura 2 con la tabla de parciales/splits o mejores esfuerzos). Combina la información de todas las imágenes.
+
+Extrae EXACTAMENTE los valores visibles. NO inventes ni calcules nada. Si un dato no aparece, usa null.
 
 Reglas importantes:
 - "tiempo_movimiento": tiempo de actividad / tiempo en movimiento / "Tiempo" del resumen principal. En Strava el "Tiempo" grande del resumen es el tiempo en movimiento.
 - "tiempo_transcurrido": solo si aparece etiquetado como tiempo transcurrido / elapsed / tiempo total.
-- "ritmo_promedio": ritmo medio en min/km (ej "5:49"). NO lo confundas con un tiempo total.
-- "distancia_km": distancia total de la actividad en km (usa punto decimal, ej 5.53). Si está en millas, conviértela a km.
+- "ritmo_promedio": ritmo medio en min/km (ej "5:49" o "7:36 /km"). NO lo confundas con un tiempo total.
+- "distancia_km": distancia total de la actividad en km (usa punto decimal, ej 5.53 o 10.02). Si está en millas, conviértela a km.
 - IGNORA: kilometraje de zapatillas (ej "Zapatillas ... (30,3 km)"), desnivel, calorías, frecuencia cardiaca, cadencia, hora del día, fecha, récords históricos de otras actividades.
 - "mejor_5k": SOLO si la captura muestra una lista de "Mejores tiempos" / "Mejores esfuerzos" / "Best efforts" con una fila de 5 km o 5K (ej "5 km (28:20)"). Copia ese tiempo.
-- "parciales": si hay una tabla de parciales / splits / vueltas por kilómetro, copia TODAS las filas en orden. "km" es el valor de la primera columna tal cual (1, 2, 3... o una fracción como 0.53 en la última fila). "ritmo" es el ritmo de esa fila (M:SS). "tiempo" solo si la tabla muestra el tiempo de la vuelta.
-- Formato de tiempos: "H:MM:SS" o "MM:SS" tal como se ve.
-- "es_captura_deportiva": false si la imagen no es una captura de una actividad física.
+- "parciales": si hay una tabla de parciales / splits / vueltas por kilómetro en cualquiera de las imágenes, copia TODAS las filas en orden. "km" es el valor de la primera columna tal cual (1, 2, 3... o una fracción como 0.53 en la última fila). "ritmo" es el ritmo de esa fila (M:SS). "tiempo" solo si la tabla muestra el tiempo de la vuelta.
+- Formato de tiempos: "H:MM:SS" o "MM:SS" o "Xmin Ys" tal como se ve.
+- "es_captura_deportiva": false si ninguna de las imágenes es una captura de actividad deportiva.
 
 Responde ÚNICAMENTE con un objeto JSON con estas claves:
-{"es_captura_deportiva": boolean, "app": string|null, "tipo_captura": "resumen"|"parciales"|"mejores_tiempos"|"reloj"|"otro", "distancia_km": number|null, "tiempo_movimiento": string|null, "tiempo_transcurrido": string|null, "ritmo_promedio": string|null, "mejor_5k": string|null, "parciales": [{"km": number, "ritmo": string|null, "tiempo": string|null}], "notas": string|null}`;
+{"es_captura_deportiva": boolean, "app": string|null, "tipo_captura": "resumen"|"parciales"|"mejores_tiempos"|"reloj"|"combinado"|"otro", "distancia_km": number|null, "tiempo_movimiento": string|null, "tiempo_transcurrido": string|null, "ritmo_promedio": string|null, "mejor_5k": string|null, "parciales": [{"km": number, "ritmo": string|null, "tiempo": string|null}], "notas": string|null}`;
 
 const SCHEMA = {
     type: 'object',
@@ -185,10 +187,14 @@ function calcularTiempo5K(d) {
 }
 
 // ---------- Proveedores de visión ----------
-async function analizarConGemini(apiKey, base64, mime) {
+async function analizarConGemini(apiKey, imagenes) {
     // Modelos estables con soporte de visión
     const modelos = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-2.5-pro', 'gemini-1.5-pro'];
     let ultimoError = null;
+
+    const imageParts = imagenes.map(img => ({
+        inline_data: { mime_type: img.mime, data: img.base64 }
+    }));
 
     for (const modelo of modelos) {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${encodeURIComponent(apiKey)}`;
@@ -205,7 +211,7 @@ async function analizarConGemini(apiKey, base64, mime) {
                     body: JSON.stringify({
                         contents: [{
                             parts: [
-                                { inline_data: { mime_type: mime, data: base64 } },
+                                ...imageParts,
                                 { text: PROMPT }
                             ]
                         }],
@@ -232,7 +238,7 @@ async function analizarConGemini(apiKey, base64, mime) {
     throw new Error(ultimoError || 'No se pudo obtener respuesta de Gemini');
 }
 
-async function analizarConGroq(apiKey, base64, mime) {
+async function analizarConGroq(apiKey, imagenes) {
     let candidatos = [];
     try {
         const lista = await fetch('https://api.groq.com/openai/v1/models', {
@@ -253,6 +259,14 @@ async function analizarConGroq(apiKey, base64, mime) {
         throw new Error('Groq: Actualmente no hay modelos de visión disponibles en Groq para procesar imágenes.');
     }
 
+    const contentItems = [{ type: 'text', text: PROMPT }];
+    imagenes.forEach(img => {
+        contentItems.push({
+            type: 'image_url',
+            image_url: { url: `data:${img.mime};base64,${img.base64}` }
+        });
+    });
+
     let ultimoError = null;
     for (const modelo of orden) {
         for (const usarJsonMode of [true, false]) {
@@ -263,10 +277,7 @@ async function analizarConGroq(apiKey, base64, mime) {
                     max_tokens: 1500,
                     messages: [{
                         role: 'user',
-                        content: [
-                            { type: 'text', text: PROMPT },
-                            { type: 'image_url', image_url: { url: `data:${mime};base64,${base64}` } }
-                        ]
+                        content: contentItems
                     }]
                 };
                 if (usarJsonMode) body.response_format = { type: 'json_object' };
@@ -303,12 +314,26 @@ export default async function handler(req, res) {
     if (req.method === 'OPTIONS') return res.status(200).end();
     if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'Método no permitido' });
 
-    const { imageBase64, mimeType } = req.body || {};
-    if (!imageBase64 || typeof imageBase64 !== 'string') {
-        return res.status(400).json({ ok: false, error: 'Falta la imagen (imageBase64).' });
+    const { imageBase64, mimeType, imagenes: imagenesRaw } = req.body || {};
+    
+    // Normalizar lista de imágenes (soporta una sola imagen o un array de hasta 3 capturas)
+    let imagenes = [];
+    if (Array.isArray(imagenesRaw) && imagenesRaw.length > 0) {
+        imagenes = imagenesRaw.map(item => {
+            const rawB64 = typeof item === 'string' ? item : (item.base64 || item.imageBase64 || '');
+            const b64 = rawB64.includes(',') ? rawB64.split(',')[1] : rawB64;
+            const mime = item.mime || item.mimeType || 'image/jpeg';
+            return { base64: b64, mime: /^image\/(png|jpe?g|webp|heic|heif)$/i.test(mime) ? mime : 'image/jpeg' };
+        }).filter(item => Boolean(item.base64));
+    } else if (imageBase64 && typeof imageBase64 === 'string') {
+        const b64 = imageBase64.includes(',') ? imageBase64.split(',')[1] : imageBase64;
+        const mime = /^image\/(png|jpe?g|webp|heic|heif)$/i.test(mimeType || '') ? mimeType : 'image/jpeg';
+        imagenes.push({ base64: b64, mime });
     }
-    const base64 = imageBase64.includes(',') ? imageBase64.split(',')[1] : imageBase64;
-    const mime = /^image\/(png|jpe?g|webp|heic|heif)$/i.test(mimeType || '') ? mimeType : 'image/jpeg';
+
+    if (imagenes.length === 0) {
+        return res.status(400).json({ ok: false, error: 'Falta la imagen o lista de imágenes.' });
+    }
 
     const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
     const GROQ_API_KEY = process.env.GROQ_API_KEY;
@@ -317,14 +342,14 @@ export default async function handler(req, res) {
     let analisis = null;
 
     if (GEMINI_API_KEY) {
-        try { analisis = await analizarConGemini(GEMINI_API_KEY.trim(), base64, mime); }
+        try { analisis = await analizarConGemini(GEMINI_API_KEY.trim(), imagenes); }
         catch (e) { errores.push(`Gemini: ${e.message}`); }
     } else {
         errores.push('Gemini: Sin GEMINI_API_KEY');
     }
 
     if (!analisis && GROQ_API_KEY) {
-        try { analisis = await analizarConGroq(GROQ_API_KEY.trim(), base64, mime); }
+        try { analisis = await analizarConGroq(GROQ_API_KEY.trim(), imagenes); }
         catch (e) { errores.push(`Groq: ${e.message}`); }
     } else if (!analisis && !GROQ_API_KEY) {
         errores.push('Groq: Sin GROQ_API_KEY');

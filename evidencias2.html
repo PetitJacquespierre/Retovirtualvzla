@@ -372,74 +372,52 @@
                     <!-- Contenedor del resto del formulario (Se desbloquea SOLO cuando la cédula está verificada) -->
                     <div id="bloque-inputs-evidencia" class="space-y-6 opacity-40 pointer-events-none transition-all">
 
-                        <!-- Modalidad: Running vs Caminata y Distancia -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <!-- Tipo de Actividad -->
-                            <div>
-                                <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2">
-                                    <i class="fa-solid fa-person-running text-[#00D2FF] mr-2"></i>Modalidad
-                                </label>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <button type="button" onclick="setModalidadActividad('CORRIENDO')" id="btn-mod-corriendo" 
-                                            class="py-3 px-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-[#00D2FF] text-[#001E50] border border-[#00D2FF] flex items-center justify-center gap-1.5 transition-all">
-                                        <i class="fa-solid fa-bolt"></i> Corriendo
-                                    </button>
-                                    <button type="button" onclick="setModalidadActividad('CAMINANDO')" id="btn-mod-caminando" 
-                                            class="py-3 px-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-white/5 text-white/70 hover:text-white border border-white/10 flex items-center justify-center gap-1.5 transition-all">
-                                        <i class="fa-solid fa-person-walking"></i> Caminando
-                                    </button>
-                                </div>
-                                <input type="hidden" id="inputModalidad" value="CORRIENDO">
+                        <!-- Modalidad: Running vs Caminata (Distancia se autodetecta por IA) -->
+                        <div>
+                            <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2">
+                                <i class="fa-solid fa-person-running text-[#00D2FF] mr-2"></i>Modalidad
+                            </label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button type="button" onclick="setModalidadActividad('CORRIENDO')" id="btn-mod-corriendo" 
+                                        class="py-3 px-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-[#00D2FF] text-[#001E50] border border-[#00D2FF] flex items-center justify-center gap-1.5 transition-all">
+                                    <i class="fa-solid fa-bolt"></i> Corriendo
+                                </button>
+                                <button type="button" onclick="setModalidadActividad('CAMINANDO')" id="btn-mod-caminando" 
+                                        class="py-3 px-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-white/5 text-white/70 hover:text-white border border-white/10 flex items-center justify-center gap-1.5 transition-all">
+                                    <i class="fa-solid fa-person-walking"></i> Caminando
+                                </button>
                             </div>
-
-                            <!-- Distancia de la Captura -->
-                            <div>
-                                <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2">
-                                    <i class="fa-solid fa-route text-[#00D2FF] mr-2"></i>Distancia en Captura
-                                </label>
-                                <select id="selectTipoDistancia" onchange="actualizarAvisoDistancia()" 
-                                        class="input-dark w-full px-4 py-3 rounded-xl text-xs font-bold text-white bg-[#0A0E1A] border border-white/20 focus:border-[#00D2FF] appearance-none cursor-pointer">
-                                    <option value="EXACTO_5K" class="bg-[#0A0E1A] text-white py-2">5K Exactos (5.00K a 5.50K)</option>
-                                    <option value="SPLIT_10K" class="bg-[#0A0E1A] text-white py-2">Recorrido 10K+ (Parcial de los primeros 5K)</option>
-                                </select>
-                            </div>
+                            <input type="hidden" id="inputModalidad" value="CORRIENDO">
+                            <!-- Tipo de distancia gestionado 100% de forma transparente y automática por la IA -->
+                            <input type="hidden" id="selectTipoDistancia" value="EXACTO_5K">
                         </div>
 
-                        <!-- Banner dinámico para 10K Split -->
-                        <div id="aviso-split-10k" class="hidden p-4 rounded-xl bg-[#00D2FF]/10 border border-[#00D2FF]/30 text-xs text-[#00D2FF] flex items-start gap-3">
-                            <i class="fa-solid fa-circle-info text-base mt-0.5"></i>
-                            <div>
-                                <strong class="uppercase font-black block">Atletas con recorrido de 10K+:</strong>
-                                <span>Por favor coloca el tiempo correspondiente a tus <strong>primeros 5 Kilómetros</strong> (puedes consultarlo en Strava/Garmin en la sección de vueltas o mejores parciales). La IA corroborará el split en tu captura.</span>
-                            </div>
-                        </div>
-
-                        <!-- Campo 2: Carga de Captura (Foto a Google Drive y Auto-detección por IA) -->
+                        <!-- Campo 2: Carga de Capturas (Soporta múltiples capturas: resumen y tabla de parciales/splits) -->
                         <div>
                             <label class="block text-white/80 text-[11px] font-black uppercase tracking-widest mb-2 flex items-center justify-between">
-                                <span><i class="fa-solid fa-camera text-[#00D2FF] mr-2"></i>Captura de Pantalla (Strava, Garmin, Nike, Reloj)</span>
+                                <span><i class="fa-solid fa-camera text-[#00D2FF] mr-2"></i>Capturas de Pantalla (Resumen y/o Parciales/Splits)</span>
                                 <span class="text-[10px] text-[#00D2FF] font-black uppercase tracking-widest"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Auto-Lectura IA</span>
                             </label>
                             
                             <div class="relative border-2 border-dashed border-white/20 hover:border-[#00D2FF] rounded-2xl p-6 text-center transition-all bg-white/[0.02] cursor-pointer group"
                                  onclick="document.getElementById('inputCaptura').click()">
-                                <input type="file" id="inputCaptura" accept="image/*" required class="hidden" onchange="previsualizarImagen(event)">
+                                <input type="file" id="inputCaptura" accept="image/*" multiple required class="hidden" onchange="previsualizarImagenes(event)">
                                 
                                 <div id="preview-placeholder">
                                     <div class="w-14 h-14 bg-white/5 group-hover:bg-[#00D2FF]/20 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl text-[#00D2FF] transition-all">
                                         <i class="fa-solid fa-cloud-arrow-up"></i>
                                     </div>
-                                    <span class="font-bold text-sm text-white block">Toca para seleccionar tu captura</span>
-                                    <span class="text-[11px] text-slate-400 block mt-1">Formatos permitidos: JPG, PNG, WEBP (Máx. 5MB)</span>
+                                    <span class="font-bold text-sm text-white block">Toca para seleccionar tus capturas</span>
+                                    <span class="text-[11px] text-slate-400 block mt-1">Puedes subir 1 o varias capturas (Resumen principal + Tabla de parciales/splits) • Máx. 3 fotos</span>
                                     <span class="inline-block mt-2 px-3 py-1 rounded-full bg-[#00D2FF]/10 text-[#00D2FF] text-[10px] font-bold">
-                                        ⚡ La IA detectará automáticamente tu tiempo y ritmo de carrera
+                                        ⚡ La IA calcula tu 5K exacto y promedia splits si la distancia es mayor a 5 km
                                     </span>
                                 </div>
 
                                 <div id="preview-container" class="hidden flex flex-col items-center">
-                                    <img id="imgPreview" src="" alt="Captura de evidencia" class="max-h-52 rounded-xl border border-[#00D2FF]/40 shadow-lg object-contain mb-3">
-                                    <span id="preview-filename" class="text-xs font-bold text-[#00D2FF] truncate max-w-xs">archivo.jpg</span>
-                                    <span class="text-[10px] text-slate-400 mt-1 hover:text-white underline">Cambiar imagen</span>
+                                    <div id="preview-grid" class="flex flex-wrap items-center justify-center gap-3 mb-2"></div>
+                                    <span id="preview-count" class="text-xs font-bold text-[#00D2FF]">1 captura seleccionada</span>
+                                    <span class="text-[10px] text-slate-400 mt-1 hover:text-white underline">Cambiar o agregar imágenes</span>
                                 </div>
                             </div>
 
@@ -852,56 +830,93 @@
             return { valido: true };
         }
 
-        // 2. Previsualización de Imagen y Procesamiento OCR Inteligente con IA
-        async function previsualizarImagen(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+        let listaCapturas = []; // Array de { base64, mimeType, name, dataUrl }
 
-            if (file.size > 5 * 1024 * 1024) {
-                alert("La imagen excede los 5MB. Por favor sube una captura más ligera.");
-                event.target.value = "";
+        // 2. Previsualización de Imágenes Múltiples y Procesamiento OCR Inteligente con IA
+        async function previsualizarImagenes(event) {
+            const files = Array.from(event.target.files || []);
+            if (!files || files.length === 0) return;
+
+            if (files.length > 3) {
+                alert("Puedes subir un máximo de 3 capturas (por ejemplo: resumen + tabla de parciales/splits).");
+            }
+            const archivosSeleccionados = files.slice(0, 3);
+
+            listaCapturas = [];
+            const previewGrid = document.getElementById('preview-grid');
+            previewGrid.innerHTML = '';
+
+            for (const file of archivosSeleccionados) {
+                if (file.size > 8 * 1024 * 1024) {
+                    alert(`El archivo ${file.name} supera los 8MB. Por favor sube una captura más ligera.`);
+                    continue;
+                }
+
+                const mime = file.type || 'image/jpeg';
+                const dataUrl = await new Promise(resolve => {
+                    const r = new FileReader();
+                    r.onload = e => resolve(e.target.result);
+                    r.readAsDataURL(file);
+                });
+
+                const b64 = dataUrl.split(',')[1];
+                listaCapturas.push({
+                    base64: b64,
+                    mimeType: mime,
+                    name: file.name,
+                    dataUrl: dataUrl
+                });
+
+                // Miniatura en cuadrícula
+                const thumb = document.createElement('div');
+                thumb.className = "relative group/thumb border border-[#00D2FF]/40 rounded-xl overflow-hidden shadow-md bg-black/40";
+                thumb.innerHTML = `
+                    <img src="${dataUrl}" class="h-28 w-28 object-cover">
+                    <span class="absolute bottom-0 inset-x-0 bg-black/75 text-[9px] font-bold text-white px-1 py-0.5 truncate text-center">${file.name}</span>
+                `;
+                previewGrid.appendChild(thumb);
+            }
+
+            if (listaCapturas.length === 0) {
+                document.getElementById('preview-placeholder').classList.remove('hidden');
+                document.getElementById('preview-container').classList.add('hidden');
+                base64Captura = null;
                 return;
             }
 
-            mimeTypeCaptura = file.type || 'image/jpeg';
-            document.getElementById('preview-filename').innerText = file.name;
+            // Mantener compatibilidad con base64Captura para Apps Script
+            base64Captura = listaCapturas[0].base64;
+            mimeTypeCaptura = listaCapturas[0].mimeType;
 
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                const fullBase64 = e.target.result;
-                base64Captura = fullBase64.split(',')[1];
-                document.getElementById('imgPreview').src = fullBase64;
-                document.getElementById('preview-placeholder').classList.add('hidden');
-                document.getElementById('preview-container').classList.remove('hidden');
+            document.getElementById('preview-count').innerText = `${listaCapturas.length} captura${listaCapturas.length > 1 ? 's' : ''} cargada${listaCapturas.length > 1 ? 's' : ''} (Resumen y Parciales)`;
+            document.getElementById('preview-placeholder').classList.add('hidden');
+            document.getElementById('preview-container').classList.remove('hidden');
 
-                // Iniciar Escaneo Automático por IA (OCR)
-                ejecutarVisionOCR(fullBase64);
-            };
-            reader.readAsDataURL(file);
+            // Iniciar Escaneo Automático por IA (OCR) con todas las imágenes cargadas
+            ejecutarVisionOCR();
         }
 
-        // Función de extracción por IA (Visión Multimodal + Fallback Tesseract)
-        async function ejecutarVisionOCR(imageSrc) {
+        // Función de extracción por IA (Visión Multimodal con soporte multi-captura + Fallback Tesseract)
+        async function ejecutarVisionOCR() {
             const ocrBox = document.getElementById('ocr-status-box');
             const ocrLoading = document.getElementById('ocr-loading');
             const ocrSuccess = document.getElementById('ocr-success');
             const ocrPaceEl = document.getElementById('ocr-detected-pace');
 
-            if (!ocrBox) return;
+            if (!ocrBox || listaCapturas.length === 0) return;
 
             ocrBox.classList.remove('hidden');
             ocrLoading.classList.remove('hidden');
             ocrSuccess.classList.add('hidden');
-            ocrLoading.querySelector('span').innerText = 'IA analizando captura (Strava, Garmin, parciales)...';
+            ocrLoading.querySelector('span').innerText = `IA analizando ${listaCapturas.length} captura${listaCapturas.length > 1 ? 's' : ''} (Resumen, splits y parciales 5K)...`;
 
-            // INTENTO 1: IA de Visión en el Servidor (Gemini 3.8 Flash / Groq Vision)
+            // INTENTO 1: IA de Visión en el Servidor (Gemini 2.5 Flash / Groq Vision con imágenes combinadas)
             try {
                 const respIA = await fetch('/api/analizar-captura', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        imageBase64: base64Captura,
-                        mimeType: mimeTypeCaptura
+                        imagenes: listaCapturas.map(img => ({ base64: img.base64, mimeType: img.mimeType }))
                     })
                 });
 
@@ -911,7 +926,6 @@
 
                     if (dataIA.ok && dataIA.resultado) {
                         const r = dataIA.resultado;
-                        const d = dataIA.datos || {};
 
                         // Rellenar casillas del cronómetro
                         const inputHH = document.getElementById('tiempoHH');
@@ -921,13 +935,13 @@
                         inputMM.value = String(r.mm).padStart(2, '0');
                         inputSS.value = String(r.ss).padStart(2, '0');
 
-                        // Disparar eventos para asegurar reactividad en el DOM
+                        // Disparar eventos para reactividad
                         [inputHH, inputMM, inputSS].forEach(inp => {
                             inp.dispatchEvent(new Event('input', { bubbles: true }));
                             inp.dispatchEvent(new Event('change', { bubbles: true }));
                         });
 
-                        // Efecto visual de resaltado para confirmar la auto-actualización
+                        // Efecto visual de resaltado
                         [inputHH.parentElement, inputMM.parentElement, inputSS.parentElement].forEach(box => {
                             if (box) {
                                 box.classList.add('ring-2', 'ring-[#00D2FF]', 'bg-[#00D2FF]/20');
@@ -937,16 +951,13 @@
                             }
                         });
 
-                        // Ajustar selector de distancia
-                        if (r.distancia_km >= 9.5) {
-                            document.getElementById('selectTipoDistancia').value = 'SPLIT_10K';
-                            actualizarAvisoDistancia();
-                        } else {
-                            document.getElementById('selectTipoDistancia').value = 'EXACTO_5K';
-                            actualizarAvisoDistancia();
+                        // Categorización automática según distancia leída
+                        const tipoDistEl = document.getElementById('selectTipoDistancia');
+                        if (tipoDistEl) {
+                            tipoDistEl.value = (r.distancia_km && r.distancia_km >= 9.5) ? 'SPLIT_10K' : 'EXACTO_5K';
                         }
 
-                        // Mensajes amigables según la fuente detectada
+                        // Mensajes explicativos según la fuente detectada
                         let mensaje = '';
                         let origenBadge = '';
 
@@ -954,16 +965,16 @@
                             mensaje = `🏅 Récord Personal 5K (PR): ${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')} (Ritmo: ${r.ritmo_5k} min/km). Auto-completado con éxito.`;
                             origenBadge = 'Mejor Esfuerzo 5K (Strava PR)';
                         } else if (r.fuente === 'parciales') {
-                            mensaje = `📊 Suma oficial de los primeros 5 km: ${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')} (Ritmo promedio: ${r.ritmo_5k} min/km). Auto-completado con éxito.`;
-                            origenBadge = 'Suma de 5 Parciales (1K a 5K)';
+                            mensaje = `📊 Suma oficial de los primeros 5 km (Splits): ${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')} (Ritmo promedio: ${r.ritmo_5k} min/km). Auto-completado con éxito.`;
+                            origenBadge = 'Suma de Parciales 1K a 5K';
                         } else if (r.fuente === 'resumen') {
                             const distTxt = r.distancia_km ? ` (Distancia: ${r.distancia_km.toFixed(2)} km)` : '';
                             mensaje = `⏱️ Tiempo en movimiento oficial${distTxt}: ${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')} (Ritmo: ${r.ritmo_5k} min/km).`;
                             origenBadge = 'Tiempo en Movimiento Oficial';
                         } else if (r.fuente === 'estimado') {
-                            const totTxt = r.tiempo_total_hms ? ` (Actividad total: ${String(r.tiempo_total_hms.mm).padStart(2, '0')}:${String(r.tiempo_total_hms.ss).padStart(2, '0')} para ${r.distancia_km?.toFixed(2)} km)` : '';
-                            mensaje = `⚡ Estimado primeros 5 km a ritmo promedio: ${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')}${totTxt}.`;
-                            origenBadge = 'Estimado 5K a Ritmo Promedio';
+                            const totTxt = r.tiempo_total_hms ? ` (Total: ${String(r.tiempo_total_hms.mm).padStart(2, '0')}:${String(r.tiempo_total_hms.ss).padStart(2, '0')} en ${r.distancia_km?.toFixed(2)} km)` : '';
+                            mensaje = `⚡ Distancia mayor detectada (${r.distancia_km?.toFixed(2)} km): Calculado tiempo exacto para los primeros 5K a ritmo promedio: ${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')}${totTxt}.`;
+                            origenBadge = 'Primeros 5K Calculados a Ritmo Promedio';
                         } else {
                             mensaje = `Tiempo detectado: ${String(r.hh).padStart(2, '0')}:${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')} (Ritmo: ${r.ritmo_5k} min/km).`;
                             origenBadge = 'Tiempo Detectado por IA';
@@ -979,7 +990,7 @@
 
                         const display = document.getElementById('calculo-pace-display');
                         if (display) {
-                            display.innerHTML = `${origenBadge}: <strong class="text-[#00D2FF] font-black">${String(r.hh).padStart(2, '0')}:${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')}</strong> • Ritmo: <strong class="text-white">${r.ritmo_5k} min/km</strong> <span class="text-emerald-400 text-[10px] ml-1">✓ IA Visión</span>`;
+                            display.innerHTML = `${origenBadge}: <strong class="text-[#00D2FF] font-black">${String(r.hh).padStart(2, '0')}:${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')}</strong> • Ritmo: <strong class="text-white">${r.ritmo_5k} min/km</strong> <span class="text-emerald-400 text-[10px] ml-1">✓ IA Multimodal</span>`;
                         }
 
                         return; // Éxito con IA de Visión
@@ -989,10 +1000,9 @@
                 console.warn("IA de Visión no disponible, pasando a OCR local:", errIA.message);
             }
 
-            // INTENTO 2 (Fallback): OCR local en el navegador con Tesseract
+            // INTENTO 2 (Fallback): OCR local en el navegador con Tesseract sobre la primera imagen
             try {
-                if (typeof Tesseract === 'undefined') {
-                    console.warn("Tesseract no cargado aún.");
+                if (typeof Tesseract === 'undefined' || listaCapturas.length === 0) {
                     ocrBox.classList.add('hidden');
                     return;
                 }
@@ -1000,7 +1010,7 @@
                 let tiempoEncontrado = null;
                 ocrLoading.querySelector('span').innerText = 'IA analizando texto con OCR local...';
 
-                const result = await Tesseract.recognize(imageSrc, 'eng', {
+                const result = await Tesseract.recognize(listaCapturas[0].dataUrl, 'eng', {
                     logger: m => {
                         if (m.status === 'recognizing text' && m.progress) {
                             const pct = Math.round(m.progress * 100);
@@ -1016,27 +1026,17 @@
                 const textoLimpio = texto.replace(/\r/g, '');
 
                 // 1. Extraer Distancia real de la carrera
-                // IMPORTANTE: Ignorar kilometraje acumulado de zapatillas (ej: "Zapatillas: ... (30,3 km)")
                 let textoSinZapatillas = textoLimpio.replace(/zapatillas?[^\n\r]*\(\d+[,.]\d+\s*km\)/gi, '');
                 textoSinZapatillas = textoSinZapatillas.replace(/\(\d+[,.]\d+\s*km\)/gi, '');
 
                 let distanciaDetectadaKm = 5.0;
-                // Buscar distancia cerca de "Distancia" o con "km"
                 const matchDist = textoSinZapatillas.match(/(\d{1,2}[.,]\d{1,2})\s*km\s*(?:[\n\r\s]*distancia)?/i) || 
                                   textoSinZapatillas.match(/(?:distancia[^\d]{0,10})?(\d{1,2}[.,]\d{1,2})\s*km/i);
                 
                 if (matchDist) {
                     const parsedDist = parseFloat(matchDist[1].replace(',', '.'));
-                    // Una carrera 5K o 10K razonable está entre 3km y 25km
-                    if (parsedDist >= 3.0 && parsedDist <= 25.0) {
+                    if (parsedDist >= 3.0 && parsedDist <= 50.0) {
                         distanciaDetectadaKm = parsedDist;
-                        if (distanciaDetectadaKm >= 9.5) {
-                            document.getElementById('selectTipoDistancia').value = 'SPLIT_10K';
-                            actualizarAvisoDistancia();
-                        } else if (distanciaDetectadaKm >= 4.8) {
-                            document.getElementById('selectTipoDistancia').value = 'EXACTO_5K';
-                            actualizarAvisoDistancia();
-                        }
                     }
                 }
 
@@ -1277,6 +1277,24 @@
 
                     if (candidatos.length > 0) {
                         tiempoEncontrado = candidatos[0];
+
+                        // Si la distancia detectada es mayor a 5.05 km y no es PR ni Split,
+                        // calcular el tiempo proporcional exacto de los primeros 5.0 km
+                        if (distanciaDetectadaKm > 5.05 && !tiempoEncontrado.esMejorTiempo && !tiempoEncontrado.esDeSplits) {
+                            const segProporcional5K = Math.round((tiempoEncontrado.totalSeg / distanciaDetectadaKm) * 5.0);
+                            const hh5k = Math.floor(segProporcional5K / 3600);
+                            const mm5k = Math.floor((segProporcional5K % 3600) / 60);
+                            const ss5k = segProporcional5K % 60;
+                            tiempoEncontrado = {
+                                hh: hh5k,
+                                mm: mm5k,
+                                ss: ss5k,
+                                totalSeg: segProporcional5K,
+                                esCalculado5K: true
+                            };
+                            const tipoDistEl = document.getElementById('selectTipoDistancia');
+                            if (tipoDistEl) tipoDistEl.value = 'SPLIT_10K';
+                        }
                     }
                 }
 
@@ -1307,7 +1325,7 @@
                     // Cálculo del Pace: preferir el ritmo oficial de la app si fue detectado
                     let paceFinal = paceAppDetectado;
                     if (!paceFinal) {
-                        const baseKm = distanciaDetectadaKm > 0 ? distanciaDetectadaKm : 5.0;
+                        const baseKm = (tiempoEncontrado.esCalculado5K || tiempoEncontrado.esMejorTiempo || tiempoEncontrado.esDeSplits) ? 5.0 : (distanciaDetectadaKm > 0 ? distanciaDetectadaKm : 5.0);
                         const paceSegundosPorKm = Math.round(tiempoEncontrado.totalSeg / baseKm);
                         const paceMin = Math.floor(paceSegundosPorKm / 60);
                         const paceSec = paceSegundosPorKm % 60;
@@ -1321,13 +1339,15 @@
                         ocrPaceEl.innerText = `Récord Personal (PR) de 5K detectado: ${String(tiempoEncontrado.mm).padStart(2, '0')}:${String(tiempoEncontrado.ss).padStart(2, '0')} (Ritmo: ${paceFinal}). Cronómetro auto-completado con éxito.`;
                     } else if (tiempoEncontrado.esDeSplits) {
                         ocrPaceEl.innerText = `Parciales detectados y calculados: Suma 5K oficial de ${String(tiempoEncontrado.mm).padStart(2, '0')}:${String(tiempoEncontrado.ss).padStart(2, '0')} (Ritmo promedio: ${paceFinal}). Cronómetro auto-completado con éxito.`;
+                    } else if (tiempoEncontrado.esCalculado5K) {
+                        ocrPaceEl.innerText = `Distancia superior a 5K (${distanciaDetectadaKm.toFixed(2)} Km): Tiempo 5K calculado a ritmo oficial ${paceFinal}. Cronómetro auto-completado con éxito.`;
                     } else {
                         ocrPaceEl.innerText = `Ritmo detectado: ${paceFinal} (Distancia: ${distanciaDetectadaKm.toFixed(2)} Km). Cronómetro auto-completado con éxito.`;
                     }
 
                     const display = document.getElementById('calculo-pace-display');
                     if (display) {
-                        const origenTexto = tiempoEncontrado.esMejorTiempo ? "Mejor Tiempo 5K (PR)" : (tiempoEncontrado.esDeSplits ? "Tiempo suma parciales (5K)" : "Tiempo en movimiento oficial");
+                        const origenTexto = tiempoEncontrado.esMejorTiempo ? "Mejor Tiempo 5K (PR)" : (tiempoEncontrado.esDeSplits ? "Tiempo suma parciales (5K)" : (tiempoEncontrado.esCalculado5K ? "Tiempo proporcional 5K" : "Tiempo en movimiento oficial"));
                         display.innerHTML = `${origenTexto}: <strong class="text-[#00D2FF] font-black">${String(tiempoEncontrado.hh).padStart(2, '0')}:${String(tiempoEncontrado.mm).padStart(2, '0')}:${String(tiempoEncontrado.ss).padStart(2, '0')}</strong> • Ritmo: <strong class="text-white">${paceFinal}</strong>`;
                     }
                 } else {
@@ -1510,6 +1530,11 @@
                 document.getElementById('preview-container').classList.add('hidden');
                 document.getElementById('preview-placeholder').classList.remove('hidden');
                 base64Captura = null;
+                listaCapturas = [];
+                const previewGrid = document.getElementById('preview-grid');
+                if (previewGrid) previewGrid.innerHTML = '';
+                const previewCount = document.getElementById('preview-count');
+                if (previewCount) previewCount.classList.add('hidden');
                 document.getElementById('box-datos-atleta').classList.add('hidden');
                 atletaVerificadoConExito = false;
 

@@ -1274,6 +1274,7 @@
                     }
 
                     ocrLoading.classList.add('hidden');
+                    ocrSuccess.className = "flex flex-col items-center gap-1 text-xs text-green-400 font-bold";
                     ocrSuccess.classList.remove('hidden');
                     if (tiempoEncontrado.esMejorTiempo) {
                         ocrPaceEl.innerText = `Récord Personal (PR) de 5K detectado: ${String(tiempoEncontrado.mm).padStart(2, '0')}:${String(tiempoEncontrado.ss).padStart(2, '0')} (Ritmo: ${paceFinal}). Cronómetro auto-completado con éxito.`;
@@ -1290,9 +1291,9 @@
                     }
                 } else {
                     ocrLoading.classList.add('hidden');
-                    ocrSuccess.classList.remove('hidden');
                     ocrSuccess.className = "flex flex-col items-center gap-1 text-xs text-amber-300 font-bold";
-                    ocrSuccess.innerHTML = `<span><i class="fa-solid fa-circle-info mr-1"></i>Captura cargada. Por favor confirma o ajusta las casillas de tiempo abajo (Horas, Minutos, Segundos).</span>`;
+                    ocrSuccess.classList.remove('hidden');
+                    ocrSuccess.innerHTML = `<span><i class="fa-solid fa-circle-info mr-1"></i>Captura cargada. Por favor confirma o escribe tu tiempo en las casillas (Minutos y Segundos).</span>`;
                 }
             } catch (err) {
                 console.error("Error en OCR:", err);

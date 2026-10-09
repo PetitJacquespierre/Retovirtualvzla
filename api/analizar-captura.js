@@ -62,7 +62,22 @@ const SCHEMA = {
 // ---------- Utilidades de tiempo ----------
 function aSegundos(valor) {
     if (valor === null || valor === undefined) return null;
-    const limpio = String(valor).trim().replace(/[’'′]/g, ':').replace(/["″]/g, '').replace(/\s*(min\/km|\/km|min|km)\s*$/i, '');
+    let limpio = String(valor).trim().toLowerCase();
+    
+    // Soporte para formato textual como "38min 3s", "38m 03s", "1h 20min 15s", "38 min 3 seg"
+    const matchTexto = limpio.match(/(?:(\d{1,2})\s*h(?:oras?)?)?\s*(?:(\d{1,2})\s*(?:min|m)(?:utos?)?)?\s*(?:(\d{1,2})\s*s(?:eg(?:undos?)?)?)?/i);
+    if (matchTexto && (matchTexto[1] !== undefined || matchTexto[2] !== undefined || matchTexto[3] !== undefined)) {
+        if (limpio.includes('m') || limpio.includes('h') || limpio.includes('s')) {
+            const h = matchTexto[1] ? parseInt(matchTexto[1], 10) : 0;
+            const m = matchTexto[2] ? parseInt(matchTexto[2], 10) : 0;
+            const s = matchTexto[3] ? parseInt(matchTexto[3], 10) : 0;
+            if (h > 0 || m > 0 || s > 0) {
+                return (h * 3600) + (m * 60) + s;
+            }
+        }
+    }
+
+    limpio = limpio.replace(/[’'′]/g, ':').replace(/["″]/g, '').replace(/\s*(min\/km|\/km|min|km)\s*$/i, '');
     const partes = limpio.split(':').map(p => p.trim());
     if (partes.length < 2 || partes.length > 3 || partes.some(p => !/^\d{1,3}$/.test(p))) return null;
     const n = partes.map(Number);
@@ -172,7 +187,7 @@ function calcularTiempo5K(d) {
 // ---------- Proveedores de visión ----------
 async function analizarConGemini(apiKey, base64, mime) {
     // Modelos estables con soporte de visión
-    const modelos = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro'];
+    const modelos = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-2.5-pro', 'gemini-1.5-pro'];
     let ultimoError = null;
 
     for (const modelo of modelos) {

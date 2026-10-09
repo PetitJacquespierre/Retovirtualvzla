@@ -1076,6 +1076,21 @@
                     }
                 }
 
+                // Intento A0: Buscar formato textual directo como "38min 3s", "38 min 03 s", "1h 20m 15s" (ej: Strava en español)
+                if (!tiempoEncontrado) {
+                    const matchTextoTiempo = textoSinZapatillas.match(/(?:tiempo|time)?[\s\n\r]*(?:(\d{1,2})\s*h(?:oras?)?)?\s*(\d{1,2})\s*(?:min|m)(?:utos?)?\s*(?:(\d{1,2})\s*s(?:eg(?:undos?)?)?)?/i);
+                    if (matchTextoTiempo && (matchTextoTiempo[1] !== undefined || matchTextoTiempo[2] !== undefined)) {
+                        const h = matchTextoTiempo[1] ? parseInt(matchTextoTiempo[1], 10) : 0;
+                        const m = matchTextoTiempo[2] ? parseInt(matchTextoTiempo[2], 10) : 0;
+                        const s = matchTextoTiempo[3] ? parseInt(matchTextoTiempo[3], 10) : 0;
+                        const totalSeg = (h * 3600) + (m * 60) + s;
+                        if (totalSeg >= 780 && totalSeg <= 8100) {
+                            tiempoEncontrado = { hh: h, mm: m, ss: s, totalSeg };
+                            console.log("Detectado tiempo en formato texto (ej: 38min 3s):", tiempoEncontrado);
+                        }
+                    }
+                }
+
                 // Intento A1: Buscar número HH:MM:SS o MM:SS asociado a "movimiento" o "tiempo en movimiento"
                 if (!tiempoEncontrado) {
                     const matchMovimiento = textoLimpio.match(/(\d{1,2}):(\d{2})(?::(\d{2}))?[\s\n\r]*(?:tiempo\s*(?:en)?\s*movimiento|movimiento|moving\s*time)/i) ||
@@ -1230,8 +1245,9 @@
                         const indexMatch = m.index;
                         const entorno = textoSinZapatillas.substring(Math.max(0, indexMatch - 25), Math.min(textoSinZapatillas.length, indexMatch + 35)).toLowerCase();
                         
-                        // Ignorar horas del día
-                        if (entorno.includes('del ') || entorno.includes('sábado') || entorno.includes('domingo') || 
+                        // Ignorar horas del día (ej: "Hoy a las 19:04", "a las 19:04")
+                        if (entorno.includes('del ') || entorno.includes('a las') || entorno.includes('hoy') || entorno.includes('ayer') ||
+                            entorno.includes('sábado') || entorno.includes('domingo') || 
                             entorno.includes('lunes') || entorno.includes('martes') || entorno.includes('miércoles') || 
                             entorno.includes('jueves') || entorno.includes('viernes') || entorno.includes('am') || 
                             entorno.includes('pm') || entorno.includes(' hrs') || entorno.includes('hora')) {

@@ -210,8 +210,8 @@
 
     <div class="bg-[#00D2FF] text-[#001E50] py-2.5 text-center text-[10px] font-black uppercase tracking-[0.25em] z-50 relative">
         <i class="fa-solid fa-fire mr-2"></i>
-        🔥 3RA EDICIÓN 5K ¡SOLD OUT TOTAL! GRACIAS POR EL APOYO · ÚLTIMOS CUPOS COMBO DÚO & 10K —
-        <a href="inscripcion.html?modo=COMBO" class="underline underline-offset-2 hover:opacity-80 transition-opacity ml-1">Asegurar Combo Dúo</a>
+        🏆 CIRCUITO 5K (3RA Y 4TA EDICIÓN) ¡SOLD OUT TOTAL! · CUPOS DISPONIBLES: EDICIÓN ESPECIAL 10K —
+        <a href="inscripcion.html?modo=10K" class="underline underline-offset-2 hover:opacity-80 transition-opacity ml-1">Asegurar Kit 10K</a>
         <i class="fa-solid fa-fire ml-2"></i>
     </div>
 
@@ -256,15 +256,15 @@
                         </button>
                         <div class="absolute right-0 mt-2 w-64 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                             <div class="p-2 space-y-1">
-                                <button onclick="window.location.href='inscripcion.html?modo=5K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
-                                    <i class="fa-solid fa-person-running mr-3 text-sm"></i> Tercera Edición 5K / Combo
-                                </button>
-                                <button onclick="window.location.href='inscripcion.html?modo=10K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
-                                    <i class="fa-solid fa-medal mr-3 text-sm"></i> Edición Especial 10K
+                                <button onclick="window.location.href='inscripcion.html?modo=10K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
+                                    <i class="fa-solid fa-medal mr-3 text-sm text-[#00D2FF]"></i> Edición Especial 10K (Abierta)
                                 </button>
                                 <button onclick="window.location.href='inscripcion.html?modo=ABONO'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all border-t border-white/10 pt-2">
                                     <i class="fa-solid fa-money-bill-wave mr-3 text-sm"></i> Consultar Saldo / Abonar
                                 </button>
+                                <div class="px-4 py-2 text-[10px] font-bold text-slate-400 uppercase border-t border-white/10">
+                                    <i class="fa-solid fa-lock text-red-400 mr-1"></i> 5K: Sold Out Completo
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -290,9 +290,9 @@
                     <a href="tienda.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">Tienda</a>
                 </div>
                 <div class="border-t border-white/20 w-full pt-5 flex flex-col gap-3 text-center">
-                    <a href="inscripcion.html?modo=5K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Tercera Edición 5K / Combo</a>
-                    <a href="inscripcion.html?modo=10K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Edición Especial 10K</a>
+                    <a href="inscripcion.html?modo=10K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Edición Especial 10K (Abierta)</a>
                     <a href="inscripcion.html?modo=ABONO" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-white transition-colors">Consultar Saldo / Abonar</a>
+                    <span class="text-xs uppercase tracking-wider text-red-400 font-bold"><i class="fa-solid fa-lock mr-1"></i> Circuito 5K: Sold Out Total</span>
                 </div>
             </div>
         </div>
@@ -1105,10 +1105,10 @@ const heroCarousel = (function() {
 
     <!-- CTA inferior -->
     <div class="text-center mt-12">
-      <a href="inscripcion.html?modo=5K"
+      <a href="inscripcion.html?modo=10K"
          class="inline-flex items-center gap-2 bg-[#001E50] text-white font-black text-xs uppercase tracking-widest px-8 py-4 rounded-full hover:bg-[#00D2FF] hover:text-[#001E50] transition-all duration-300 shadow-lg">
         <i class="fa-solid fa-flag-checkered"></i>
-        Quiero participar
+        Inscribirme en Edición 10K
       </a>
     </div>
 
@@ -1207,78 +1207,62 @@ const heroCarousel = (function() {
           </span>
         </div>
 
-        <!-- Botón inferior invitando al Combo Dúo -->
+        <!-- Botón inferior SOLD OUT -->
         <div class="absolute bottom-5 left-5 right-5 z-20">
-          <a href="inscripcion.html?modo=COMBO"
-             class="block w-full bg-gradient-to-r from-amber-400 to-amber-500 text-[#001E50] py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider hover:brightness-110 transition-all shadow-lg text-center">
-            <i class="fa-solid fa-fire mr-1"></i> Disponible en Combo Dúo
-          </a>
+          <span class="block w-full bg-slate-800/90 text-slate-400 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider text-center border border-white/10">
+            <i class="fa-solid fa-lock mr-1"></i> Inscripciones Cerradas
+          </span>
         </div>
       </div>
 
-      <!-- EDICIÓN 4 — Próximamente -->
+      <!-- EDICIÓN 4 — Sold Out / Exclusiva -->
       <div class="group relative aspect-[3/4] overflow-hidden rounded-2xl shadow-xl transition-all hover:scale-[1.02] bg-[#001E50] border border-white/10">
         <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-[#001E50]/80 to-black/60"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-white z-10 text-center">
-          <div class="mb-3 bg-white/10 backdrop-blur-sm border border-white/20 p-2.5 rounded-full shadow-lg">
-            <i class="fa-solid fa-flag-checkered text-[#00D2FF] text-sm"></i>
+          <div class="mb-3 bg-red-500/20 backdrop-blur-sm border border-red-500/40 p-2.5 rounded-full shadow-lg">
+            <i class="fa-solid fa-lock text-red-400 text-sm"></i>
           </div>
           <h4 class="font-black text-2xl uppercase mb-1 tracking-tighter">Edición 4</h4>
-          <p class="text-white/50 text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Próximamente</p>
+          <p class="text-red-400 text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Cupos Asignados</p>
           <span class="border border-white/20 px-4 py-1.5 rounded-full text-[10px] font-bold text-white/40 bg-white/5">Diciembre 04 - 13</span>
         </div>
       </div>
 
     </div>
 
-    <!-- ===== PROMO COMBO 3ra y 4ta EDICIÓN ===== -->
-    <div class="mt-20 bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden border-2 border-dashed border-[#00D2FF]">
+    <!-- ===== COMBO DÚO SOLD OUT ===== -->
+    <div class="mt-20 bg-slate-900 rounded-[2.5rem] shadow-sm border border-slate-800 overflow-hidden relative opacity-90">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
 
         <!-- IMAGEN CON FONDO -->
-        <div class="relative flex items-center justify-center p-12 min-h-[320px] overflow-hidden"
-             style="background: linear-gradient(135deg, #001E50 0%, #001840 100%);">
-          <div class="absolute w-64 h-64 bg-[#00D2FF]/15 rounded-full blur-[80px]"></div>
-          <div class="absolute w-40 h-40 bg-[#00D2FF]/10 rounded-full blur-[60px] translate-x-16 translate-y-8"></div>
+        <div class="relative flex items-center justify-center p-12 min-h-[320px] overflow-hidden bg-black/60">
           <div class="relative z-10 max-w-sm w-full text-center flex flex-col items-center gap-4">
-             <i class="fa-solid fa-gift text-6xl text-[#00D2FF] mb-2 drop-shadow-[0_0_15px_rgba(0,210,255,0.6)]"></i>
-             <h2 class="text-white text-4xl font-black italic">COMBO DÚO</h2>
-             <span class="text-[#00D2FF] text-[10px] font-black uppercase tracking-[0.3em]">3ra + 4ta Edición</span>
+             <i class="fa-solid fa-lock text-6xl text-slate-500 mb-2"></i>
+             <h2 class="text-white text-4xl font-black italic">COMBO DÚO 5K</h2>
+             <span class="text-red-400 text-[10px] font-black uppercase tracking-[0.3em]">CUPOS AGOTADOS</span>
           </div>
-          <div class="absolute top-4 left-4 bg-[#00D2FF] border border-[#00D2FF]/40 backdrop-blur-sm px-3 py-1.5 rounded-full animate-pulse">
-            <span class="text-[#001E50] text-[9px] font-black uppercase tracking-[0.3em]">Promoción Especial</span>
+          <div class="absolute top-4 left-4 bg-red-600 px-3 py-1.5 rounded-full">
+            <span class="text-white text-[9px] font-black uppercase tracking-[0.3em]">SOLD OUT TOTAL</span>
           </div>
         </div>
 
         <!-- Texto -->
         <div class="p-10 md:p-14">
           <div class="flex items-center gap-2 mb-3">
-            <span class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.5em] block">Últimos Cupos Disponibles</span>
-            <span class="bg-red-500/10 text-red-500 border border-red-500/20 text-[9px] font-black uppercase px-2.5 py-0.5 rounded-full">¡Pocas Medallas!</span>
+            <span class="text-red-400 font-bold text-[10px] uppercase tracking-[0.5em] block">Circuito 5K Culminado</span>
+            <span class="bg-red-500/20 text-red-400 border border-red-500/30 text-[9px] font-black uppercase px-2.5 py-0.5 rounded-full">Inscripciones Finalizadas</span>
           </div>
-          <h3 class="text-[#001E50] text-3xl md:text-4xl font-black uppercase leading-tight tracking-tighter mb-4">
-            Llévate las <span class="text-[#00D2FF] italic">dos ediciones</span><br>por $16
+          <h3 class="text-white text-3xl md:text-4xl font-black uppercase leading-tight tracking-tighter mb-4">
+            ¡Mil Gracias por <span class="text-[#00D2FF] italic">todo el apoyo!</span>
           </h3>
-          <p class="text-slate-500 text-sm leading-relaxed mb-6">
-            Con la 3ra Edición individual ya <strong>completamente agotada</strong>, este Combo Dúo es la <strong>única forma de acceder</strong> a ambas medallas y completar tu rompecabezas nacional. Quedan muy pocas piezas de la 4ta edición. <strong>Ambas medallas se envían juntas en un solo paquete a partir de hoy 09 de Octubre</strong> (ahorras también en el costo de envío).
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            Hemos alcanzado el límite total de medallas físicas para la 3ra Edición y Combo Dúo. Todos los cupos fueron asignados a los corredores registrados. Te invitamos a formar parte de nuestra <strong>Edición Especial 10K (The Iron Series)</strong> con medalla maciza 3D.
           </p>
 
-          <ul class="space-y-3 mb-8">
-            <li class="flex items-center gap-3 text-sm text-[#001E50] font-semibold">
-              <i class="fa-solid fa-check-double text-[#00D2FF]"></i> Medalla 3ra Edición
-            </li>
-            <li class="flex items-center gap-3 text-sm text-[#001E50] font-semibold">
-              <i class="fa-solid fa-check-double text-[#00D2FF]"></i> Medalla 4ta Edición
-            </li>
-            <li class="flex items-center gap-3 text-sm text-[#001E50] font-semibold">
-              <i class="fa-solid fa-bolt text-[#00D2FF]"></i> Ahorro inmediato de $4
-            </li>
-          </ul>
-
-          <a href="inscripcion.html?modo=COMBO"
-             class="inline-flex items-center gap-2 bg-[#001E50] text-white font-black text-xs uppercase tracking-widest px-7 py-3.5 rounded-full hover:bg-[#00D2FF] hover:text-[#001E50] transition-all duration-300 shadow-[0_10px_20px_rgba(0,30,80,0.2)]">
-            <i class="fa-solid fa-ticket"></i>
-            ¡Comprar Combo a $16!
+          <a href="inscripcion.html?modo=10K"
+             class="inline-flex items-center gap-2 bg-[#00D2FF] text-[#001E50] font-black text-xs uppercase tracking-widest px-7 py-3.5 rounded-full hover:bg-white transition-all duration-300 shadow-[0_10px_20px_rgba(0,210,255,0.2)]">
+            <i class="fa-solid fa-medal"></i>
+            Ver Edición Especial 10K
           </a>
         </div>
 

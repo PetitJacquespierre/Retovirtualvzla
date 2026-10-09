@@ -200,21 +200,24 @@
         <div id="pantalla-bienvenida" class="space-y-6 animate-fade-in max-w-2xl mx-auto">
             <h2 class="text-center text-[#001E50] font-black text-2xl uppercase tracking-tighter mb-8 italic">Selecciona tu Trámite</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <button onclick="activarFlujo('COMBO')" class="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-100 text-center hover:border-[#00D2FF] hover:shadow-[#00D2FF]/20 transition-all group relative overflow-hidden">
+                <div class="bg-slate-100 p-8 rounded-[2rem] border border-slate-200 text-center opacity-70 relative overflow-hidden">
                     <div class="absolute top-3 right-3 bg-red-600 text-white text-[8px] font-black uppercase px-2 py-0.5 rounded-full tracking-wider shadow">
-                        3ra Sola: SOLD OUT
+                        SOLD OUT TOTAL
                     </div>
-                    <div class="w-16 h-16 bg-[#001E50] group-hover:bg-[#00D2FF] text-white group-hover:text-[#001E50] rounded-full flex items-center justify-center mx-auto mb-4 text-2xl transition-all">
-                        <i class="fa-solid fa-fire"></i>
+                    <div class="w-16 h-16 bg-slate-300 text-slate-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-lock"></i>
                     </div>
-                    <h3 class="font-black text-[#001E50] uppercase text-sm mb-2">Combo Dúo (3ra + 4ta)</h3>
-                    <p class="text-[10px] text-[#00D2FF] font-bold uppercase tracking-widest">Últimos Cupos Dúo $16</p>
-                </button>
-                <button onclick="activarFlujo('10K')" class="bg-[#001E50] p-8 rounded-[2rem] shadow-lg border border-slate-100 text-center hover:bg-[#002a70] transition-all group relative overflow-hidden">
+                    <h3 class="font-black text-slate-600 uppercase text-sm mb-2">Circuito 5K (3ra & 4ta)</h3>
+                    <p class="text-[10px] text-red-500 font-bold uppercase tracking-widest">Inscripciones Cerradas</p>
+                </div>
+                <button onclick="activarFlujo('10K')" class="bg-[#001E50] p-8 rounded-[2rem] shadow-xl border-2 border-[#00D2FF] text-center hover:bg-[#002a70] transition-all group relative overflow-hidden ring-4 ring-[#00D2FF]/20">
+                    <div class="absolute top-3 right-3 bg-[#00D2FF] text-[#001E50] text-[8px] font-black uppercase px-2 py-0.5 rounded-full tracking-wider shadow animate-pulse">
+                        ÚLTIMOS CUPOS
+                    </div>
                     <div class="w-16 h-16 bg-[#00D2FF] text-[#001E50] rounded-full flex items-center justify-center mx-auto mb-4 text-2xl transition-all">
                         <i class="fa-solid fa-medal"></i>
                     </div>
-                    <h3 class="font-black text-white uppercase text-sm mb-2">Edición 10K</h3>
+                    <h3 class="font-black text-white uppercase text-sm mb-2">Edición Especial 10K</h3>
                     <p class="text-[10px] text-[#00D2FF] font-bold uppercase tracking-widest">Inscripciones Abiertas • Entregas Nov / Dic</p>
                 </button>
                 <button onclick="activarFlujo('ABONO')" class="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-100 text-center hover:border-[#00D2FF] hover:shadow-[#00D2FF]/20 transition-all group">
@@ -671,13 +674,9 @@
             if (opcAbono) opcAbono.classList.add('hidden-step');
 
             if (modo === '5K' || modo === 'COMBO') {
-                document.getElementById('paso-fundador').classList.remove('hidden-step');
-                document.getElementById('seccion-combo-5k').classList.remove('hidden-step');
-                document.getElementById('tituloRuta').innerText = "INSCRIPCIÓN COMBO DÚO 5K";
-                document.getElementById('labelCarreraActual').innerText = "Combo Dúo (3ra + 4ta Edición)";
-                document.getElementById('textoBannerPrincipal').innerText = "COMBO DÚO 5K (3RA + 4TA)";
-                document.getElementById('textoBannerSecundario').innerText = "3ra Edición Sold Out Individual · Últimos Cupos Dúo";
-                seleccionarPaquete('COMBO');
+                alert("🚨 ¡ATENCIÓN!\n\nLas inscripciones para el Circuito 5K (3ra Edición y Combo Dúo) están 100% SOLD OUT y cerradas oficialmente.\n\nTe redirigiremos a la Edición Especial 10K que aún cuenta con cupos abiertos.");
+                activarFlujo('10K');
+                return;
             }
             else if (modo === '10K') {
                 document.getElementById('paso-fundador').classList.remove('hidden-step');

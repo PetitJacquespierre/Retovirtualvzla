@@ -53,14 +53,19 @@ export default async function handler(req, res) {
             for (let i = 1; i < filas.length; i++) {
                 const cols = parseCsvLine(filas[i]);
                 const dorsal = (idxDorsal !== -1 ? cols[idxDorsal] : cols[3]) || 'S/N';
-                const nombre = (idxNombre !== -1 ? cols[idxNombre] : cols[4]) || 'Corredor';
+                let nombre = (idxNombre !== -1 ? cols[idxNombre] : cols[4]) || 'Corredor';
                 const genero = (idxGenero !== -1 ? cols[idxGenero] : cols[5]) || '-';
                 const tiempo = (idxTiempo !== -1 ? cols[idxTiempo] : cols[6]) || 'Pendiente';
                 const estatus = (idxEstatus !== -1 ? cols[idxEstatus] : cols[8]) || 'Aprobado';
 
+                const dPad = String(dorsal).replace(/\D/g, '').padStart(3, '0');
+                if (dPad === '070' || nombre.toUpperCase().includes('CARLOS ANTONIO NATER')) {
+                    nombre = 'CARLOS ANTONIO NATERA CANELO';
+                }
+
                 // Solo incluimos los validados o todos según convenga
                 lista.push({
-                    dorsal: String(dorsal).replace(/\D/g, '').padStart(3, '0'),
+                    dorsal: dPad,
                     nombre: nombre,
                     genero: genero.toUpperCase().startsWith('F') ? 'FEMENINO' : 'MASCULINO',
                     tiempo: tiempo,
@@ -137,11 +142,25 @@ export default async function handler(req, res) {
             return res.status(200).json({ total: 22 });
         }
 
-        if (!ci || ci.length < 5) {
-            return res.status(400).json({ error: 'Cédula inválida o requerida' });
+        if (!ciRaw || ciRaw.trim().length === 0) {
+            return res.status(400).json({ error: 'Cédula o dorsal requerido' });
         }
 
+        const queryTerm = ciRaw.replace(/\D/g, '').trim();
+        const dorsalQueryPad = queryTerm.padStart(3, '0');
+
         let registrosAtleta = [];
+
+        // Función para normalizar nombres conocidos (ej: corrección de errores ortográficos en hojas históricas)
+        const normalizarNombre = (nombre, ciAtleta, dorsalAtleta) => {
+            if (!nombre) return 'Atleta';
+            let nom = nombre.trim();
+            // Corrección específica para Carlos Antonio Natera Canelo (dorsal 070 / CI 19503931)
+            if (ciAtleta === '19503931' || dorsalAtleta === '070' || nom.toUpperCase().includes('CARLOS ANTONIO NATER')) {
+                return 'CARLOS ANTONIO NATERA CANELO';
+            }
+            return nom;
+        };
 
         // 1. Consultar 3ra Edición 5K
         try {
@@ -160,9 +179,13 @@ export default async function handler(req, res) {
                     for (let i = 1; i < filas3.length; i++) {
                         const col = parseCsv(filas3[i]);
                         const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
-                        if (filaCI === ci) {
+                        const filaDorsal = col[idxDorsal] ? col[idxDorsal].replace(/\D/g, '').trim() : '';
+                        const dNum = filaDorsal ? filaDorsal.padStart(3, '0') : 'S/N';
+
+                        const coincide = (filaCI && filaCI === queryTerm) || (filaDorsal && (filaDorsal === queryTerm || dNum === dorsalQueryPad));
+
+                        if (coincide) {
                             const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
-                            const dNum = col[idxDorsal] ? String(col[idxDorsal]).replace(/\D/g, '').padStart(3, '0') : 'S/N';
                             const rawGen = idxGen3 !== -1 && col[idxGen3] ? col[idxGen3].trim() : '';
                             let genFinal = '';
                             if (rawGen.toUpperCase().startsWith('F')) genFinal = 'FEMENINO';
@@ -170,7 +193,7 @@ export default async function handler(req, res) {
 
                             registrosAtleta.push({
                                 dorsal: dNum,
-                                nombre: col[idxNombre] || 'Atleta',
+                                nombre: normalizarNombre(col[idxNombre], filaCI, dNum),
                                 tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
                                 carrera: "3ra Edición 5K",
                                 saldoNum: 0,
@@ -203,9 +226,13 @@ export default async function handler(req, res) {
                     for (let i = 1; i < filas4.length; i++) {
                         const col = parseCsv(filas4[i]);
                         const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
-                        if (filaCI === ci) {
+                        const filaDorsal = col[idxDorsal] ? col[idxDorsal].replace(/\D/g, '').trim() : '';
+                        const dNum = filaDorsal ? filaDorsal.padStart(3, '0') : 'S/N';
+
+                        const coincide = (filaCI && filaCI === queryTerm) || (filaDorsal && (filaDorsal === queryTerm || dNum === dorsalQueryPad));
+
+                        if (coincide) {
                             const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
-                            const dNum = col[idxDorsal] ? String(col[idxDorsal]).replace(/\D/g, '').padStart(3, '0') : 'S/N';
                             const rawGen = idxGen4 !== -1 && col[idxGen4] ? col[idxGen4].trim() : '';
                             let genFinal = '';
                             if (rawGen.toUpperCase().startsWith('F')) genFinal = 'FEMENINO';
@@ -213,7 +240,7 @@ export default async function handler(req, res) {
 
                             registrosAtleta.push({
                                 dorsal: dNum,
-                                nombre: col[idxNombre] || 'Atleta',
+                                nombre: normalizarNombre(col[idxNombre], filaCI, dNum),
                                 tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
                                 carrera: "4ta Edición 5K",
                                 saldoNum: 0,

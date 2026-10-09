@@ -597,7 +597,11 @@
             
             const c = corredores.find(x => x.dorsal === d);
             if (c) {
-                document.getElementById('cert-nombre').innerText = c.nombre;
+                let nomCert = c.nombre;
+                if (d === '070' || nomCert.toUpperCase().includes('CARLOS ANTONIO NATER')) {
+                    nomCert = 'CARLOS ANTONIO NATERA CANELO';
+                }
+                document.getElementById('cert-nombre').innerText = nomCert;
                 document.getElementById('cert-dorsal').innerText = c.dorsal;
                 document.getElementById('cert-tiempo').innerText = c.tiempo;
                 

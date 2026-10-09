@@ -1737,8 +1737,14 @@
             }
 
             if (atleta) {
-                document.getElementById('cert-nombre').innerText = atleta.nombre;
-                document.getElementById('cert-dorsal').innerText = '#' + String(atleta.dorsal).replace('#', '');
+                let nombreFinal = atleta.nombre;
+                const dorsalLimpio = String(atleta.dorsal).replace(/\D/g, '').padStart(3, '0');
+                if (dorsalLimpio === '070' || nombreFinal.toUpperCase().includes('CARLOS ANTONIO NATER')) {
+                    nombreFinal = 'CARLOS ANTONIO NATERA CANELO';
+                }
+
+                document.getElementById('cert-nombre').innerText = nombreFinal;
+                document.getElementById('cert-dorsal').innerText = '#' + dorsalLimpio;
                 document.getElementById('cert-tiempo').innerText = atleta.tiempo;
 
                 // Dinamismo de Edición 3ra vs 4ta

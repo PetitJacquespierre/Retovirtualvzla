@@ -225,21 +225,21 @@ async function analizarConGroq(apiKey, base64, mime) {
         });
         if (lista.ok) {
             const ld = await lista.json();
+            // Solo modelos activos y compatibles con visión, excluyendo modelos descontinuados
             candidatos = (ld.data || [])
                 .map(m => m.id)
-                .filter(id => /vision|-vl\b|qwen.*vl/i.test(id) && !/whisper|guard/i.test(id));
+                .filter(id => /vision|-vl\b|qwen.*vl/i.test(id) && !/whisper|guard|90b-vision/i.test(id) && m.active !== false);
         }
     } catch (e) { /* usar valores por defecto */ }
 
-    // Modelos de visión de Groq
+    // Modelos de visión de Groq activos
     const preferidos = [
-        'llama-3.2-11b-vision-preview',
-        'llama-3.2-90b-vision-preview'
+        'llama-3.2-11b-vision-preview'
     ];
     const orden = [
         ...candidatos,
         ...preferidos
-    ].filter((id, i, arr) => arr.indexOf(id) === i);
+    ].filter((id, i, arr) => arr.indexOf(id) === i && !/90b-vision|scout|maverick/i.test(id));
 
     let ultimoError = null;
     for (const modelo of orden) {
@@ -307,15 +307,21 @@ export default async function handler(req, res) {
     if (GEMINI_API_KEY) {
         try { analisis = await analizarConGemini(GEMINI_API_KEY.trim(), base64, mime); }
         catch (e) { errores.push(`Gemini: ${e.message}`); }
+    } else {
+        errores.push('Gemini: Sin GEMINI_API_KEY');
     }
+
     if (!analisis && GROQ_API_KEY) {
         try { analisis = await analizarConGroq(GROQ_API_KEY.trim(), base64, mime); }
         catch (e) { errores.push(`Groq: ${e.message}`); }
+    } else if (!analisis && !GROQ_API_KEY) {
+        errores.push('Groq: Sin GROQ_API_KEY');
     }
+
     if (!analisis) {
         return res.status(502).json({
             ok: false,
-            error: errores.length ? errores.join(' | ') : 'No hay GEMINI_API_KEY ni GROQ_API_KEY configuradas en Vercel.'
+            error: errores.join(' | ')
         });
     }
 

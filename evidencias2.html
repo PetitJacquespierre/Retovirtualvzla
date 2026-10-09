@@ -855,7 +855,7 @@
             reader.readAsDataURL(file);
         }
 
-        // Función de extracción por IA (Tesseract OCR)
+        // Función de extracción por IA (Visión Multimodal + Fallback Tesseract)
         async function ejecutarVisionOCR(imageSrc) {
             const ocrBox = document.getElementById('ocr-status-box');
             const ocrLoading = document.getElementById('ocr-loading');
@@ -867,13 +867,93 @@
             ocrBox.classList.remove('hidden');
             ocrLoading.classList.remove('hidden');
             ocrSuccess.classList.add('hidden');
+            ocrLoading.querySelector('span').innerText = 'IA analizando captura (Strava, Garmin, parciales)...';
 
+            // INTENTO 1: IA de Visión en el Servidor (Gemini 3.8 Flash / Groq Vision)
+            try {
+                const respIA = await fetch('/api/analizar-captura', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        imageBase64: base64Captura,
+                        mimeType: mimeTypeCaptura
+                    })
+                });
+
+                if (respIA.ok) {
+                    const dataIA = await respIA.json();
+                    console.log("Respuesta de IA de Visión:", dataIA);
+
+                    if (dataIA.ok && dataIA.resultado) {
+                        const r = dataIA.resultado;
+                        const d = dataIA.datos || {};
+
+                        // Rellenar casillas
+                        document.getElementById('tiempoHH').value = String(r.hh).padStart(2, '0');
+                        document.getElementById('tiempoMM').value = String(r.mm).padStart(2, '0');
+                        document.getElementById('tiempoSS').value = String(r.ss).padStart(2, '0');
+
+                        // Ajustar selector de distancia
+                        if (r.distancia_km >= 9.5) {
+                            document.getElementById('selectTipoDistancia').value = 'SPLIT_10K';
+                            actualizarAvisoDistancia();
+                        } else {
+                            document.getElementById('selectTipoDistancia').value = 'EXACTO_5K';
+                            actualizarAvisoDistancia();
+                        }
+
+                        // Mensajes amigables según la fuente detectada
+                        let mensaje = '';
+                        let origenBadge = '';
+
+                        if (r.fuente === 'mejor_5k') {
+                            mensaje = `🏅 Récord Personal 5K (PR): ${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')} (Ritmo: ${r.ritmo_5k} min/km). Auto-completado con éxito.`;
+                            origenBadge = 'Mejor Esfuerzo 5K (Strava PR)';
+                        } else if (r.fuente === 'parciales') {
+                            mensaje = `📊 Suma oficial de los primeros 5 km: ${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')} (Ritmo promedio: ${r.ritmo_5k} min/km). Auto-completado con éxito.`;
+                            origenBadge = 'Suma de 5 Parciales (1K a 5K)';
+                        } else if (r.fuente === 'resumen') {
+                            const distTxt = r.distancia_km ? ` (Distancia: ${r.distancia_km.toFixed(2)} km)` : '';
+                            mensaje = `⏱️ Tiempo en movimiento oficial${distTxt}: ${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')} (Ritmo: ${r.ritmo_5k} min/km).`;
+                            origenBadge = 'Tiempo en Movimiento Oficial';
+                        } else if (r.fuente === 'estimado') {
+                            const totTxt = r.tiempo_total_hms ? ` (Actividad total: ${String(r.tiempo_total_hms.mm).padStart(2, '0')}:${String(r.tiempo_total_hms.ss).padStart(2, '0')} para ${r.distancia_km?.toFixed(2)} km)` : '';
+                            mensaje = `⚡ Estimado primeros 5 km a ritmo promedio: ${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')}${totTxt}.`;
+                            origenBadge = 'Estimado 5K a Ritmo Promedio';
+                        } else {
+                            mensaje = `Tiempo detectado: ${String(r.hh).padStart(2, '0')}:${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')} (Ritmo: ${r.ritmo_5k} min/km).`;
+                            origenBadge = 'Tiempo Detectado por IA';
+                        }
+
+                        if (r.advertencias && r.advertencias.length > 0) {
+                            mensaje += ` ⚠️ ${r.advertencias.join(' ')}`;
+                        }
+
+                        ocrLoading.classList.add('hidden');
+                        ocrSuccess.classList.remove('hidden');
+                        ocrPaceEl.innerText = mensaje;
+
+                        const display = document.getElementById('calculo-pace-display');
+                        if (display) {
+                            display.innerHTML = `${origenBadge}: <strong class="text-[#00D2FF] font-black">${String(r.hh).padStart(2, '0')}:${String(r.mm).padStart(2, '0')}:${String(r.ss).padStart(2, '0')}</strong> • Ritmo: <strong class="text-white">${r.ritmo_5k} min/km</strong> <span class="text-emerald-400 text-[10px] ml-1">✓ IA Visión</span>`;
+                        }
+
+                        return; // Éxito con IA de Visión
+                    }
+                }
+            } catch (errIA) {
+                console.warn("IA de Visión no disponible, pasando a OCR local:", errIA.message);
+            }
+
+            // INTENTO 2 (Fallback): OCR local en el navegador con Tesseract
             try {
                 if (typeof Tesseract === 'undefined') {
                     console.warn("Tesseract no cargado aún.");
                     ocrBox.classList.add('hidden');
                     return;
                 }
+
+                ocrLoading.querySelector('span').innerText = 'IA analizando texto con OCR local...';
 
                 const result = await Tesseract.recognize(imageSrc, 'eng', {
                     logger: m => {

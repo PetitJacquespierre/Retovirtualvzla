@@ -1,7 +1,7 @@
 # 📊 AUDITORÍA Y CONTROL FINANCIERO — RETO VIRTUAL VZLA
 **Dirección Financiera (CFO), Contraloría y Auditoría de Negocio**  
 **Moneda Base:** USD ($) | Tasa BCV Oficial  
-**Fecha de Auditoría:** 02 de Octubre, 2026
+**Fecha de Auditoría:** 08 de Octubre, 2026 (Actualización Conciliación Bancaria y Gastos Personales)
 
 ---
 
@@ -9,11 +9,12 @@
 
 | Cuenta / Concepto | Monto Total ($ USD) | Destino / Dueño Real | Instrucción de Blindaje |
 | :--- | :--- | :--- | :--- |
-| **Dinero Hermana (Saldo Intocable)** | **$0.00 USD** | Familiar | **¡100% LIQUIDADO HOY!** ($30 tía Chita + $20 papá pagados) |
+| **Dinero Hermana (Saldo Intocable)** | **$0.00 USD** | Familiar | **¡100% LIQUIDADO!** ($30 tía Chita + $20 papá pagados) |
 | **Dinero Personal (Remanente Tía/Laptop)** | **$130.94 USD** | Personal / Fondo Moto | Preservado íntegro en ahorro |
 | **Reto Virtual Vzla (Capital Operativo)** | **$123.00 USD** | Negocio Eventos | Billetera Fondos (Air Ocean / Proveedores) INTOCABLE |
-| **Mercantil Bs (Saldo Conciliado)** | **20.456,52 Bs** | Negocio / Inscripciones | 23.149,69 Bs - Deuda $3 (2.677,17 Bs) - Com. (16 Bs) |
-| **Zinli Digital** | **$58.50 - $63.17 USD** | Fondo Pauta 10K | **+$20.00 USD recarga desde Mercantil M/E** (Saldo disponible: ~$63 USD) |
+| **Mercantil Bs (Saldo Conciliado 08/Oct)** | **1.602,43 Bs** | Personal / Operativo | Saldo líquido verificado en app tras gastos aire y compras |
+| **Banesco Bs (Saldo Conciliado 08/Oct)** | **142,58 Bs** | Personal / Operativo | Saldo líquido verificado en app tras pago técnico aire |
+| **Zinli Digital** | **$38.50 - $63.17 USD** | Fondo Pauta 10K | Fondos reservados para pauta 10K |
 | **Cuenta por Cobrar Préstamo Familiar** | **$0.00 USD** | Liquidado | ¡100% COBRADO Y RECUPERADO! ($45.00 USD) |
 | **TOTAL LÍQUIDO DISPONIBLE DEL NEGOCIO:** | **~$181.50 - $186.17 USD** | Flujo propio del negocio | **Deuda 5K en $0 | Flete 10K $60 cubierto** |
 
@@ -137,3 +138,37 @@ En Binance no existen carpetas con nombre personalizado, pero sí existen **Bill
 3. En *Desde:* pones **Spot**, en *Para:* pones **Fondos (Funding)**.
 4. Seleccionas **USDT**, colocas **$60** (lo de Reto Virtual Vzla) y confirmas.
 5. ¡Listo! Lo que esté en *Fondos* no se toca porque es del negocio.
+
+---
+
+## ❄️ 6. CONCILIACIÓN DE GASTOS EXTRAORDINARIOS Y SERVICIOS PERSONALES (08/10/2026)
+* **Tasa Oficial Aplicada:** **875,65 Bs/USD**.
+* **Motivo:** Gastos en materiales e instalación de aire acondicionado (apoyo familiar / esposa) y compensación con ingresos de cerrajería.
+
+### A. Ingresos Registrados (08/10/2026):
+| Banco / Concepto | Monto (Bs.) | Equivalente ($ USD) | Origen / Destino |
+| :--- | :---: | :---: | :--- |
+| **Banesco Pago Móvil (Entrada)** | **+6.570,00 Bs.** | **+$7,50 USD** | **Trabajo de Cerrajería realizado** (utilizado para cubrir técnico) |
+| **Banesco Transferencia Terceros** | **+15.500,00 Bs.** | **+$17,70 USD** | Transferencia recibida para cubrir pago de instalación |
+| **Mercantil Pago Móvil (Entrada)** | **+13.996,00 Bs.** | **+$15,98 USD** | Abono / reposición a cuenta corriente |
+| **Total Ingresos Percibidos:** | **+36.066,00 Bs.** | **+$41,18 USD** | |
+
+### B. Egresos Ejecutados (Materiales + Mano de Obra + Gastos de Cortesía):
+| Banco / Movimiento | Monto (Bs.) | Equivalente ($ USD) | Detalle / Destino |
+| :--- | :---: | :---: | :--- |
+| **Mercantil Débito (Consumo)** | **-34.986,48 Bs.** | **-$39,95 USD** | Material principal ferretería aire |
+| **Mercantil Débito (Consumo)** | **-21.277,11 Bs.** | **-$24,30 USD** | Tubería / repuestos ferretería |
+| **Mercantil Débito (Consumo)** | **-7.768,33 Bs.** | **-$8,87 USD** | Conexiones / ferretería complementaria |
+| **Mercantil Débito (Consumo)** | **-4.467,60 Bs.** | **-$5,10 USD** | Six-pack de cerveza (agradecimiento instalador) |
+| **Mercantil Débito (Consumo)** | **-3.073,53 Bs.** | **-$3,51 USD** | Compra menor / insumo |
+| **Mercantil Débito (Consumo)** | **-2.947,84 Bs.** | **-$3,37 USD** | Compra menor / insumo |
+| **Mercantil Pago Móvil** | **-2.200,00 Bs.** | **-$2,51 USD** | Pago puntual de mano de obra / extra |
+| **Mercantil Edo Cta / Comisiones** | **-1.398,00 Bs.** | **-$1,60 USD** | Edo. cta (1.370) + Comisiones (28 Bs) |
+| **Banesco Pago Móvil** | **-21.891,25 Bs.** | **-$25,00 USD** | **Pago mano de obra técnico instalador** |
+| **Banesco Comisión Pago Móvil** | **-65,67 Bs.** | **-$0,07 USD** | Comisión bancaria interbancaria |
+| **TOTAL GASTADO (08/10/2026):** | **-100.075,81 Bs.** | **-$114,29 USD** | **$89,21 Mercantil + $25,07 Banesco** |
+
+> 📌 **RESUMEN DE CONTRALORÍA:**  
+> * Los **$7,50 USD (6.570,00 Bs)** ganados por tu **servicio de cerrajería** se aplicaron directamente al pago de la instalación del técnico ($25,00 USD), amortizando el costo de tu bolsillo.  
+> * Los **fondos sagrados del negocio** (los $123 USD operativos de Reto Virtual Vzla y los $60 del flete China) se mantienen **intocables e intactos en Binance**.  
+> * Saldos líquidos bancarios en bolívares conciliados al cierre del 08/10/2026: **Mercantil: 1.602,43 Bs.** y **Banesco: 142,58 Bs.**

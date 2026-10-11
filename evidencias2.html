@@ -1724,30 +1724,52 @@
             const busqueda = raw.replace(/\D/g, '');
             const dorsalPad = busqueda.padStart(3, '0');
 
-            // 1. Buscar en el ranking cargado (atletas con evidencia registrada)
-            let atleta = atletasRanking.find(a => a && (a.dorsal === dorsalPad || a.dorsal === busqueda));
-
-            // 2. Si no ha subido evidencia o el ranking está vacío, consultar inscripción oficial
-            if (!atleta) {
-                try {
-                    const resp = await fetch(`/api/consultar-atleta?ci=${busqueda}`);
-                    if (resp.ok) {
-                        const data = await resp.json();
-                        if (data.encontrado && data.registros && data.registros.length > 0) {
-                            const reg = data.registros[0];
-                            atleta = {
-                                nombre: reg.nombre,
-                                dorsal: '#' + String(reg.dorsal).padStart(3, '0'),
-                                tiempo: "FINISHER OFICIAL"
-                            };
-                        }
-                    }
-                } catch(e) {
-                    console.error("Error consultando para certificado:", e);
-                }
+            const btnCert = document.querySelector("button[onclick='generarCertificado()']");
+            const btnOriginalText = btnCert ? btnCert.innerHTML : '';
+            if (btnCert) {
+                btnCert.disabled = true;
+                btnCert.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Validando tiempo oficial...`;
             }
 
-            if (atleta) {
+            try {
+                // 1. Buscar en el ranking en memoria de la edición activa
+                let atleta = atletasRanking.find(a => a && (a.dorsal === dorsalPad || a.dorsal === busqueda));
+
+                // 2. Si no está en el ranking o queremos confirmar el registro exacto de evidencia en esta edición:
+                if (!atleta || (atleta.estatus && atleta.estatus.toLowerCase() !== 'aprobado')) {
+                    try {
+                        const urlCheck = `/api/consultar-atleta?accion=verificar_evidencia&ci=${busqueda}&dorsal=${dorsalPad}&edicion=${edicionActual}`;
+                        const resp = await fetch(urlCheck);
+                        if (resp.ok) {
+                            const data = await resp.json();
+                            if (data.yaSubio && data.registro) {
+                                atleta = {
+                                    nombre: data.registro.nombre,
+                                    dorsal: data.registro.dorsal,
+                                    tiempo: data.registro.tiempo,
+                                    estatus: data.registro.estatus || 'Pendiente'
+                                };
+                            }
+                        }
+                    } catch (e) {
+                        console.error("Error verificando evidencia:", e);
+                    }
+                }
+
+                if (!atleta) {
+                    const nombreEd = edicionActual === '4ta' ? '4ta Edición' : '3ra Edición';
+                    alert(`⚠️ No se encontró evidencia de carrera registrada para el Dorsal o Cédula "${raw}" en la ${nombreEd}.\n\nPara obtener tu certificado oficial debes haber completado tus 5K y reportado tu captura de tiempo en esta edición.`);
+                    return;
+                }
+
+                const estatusLimpio = (atleta.estatus || '').toString().toLowerCase().trim();
+                const esAprobado = estatusLimpio === 'aprobado' || estatusLimpio === 'validado';
+
+                if (!esAprobado) {
+                    alert(`⏳ Tu evidencia (Dorsal #${String(atleta.dorsal).replace(/\D/g, '').padStart(3, '0')}) se encuentra actualmente en estado: "${atleta.estatus || 'Pendiente'}".\n\nLos jueces están validando tu captura y tiempo. Tan pronto sea aprobada oficialmente, podrás visualizar y descargar tu certificado con tu tiempo oficial.`);
+                    return;
+                }
+
                 let nombreFinal = atleta.nombre || '';
                 const dorsalLimpio = String(atleta.dorsal || '').replace(/\D/g, '').padStart(3, '0');
                 if (dorsalLimpio === '070' || nombreFinal.toUpperCase().includes('CARLOS ANTONIO NATER')) {
@@ -1807,8 +1829,11 @@
 
                 // Scroll suave al certificado
                 contenedor.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                alert(`No se encontró un corredor con la Cédula o Dorsal "${raw}".\n\nSi ya completaste tu carrera o tienes dudas con tu registro, escríbenos por WhatsApp para asistirte.`);
+            } finally {
+                if (btnCert) {
+                    btnCert.disabled = false;
+                    btnCert.innerHTML = btnOriginalText;
+                }
             }
         }
 

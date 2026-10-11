@@ -77,11 +77,15 @@ export default async function handler(req, res) {
         }
 
         // =========================================================================
-        // ACCIÓN 2: VERIFICAR SI CÉDULA YA TIENE EVIDENCIA EN ESA EDICIÓN
+        // ACCIÓN 2: VERIFICAR SI CÉDULA O DORSAL YA TIENE EVIDENCIA EN ESA EDICIÓN
         // =========================================================================
         if (accion === 'verificar_evidencia') {
-            if (!ci || ci.length < 5) {
-                return res.status(400).json({ error: 'Cédula inválida o requerida' });
+            const dorsalParam = (req.query.dorsal || '').toString().trim().replace(/\D/g, '');
+            const dorsalPad = dorsalParam ? dorsalParam.padStart(3, '0') : '';
+            const ciClean = (ci || '').toString().trim().replace(/\D/g, '');
+
+            if (!ciClean && !dorsalPad) {
+                return res.status(400).json({ error: 'Cédula o dorsal requerido' });
             }
 
             const sheetName = (edicion === '4ta') ? 'Evidencias_4ta' : 'Evidencias_3ra';
@@ -99,13 +103,17 @@ export default async function handler(req, res) {
             let registroPrevio = null;
 
             for (let i = 1; i < filas.length; i++) {
-                const cols = filas[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+                const cols = parseCsvLine(filas[i]);
                 const filaCI = cols[2] ? cols[2].replace(/\D/g, '').trim() : '';
+                const filaDorsal = cols[3] ? cols[3].replace(/\D/g, '').padStart(3, '0') : '';
 
-                if (filaCI === ci) {
+                const coincideCI = ciClean && (filaCI === ciClean);
+                const coincideDorsal = dorsalPad && (filaDorsal === dorsalPad);
+
+                if (coincideCI || coincideDorsal) {
                     yaSubio = true;
                     registroPrevio = {
-                        dorsal: cols[3] || '',
+                        dorsal: filaDorsal || cols[3] || '',
                         nombre: cols[4] || '',
                         tiempo: cols[6] || '',
                         fecha: cols[0] || '',

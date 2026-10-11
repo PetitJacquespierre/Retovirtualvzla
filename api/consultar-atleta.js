@@ -19,6 +19,8 @@ export default async function handler(req, res) {
     const ci = String(ciRaw).replace(/\D/g, '').trim();
     const telFiltro = String(telRaw).replace(/\D/g, '').trim();
 
+    const parseCsvLine = (line) => line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+
     try {
         // =========================================================================
         // ACCIÓN 1: OBTENER RANKING PÚBLICO DE EVIDENCIAS (3ra o 4ta Edición)
@@ -39,7 +41,6 @@ export default async function handler(req, res) {
                 return res.status(200).json({ ranking: [] });
             }
 
-            const parseCsvLine = (line) => line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
             const headers = parseCsvLine(filas[0]).map(h => h.toLowerCase());
 
             const idxDorsal = headers.findIndex(h => h.includes('dorsal'));
@@ -56,14 +57,16 @@ export default async function handler(req, res) {
                 let nombre = (idxNombre !== -1 ? cols[idxNombre] : cols[4]) || 'Corredor';
                 const genero = (idxGenero !== -1 ? cols[idxGenero] : cols[5]) || '-';
                 const tiempo = (idxTiempo !== -1 ? cols[idxTiempo] : cols[6]) || 'Pendiente';
-                const estatus = (idxEstatus !== -1 ? cols[idxEstatus] : cols[8]) || 'Aprobado';
+                
+                // Si la columna estatus viene vacía o no existe, es 'Pendiente' (NO 'Aprobado')
+                const rawEstatus = (idxEstatus !== -1 ? cols[idxEstatus] : cols[8]);
+                const estatus = (rawEstatus && rawEstatus.trim().length > 0) ? rawEstatus.trim() : 'Pendiente';
 
                 const dPad = String(dorsal).replace(/\D/g, '').padStart(3, '0');
                 if (dPad === '070' || nombre.toUpperCase().includes('CARLOS ANTONIO NATER')) {
                     nombre = 'CARLOS ANTONIO NATERA CANELO';
                 }
 
-                // Solo incluimos los validados o todos según convenga
                 lista.push({
                     dorsal: dPad,
                     nombre: nombre,
@@ -112,12 +115,13 @@ export default async function handler(req, res) {
 
                 if (coincideCI || coincideDorsal) {
                     yaSubio = true;
+                    const rawSt = (cols[8] || '').toString().trim();
                     registroPrevio = {
                         dorsal: filaDorsal || cols[3] || '',
                         nombre: cols[4] || '',
                         tiempo: cols[6] || '',
                         fecha: cols[0] || '',
-                        estatus: cols[8] || 'Pendiente'
+                        estatus: rawSt ? rawSt : 'Pendiente'
                     };
                     break;
                 }

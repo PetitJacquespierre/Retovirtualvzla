@@ -1632,7 +1632,11 @@
             tbody.innerHTML = '';
 
             try {
-                let filtrados = [...(atletasRanking || [])];
+                // Solo atletas cuyo tiempo haya sido validado y aprobado oficialmente por los jueces
+                let filtrados = (atletasRanking || []).filter(a => {
+                    const st = (a?.estatus || '').toString().toLowerCase().trim();
+                    return st === 'aprobado' || st === 'validado';
+                });
 
                 if (filtroGeneroActual === 'MASCULINO') {
                     filtrados = filtrados.filter(a => (a && a.genero) ? a.genero.toUpperCase().startsWith('M') : false);
@@ -1732,41 +1736,47 @@
             }
 
             try {
-                // 1. Buscar en el ranking en memoria de la edición activa
-                let atleta = atletasRanking.find(a => a && (a.dorsal === dorsalPad || a.dorsal === busqueda));
-
-                // 2. Si no está en el ranking o queremos confirmar el registro exacto de evidencia en esta edición:
-                if (!atleta || (atleta.estatus && atleta.estatus.toLowerCase() !== 'aprobado')) {
-                    try {
-                        const urlCheck = `/api/consultar-atleta?accion=verificar_evidencia&ci=${busqueda}&dorsal=${dorsalPad}&edicion=${edicionActual}`;
-                        const resp = await fetch(urlCheck);
-                        if (resp.ok) {
-                            const data = await resp.json();
-                            if (data.yaSubio && data.registro) {
-                                atleta = {
-                                    nombre: data.registro.nombre,
-                                    dorsal: data.registro.dorsal,
-                                    tiempo: data.registro.tiempo,
-                                    estatus: data.registro.estatus || 'Pendiente'
-                                };
-                            }
+                // Consultar en tiempo real la evidencia oficial de esta edición específica
+                let atleta = null;
+                try {
+                    const urlCheck = `/api/consultar-atleta?accion=verificar_evidencia&ci=${busqueda}&dorsal=${dorsalPad}&edicion=${edicionActual}`;
+                    const resp = await fetch(urlCheck);
+                    if (resp.ok) {
+                        const data = await resp.json();
+                        if (data.yaSubio && data.registro) {
+                            atleta = {
+                                nombre: data.registro.nombre,
+                                dorsal: data.registro.dorsal,
+                                tiempo: data.registro.tiempo,
+                                estatus: data.registro.estatus || 'Pendiente'
+                            };
                         }
-                    } catch (e) {
-                        console.error("Error verificando evidencia:", e);
+                    }
+                } catch (e) {
+                    console.error("Error verificando evidencia vía API:", e);
+                }
+
+                // Si falló la API por red, recurrir al ranking en memoria
+                if (!atleta) {
+                    const enRanking = atletasRanking.find(a => a && (a.dorsal === dorsalPad || a.dorsal === busqueda));
+                    if (enRanking) {
+                        atleta = { ...enRanking };
                     }
                 }
 
+                const nombreEd = edicionActual === '4ta' ? '4ta Edición' : '3ra Edición';
+
                 if (!atleta) {
-                    const nombreEd = edicionActual === '4ta' ? '4ta Edición' : '3ra Edición';
                     alert(`⚠️ No se encontró evidencia de carrera registrada para el Dorsal o Cédula "${raw}" en la ${nombreEd}.\n\nPara obtener tu certificado oficial debes haber completado tus 5K y reportado tu captura de tiempo en esta edición.`);
                     return;
                 }
 
                 const estatusLimpio = (atleta.estatus || '').toString().toLowerCase().trim();
-                const esAprobado = estatusLimpio === 'aprobado' || estatusLimpio === 'validado';
+                const esAprobado = (estatusLimpio === 'aprobado' || estatusLimpio === 'validado');
 
+                // Si está en blanco, pendiente, o dice cualquier cosa que NO sea aprobado:
                 if (!esAprobado) {
-                    alert(`⏳ Tu evidencia (Dorsal #${String(atleta.dorsal).replace(/\D/g, '').padStart(3, '0')}) se encuentra actualmente en estado: "${atleta.estatus || 'Pendiente'}".\n\nLos jueces están validando tu captura y tiempo. Tan pronto sea aprobada oficialmente, podrás visualizar y descargar tu certificado con tu tiempo oficial.`);
+                    alert(`⏳ Tu evidencia para la ${nombreEd} (Dorsal #${String(atleta.dorsal).replace(/\D/g, '').padStart(3, '0')}) aún no ha sido aprobada.\n\nDebes esperar a que los jueces validen y aprueben oficialmente tu tiempo para poder obtener tu certificado.`);
                     return;
                 }
 

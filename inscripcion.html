@@ -292,12 +292,50 @@
                 <p id="labelCarreraActual" class="font-black text-sm text-slate-500 mt-1">Procesando...</p>
             </div>
 
-            <div id="contenedor-visual-kit" class="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-xl border border-slate-100">
-                <h3 class="text-[#001E50] font-black text-xl mb-6 uppercase italic text-center">Detalles del Kit Oficial</h3>
+            <div id="contenedor-visual-kit" class="bg-white p-6 md:p-10 rounded-[2.5rem] shadow-xl border border-slate-100">
+                <div class="flex flex-col items-center mb-5">
+                    <span class="text-[#00D2FF] font-black text-xs uppercase tracking-widest mb-1">Edición Especial 10K</span>
+                    <h3 class="text-[#001E50] font-black text-xl md:text-2xl uppercase italic text-center">Detalles del Kit Oficial</h3>
+                </div>
+
+                <!-- Visor Interactivo Moderno de Alta Definición -->
                 <div class="mb-6 flex flex-col items-center">
-                    <button type="button" onclick="abrirModalImagen()" class="rounded-3xl border overflow-hidden max-w-xs h-40 bg-slate-50 flex items-center justify-center">
-                        <img id="imgPrototipo" src="img/10k_franela.webp" class="h-full w-full object-cover">
-                    </button>
+                    <div class="relative w-full max-w-md h-72 sm:h-80 md:h-96 rounded-3xl overflow-hidden bg-[#00102A] border-2 border-slate-100 shadow-2xl flex items-center justify-center">
+                        
+                        <!-- 1. Video Real de la Medalla Girando 360° -->
+                        <video id="videoKitMedalla" autoplay loop muted playsinline class="w-full h-full object-cover">
+                            <source src="img/medallagiratoria.mp4" type="video/mp4">
+                            Tu navegador no soporta videos.
+                        </video>
+
+                        <!-- 2. Foto Real de la Medalla con Cinta/Lanyard (Toggle) -->
+                        <img id="imgMedallaLanyard" src="img/medallahorizontallanyard.jpeg" alt="Medalla 10K con Cinta Oficial" class="w-full h-full object-cover hidden">
+
+                        <!-- 3. Imagen para Prenda Textil (Franelilla Olímpica / Franela con mangas) -->
+                        <img id="imgKitTextil" src="img/10k_franelilla_olimpica.jpg" alt="Kit 10K" class="w-full h-full object-cover hidden">
+
+                        <!-- Badge Superior Izquierda Dinámico -->
+                        <div id="badgeKitPreview" class="absolute top-3 left-3 bg-[#001E50]/85 backdrop-blur-md border border-[#00D2FF]/40 text-white text-[10px] md:text-xs font-black uppercase px-3 py-1.5 rounded-full flex items-center gap-2 shadow-lg">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>Medalla de Metal 3D + Dorsal</span>
+                        </div>
+
+                        <!-- Botón Toggle de la Medalla (Alternar entre Video 360° y Foto con Cinta) -->
+                        <button type="button" id="btnToggleMedallaVista" onclick="toggleMedallaVista()" class="absolute bottom-3 left-3 bg-[#001E50]/90 hover:bg-[#00D2FF] text-white hover:text-[#001E50] border border-white/20 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-xl backdrop-blur-md cursor-pointer">
+                            <i class="fa-solid fa-camera text-xs"></i>
+                            <span id="lblToggleMedalla">Ver con Cinta y Lanyard</span>
+                        </button>
+
+                        <!-- Badge Inferior Izquierda: Prototipo Textil -->
+                        <div id="badgeReferencialTextil" class="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md text-white/90 text-[10px] font-bold px-3 py-1 rounded-lg border border-white/10 hidden">
+                            <i class="fa-solid fa-circle-info text-[#00D2FF] mr-1"></i> Diseño Oficial Prototipo
+                        </div>
+
+                        <!-- Botón para ver en grande / modal -->
+                        <button type="button" onclick="abrirModalImagen()" title="Ampliar imagen" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 hover:bg-[#00D2FF] text-white hover:text-[#001E50] border border-white/20 flex items-center justify-center transition-all shadow-md cursor-pointer">
+                            <i class="fa-solid fa-expand text-xs"></i>
+                        </button>
+                    </div>
                 </div>
                 <div id="selectorTextil10k" class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border">
                     <div class="flex flex-col gap-2">
@@ -685,7 +723,7 @@
                 document.getElementById('tituloRuta').innerText = "EDICION ESPECIAL 10K";
                 document.getElementById('labelCarreraActual').innerText = "Kit General 10K";
                 document.getElementById('textoBannerPrincipal').innerText = "EDICION ESPECIAL 10K";
-                document.getElementById('textoBannerSecundario').innerText = "Medalla Maciza 3D y Prenda Opcional";
+                document.getElementById('textoBannerSecundario').innerText = "Medalla de Metal 3D y Prenda Opcional";
                 cambiarTipoKit10k();
             } 
             else if (modo === 'ABONO') {
@@ -789,19 +827,83 @@
             }
         }
 
+        let vistaMedallaActual = 'video'; // 'video' o 'foto'
+
+        function toggleMedallaVista() {
+            const video = document.getElementById('videoKitMedalla');
+            const foto = document.getElementById('imgMedallaLanyard');
+            const lbl = document.getElementById('lblToggleMedalla');
+            
+            if (vistaMedallaActual === 'video') {
+                vistaMedallaActual = 'foto';
+                if (video) { video.classList.add('hidden'); video.pause(); }
+                if (foto) foto.classList.remove('hidden');
+                if (lbl) lbl.innerText = "Ver Video Giratorio 360°";
+            } else {
+                vistaMedallaActual = 'video';
+                if (foto) foto.classList.add('hidden');
+                if (video) { video.classList.remove('hidden'); video.play(); }
+                if (lbl) lbl.innerText = "Ver con Cinta y Lanyard";
+            }
+        }
+
         function cambiarTipoKit10k() {
             const tipo = document.getElementById('tipoTextil10k').value;
             const contTalla = document.getElementById('contenedor-talla-10k');
-            const imgProt = document.getElementById('imgPrototipo');
+            const videoMedalla = document.getElementById('videoKitMedalla');
+            const imgLanyard = document.getElementById('imgMedallaLanyard');
+            const imgTextil = document.getElementById('imgKitTextil');
+            const btnToggleMedalla = document.getElementById('btnToggleMedallaVista');
+            const badgePreview = document.getElementById('badgeKitPreview');
+            const badgeReferencial = document.getElementById('badgeReferencialTextil');
             
             if (tipo === "Solo Medalla") {
-                if (contTalla) contTalla.classList.add('hidden');
-                if (contTalla) contTalla.classList.remove('flex');
-                if (imgProt) imgProt.src = "img/medalla-frente.webp";
+                if (contTalla) {
+                    contTalla.classList.add('hidden');
+                    contTalla.classList.remove('flex');
+                }
+                if (imgTextil) imgTextil.classList.add('hidden');
+                if (btnToggleMedalla) btnToggleMedalla.classList.remove('hidden');
+                if (badgeReferencial) badgeReferencial.classList.add('hidden');
+
+                if (vistaMedallaActual === 'video') {
+                    if (videoMedalla) { videoMedalla.classList.remove('hidden'); videoMedalla.play(); }
+                    if (imgLanyard) imgLanyard.classList.add('hidden');
+                } else {
+                    if (videoMedalla) { videoMedalla.classList.add('hidden'); videoMedalla.pause(); }
+                    if (imgLanyard) imgLanyard.classList.remove('hidden');
+                }
+
+                if (badgePreview) {
+                    badgePreview.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span>Medalla de Metal 3D + Dorsal</span>';
+                }
             } else {
-                if (contTalla) contTalla.classList.remove('hidden');
-                if (contTalla) contTalla.classList.add('flex');
-                if (imgProt) imgProt.src = "img/10k_franela.webp";
+                if (contTalla) {
+                    contTalla.classList.remove('hidden');
+                    contTalla.classList.add('flex');
+                }
+                if (videoMedalla) { videoMedalla.classList.add('hidden'); videoMedalla.pause(); }
+                if (imgLanyard) imgLanyard.classList.add('hidden');
+                if (btnToggleMedalla) btnToggleMedalla.classList.add('hidden');
+                if (badgeReferencial) badgeReferencial.classList.remove('hidden');
+
+                if (tipo === "Franelilla Oscura") {
+                    if (imgTextil) {
+                        imgTextil.src = "img/10k_franelilla_olimpica.jpg";
+                        imgTextil.classList.remove('hidden');
+                    }
+                    if (badgePreview) {
+                        badgePreview.innerHTML = '<i class="fa-solid fa-shirt text-[#00D2FF]"></i><span>Kit + Franelilla Olímpica</span>';
+                    }
+                } else if (tipo === "Franela Oscura") {
+                    if (imgTextil) {
+                        imgTextil.src = "img/10k_franela_mangas.jpg";
+                        imgTextil.classList.remove('hidden');
+                    }
+                    if (badgePreview) {
+                        badgePreview.innerHTML = '<i class="fa-solid fa-shirt text-[#00D2FF]"></i><span>Kit + Franela con Mangas</span>';
+                    }
+                }
             }
             actualizarTotal();
         }
@@ -1317,9 +1419,55 @@
         if (menuToggle) {
             menuToggle.addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('translate-x-full'));
         }
-        function abrirModalImagen() { document.getElementById('modal-imagen').classList.remove('hidden'); document.getElementById('modal-imagen').classList.add('flex'); }
-        function cerrarModalImagen() { document.getElementById('modal-imagen').classList.add('hidden'); }
+        function abrirModalImagen() {
+            const modal = document.getElementById('modal-imagen');
+            const cont = document.getElementById('modal-contenido-dinamico');
+            const caption = document.getElementById('modal-caption');
+            const tipo = document.getElementById('tipoTextil10k')?.value || 'Solo Medalla';
+            
+            if (!modal || !cont) return;
+
+            if (tipo === 'Solo Medalla') {
+                if (vistaMedallaActual === 'video') {
+                    cont.innerHTML = '<video autoplay loop muted playsinline class="max-h-[75vh] w-auto max-w-full rounded-2xl shadow-2xl"><source src="img/medallagiratoria.mp4" type="video/mp4"></video>';
+                    if (caption) caption.innerText = 'Medalla Oficial 10K - Vista Giratoria 360° Real';
+                } else {
+                    cont.innerHTML = '<img src="img/medallahorizontallanyard.jpeg" alt="Medalla 10K" class="max-h-[75vh] w-auto max-w-full rounded-2xl object-contain shadow-2xl">';
+                    if (caption) caption.innerText = 'Medalla Oficial 10K con Cinta y Lanyard Oficial';
+                }
+            } else if (tipo === 'Franelilla Oscura') {
+                cont.innerHTML = '<img src="img/10k_franelilla_olimpica.jpg" alt="Franelilla Olímpica" class="max-h-[75vh] w-auto max-w-full rounded-2xl object-contain shadow-2xl">';
+                if (caption) caption.innerText = 'Franelilla Olímpica 10K (Frente y Espalda) - Diseño Oficial Prototipo';
+            } else if (tipo === 'Franela Oscura') {
+                cont.innerHTML = '<img src="img/10k_franela_mangas.jpg" alt="Franela con mangas" class="max-h-[75vh] w-auto max-w-full rounded-2xl object-contain shadow-2xl">';
+                if (caption) caption.innerText = 'Franela con Mangas 10K (Frente y Espalda) - Diseño Oficial Prototipo';
+            }
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function cerrarModalImagen() {
+            const modal = document.getElementById('modal-imagen');
+            const cont = document.getElementById('modal-contenido-dinamico');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+            if (cont) cont.innerHTML = '';
+        }
     </script>
+
+    <!-- Modal para ver imágenes/video en pantalla completa -->
+    <div id="modal-imagen" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="relative max-w-3xl w-full flex flex-col items-center animate-fade-in">
+            <button type="button" onclick="cerrarModalImagen()" class="absolute -top-12 right-0 text-white/80 hover:text-white text-xl font-black bg-white/10 hover:bg-white/25 w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modal-contenido-dinamico" class="w-full flex items-center justify-center rounded-2xl overflow-hidden bg-black/50 border border-white/10 p-2"></div>
+            <p id="modal-caption" class="text-white/80 text-xs font-bold uppercase tracking-wider mt-3 text-center"></p>
+        </div>
+    </div>
 
     <!-- Botón flotante de asistencia inmediata WhatsApp -->
     <a href="https://wa.me/584127732710?text=Hola,%20tengo%20una%20duda%20o%20inconveniente%20con%20el%20portal%20de%20inscripciones" 

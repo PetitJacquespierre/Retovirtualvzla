@@ -73,11 +73,11 @@
   - **3 unidades:** Premiación Podio 5K (Costo: $10.50).
   - **1 unidad:** Muestra personal de auditoría / marketing (Costo: $3.50).
   - **6 unidades iniciales para venta:** Precio fijado en **$7.00 USD c/u**.
-* **VENTAS EJECUTADAS HOY (04/10/2026):**
-  - **Zarahyt Páez (Lara - Dorsal 018):** Compró **2 unidades** = **12.200,00 Bs ($14.00 USD a tasa BCV)** recibidos por Pago Móvil Mercantil (17:24 hrs).
-  - **Compromiso Próxima Semana:** Promesa de pago de **2 unidades adicionales** ($14.00 USD).
-* **Inventario Remanente Disponible para Venta:** **Solo 4 unidades físicas disponibles** (¡y 2 reservadas!).
-* **RECUPERACIÓN DE CAPITAL:** Ya recuperaste **$14.00 USD de los $35.00 invertidos** el primer día. Al cobrar los 2 de la próxima semana, habrás recuperado **$28.00 USD (80% de la inversión total)** con solo 4 ventas.
+* **VENTAS EJECUTADAS:**
+  - **04/10/2026 (Zarahyt Páez - Lara):** Compró **2 unidades** = **12.200,00 Bs ($14.00 USD)** recibidos por Pago Móvil Mercantil.
+  - **13/10/2026 (Segunda Venta):** Pagó **2 unidades** = **12.276,00 Bs ($14.00 USD)** recibidos por Pago Móvil Mercantil desde Banesco (Ref: `062864922101`, 15:57 hrs).
+* **Inventario Remanente Disponible para Venta:** **Solo 2 unidades físicas disponibles** (de las 6 originales de venta).
+* **RECUPERACIÓN DE CAPITAL:** ¡Meta cumplida! Has recuperado **$28.00 USD de los $35.00 invertidos** (el **80.0% del capital total recuperado**). Las 2 unidades restantes son **$14.00 USD de utilidad neta pura**.
 
 ---
 
@@ -172,3 +172,18 @@ En Binance no existen carpetas con nombre personalizado, pero sí existen **Bill
 > * Los **$7,50 USD (6.570,00 Bs)** ganados por tu **servicio de cerrajería** se aplicaron directamente al pago de la instalación del técnico ($25,00 USD), amortizando el costo de tu bolsillo.  
 > * Los **fondos sagrados del negocio** (los $123 USD operativos de Reto Virtual Vzla y los $60 del flete China) se mantienen **intocables e intactos en Binance**.  
 > * Saldos líquidos bancarios en bolívares conciliados al cierre del 08/10/2026: **Mercantil: 1.602,43 Bs.** y **Banesco: 142,58 Bs.**
+
+---
+
+## 📦 7. REGISTRO DE COMPRAS OPERATIVAS Y MENORES (14/10/2026)
+* **Comercio:** Minimarket (Las Adjuntas 2da Etapa, Punto Fijo, Falcón).
+* **Nota de Despacho:** N° *0114459 (Efectivo / Contado).
+* **Tasa Referencial:** 875,65 Bs/USD.
+
+| Producto / Ítem | Monto (Bs.) | Equivalente ($ USD) | Categoría Contable |
+| :--- | :---: | :---: | :--- |
+| **Cinta de Embalar 120m NAIY(E)** | **2.608,74 Bs.** | **$2,98 USD** | **Gasto Operativo Reto Virtual Vzla** (Material para envíos y paquetes) |
+| **Refresco Golden 7 Up 2L Pepsico(E)** | **901,62 Bs.** | **$1,03 USD** | Gasto Personal / Refrigerio |
+| **TOTAL TICKET:** | **3.510,36 Bs.** | **$4,01 USD** | Pago contado en efectivo |
+
+> 💡 **Nota de Contraloría:** La cinta de embalar ($2,98 USD) cuenta como insumo de trabajo directo para los envíos de las medallas/combos del 5K y 10K, por lo que es deducible del flujo operativo del negocio.

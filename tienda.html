@@ -359,6 +359,11 @@
                             </div>
 
                             <div>
+                                <label class="text-[10px] text-slate-300 font-semibold block mb-1">Número de Referencia de Pago *</label>
+                                <input type="text" id="refPagoAtleta" placeholder="Últimos 4 o 6 dígitos de la referencia *" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF]">
+                            </div>
+
+                            <div>
                                 <label class="text-[10px] text-slate-300 font-semibold block mb-1">Modalidad de Envío:</label>
                                 <select id="modalidadEnvio" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3 py-2.5 text-xs text-white outline-none focus:border-[#00D2FF]">
                                     <option value="combo_inscrito">📦 Tengo cupo 3ra/4ta ed. (Mismo paquete sin flete extra)</option>
@@ -528,12 +533,19 @@
             const nombre = document.getElementById('nombreAtleta').value.trim();
             const cedula = document.getElementById('cedulaAtleta').value.trim();
             const telefono = document.getElementById('telefonoAtleta').value.trim();
+            const refPago = document.getElementById('refPagoAtleta').value.trim();
             const envioSelect = document.getElementById('modalidadEnvio');
             const envioTexto = envioSelect.options[envioSelect.selectedIndex].text;
 
             if (!nombre || !cedula || !telefono) {
                 alert("Por favor completa tu Nombre, Cédula y Teléfono para procesar el pedido.");
                 document.getElementById('nombreAtleta').focus();
+                return;
+            }
+
+            if (!refPago) {
+                alert("Por favor ingresa el número o últimos dígitos de tu referencia de pago.");
+                document.getElementById('refPagoAtleta').focus();
                 return;
             }
 
@@ -551,6 +563,7 @@
                 datos.append("Nombre", nombre);
                 datos.append("Cedula", cedula);
                 datos.append("Telefono", telefono);
+                datos.append("RefPago", refPago);
                 datos.append("CantM1", cantidades.m1);
                 datos.append("CantM2", cantidades.m2);
                 datos.append("Total", totalUSD);
@@ -570,7 +583,7 @@
             if (cantidades.m1 > 0) itemsTexto += "• " + cantidades.m1 + "x Medalla 1ra Edición ($" + (cantidades.m1 * PRECIO_UNITARIO) + " USD)\n";
             if (cantidades.m2 > 0) itemsTexto += "• " + cantidades.m2 + "x Medalla 2da Edición ($" + (cantidades.m2 * PRECIO_UNITARIO) + " USD)\n";
 
-            const mensajeWA = "¡Hola Reto Virtual VZLA! 🏅\nQuiero confirmar mi pedido en la Tienda Oficial:\n\n" + itemsTexto + "💰 *Total a Pagar:* $" + totalUSD + " USD\n\n👤 *Atleta:* " + nombre + "\n📄 *Cédula:* " + cedula + "\n📱 *Teléfono:* " + telefono + "\n📦 *Envío:* " + envioTexto + "\n\nAdjunto mi comprobante de pago a continuación 👇";
+            const mensajeWA = "¡Hola Reto Virtual VZLA! 🏅\nQuiero confirmar mi pedido en la Tienda Oficial:\n\n" + itemsTexto + "💰 *Total a Pagar:* $" + totalUSD + " USD\n\n👤 *Atleta:* " + nombre + "\n📄 *Cédula:* " + cedula + "\n📱 *Teléfono:* " + telefono + "\n🔢 *N° Referencia:* #" + refPago + "\n📦 *Envío:* " + envioTexto + "\n\nAdjunto mi comprobante de pago a continuación 👇";
 
             const urlWA = "https://wa.me/584127732710?text=" + encodeURIComponent(mensajeWA);
 

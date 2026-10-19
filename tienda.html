@@ -192,50 +192,37 @@
         </div>
     </nav>
 
-    <!-- HERO PRO CYBER SPORTS TIENDA (Matching Entrenador IA & Resultados) -->
-    <header class="relative py-12 md:py-20 px-4 text-center hero-3d-bg bg-gradient-to-b from-[#001E50] via-[#050B1A] to-[#0b132b] border-b border-[#00D2FF]/20 overflow-hidden">
-        <!-- Rejilla de perspectiva 3D cibernética en movimiento -->
-        <div class="grid-3d"></div>
+    <!-- HERO TIENDA OFICIAL CON IMAGEN DE FONDO -->
+    <header class="relative py-14 md:py-24 px-4 text-center bg-[#050B1A] border-b border-[#00D2FF]/20 overflow-hidden flex items-center justify-center min-h-[380px] md:min-h-[440px]">
+        <!-- Imagen de fondo de tienda con superposición oscura para legibilidad -->
+        <div class="absolute inset-0 bg-[url('img/banner-tienda.webp')] bg-cover bg-center opacity-30 mix-blend-luminosity scale-105 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0b132b] via-[#050B1A]/85 to-[#001E50]/90 pointer-events-none"></div>
         
-        <!-- Orbes de luz resplandecientes -->
-        <div class="glow-orb w-[320px] md:w-[500px] h-[320px] md:h-[500px] bg-[#00D2FF]/15 -top-24 -left-24 blur-[120px]"></div>
-        <div class="glow-orb w-[280px] md:w-[450px] h-[280px] md:h-[450px] bg-blue-600/20 -bottom-24 -right-24 blur-[120px]"></div>
+        <!-- Rejilla y orbes sutiles -->
+        <div class="grid-3d opacity-60"></div>
+        <div class="glow-orb w-[280px] md:w-[400px] h-[280px] md:h-[400px] bg-[#00D2FF]/15 top-0 left-1/4 blur-[100px]"></div>
 
-        <div class="max-w-5xl mx-auto relative z-10 flex flex-col items-center">
+        <div class="max-w-4xl mx-auto relative z-10 flex flex-col items-center">
             
-            <!-- Badge superior con icono animado -->
-            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#00D2FF]/10 border border-[#00D2FF]/40 text-[#00D2FF] text-[10px] md:text-xs font-black uppercase tracking-[0.25em] mb-4 shadow-[0_0_20px_rgba(0,210,255,0.2)]">
-                <i class="fa-solid fa-store animate-pulse text-amber-400"></i>
-                TIENDA Y BÓVEDA OFICIAL • PIEZAS FÍSICAS EXCLUSIVAS
+            <!-- Badge superior simple -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00D2FF]/10 border border-[#00D2FF]/40 text-[#00D2FF] text-[10px] md:text-xs font-black uppercase tracking-[0.25em] mb-4 shadow-[0_0_20px_rgba(0,210,255,0.2)]">
+                <i class="fa-solid fa-shop text-amber-400"></i>
+                ARTÍCULOS OFICIALES PARA CORREDORES
             </div>
 
-            <!-- Título Principal Impactante con Efecto Camaleón -->
-            <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase italic tracking-tighter text-white leading-tight mb-4 drop-shadow-[0_4px_30px_rgba(0,0,0,0.8)]">
-                TIENDA & BÓVEDA <span class="chameleon-text">OFICIAL</span>
+            <!-- Título Principal Limpio -->
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black uppercase italic tracking-tighter text-white leading-tight mb-3 drop-shadow-[0_4px_25px_rgba(0,0,0,0.9)]">
+                TIENDA <span class="chameleon-text">OFICIAL</span>
             </h1>
 
-            <p class="text-slate-300 text-xs sm:text-sm md:text-base max-w-2xl mx-auto font-medium tracking-wide mb-8 px-2">
-                Piezas físicas exclusivas de colección para atletas y finishers: medallas troqueladas en metal fundido, portamedallas personalizados y artículos oficiales de circuito.
+            <p class="text-slate-300 text-xs sm:text-sm md:text-base max-w-xl mx-auto font-medium tracking-wide mb-6 px-2">
+                Medallas de colección, medalleros y accesorios oficiales de Reto Virtual Venezuela para celebrar cada kilómetro recorrido.
             </p>
 
-            <!-- Medalla Giratoria Showcase en Video + Badge de Reserva 72h -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 w-full max-w-xl">
-                
-                <!-- Showcase Circular con Medalla Giratoria (Video MP4 en loop suave) -->
-                <div class="flex items-center gap-3.5 bg-slate-900/80 border border-[#00D2FF]/40 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-[0_0_25px_rgba(0,210,255,0.2)] floating-element">
-                    <div class="relative w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-[#00D2FF] shadow-[0_0_15px_rgba(0,210,255,0.6)] shrink-0 bg-black flex items-center justify-center">
-                        <video src="img/medallagiratoria.mp4" autoplay loop muted playsinline class="w-full h-full object-cover scale-110 pointer-events-none"></video>
-                    </div>
-                    <div class="text-left">
-                        <span class="text-[9px] text-[#00D2FF] font-black uppercase tracking-widest block">Acabado 3D Real</span>
-                        <span class="text-xs sm:text-sm font-black text-white uppercase italic">Metal Macizo Troquelado</span>
-                    </div>
-                </div>
-
-                <!-- Badge 72 Horas Bajo Pedido -->
-                <div class="bg-amber-400/10 border border-amber-400/50 backdrop-blur-md text-amber-300 text-xs sm:text-sm font-black px-5 py-3 rounded-2xl flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(251,191,36,0.2)]">
-                    <i class="fa-regular fa-clock text-base text-amber-400 animate-pulse"></i>
-                    <span>Reserva 72 Horas • Bajo Pedido</span>
+            <!-- Medalla Giratoria Limpia (Solo el video en bucle) -->
+            <div class="flex items-center justify-center">
+                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-[#00D2FF] shadow-[0_0_25px_rgba(0,210,255,0.5)] shrink-0 bg-black flex items-center justify-center floating-element">
+                    <video src="img/medallagiratoria.mp4" autoplay loop muted playsinline class="w-full h-full object-cover scale-110 pointer-events-none"></video>
                 </div>
             </div>
 
@@ -413,37 +400,59 @@
                         </div>
                     </div>
 
-                    <!-- Categoría 3: Portamedallas & Exhibidores Personalizados (Bajo Pedido / Próximamente) -->
-                    <div class="bg-gradient-to-br from-[#131f3a] to-[#001E50] border border-[#00D2FF]/30 rounded-2xl p-4 sm:p-5 relative overflow-hidden shadow-lg">
-                        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-[#00D2FF]/10 rounded-full blur-2xl pointer-events-none"></div>
-
-                        <div class="flex items-center justify-between mb-3 pb-2 border-b border-white/10">
+                    <!-- Categoría 3: Medallero Hexagonal Oficial ($7 USD) -->
+                    <div class="bg-[#131f3a] border border-slate-800 rounded-2xl p-3.5 sm:p-5">
+                        <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-800">
                             <h2 class="text-xs sm:text-sm font-black uppercase tracking-wider text-white flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-[#00D2FF]"></span> Portamedallas & Exhibidores
+                                <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Medallero Oficial • $7 USD
                             </h2>
-                            <span class="text-[10px] text-[#00D2FF] bg-[#00D2FF]/10 border border-[#00D2FF]/30 px-2 py-0.5 rounded font-bold">Hecho a la Medida</span>
+                            <span class="text-[10px] text-emerald-300 bg-emerald-400/10 border border-emerald-400/30 px-2 py-0.5 rounded font-bold">Disponible</span>
                         </div>
 
-                        <div class="flex flex-col sm:flex-row items-center gap-4 bg-slate-950/60 border border-white/10 rounded-xl p-3.5 sm:p-4">
-                            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-gradient-to-br from-[#00D2FF]/20 to-blue-900/50 border border-[#00D2FF]/40 flex items-center justify-center text-2xl text-[#00D2FF] shrink-0 shadow-[0_0_15px_rgba(0,210,255,0.25)]">
-                                <i class="fa-solid fa-trophy animate-pulse"></i>
-                            </div>
-                            
-                            <div class="flex-grow text-center sm:text-left">
-                                <div class="inline-flex items-center gap-1.5 text-[9px] font-black uppercase tracking-wider text-[#00D2FF] mb-1">
-                                    <i class="fa-solid fa-hammer"></i> Fabricación Nacional • Bajo Pedido
-                                </div>
-                                <h3 class="text-xs sm:text-sm font-black text-white uppercase italic leading-tight">
-                                    Portamedallas Personalizado Reto Virtual
-                                </h3>
-                                <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
-                                    Organiza tus logros con portamedallas en madera y metal cortado a láser. Personalízalo con tu nombre o silueta favorita.
-                                </p>
+                        <!-- Tarjeta de Producto Medallero con Foto Real -->
+                        <div class="bg-[#001E50] border border-white/10 hover:border-emerald-400/60 rounded-xl overflow-hidden flex flex-col sm:flex-row transition-all shadow-md group medal-card-hover">
+                            <!-- Foto del Medallero -->
+                            <div class="relative w-full sm:w-48 aspect-square sm:aspect-auto bg-slate-950 overflow-hidden shrink-0">
+                                <span class="absolute top-2 left-2 bg-emerald-500 text-slate-950 text-[8px] sm:text-[9px] font-black uppercase px-2 py-0.5 rounded shadow z-10">
+                                    Nuevo
+                                </span>
+                                <img src="img/medallero.jpg" alt="Medallero Hexagonal Reto Virtual" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             </div>
 
-                            <button type="button" onclick="consultarDisponibilidad('Portamedallas Personalizado')" class="w-full sm:w-auto bg-[#00D2FF] hover:bg-[#00D2FF]/85 text-[#001E50] text-[11px] sm:text-xs font-black py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shrink-0 shadow-md active:scale-95">
-                                <i class="fa-brands fa-whatsapp text-sm"></i> Cotizar
-                            </button>
+                            <!-- Información y Pedido -->
+                            <div class="p-3.5 sm:p-4 flex flex-col justify-between flex-grow">
+                                <div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[9px] sm:text-[10px] text-emerald-400 font-bold uppercase block">Exhibidor de Pared</span>
+                                        <div class="flex items-baseline gap-1">
+                                            <span class="text-lg sm:text-2xl font-black text-white">$7</span>
+                                            <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">USD</span>
+                                        </div>
+                                    </div>
+
+                                    <h3 class="text-sm sm:text-base font-bold text-white leading-tight mt-1">
+                                        Medallero Hexagonal Reto Virtual
+                                    </h3>
+                                    
+                                    <p class="text-xs text-slate-300 font-normal mt-1.5 leading-relaxed">
+                                        Coloca tu medalla en tu pared para que todo el mundo vea tus logros y cada kilómetro superado. Diseño modular hexagonal con acabado premium texturizado negro.
+                                    </p>
+                                </div>
+
+                                <!-- Control de Cantidad integrado a la Cesta -->
+                                <div class="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-300 font-semibold">Cantidad:</span>
+                                    <div class="flex items-center gap-2 bg-slate-950/80 border border-white/15 rounded-lg p-1">
+                                        <button type="button" onclick="cambiarCantidad('medallero', -1)" class="w-8 h-8 rounded bg-white/10 hover:bg-white/20 active:bg-white/30 text-white text-xs flex items-center justify-center font-black transition-colors">
+                                            -
+                                        </button>
+                                        <span id="cant-medallero" class="w-7 text-center text-xs font-black text-emerald-400">0</span>
+                                        <button type="button" onclick="cambiarCantidad('medallero', 1)" class="w-8 h-8 rounded bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-[#001E50] text-xs flex items-center justify-center font-black transition-all">
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -470,6 +479,10 @@
                             <div class="flex justify-between items-center text-slate-300">
                                 <span>Medalla 2da Edición ($5 USD):</span>
                                 <span id="resumen-m2" class="font-bold text-white">0 un.</span>
+                            </div>
+                            <div class="flex justify-between items-center text-slate-300">
+                                <span>Medallero Hexagonal ($7 USD):</span>
+                                <span id="resumen-medallero" class="font-bold text-emerald-400">0 un.</span>
                             </div>
                             <div class="flex justify-between items-center pt-2 border-t border-white/10 text-sm font-black text-white">
                                 <span>Total a Pagar:</span>
@@ -617,8 +630,9 @@
         });
 
         // ========== LÓGICA DE TIENDA Y CESTA ==========
-        let cantidades = { m1: 0, m2: 0 };
-        const PRECIO_UNITARIO = 5;
+        let cantidades = { m1: 0, m2: 0, medallero: 0 };
+        const PRECIO_MEDALLA = 5;
+        const PRECIO_MEDALLERO = 7;
 
         function cambiarCantidad(producto, cambio) {
             cantidades[producto] = Math.max(0, cantidades[producto] + cambio);
@@ -627,19 +641,20 @@
         }
 
         function actualizarTotal() {
-            const totalItems = cantidades.m1 + cantidades.m2;
-            const total = totalItems * PRECIO_UNITARIO;
+            const totalItems = cantidades.m1 + cantidades.m2 + cantidades.medallero;
+            const total = (cantidades.m1 * PRECIO_MEDALLA) + (cantidades.m2 * PRECIO_MEDALLA) + (cantidades.medallero * PRECIO_MEDALLERO);
 
             document.getElementById('total-dolares').innerText = '$' + total + ' USD';
             document.getElementById('resumen-m1').innerText = cantidades.m1 + ' un.';
             document.getElementById('resumen-m2').innerText = cantidades.m2 + ' un.';
-            document.getElementById('badge-items').innerText = totalItems + (totalItems === 1 ? ' medalla' : ' medallas');
+            document.getElementById('resumen-medallero').innerText = cantidades.medallero + ' un.';
+            document.getElementById('badge-items').innerText = totalItems + (totalItems === 1 ? ' artículo' : ' artículos');
 
             // Barra flotante en móvil
             const barraMovil = document.getElementById('barra-movil-cesta');
             if (totalItems > 0) {
                 barraMovil.classList.remove('hidden');
-                document.getElementById('movil-items').innerText = totalItems + (totalItems === 1 ? ' medalla en cesta' : ' medallas en cesta');
+                document.getElementById('movil-items').innerText = totalItems + (totalItems === 1 ? ' artículo en cesta' : ' artículos en cesta');
                 document.getElementById('movil-total').innerText = 'Total: $' + total + ' USD';
             } else {
                 barraMovil.classList.add('hidden');
@@ -656,9 +671,9 @@
         }
 
         async function procesarPedidoWhatsApp() {
-            const totalItems = cantidades.m1 + cantidades.m2;
+            const totalItems = cantidades.m1 + cantidades.m2 + cantidades.medallero;
             if (totalItems === 0) {
-                alert("Por favor selecciona al menos una medalla (1ra o 2da Edición) usando el botón '+' arriba.");
+                alert("Por favor selecciona al menos un artículo (Medalla o Medallero) usando el botón '+' antes de continuar.");
                 return;
             }
 
@@ -681,7 +696,7 @@
                 return;
             }
 
-            const totalUSD = totalItems * PRECIO_UNITARIO;
+            const totalUSD = (cantidades.m1 * PRECIO_MEDALLA) + (cantidades.m2 * PRECIO_MEDALLA) + (cantidades.medallero * PRECIO_MEDALLERO);
             const btn = document.getElementById('btnConfirmarPedido');
             const textoOriginal = btn.innerHTML;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Conectando...';
@@ -698,6 +713,7 @@
                 datos.append("RefPago", refPago);
                 datos.append("CantM1", cantidades.m1);
                 datos.append("CantM2", cantidades.m2);
+                datos.append("CantMedallero", cantidades.medallero);
                 datos.append("Total", totalUSD);
                 datos.append("Agencia", envioTexto);
                 
@@ -712,10 +728,11 @@
 
             // Redacción del mensaje para WhatsApp
             let itemsTexto = "";
-            if (cantidades.m1 > 0) itemsTexto += "• " + cantidades.m1 + "x Medalla 1ra Edición ($" + (cantidades.m1 * PRECIO_UNITARIO) + " USD)\n";
-            if (cantidades.m2 > 0) itemsTexto += "• " + cantidades.m2 + "x Medalla 2da Edición ($" + (cantidades.m2 * PRECIO_UNITARIO) + " USD)\n";
+            if (cantidades.m1 > 0) itemsTexto += "• " + cantidades.m1 + "x Medalla 1ra Edición ($" + (cantidades.m1 * PRECIO_MEDALLA) + " USD)\n";
+            if (cantidades.m2 > 0) itemsTexto += "• " + cantidades.m2 + "x Medalla 2da Edición ($" + (cantidades.m2 * PRECIO_MEDALLA) + " USD)\n";
+            if (cantidades.medallero > 0) itemsTexto += "• " + cantidades.medallero + "x Medallero Hexagonal ($" + (cantidades.medallero * PRECIO_MEDALLERO) + " USD)\n";
 
-            const mensajeWA = "¡Hola Reto Virtual VZLA! 🏅\nQuiero confirmar mi pedido en la Tienda Oficial:\n\n" + itemsTexto + "💰 *Total a Pagar:* $" + totalUSD + " USD\n\n👤 *Atleta:* " + nombre + "\n📄 *Cédula:* " + cedula + "\n📱 *Teléfono:* " + telefono + "\n🔢 *N° Referencia:* #" + refPago + "\n📦 *Envío:* " + envioTexto + "\n\nAdjunto mi comprobante de pago a continuación 👇";
+            const mensajeWA = "¡Hola Reto Virtual VZLA! 🏅\nQuiero confirmar mi pedido en la Tienda Oficial:\n\n" + itemsTexto + "\n💰 *Total a Pagar:* $" + totalUSD + " USD\n\n👤 *Atleta:* " + nombre + "\n📄 *Cédula:* " + cedula + "\n📱 *Teléfono:* " + telefono + "\n🔢 *N° Referencia:* #" + refPago + "\n📦 *Envío:* " + envioTexto + "\n\nAdjunto mi comprobante de pago a continuación 👇";
 
             const urlWA = "https://wa.me/584127732710?text=" + encodeURIComponent(mensajeWA);
 

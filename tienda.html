@@ -489,11 +489,34 @@
                                 1. Datos para el Pedido
                             </label>
                             
-                            <input type="text" id="nombreAtleta" placeholder="Nombre y Apellido *" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF]">
-                            
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                                <input type="text" id="cedulaAtleta" placeholder="Cédula (Ej: 12345678) *" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF]">
-                                <input type="tel" id="telefonoAtleta" placeholder="Teléfono (0412...) *" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF]">
+                            <!-- Búsqueda y Validación de Cédula / Dorsal -->
+                            <div>
+                                <label class="text-[10px] text-slate-300 font-semibold block mb-1">
+                                    Cédula de Identidad * <span class="text-[#00D2FF] text-[9px] font-normal">(Escribe tu cédula para auto-detectar tu dorsal)</span>
+                                </label>
+                                <div class="relative flex items-center">
+                                    <input type="text" id="cedulaAtleta" oninput="alEscribirCedulaTienda()" placeholder="Ej: 12345678" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF] pr-28">
+                                    <button type="button" onclick="consultarDorsalTienda()" class="absolute right-1.5 bg-[#00D2FF]/20 hover:bg-[#00D2FF]/40 border border-[#00D2FF]/50 text-[#00D2FF] text-[10px] font-bold px-2.5 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+                                        <i class="fa-solid fa-magnifying-glass"></i> Buscar
+                                    </button>
+                                </div>
+                                <div id="status-cedula-tienda" class="text-[10px] mt-1 text-slate-400"></div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                                <div class="sm:col-span-2">
+                                    <label class="text-[10px] text-slate-300 font-semibold block mb-1">Nombre y Apellido *</label>
+                                    <input type="text" id="nombreAtleta" placeholder="Nombre y Apellido *" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF]">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-300 font-semibold block mb-1">N° Dorsal</label>
+                                    <input type="text" id="dorsalAtleta" placeholder="Ej: 045" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-[#00D2FF] font-black placeholder-slate-400 outline-none focus:border-[#00D2FF] text-center">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="text-[10px] text-slate-300 font-semibold block mb-1">Teléfono WhatsApp *</label>
+                                <input type="tel" id="telefonoAtleta" placeholder="0412-1234567 *" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF]">
                             </div>
 
                             <div>
@@ -689,6 +712,8 @@
                 return;
             }
 
+            const dorsal = document.getElementById('dorsalAtleta').value.trim();
+
             const totalUSD = (cantidades.m1 * PRECIO_MEDALLA) + (cantidades.m2 * PRECIO_MEDALLA) + (cantidades.medallero * PRECIO_MEDALLERO);
             const btn = document.getElementById('btnConfirmarPedido');
             const textoOriginal = btn.innerHTML;
@@ -702,6 +727,7 @@
                 datos.append("Carrera", "TIENDA");
                 datos.append("Nombre", nombre);
                 datos.append("Cedula", cedula);
+                datos.append("Dorsal", dorsal);
                 datos.append("Telefono", telefono);
                 datos.append("RefPago", refPago);
                 datos.append("CantM1", cantidades.m1);
@@ -725,7 +751,8 @@
             if (cantidades.m2 > 0) itemsTexto += "• " + cantidades.m2 + "x Medalla 2da Edición ($" + (cantidades.m2 * PRECIO_MEDALLA) + " USD)\n";
             if (cantidades.medallero > 0) itemsTexto += "• " + cantidades.medallero + "x Medallero Hexagonal ($" + (cantidades.medallero * PRECIO_MEDALLERO) + " USD)\n";
 
-            const mensajeWA = "¡Hola Reto Virtual VZLA! 🏅\nQuiero confirmar mi pedido en la Tienda Oficial:\n\n" + itemsTexto + "\n💰 *Total a Pagar:* $" + totalUSD + " USD\n\n👤 *Atleta:* " + nombre + "\n📄 *Cédula:* " + cedula + "\n📱 *Teléfono:* " + telefono + "\n🔢 *N° Referencia:* #" + refPago + "\n📦 *Envío:* " + envioTexto + "\n\nAdjunto mi comprobante de pago a continuación 👇";
+            const dorsalTexto = dorsal ? " (Dorsal #" + dorsal + ")" : "";
+            const mensajeWA = "¡Hola Reto Virtual VZLA! 🏅\nQuiero confirmar mi pedido en la Tienda Oficial:\n\n" + itemsTexto + "\n💰 *Total a Pagar:* $" + totalUSD + " USD\n\n👤 *Atleta:* " + nombre + dorsalTexto + "\n📄 *Cédula:* " + cedula + "\n📱 *Teléfono:* " + telefono + "\n🔢 *N° Referencia:* #" + refPago + "\n📦 *Envío:* " + envioTexto + "\n\nAdjunto mi comprobante de pago a continuación 👇";
 
             const urlWA = "https://wa.me/584127732710?text=" + encodeURIComponent(mensajeWA);
 
@@ -734,6 +761,57 @@
                 btn.disabled = false;
                 window.open(urlWA, '_blank');
             }, 500);
+        }
+
+        // Búsqueda inteligente de dorsal y nombre a partir de la cédula
+        let timeoutBusquedaCI = null;
+
+        function alEscribirCedulaTienda() {
+            clearTimeout(timeoutBusquedaCI);
+            const ci = document.getElementById('cedulaAtleta').value.replace(/\D/g, '').trim();
+            if (ci.length >= 6) {
+                timeoutBusquedaCI = setTimeout(() => {
+                    consultarDorsalTienda();
+                }, 600);
+            }
+        }
+
+        async function consultarDorsalTienda() {
+            const inputCI = document.getElementById('cedulaAtleta');
+            const statusCI = document.getElementById('status-cedula-tienda');
+            const ci = inputCI.value.replace(/\D/g, '').trim();
+
+            if (!ci || ci.length < 5) {
+                statusCI.innerHTML = `<span class="text-amber-400">Ingresa tu cédula completa</span>`;
+                return;
+            }
+
+            statusCI.innerHTML = `<span class="text-[#00D2FF]"><i class="fa-solid fa-spinner fa-spin mr-1"></i>Buscando dorsal en base de datos...</span>`;
+
+            try {
+                const resp = await fetch(`/api/consultar-atleta?ci=${ci}`);
+                if (resp.ok) {
+                    const data = await resp.json();
+                    if (data.encontrado && data.registros && data.registros.length > 0) {
+                        const reg = data.registros[0];
+                        const nombreInput = document.getElementById('nombreAtleta');
+                        const dorsalInput = document.getElementById('dorsalAtleta');
+
+                        if (!nombreInput.value || nombreInput.value.trim() === '') {
+                            nombreInput.value = reg.nombre || '';
+                        }
+                        if (reg.dorsal) {
+                            dorsalInput.value = reg.dorsal;
+                        }
+
+                        statusCI.innerHTML = `<span class="text-green-400 font-bold"><i class="fa-solid fa-circle-check mr-1"></i>Atleta encontrado: <b>${reg.nombre}</b> (Dorsal #${reg.dorsal || 'S/N'})</span>`;
+                        return;
+                    }
+                }
+                statusCI.innerHTML = `<span class="text-slate-400"><i class="fa-solid fa-circle-info mr-1"></i>No inscrito previamente. Puedes escribir tu nombre y dorsal manualmente.</span>`;
+            } catch (err) {
+                statusCI.innerHTML = `<span class="text-slate-400">Puedes escribir tus datos manualmente.</span>`;
+            }
         }
 
         function consultarDisponibilidad(medalla) {

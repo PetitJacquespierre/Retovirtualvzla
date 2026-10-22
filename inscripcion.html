@@ -34,12 +34,19 @@
     </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&family=Montserrat:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
+        body { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; background-color: #f8fafc; }
+        h1, h2, h3 { font-family: 'Syne', 'Montserrat', sans-serif; }
+        .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
+        .card-specular-dark {
+            background: linear-gradient(180deg, rgba(16, 24, 48, 0.96) 0%, rgba(7, 11, 24, 0.99) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: 1px solid rgba(0, 210, 255, 0.35);
+            box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.08) inset, 0 20px 40px -15px rgba(0, 14, 38, 0.55);
+        }
         .hidden-step { display: none !important; }
         input:focus, select:focus, textarea:focus { 
             border-color: #00D2FF !important; 
@@ -200,16 +207,16 @@
         <div id="pantalla-bienvenida" class="space-y-6 animate-fade-in max-w-2xl mx-auto">
             <h2 class="text-center text-[#001E50] font-black text-2xl uppercase tracking-tighter mb-8 italic">Selecciona tu Trámite</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-slate-100 p-8 rounded-[2rem] border border-slate-200 text-center opacity-70 relative overflow-hidden">
-                    <div class="absolute top-3 right-3 bg-red-600 text-white text-[8px] font-black uppercase px-2 py-0.5 rounded-full tracking-wider shadow">
-                        SOLD OUT TOTAL
+                <button onclick="activarFlujo('5K')" class="card-specular-dark p-7 rounded-[2rem] text-center hover:scale-[1.02] transition-all group relative overflow-hidden cursor-pointer ring-2 ring-[#00D2FF]/40">
+                    <div class="absolute top-3 right-3 bg-emerald-500 text-slate-950 font-mono-tech text-[9px] font-extrabold uppercase px-2.5 py-0.5 rounded-full tracking-wider shadow animate-pulse">
+                        [CUPO HABILITADO]
                     </div>
-                    <div class="w-16 h-16 bg-slate-300 text-slate-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
-                        <i class="fa-solid fa-lock"></i>
+                    <div class="w-16 h-16 bg-[#00D2FF]/15 border border-[#00D2FF]/40 text-[#00D2FF] rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl transition-all group-hover:bg-[#00D2FF] group-hover:text-[#001E50]">
+                        <i class="fa-solid fa-layer-group"></i>
                     </div>
-                    <h3 class="font-black text-slate-600 uppercase text-sm mb-2">Circuito 5K (3ra & 4ta)</h3>
-                    <p class="text-[10px] text-red-500 font-bold uppercase tracking-widest">Inscripciones Cerradas</p>
-                </div>
+                    <h3 class="font-black text-white uppercase text-sm mb-1.5 tracking-tight">Pack Colección 5K (4 Ediciones)</h3>
+                    <p class="font-mono-tech text-[10px] text-[#00D2FF] font-bold uppercase tracking-widest">1ra + 2da + 3ra + 4ta • $26.00</p>
+                </button>
                 <button onclick="activarFlujo('10K')" class="bg-[#001E50] p-8 rounded-[2rem] shadow-xl border-2 border-[#00D2FF] text-center hover:bg-[#002a70] transition-all group relative overflow-hidden ring-4 ring-[#00D2FF]/20">
                     <div class="absolute top-3 right-3 bg-[#00D2FF] text-[#001E50] text-[8px] font-black uppercase px-2 py-0.5 rounded-full tracking-wider shadow animate-pulse">
                         ÚLTIMOS CUPOS
@@ -371,72 +378,123 @@
             </div>
 
             <div id="seccion-combo-5k" class="hidden-step bg-white p-6 md:p-8 rounded-[2.5rem] shadow-xl border border-slate-100 mb-8">
-                <div class="flex items-center justify-between border-b pb-3 mb-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-4 mb-6 gap-2">
                     <div>
-                        <h3 class="text-[#001E50] font-black text-xl md:text-2xl uppercase italic tracking-tight">Elige tu Paquete de Inscripción</h3>
-                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mt-0.5">Fecha de Envíos y Carrera: A partir del 9 de Octubre</p>
+                        <span class="font-mono-tech text-[10px] text-[#00D2FF] bg-[#001E50] px-2.5 py-0.5 rounded font-bold uppercase tracking-widest inline-block mb-1.5">[EDICIÓN ESPECIAL DE COLECCIÓN // 4 MEDALLAS]</span>
+                        <h3 class="text-[#001E50] font-black text-xl md:text-2xl uppercase italic tracking-tight">Paquete Full Circuito 5K (1ra a 4ta Edición)</h3>
+                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mt-0.5">Cupo Especial Habilitado • Envío Único Consolidado</p>
                     </div>
-                    <span class="hidden md:inline-flex bg-[#001E50] text-[#00D2FF] text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest">
-                        Paso Obligatorio
+                    <span class="self-start sm:self-center font-mono-tech bg-emerald-500/10 text-emerald-600 border border-emerald-500/30 text-[10px] font-extrabold uppercase px-3 py-1.5 rounded-full tracking-widest">
+                        ● SELECCIONADO
                     </span>
                 </div>
 
-                <!-- CARDS DE SELECCIÓN GRANDE -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-                    <!-- OPCION 1: SOLO 5K (SOLD OUT) -->
-                    <div id="card-opcion-5k" class="cursor-not-allowed border-2 rounded-2xl p-5 md:p-6 transition-all relative flex flex-col justify-between border-slate-200 bg-slate-100/80 opacity-60 group">
-                        <div class="absolute -top-3.5 right-4 bg-red-600 text-white font-black text-[10px] uppercase px-3 py-1 rounded-full shadow-md tracking-wider flex items-center gap-1">
-                            <i class="fa-solid fa-lock"></i> ¡SOLD OUT! AGOTADO
-                        </div>
-
-                        <div class="flex items-start justify-between gap-3 mb-4">
+                <!-- BENTO ASIMÉTRICO: 7 COLS (COLECCIÓN 4 MEDALLAS) + 5 COLS (DESGLOSE DE INGENIERÍA) -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6 items-stretch">
+                    <!-- COLUMNA PROTAGONISTA (7 COLUMNAS): PACK 4 EDICIONES -->
+                    <div id="card-opcion-combo" onclick="seleccionarPaquete('COLECCION_4')" class="md:col-span-7 cursor-pointer card-specular-dark rounded-3xl p-6 md:p-7 transition-all relative flex flex-col justify-between text-white group">
+                        <div class="flex items-start justify-between gap-3 mb-5">
                             <div class="flex items-center gap-3">
-                                <input type="radio" id="radio-5k" name="paqueteRadio" value="5K" disabled class="w-5 h-5 accent-slate-400 cursor-not-allowed">
+                                <input type="radio" id="radio-combo" name="paqueteRadio" value="COLECCION_4" checked class="w-5 h-5 accent-[#00D2FF] cursor-pointer" onchange="seleccionarPaquete('COLECCION_4')">
                                 <div>
-                                    <h4 class="font-black text-slate-500 text-base md:text-lg uppercase line-through">Solo 3ra Edición (5K)</h4>
-                                    <span class="text-[11px] font-bold text-red-500 uppercase tracking-wider">Inscripción Individual Cerrada</span>
-                                </div>
-                            </div>
-                            <span class="text-2xl md:text-3xl font-black text-slate-400">$10<span class="text-xs font-bold text-slate-400">.00</span></span>
-                        </div>
-                        <ul class="text-xs text-slate-500 space-y-2 border-t border-slate-200 pt-3">
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-slate-400 text-xs"></i> <span>Cupos individuales 100% completados.</span></li>
-                            <li class="flex items-center gap-2 text-amber-600 font-bold"><i class="fa-solid fa-triangle-exclamation text-xs"></i> <span>Disponible únicamente mediante el <b>Combo Dúo</b>.</span></li>
-                        </ul>
-                    </div>
-
-                    <!-- OPCION 2: COMBO DÚO -->
-                    <div id="card-opcion-combo" onclick="seleccionarPaquete('COMBO')" class="cursor-pointer border-2 rounded-2xl p-5 md:p-6 transition-all relative flex flex-col justify-between hover:shadow-lg border-[#00D2FF] bg-gradient-to-br from-blue-50/80 to-cyan-50/40 ring-2 ring-[#00D2FF]/30 group">
-                        <!-- Badge Promoción -->
-                        <div class="absolute -top-3.5 right-4 bg-gradient-to-r from-[#00D2FF] to-blue-600 text-[#001E50] font-black text-[10px] uppercase px-3 py-1 rounded-full shadow-md tracking-wider flex items-center gap-1">
-                            <i class="fa-solid fa-fire text-amber-500"></i> ¡UN SOLO ENVÍO / AHORRA $4!
-                        </div>
-
-                        <div class="flex items-start justify-between gap-3 mb-4">
-                            <div class="flex items-center gap-3">
-                                <input type="radio" id="radio-combo" name="paqueteRadio" value="COMBO" checked class="w-5 h-5 accent-[#00D2FF] cursor-pointer" onchange="seleccionarPaquete('COMBO')">
-                                <div>
-                                    <h4 class="font-black text-[#001E50] text-base md:text-lg uppercase">COMBO DÚO (5K)</h4>
-                                    <span class="text-[11px] font-black text-[#00D2FF] uppercase tracking-wider">3ra + 4ta Edición Juntas</span>
+                                    <span class="font-mono-tech text-[10px] text-[#00D2FF] uppercase tracking-widest block">PACK COMPLETO 4 EN 1</span>
+                                    <h4 class="font-black text-white text-lg md:text-xl uppercase tracking-tight">Colección 4 Medallas (5K)</h4>
                                 </div>
                             </div>
                             <div class="text-right">
-                                <span class="text-2xl md:text-3xl font-black text-[#001E50]">$16<span class="text-xs font-bold text-slate-400">.00</span></span>
-                                <span class="text-[10px] block line-through text-slate-400 font-bold">$20.00</span>
+                                <span class="font-mono-tech text-2xl md:text-3xl font-extrabold text-[#00D2FF]">$26<span class="text-xs font-bold text-white/60">.00</span></span>
+                                <span class="font-mono-tech text-[10px] block text-emerald-400 font-bold uppercase tracking-wider">Total 4 Ediciones</span>
                             </div>
                         </div>
-                        <ul class="text-xs text-slate-700 space-y-2 border-t border-cyan-200/60 pt-3 font-medium">
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span><b>2 Dorsales Digitales</b> (3ra y 4ta Edición)</span></li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500 text-xs"></i> <span><b>2 Medallas Acrílicas</b> Oficiales (Ambas Ediciones)</span></li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-box text-[#001E50] text-xs"></i> <span><b>Una sola entrega:</b> Te enviamos las 2 medallas juntas el 9 de Octubre</span></li>
+
+                        <!-- Micro-UI de las 4 Medallas Incluidas -->
+                        <div class="grid grid-cols-2 gap-2.5 my-2">
+                            <div class="bg-white/5 border border-white/10 rounded-xl p-3 flex items-center justify-between">
+                                <div>
+                                    <span class="font-mono-tech text-[9px] text-white/50 block">EDICIÓN 01</span>
+                                    <span class="text-xs font-bold text-white">1ra Edición 5K</span>
+                                </div>
+                                <span class="font-mono-tech text-xs font-bold text-[#00D2FF]">$5.00</span>
+                            </div>
+                            <div class="bg-white/5 border border-white/10 rounded-xl p-3 flex items-center justify-between">
+                                <div>
+                                    <span class="font-mono-tech text-[9px] text-white/50 block">EDICIÓN 02</span>
+                                    <span class="text-xs font-bold text-white">2da Edición 5K</span>
+                                </div>
+                                <span class="font-mono-tech text-xs font-bold text-[#00D2FF]">$5.00</span>
+                            </div>
+                            <div class="bg-[#00D2FF]/10 border border-[#00D2FF]/30 rounded-xl p-3 flex items-center justify-between">
+                                <div>
+                                    <span class="font-mono-tech text-[9px] text-[#00D2FF] block">EDICIÓN 03</span>
+                                    <span class="text-xs font-bold text-white">3ra Edición 5K</span>
+                                </div>
+                                <span class="font-mono-tech text-xs font-bold text-emerald-400">$8.00</span>
+                            </div>
+                            <div class="bg-[#00D2FF]/10 border border-[#00D2FF]/30 rounded-xl p-3 flex items-center justify-between">
+                                <div>
+                                    <span class="font-mono-tech text-[9px] text-[#00D2FF] block">EDICIÓN 04</span>
+                                    <span class="text-xs font-bold text-white">4ta Edición 5K</span>
+                                </div>
+                                <span class="font-mono-tech text-xs font-bold text-emerald-400">$8.00</span>
+                            </div>
+                        </div>
+
+                        <ul class="text-xs text-slate-300 space-y-2 border-t border-white/10 pt-4 mt-3 font-medium">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-medal text-[#00D2FF] text-xs"></i> <span><b>4 Medallas Físicas Oficiales:</b> 1ra, 2da, 3ra y 4ta Edición con sus cintas.</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-id-badge text-emerald-400 text-xs"></i> <span><b>Registro Oficial en Sistema:</b> Inscripción formal en 3ra y 4ta Edición + Certificados.</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-truck-fast text-amber-400 text-xs"></i> <span><b>Un solo paquete consolidado:</b> Recibes las 4 medallas juntas en un mismo envío.</span></li>
                         </ul>
+                    </div>
+
+                    <!-- COLUMNA DE APOYO (5 COLUMNAS): DESGLOSE FINANCIERO CLARO USD Y BS -->
+                    <div class="md:col-span-5 bg-slate-50 border border-slate-200/90 rounded-3xl p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
+                                <span class="font-mono-tech text-[11px] font-extrabold text-[#001E50] uppercase tracking-wider">DESGLOSE DE INVERSIÓN</span>
+                                <span class="font-mono-tech text-[10px] bg-[#001E50] text-white px-2 py-0.5 rounded font-bold">4 PIEZAS</span>
+                            </div>
+
+                            <div class="space-y-3 text-xs">
+                                <div class="flex justify-between items-center py-1.5 border-b border-dashed border-slate-200">
+                                    <div>
+                                        <span class="font-bold text-slate-700 block">1ra + 2da Edición (Colección)</span>
+                                        <span class="font-mono-tech text-[10px] text-slate-400">2 medallas × $5.00 c/u</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="font-mono-tech font-extrabold text-[#001E50] block">$10.00</span>
+                                        <span id="desglose-m12-bs" class="font-mono-tech text-[10px] text-slate-500">-- Bs.</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between items-center py-1.5 border-b border-dashed border-slate-200">
+                                    <div>
+                                        <span class="font-bold text-slate-700 block">Combo Dúo: 3ra + 4ta Edición</span>
+                                        <span class="font-mono-tech text-[10px] text-slate-400">2 medallas × $8.00 c/u (Promo)</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="font-mono-tech font-extrabold text-[#001E50] block">$16.00</span>
+                                        <span id="desglose-m34-bs" class="font-mono-tech text-[10px] text-slate-500">-- Bs.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-t-2 border-[#001E50]/15 bg-white p-4 rounded-2xl shadow-sm">
+                            <div class="flex justify-between items-baseline mb-1">
+                                <span class="font-mono-tech text-[10px] font-extrabold uppercase tracking-wider text-slate-400">TOTAL PACK 4 MEDALLAS:</span>
+                                <span class="font-mono-tech text-2xl font-extrabold text-[#001E50]">$26.00</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-mono-tech text-[10px] text-slate-400">Monto exacto en Bolívares:</span>
+                                <span id="desglose-total-26-bs" class="font-mono-tech text-xs font-extrabold text-emerald-600">-- Bs.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Select oculto para compatibilidad total con el envío de datos -->
+                <!-- Select oculto: envía "COMBO" (3ra y 4ta Edición) a la base de datos con el monto de $26.00 -->
                 <select id="select-combo-5k" onchange="actualizarTotal()" class="hidden">
-                    <option value="5K">Solo 3ra Edición - $10.00</option>
-                    <option value="COMBO" selected>COMBO DÚO: 3ra y 4ta Edición - $16.00</option>
+                    <option value="COMBO" selected>COMBO DÚO: 3ra y 4ta Edición - $26.00</option>
                 </select>
             </div>
 
@@ -712,9 +770,13 @@
             if (opcAbono) opcAbono.classList.add('hidden-step');
 
             if (modo === '5K' || modo === 'COMBO') {
-                alert("🚨 ¡ATENCIÓN!\n\nLas inscripciones para el Circuito 5K (3ra Edición y Combo Dúo) están 100% SOLD OUT y cerradas oficialmente.\n\nTe redirigiremos a la Edición Especial 10K que aún cuenta con cupos abiertos.");
-                activarFlujo('10K');
-                return;
+                document.getElementById('paso-fundador').classList.remove('hidden-step');
+                document.getElementById('seccion-combo-5k').classList.remove('hidden-step');
+                document.getElementById('tituloRuta').innerText = "PACK COLECCIÓN 5K (1RA A 4TA EDICIÓN)";
+                document.getElementById('labelCarreraActual').innerText = "Registro Oficial 3ra y 4ta Edición + Pack Colección";
+                document.getElementById('textoBannerPrincipal').innerText = "PACK COLECCIÓN 5K";
+                document.getElementById('textoBannerSecundario').innerText = "1ra, 2da, 3ra y 4ta Edición • Cupo Especial";
+                seleccionarPaquete('COLECCION_4');
             }
             else if (modo === '10K') {
                 document.getElementById('paso-fundador').classList.remove('hidden-step');
@@ -739,24 +801,11 @@
         }
 
         function seleccionarPaquete(tipo) {
-            // La 3ra Edición individual está SOLD OUT. Forzar siempre COMBO
-            tipo = 'COMBO';
             const selectEl = document.getElementById('select-combo-5k');
             if (selectEl) selectEl.value = 'COMBO';
             
-            const radio5k = document.getElementById('radio-5k');
             const radioCombo = document.getElementById('radio-combo');
-            const card5k = document.getElementById('card-opcion-5k');
-            const cardCombo = document.getElementById('card-opcion-combo');
-
             if (radioCombo) radioCombo.checked = true;
-            if (radio5k) {
-                radio5k.checked = false;
-                radio5k.disabled = true;
-            }
-            if (cardCombo) {
-                cardCombo.className = "cursor-pointer border-2 rounded-2xl p-5 md:p-6 transition-all relative flex flex-col justify-between hover:shadow-lg border-[#00D2FF] bg-gradient-to-br from-blue-50/80 to-cyan-50/40 ring-2 ring-[#00D2FF]/30 group";
-            }
             actualizarTotal();
         }
 
@@ -912,11 +961,16 @@
             if (flujoActual === "ABONO") return;
             
             if (flujoActual === "5K" || flujoActual === "COMBO") {
-                const selectEl = document.getElementById('select-combo-5k');
-                const selectVal = selectEl ? selectEl.value : (flujoActual === 'COMBO' ? 'COMBO' : '5K');
-                const price = selectVal === 'COMBO' ? 16 : 10;
+                const price = 26; // Pack 4 Ediciones: 1ra ($5) + 2da ($5) + 3ra y 4ta ($16) = $26.00
                 document.getElementById('total-usd').innerText = "$" + price.toFixed(2);
                 document.getElementById('total-bs').innerText = formatVE(price * tasaBCV) + " Bs.";
+
+                const elM12 = document.getElementById('desglose-m12-bs');
+                const elM34 = document.getElementById('desglose-m34-bs');
+                const elTot26 = document.getElementById('desglose-total-26-bs');
+                if (elM12) elM12.innerText = formatVE(10 * tasaBCV) + " Bs.";
+                if (elM34) elM34.innerText = formatVE(16 * tasaBCV) + " Bs.";
+                if (elTot26) elTot26.innerText = formatVE(26 * tasaBCV) + " Bs.";
                 return;
             }
 
@@ -1395,8 +1449,8 @@
                            `💵 *Monto Abonado Hoy:* ${encodeURIComponent(total)}%0A` +
                            `📊 *Saldo Restante en Cuenta:* $${encodeURIComponent(deudaActual > 0 ? (document.querySelector('input[name="opcionAbono"]:checked')?.value === 'mitad' ? (deudaActual/2).toFixed(2) : '0.00 (SOLVENTE)') : '0.00')}`;
             } else {
-                modalidad = (flujoActual === '10K') ? 'Edición Especial 10K' : (carrera === 'COMBO' ? 'Combo Dúo (5K + Medalla Extra)' : '3ra Edición 5K');
-                extraMsg = `🎟️ *DORSAL ASIGNADO:* 👉 *#${dorsal}* 👈`;
+                modalidad = (flujoActual === '10K') ? 'Edición Especial 10K' : (carrera === 'COMBO' ? 'Pack Colección 4 Ediciones (1ra a 4ta - $26.00)' : '3ra Edición 5K');
+                extraMsg = `🎟️ *DORSAL ASIGNADO:* 👉 *#${dorsal}* 👈%0A💵 *Monto Pagado:* ${encodeURIComponent(total)}`;
             }
 
             const msgText = `🏃‍♂️ *CONSULTA / SOPORTE - RETO VIRTUAL VZLA* 🇻🇪%0A%0A` +

@@ -13,6 +13,7 @@ Archivo de contexto local y memoria viva para la plataforma de carreras deportiv
 
 ## 🎨 2. IDENTIDAD Y DISEÑO UX/UI
 * **Estilo Visual:** Dark Mode deportivo de alto contraste y energía.
+* **Tipografía Oficial Innegociable:** Titulares en **`Montserrat`** (`font-weight: 700 / 900`, `uppercase`, `italic`) y cuerpo de lectura en **`Inter`** (exactamente igual que en `index.html`). **Prohibido** cambiar la fuente a `Syne` u otras tipografías distintas en páginas internas.
 * **Paleta Base:** Fondo ultra oscuro (`#0A0A0C` / `#0D1117`), texto claro contrastado y acentos vibrantes (verde neón / cian eléctrico).
 * **Enfoque:** Mobile-First real (los atletas consultan dorsales y se registran desde el teléfono).
 
@@ -30,9 +31,13 @@ Archivo de contexto local y memoria viva para la plataforma de carreras deportiv
 - [x] Formulario de inscripción y validación de campos.
 - [x] Portal Integral de Evidencias, Ranking por género y Certificados Digitales (3ra y 4ta Edición).
 - [x] FOMO en tiempo real en `index.html` para la Edición 10K conectado a Google Sheets (conteo dinámico y porcentaje).
-- [ ] Culminar evento actual de 5K.
+- [x] Tienda Oficial (`tienda.html`) estilo marketplace con Medallas 1ra/2da Edición ($5), Medallero Hexagonal ($7), auto-detección de dorsal por cédula y registro en Google Sheets (`Tienda_Medallas`).
+- [ ] Culminar completamente la 3ra y 4ta Edición de 5K.
+- [ ] 🚨 **TO-DO PRIORITARIO (POST 3RA/4TA EDICIÓN — ANTES DE INICIAR LOS 10K):** Unificar `evidencias2.html` y `resultados.html` en un **único Centro de "Evidencias, Ranking y Resultados"** tomando como base el diseño de `evidencias2.html`:
+  - Integrar selector de todas las ediciones (`1ra`, `2da`, `3ra`, `4ta` y `10K`) en `evidencias2.html`.
+  - Mostrar automáticamente solo Ranking + Generador de Diploma Neón para ediciones cerradas (`1ra`, `2da`, `3ra`, `4ta`) y habilitar el formulario de carga con IA para la edición activa (`10K`).
+  - Unificar los enlaces del menú de navegación en uno solo (*"Ranking y Evidencias"*) y redirigir `resultados.html` hacia `evidencias2.html` para no romper enlaces antiguos.
 - [ ] 🚨 **RECORDATORIO OBLIGATORIO (POST-5K):** Activar campaña publicitaria pagada para los 10K (vender los ~50 cupos restantes hasta llegar a 100).
-- [ ] Panel / buscador de dorsales y certificados digitales individuales de ediciones pasadas.
 - [ ] Integración y verificación de reportes de pago móvil / transferencias.
 
 ---
@@ -63,5 +68,6 @@ Archivo de contexto local y memoria viva para la plataforma de carreras deportiv
 * **2026-10-02:** Sincronización en vivo del widget FOMO de `index.html` con Google Sheets (`total_dorsales`), mostrando porcentaje agotado y cupos restantes. Registro y guardado de estrategia de pauta paga 10K con recordatorio post-5K.
 * **2026-10-03:** Resolución definitiva de indexación en Google Search Console. Unificación de etiquetas canónicas a `https://www.retovirtualvzla.com/`, actualización de `sitemap.xml` con 6 URLs prioritarias y `robots.txt`. Verificación en vivo aprobada por el robot de Google e indexación solicitada.
 * **2026-10-07:** Implementación de Comisario Deportivo con IA en `evidencias2.html`: Selector de modalidad (Running vs Caminata), selector de distancia con soporte para split de recorridos de 10K+, auditoría biomecánica de ritmo humano (detección de vehículos/trampas) y envío de metadatos de validación a Google Drive/Sheets.
+* **2026-10-19:** Creación de `PLAN_MEDALLAS_2027.md` con la estrategia integral para la Temporada 2027: Puzzle real de 4 piezas en acrílico (*"Los 4 Elementos del Poder Runner"*), calendario anual en 2 bloques de fabricación (`50-50-40-40`), preventa temprana en cuotas para el 10K de metal (Mayo/Junio), reseteo de dorsales a `001` y programa de descuento/lealtad para Atletas Veteranos 2026.
 
 

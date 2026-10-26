@@ -174,171 +174,180 @@ export default async function handler(req, res) {
             return nom;
         };
 
-        // 1. Consultar 3ra Edición 5K
-        try {
-            const resp3ra = await fetch(GOOGLE_CSV_URL_3RA + "&t=" + Date.now());
-            if (resp3ra.ok) {
-                const csv3 = await resp3ra.text();
-                const filas3 = csv3.split(/\r?\n/).filter(f => f.trim().length > 0);
-                if (filas3.length > 1) {
-                    const h3 = parseCsv(filas3[0]).map(h => h.toLowerCase());
-                    const idxDorsal = 0;
-                    const idxCI = h3.findIndex(h => h.includes('cedula') || h.includes('ci')) !== -1 ? h3.findIndex(h => h.includes('cedula') || h.includes('ci')) : 1;
-                    const idxNombre = h3.findIndex(h => h.includes('nombre')) !== -1 ? h3.findIndex(h => h.includes('nombre')) : 2;
-                    const idxTel = h3.findIndex(h => h.includes('telefono') || h.includes('tlf')) !== -1 ? h3.findIndex(h => h.includes('telefono') || h.includes('tlf')) : 3;
-                    const idxGen3 = h3.findIndex(h => h.includes('genero') || h.includes('sexo'));
+        // 1. Consultar 3ra Edición 5K (si no se filtró por otra edición)
+        if (!edicion || edicion === '3ra') {
+            try {
+                const resp3ra = await fetch(GOOGLE_CSV_URL_3RA + "&t=" + Date.now());
+                if (resp3ra.ok) {
+                    const csv3 = await resp3ra.text();
+                    const filas3 = csv3.split(/\r?\n/).filter(f => f.trim().length > 0);
+                    if (filas3.length > 1) {
+                        const h3 = parseCsv(filas3[0]).map(h => h.toLowerCase());
+                        const idxDorsal = 0;
+                        const idxCI = h3.findIndex(h => h.includes('cedula') || h.includes('ci')) !== -1 ? h3.findIndex(h => h.includes('cedula') || h.includes('ci')) : 1;
+                        const idxNombre = h3.findIndex(h => h.includes('nombre')) !== -1 ? h3.findIndex(h => h.includes('nombre')) : 2;
+                        const idxTel = h3.findIndex(h => h.includes('telefono') || h.includes('tlf')) !== -1 ? h3.findIndex(h => h.includes('telefono') || h.includes('tlf')) : 3;
+                        const idxGen3 = h3.findIndex(h => h.includes('genero') || h.includes('sexo'));
 
-                    for (let i = 1; i < filas3.length; i++) {
-                        const col = parseCsv(filas3[i]);
-                        const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
-                        const filaDorsal = col[idxDorsal] ? col[idxDorsal].replace(/\D/g, '').trim() : '';
-                        const dNum = filaDorsal ? filaDorsal.padStart(3, '0') : 'S/N';
+                        for (let i = 1; i < filas3.length; i++) {
+                            const col = parseCsv(filas3[i]);
+                            const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
+                            const filaDorsal = col[idxDorsal] ? col[idxDorsal].replace(/\D/g, '').trim() : '';
+                            const dNum = filaDorsal ? filaDorsal.padStart(3, '0') : 'S/N';
 
-                        const coincide = (filaCI && filaCI === queryTerm) || (filaDorsal && (filaDorsal === queryTerm || dNum === dorsalQueryPad));
+                            const coincide = (filaCI && filaCI === queryTerm) || (filaDorsal && (filaDorsal === queryTerm || dNum === dorsalQueryPad));
 
-                        if (coincide) {
-                            const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
-                            const rawGen = idxGen3 !== -1 && col[idxGen3] ? col[idxGen3].trim() : '';
-                            let genFinal = '';
-                            if (rawGen.toUpperCase().startsWith('F')) genFinal = 'FEMENINO';
-                            else if (rawGen.toUpperCase().startsWith('M')) genFinal = 'MASCULINO';
+                            if (coincide) {
+                                const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
+                                const rawGen = idxGen3 !== -1 && col[idxGen3] ? col[idxGen3].trim() : '';
+                                let genFinal = '';
+                                if (rawGen.toUpperCase().startsWith('F')) genFinal = 'FEMENINO';
+                                else if (rawGen.toUpperCase().startsWith('M')) genFinal = 'MASCULINO';
 
-                            registrosAtleta.push({
-                                dorsal: dNum,
-                                nombre: normalizarNombre(col[idxNombre], filaCI, dNum),
-                                tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
-                                carrera: "3ra Edición 5K",
-                                saldoNum: 0,
-                                saldoRaw: "SOLVENTE",
-                                esSolvente: true,
-                                textil: '',
-                                reserva: '',
-                                genero: genFinal
-                            });
+                                registrosAtleta.push({
+                                    dorsal: dNum,
+                                    nombre: normalizarNombre(col[idxNombre], filaCI, dNum),
+                                    tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
+                                    carrera: "3ra Edición 5K",
+                                    edicion: "3ra",
+                                    saldoNum: 0,
+                                    saldoRaw: "SOLVENTE",
+                                    esSolvente: true,
+                                    textil: '',
+                                    reserva: '',
+                                    genero: genFinal
+                                });
+                            }
                         }
                     }
                 }
-            }
-        } catch(e) {}
+            } catch(e) {}
+        }
 
-        // 2. Consultar 4ta Edición 5K
-        try {
-            const resp4ta = await fetch(GOOGLE_CSV_URL_4TA + "&t=" + Date.now());
-            if (resp4ta.ok) {
-                const csv4 = await resp4ta.text();
-                const filas4 = csv4.split(/\r?\n/).filter(f => f.trim().length > 0);
-                if (filas4.length > 1) {
-                    const h4 = parseCsv(filas4[0]).map(h => h.toLowerCase());
-                    const idxDorsal = 0;
-                    const idxCI = h4.findIndex(h => h.includes('cedula') || h.includes('ci')) !== -1 ? h4.findIndex(h => h.includes('cedula') || h.includes('ci')) : 1;
-                    const idxNombre = h4.findIndex(h => h.includes('nombre')) !== -1 ? h4.findIndex(h => h.includes('nombre')) : 2;
-                    const idxTel = h4.findIndex(h => h.includes('telefono') || h.includes('tlf')) !== -1 ? h4.findIndex(h => h.includes('telefono') || h.includes('tlf')) : 3;
-                    const idxGen4 = h4.findIndex(h => h.includes('genero') || h.includes('sexo'));
+        // 2. Consultar 4ta Edición 5K (si no se filtró por otra edición)
+        if (!edicion || edicion === '4ta') {
+            try {
+                const resp4ta = await fetch(GOOGLE_CSV_URL_4TA + "&t=" + Date.now());
+                if (resp4ta.ok) {
+                    const csv4 = await resp4ta.text();
+                    const filas4 = csv4.split(/\r?\n/).filter(f => f.trim().length > 0);
+                    if (filas4.length > 1) {
+                        const h4 = parseCsv(filas4[0]).map(h => h.toLowerCase());
+                        const idxDorsal = 0;
+                        const idxCI = h4.findIndex(h => h.includes('cedula') || h.includes('ci')) !== -1 ? h4.findIndex(h => h.includes('cedula') || h.includes('ci')) : 1;
+                        const idxNombre = h4.findIndex(h => h.includes('nombre')) !== -1 ? h4.findIndex(h => h.includes('nombre')) : 2;
+                        const idxTel = h4.findIndex(h => h.includes('telefono') || h.includes('tlf')) !== -1 ? h4.findIndex(h => h.includes('telefono') || h.includes('tlf')) : 3;
+                        const idxGen4 = h4.findIndex(h => h.includes('genero') || h.includes('sexo'));
 
-                    for (let i = 1; i < filas4.length; i++) {
-                        const col = parseCsv(filas4[i]);
-                        const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
-                        const filaDorsal = col[idxDorsal] ? col[idxDorsal].replace(/\D/g, '').trim() : '';
-                        const dNum = filaDorsal ? filaDorsal.padStart(3, '0') : 'S/N';
+                        for (let i = 1; i < filas4.length; i++) {
+                            const col = parseCsv(filas4[i]);
+                            const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
+                            const filaDorsal = col[idxDorsal] ? col[idxDorsal].replace(/\D/g, '').trim() : '';
+                            const dNum = filaDorsal ? filaDorsal.padStart(3, '0') : 'S/N';
 
-                        const coincide = (filaCI && filaCI === queryTerm) || (filaDorsal && (filaDorsal === queryTerm || dNum === dorsalQueryPad));
+                            const coincide = (filaCI && filaCI === queryTerm) || (filaDorsal && (filaDorsal === queryTerm || dNum === dorsalQueryPad));
 
-                        if (coincide) {
-                            const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
-                            const rawGen = idxGen4 !== -1 && col[idxGen4] ? col[idxGen4].trim() : '';
-                            let genFinal = '';
-                            if (rawGen.toUpperCase().startsWith('F')) genFinal = 'FEMENINO';
-                            else if (rawGen.toUpperCase().startsWith('M')) genFinal = 'MASCULINO';
+                            if (coincide) {
+                                const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
+                                const rawGen = idxGen4 !== -1 && col[idxGen4] ? col[idxGen4].trim() : '';
+                                let genFinal = '';
+                                if (rawGen.toUpperCase().startsWith('F')) genFinal = 'FEMENINO';
+                                else if (rawGen.toUpperCase().startsWith('M')) genFinal = 'MASCULINO';
 
-                            registrosAtleta.push({
-                                dorsal: dNum,
-                                nombre: normalizarNombre(col[idxNombre], filaCI, dNum),
-                                tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
-                                carrera: "4ta Edición 5K",
-                                saldoNum: 0,
-                                saldoRaw: "SOLVENTE",
-                                esSolvente: true,
-                                textil: '',
-                                reserva: '',
-                                genero: genFinal
-                            });
+                                registrosAtleta.push({
+                                    dorsal: dNum,
+                                    nombre: normalizarNombre(col[idxNombre], filaCI, dNum),
+                                    tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
+                                    carrera: "4ta Edición 5K",
+                                    edicion: "4ta",
+                                    saldoNum: 0,
+                                    saldoRaw: "SOLVENTE",
+                                    esSolvente: true,
+                                    textil: '',
+                                    reserva: '',
+                                    genero: genFinal
+                                });
+                            }
                         }
                     }
                 }
-            }
-        } catch(e) {}
+            } catch(e) {}
+        }
 
-        // 3. Consultar Edición 10K / General
-        try {
-            const response = await fetch(GOOGLE_CSV_URL_10K + "&t=" + Date.now(), {
-                headers: { 'User-Agent': 'Vercel-Serverless-Atleta-Fetcher' }
-            });
+        // 3. Consultar Edición 10K / General (si no se filtró estrictamente por 3ra o 4ta 5K)
+        if (!edicion || edicion === '10k' || edicion === '10K') {
+            try {
+                const response = await fetch(GOOGLE_CSV_URL_10K + "&t=" + Date.now(), {
+                    headers: { 'User-Agent': 'Vercel-Serverless-Atleta-Fetcher' }
+                });
 
-            if (response.ok) {
-                const csvText = await response.text();
-                const filas = csvText.split(/\r?\n/).filter(f => f.trim().length > 0);
-                if (filas.length > 1) {
-                    const headers = parseCsv(filas[0]).map(h => h.toLowerCase());
-                    const idxDorsal = 0;
-                    const idxCI = headers.findIndex(h => h.includes('cedula') || h.includes('ci'));
-                    const idxNombre = headers.findIndex(h => h.includes('nombre'));
-                    const idxTel = headers.findIndex(h => h.includes('telefono') || h.includes('tlf'));
-                    const idxCarrera = headers.findIndex(h => h.includes('carrera'));
-                    const idxSaldo = headers.findIndex(h => h.includes('saldopendiente') || h.includes('saldo'));
-                    const idxTextil = headers.findIndex(h => h.includes('textil'));
-                    const idxTotal = headers.findIndex(h => h.includes('total'));
-                    const idxReserva = headers.findIndex(h => h.includes('reserva'));
-                    const idxGeneroAtleta = headers.findIndex(h => h.includes('genero') || h.includes('sexo'));
+                if (response.ok) {
+                    const csvText = await response.text();
+                    const filas = csvText.split(/\r?\n/).filter(f => f.trim().length > 0);
+                    if (filas.length > 1) {
+                        const headers = parseCsv(filas[0]).map(h => h.toLowerCase());
+                        const idxDorsal = 0;
+                        const idxCI = headers.findIndex(h => h.includes('cedula') || h.includes('ci'));
+                        const idxNombre = headers.findIndex(h => h.includes('nombre'));
+                        const idxTel = headers.findIndex(h => h.includes('telefono') || h.includes('tlf'));
+                        const idxCarrera = headers.findIndex(h => h.includes('carrera'));
+                        const idxSaldo = headers.findIndex(h => h.includes('saldopendiente') || h.includes('saldo'));
+                        const idxTextil = headers.findIndex(h => h.includes('textil'));
+                        const idxTotal = headers.findIndex(h => h.includes('total'));
+                        const idxReserva = headers.findIndex(h => h.includes('reserva'));
+                        const idxGeneroAtleta = headers.findIndex(h => h.includes('genero') || h.includes('sexo'));
 
-                    for (let i = 1; i < filas.length; i++) {
-                        const col = parseCsv(filas[i]);
-                        const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
+                        for (let i = 1; i < filas.length; i++) {
+                            const col = parseCsv(filas[i]);
+                            const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
 
-                        if (filaCI === ci) {
-                            const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
+                            if (filaCI === ci) {
+                                const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
 
-                            if (telFiltro && telFiltro.length >= 4) {
-                                const ultimos4Usuario = telFiltro.slice(-4);
-                                const ultimos4Fila = filaTel.slice(-4);
-                                if (ultimos4Fila && ultimos4Usuario !== ultimos4Fila) {
-                                    continue;
+                                if (telFiltro && telFiltro.length >= 4) {
+                                    const ultimos4Usuario = telFiltro.slice(-4);
+                                    const ultimos4Fila = filaTel.slice(-4);
+                                    if (ultimos4Fila && ultimos4Usuario !== ultimos4Fila) {
+                                        continue;
+                                    }
                                 }
+
+                                let carreraNombre = "Edición 10K";
+                                if (idxCarrera !== -1 && col[idxCarrera]) {
+                                    carreraNombre = col[idxCarrera];
+                                } else if (col[idxTextil] && (col[idxTextil].includes('Franela') || col[idxTextil].includes('Solo Medalla'))) {
+                                    carreraNombre = "Edición Especial 10K";
+                                } else if (col[idxTotal] && (col[idxTotal].includes('10') || col[idxTotal].includes('16'))) {
+                                    carreraNombre = col[idxTotal].includes('16') ? "Combo Dúo 5K (3ra + 4ta)" : "3ra Edición 5K";
+                                }
+
+                                const valorSaldoRaw = String((idxSaldo !== -1 ? col[idxSaldo] : col[13]) || '').trim();
+                                const valUpper = valorSaldoRaw.toUpperCase();
+                                const esSolv = valUpper === 'SOLVENTE' || valUpper === '0' || valUpper === '0.00' || valUpper === '$0' || valUpper === '$0.00' || valUpper === '';
+                                const montoNum = esSolv ? 0 : (parseFloat(valorSaldoRaw.replace(/[^0-9.]/g, '')) || 0);
+
+                                const rawGen = (idxGeneroAtleta !== -1 ? col[idxGeneroAtleta] : '') || '';
+                                const generoFormateado = rawGen.toUpperCase().startsWith('F') ? 'FEMENINO' : 'MASCULINO';
+
+                                registrosAtleta.push({
+                                    dorsal: col[idxDorsal] || 'S/N',
+                                    nombre: col[idxNombre] || 'Atleta',
+                                    tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
+                                    carrera: carreraNombre,
+                                    edicion: "10k",
+                                    saldoNum: montoNum,
+                                    saldoRaw: valorSaldoRaw,
+                                    esSolvente: esSolv,
+                                    textil: col[idxTextil] || '',
+                                    reserva: (idxReserva !== -1 ? col[idxReserva] : ''),
+                                    genero: generoFormateado
+                                });
                             }
-
-                            let carreraNombre = "Edición 10K";
-                            if (idxCarrera !== -1 && col[idxCarrera]) {
-                                carreraNombre = col[idxCarrera];
-                            } else if (col[idxTextil] && (col[idxTextil].includes('Franela') || col[idxTextil].includes('Solo Medalla'))) {
-                                carreraNombre = "Edición Especial 10K";
-                            } else if (col[idxTotal] && (col[idxTotal].includes('10') || col[idxTotal].includes('16'))) {
-                                carreraNombre = col[idxTotal].includes('16') ? "Combo Dúo 5K (3ra + 4ta)" : "3ra Edición 5K";
-                            }
-
-                            const valorSaldoRaw = String((idxSaldo !== -1 ? col[idxSaldo] : col[13]) || '').trim();
-                            const valUpper = valorSaldoRaw.toUpperCase();
-                            const esSolv = valUpper === 'SOLVENTE' || valUpper === '0' || valUpper === '0.00' || valUpper === '$0' || valUpper === '$0.00' || valUpper === '';
-                            const montoNum = esSolv ? 0 : (parseFloat(valorSaldoRaw.replace(/[^0-9.]/g, '')) || 0);
-
-                            const rawGen = (idxGeneroAtleta !== -1 ? col[idxGeneroAtleta] : '') || '';
-                            const generoFormateado = rawGen.toUpperCase().startsWith('F') ? 'FEMENINO' : 'MASCULINO';
-
-                            registrosAtleta.push({
-                                dorsal: col[idxDorsal] || 'S/N',
-                                nombre: col[idxNombre] || 'Atleta',
-                                tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
-                                carrera: carreraNombre,
-                                saldoNum: montoNum,
-                                saldoRaw: valorSaldoRaw,
-                                esSolvente: esSolv,
-                                textil: col[idxTextil] || '',
-                                reserva: (idxReserva !== -1 ? col[idxReserva] : ''),
-                                genero: generoFormateado
-                            });
                         }
                     }
                 }
-            }
-        } catch(e) {}
+            } catch(e) {}
+        }
 
         return res.status(200).json({
             encontrado: registrosAtleta.length > 0,

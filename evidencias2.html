@@ -1454,12 +1454,34 @@
                     }
                 }
 
-                // 3.2 Buscar datos de inscripción del atleta en la base de datos
-                const respAtleta = await fetch(`/api/consultar-atleta?ci=${ci}`);
+                // 3.2 Buscar datos de inscripción del atleta en la base de datos para la edición activa
+                const respAtleta = await fetch(`/api/consultar-atleta?ci=${ci}&edicion=${edicionActual}`);
                 if (respAtleta.ok) {
                     const dataAtleta = await respAtleta.json();
-                    if (dataAtleta.encontrado && dataAtleta.registros.length > 0) {
-                        const reg = dataAtleta.registros[0];
+                    if (dataAtleta.encontrado && dataAtleta.registros && dataAtleta.registros.length > 0) {
+                        // Buscar el registro correspondiente a la edición activa (3ra o 4ta)
+                        const reg = dataAtleta.registros.find(r => {
+                            if (edicionActual === '3ra') {
+                                return (r.edicion === '3ra') || (r.carrera && (r.carrera.includes('3ra') || r.carrera.includes('Combo')));
+                            }
+                            if (edicionActual === '4ta') {
+                                return (r.edicion === '4ta') || (r.carrera && (r.carrera.includes('4ta') || r.carrera.includes('Combo')));
+                            }
+                            return true;
+                        });
+
+                        if (!reg) {
+                            // Está registrado en otra distancia (ej. 10K) pero NO en esta edición de 5K
+                            atletaVerificadoConExito = false;
+                            document.getElementById('box-datos-atleta').classList.add('hidden');
+                            document.getElementById('hiddenNombre').value = '';
+                            document.getElementById('hiddenDorsal').value = '';
+                            document.getElementById('hiddenGenero').value = '';
+                            document.getElementById('bloque-inputs-evidencia').classList.add('opacity-40', 'pointer-events-none');
+                            estadoCi.innerHTML = `<span class="text-rose-400 font-bold"><i class="fa-solid fa-circle-xmark mr-1"></i>No inscrito en ${edicionActual === '4ta' ? '4ta Edición' : '3ra Edición'}</span>`;
+                            return;
+                        }
+
                         atletaVerificadoConExito = true;
 
                         // Habilitar inputs

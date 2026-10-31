@@ -597,6 +597,8 @@
         let ciValidada = "";
         let totalDorsalesRegistrados = 22; 
         let deudaActual = 0; 
+        let dorsalAbonoActual = "";
+        let textilAbonoActual = "";
 
         // CONFIGURACIÓN DE CONEXIONES (ESTÁNDAR GROW STUDIO BACKEND)
         const urlConsultaAtleta = "/api/consultar-atleta";
@@ -1010,6 +1012,8 @@
                         const idxTotal = headers.findIndex(h => h.includes('total'));
                         const idxReserva = headers.findIndex(h => h.includes('reserva'));
 
+                        let registros10KMap = new Map();
+
                         // Escanear todas las filas de la tabla
                         for(let i = 1; i < filas.length; i++) {
                             if(!filas[i].trim()) continue;
@@ -1027,46 +1031,65 @@
                                 }
 
                                 // Detectar modalidad
-                                let carreraNombre = "Edición 10K";
+                                let carreraNombre = "Edición Especial 10K";
                                 if (idxCarrera !== -1 && col[idxCarrera]) {
-                                    carreraNombre = col[idxCarrera];
-                                } else if (col[idxTextil] && (col[idxTextil].includes('Franela') || col[idxTextil].includes('Solo Medalla'))) {
+                                    const cVal = col[idxCarrera].trim().toUpperCase();
+                                    if (cVal === 'ABONO' || cVal === '10K') {
+                                        carreraNombre = "Edición Especial 10K";
+                                    } else {
+                                        carreraNombre = col[idxCarrera];
+                                    }
+                                } else if (col[idxTextil] && (col[idxTextil].includes('Franela') || col[idxTextil].includes('Solo Medalla') || col[idxTextil].includes('Franelilla'))) {
                                     carreraNombre = "Edición Especial 10K";
-                                } else if (col[idxTotal] && (col[idxTotal].includes('10') || col[idxTotal].includes('16'))) {
+                                } else if (col[idxTotal] && (col[idxTotal].includes('10') || col[idxTotal].includes('16')) && (!col[idxReserva] || !col[idxReserva].toUpperCase().includes('SI'))) {
                                     carreraNombre = col[idxTotal].includes('16') ? "Combo Dúo 5K (3ra + 4ta)" : "3ra Edición 5K";
                                 }
 
                                 const valorSaldoRaw = String((idxSaldo !== -1 ? col[idxSaldo] : col[13]) || '').trim();
                                 const valUpper = valorSaldoRaw.toUpperCase();
                                 const esSolv = valUpper === 'SOLVENTE' || valUpper === '0' || valUpper === '0.00' || valUpper === '$0' || valUpper === '$0.00' || valUpper === '';
-                                const montoNum = esSolv ? 0 : (parseFloat(valorSaldoRaw.replace(/[^0-9.]/g, '')) || 0);
+                                const valorNormalizado = valorSaldoRaw.replace(',', '.').replace(/[^0-9.]/g, '');
+                                const montoNum = esSolv ? 0 : (parseFloat(valorNormalizado) || 0);
 
-                                registrosAtleta.push({
-                                    dorsal: col[idxDorsal] || 'S/N',
-                                    nombre: col[idxNombre] || 'Atleta',
-                                    tel: filaTel,
+                                const keyCarrera = carreraNombre.includes('10K') ? '10K' : carreraNombre;
+                                const prev = registros10KMap.get(keyCarrera);
+
+                                registros10KMap.set(keyCarrera, {
+                                    dorsal: (col[idxDorsal] && col[idxDorsal] !== 'ABONO') ? col[idxDorsal] : (prev ? prev.dorsal : 'S/N'),
+                                    nombre: (col[idxNombre] && col[idxNombre].trim()) ? col[idxNombre].trim() : (prev ? prev.nombre : 'Atleta'),
+                                    tel: filaTel || (prev ? prev.tel : ''),
                                     carrera: carreraNombre,
                                     saldoNum: montoNum,
                                     saldoRaw: valorSaldoRaw,
-                                    esSolvente: esSolv,
-                                    textil: col[idxTextil] || '',
-                                    reserva: (idxReserva !== -1 ? col[idxReserva] : '')
+                                    esSolvente: esSolv || montoNum <= 0,
+                                    textil: (col[idxTextil] && col[idxTextil] !== 'N/A') ? col[idxTextil] : (prev ? prev.textil : ''),
+                                    reserva: (idxReserva !== -1 && col[idxReserva] && col[idxReserva] !== 'NO') ? col[idxReserva] : (prev ? prev.reserva : '')
                                 });
                             }
+                        }
+
+                        for (const reg of registros10KMap.values()) {
+                            registrosAtleta.push(reg);
                         }
                     }
                 }
 
                 if (registrosAtleta.length > 0) {
                     ciValidada = ci;
-                    // Tomar datos de perfil del registro más reciente
-                    const ultimoRegistro = registrosAtleta[registrosAtleta.length - 1];
+                    // Tomar datos de perfil del registro más reciente (priorizando el de 10K o con deuda)
+                    const regConDeuda = registrosAtleta.find(r => r.saldoNum > 0) || registrosAtleta.find(r => r.edicion === '10k') || registrosAtleta[registrosAtleta.length - 1];
+                    const ultimoRegistro = regConDeuda || registrosAtleta[registrosAtleta.length - 1];
+                    dorsalAbonoActual = (ultimoRegistro.dorsal && ultimoRegistro.dorsal !== 'S/N') ? ultimoRegistro.dorsal : '';
+                    textilAbonoActual = ultimoRegistro.textil || 'N/A';
                     
                     document.getElementById('cedulaAbono').value = ci;
                     document.getElementById('nombreAbono').value = ultimoRegistro.nombre;
-                    document.getElementById('telefonoAbono').value = ultimoRegistro.tel || (telFiltro || '');
+                    const telLimpiado = (ultimoRegistro.tel && !ultimoRegistro.tel.includes('*')) ? ultimoRegistro.tel : (telFiltro || '');
+                    document.getElementById('telefonoAbono').value = telLimpiado;
 
                     document.getElementById('tituloRuta').innerText = `ESTADO DE CUENTA - ${ultimoRegistro.nombre.toUpperCase()}`;
+                    const lblCarrera = document.getElementById('labelCarreraActual');
+                    if (lblCarrera) lblCarrera.innerText = `Cédula Verificada: V-${ci}`;
                     const labelAtleta = document.getElementById('label-atleta-encontrado');
                     if (labelAtleta) labelAtleta.innerText = `Atleta: ${ultimoRegistro.nombre} (C.I. ${ci})`;
 
@@ -1151,6 +1174,7 @@
 
             try {
                 let atletaRegistrado = null;
+                let yaTiene10K = false;
 
                 // 1. Intentar primero con la API segura de Grow Studio en Vercel
                 try {
@@ -1161,11 +1185,12 @@
                             atletaRegistrado = {
                                 nombre: dataSegura.registros[0].nombre || ""
                             };
+                            yaTiene10K = dataSegura.registros.some(r => r.edicion === '10k' || (r.carrera && r.carrera.toUpperCase().includes('10K')));
                         }
                     }
                 } catch (errApi) {}
 
-                // 2. Fallback de contingencia al CSV directo
+                // 2. Fallback de contingencia al CSV directo (Hoja 10K)
                 if (!atletaRegistrado) {
                     try {
                         const res = await fetch(urlCSV_Comparacion + "&nocache=" + new Date().getTime());
@@ -1184,6 +1209,7 @@
                                     atletaRegistrado = {
                                         nombre: columnas[idxNombre] || ""
                                     };
+                                    yaTiene10K = true;
                                     break;
                                 }
                             }
@@ -1191,7 +1217,7 @@
                     } catch(e) {}
                 }
 
-                if (atletaRegistrado && flujoActual === '10K') {
+                if (yaTiene10K && flujoActual === '10K') {
                     alert(`⚠️ Hola, ${atletaRegistrado.nombre.toUpperCase()}.\n\nYa te encuentras registrado/a en la Edición 10K.\nSerás redirigido/a al Portal de Abonos para consultar tu saldo pendiente o estatus.`);
                     
                     document.getElementById('cedulaConsulta').value = ciInput;
@@ -1255,12 +1281,15 @@
                 if(!nombre || !tel) return alert("⚠️ Faltan datos en confirmar datos.");
                 
                 genero = "N/A"; estado = "N/A"; ciudad = "N/A"; agencia = "N/A"; direccion = "N/A";
+                kitTextilFinal = textilAbonoActual || "N/A";
 
                 const opAbono = document.querySelector('input[name="opcionAbono"]:checked');
                 if (opAbono && opAbono.value === "mitad") {
+                    reservaText = `ABONO CUOTA (${totalUSD})`;
                     saldoText = (deudaActual / 2).toFixed(2);
                 } else {
-                    saldoText = "0.00";
+                    reservaText = `LIQUIDACIÓN TOTAL (${totalUSD})`;
+                    saldoText = "SOLVENTE";
                 }
             } else {
                 cedulaFinal = document.getElementById('cedulaCampos').value.replace(/\D/g, '').trim();
@@ -1327,8 +1356,13 @@
             document.getElementById('loader-texto').innerText = "Guardando Reporte...";
             document.getElementById('loader').classList.remove('hidden');
 
-            totalDorsalesRegistrados++;
-            let dorsalFormateado = String(totalDorsalesRegistrados).padStart(3, '0');
+            let dorsalFormateado;
+            if (flujoActual === "ABONO") {
+                dorsalFormateado = dorsalAbonoActual || "ABONO";
+            } else {
+                totalDorsalesRegistrados++;
+                dorsalFormateado = String(totalDorsalesRegistrados).padStart(3, '0');
+            }
 
             let carreraToSend = flujoActual;
             if (flujoActual === '5K' || flujoActual === 'COMBO') {
@@ -1391,7 +1425,9 @@
 
             if (flujoActual === 'ABONO') {
                 modalidad = "Abono / Liquidación de Cuenta";
-                extraMsg = `📋 *TIPO:* Reporte de Abono Realizado%0A` +
+                const dorsalTag = dorsalAbonoActual ? `🎟️ *DORSAL:* #${encodeURIComponent(dorsalAbonoActual)}%0A` : '';
+                extraMsg = dorsalTag +
+                           `📋 *TIPO:* Reporte de Abono Realizado%0A` +
                            `💵 *Monto Abonado Hoy:* ${encodeURIComponent(total)}%0A` +
                            `📊 *Saldo Restante en Cuenta:* $${encodeURIComponent(deudaActual > 0 ? (document.querySelector('input[name="opcionAbono"]:checked')?.value === 'mitad' ? (deudaActual/2).toFixed(2) : '0.00 (SOLVENTE)') : '0.00')}`;
             } else {

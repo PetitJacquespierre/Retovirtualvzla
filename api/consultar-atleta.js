@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     const CSV_BASE = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&`;
 
     const accion = req.query.accion || (req.body && req.body.accion) || 'consultar';
-    const edicion = req.query.edicion || (req.body && req.body.edicion) || '3ra';
+    const edicion = req.query.edicion || (req.body && req.body.edicion) || '';
     const ciRaw = req.query.ci || (req.body && req.body.ci) || '';
     const telRaw = req.query.tel || (req.body && req.body.tel) || '';
 
@@ -297,6 +297,8 @@ export default async function handler(req, res) {
                         const idxReserva = headers.findIndex(h => h.includes('reserva'));
                         const idxGeneroAtleta = headers.findIndex(h => h.includes('genero') || h.includes('sexo'));
 
+                        let registros10KMap = new Map();
+
                         for (let i = 1; i < filas.length; i++) {
                             const col = parseCsv(filas[i]);
                             const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
@@ -312,37 +314,52 @@ export default async function handler(req, res) {
                                     }
                                 }
 
-                                let carreraNombre = "Edición 10K";
+                                let carreraNombre = "Edición Especial 10K";
                                 if (idxCarrera !== -1 && col[idxCarrera]) {
-                                    carreraNombre = col[idxCarrera];
-                                } else if (col[idxTextil] && (col[idxTextil].includes('Franela') || col[idxTextil].includes('Solo Medalla'))) {
+                                    const cVal = col[idxCarrera].trim().toUpperCase();
+                                    if (cVal === 'ABONO' || cVal === '10K') {
+                                        carreraNombre = "Edición Especial 10K";
+                                    } else {
+                                        carreraNombre = col[idxCarrera];
+                                    }
+                                } else if (col[idxTextil] && (col[idxTextil].includes('Franela') || col[idxTextil].includes('Solo Medalla') || col[idxTextil].includes('Franelilla'))) {
                                     carreraNombre = "Edición Especial 10K";
-                                } else if (col[idxTotal] && (col[idxTotal].includes('10') || col[idxTotal].includes('16'))) {
+                                } else if (col[idxTotal] && (col[idxTotal].includes('10') || col[idxTotal].includes('16')) && (!col[idxReserva] || !col[idxReserva].toUpperCase().includes('SI'))) {
                                     carreraNombre = col[idxTotal].includes('16') ? "Combo Dúo 5K (3ra + 4ta)" : "3ra Edición 5K";
                                 }
 
                                 const valorSaldoRaw = String((idxSaldo !== -1 ? col[idxSaldo] : col[13]) || '').trim();
                                 const valUpper = valorSaldoRaw.toUpperCase();
                                 const esSolv = valUpper === 'SOLVENTE' || valUpper === '0' || valUpper === '0.00' || valUpper === '$0' || valUpper === '$0.00' || valUpper === '';
-                                const montoNum = esSolv ? 0 : (parseFloat(valorSaldoRaw.replace(/[^0-9.]/g, '')) || 0);
+                                const valorNormalizado = valorSaldoRaw.replace(',', '.').replace(/[^0-9.]/g, '');
+                                const montoNum = esSolv ? 0 : (parseFloat(valorNormalizado) || 0);
 
                                 const rawGen = (idxGeneroAtleta !== -1 ? col[idxGeneroAtleta] : '') || '';
                                 const generoFormateado = rawGen.toUpperCase().startsWith('F') ? 'FEMENINO' : 'MASCULINO';
 
-                                registrosAtleta.push({
-                                    dorsal: col[idxDorsal] || 'S/N',
-                                    nombre: col[idxNombre] || 'Atleta',
-                                    tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
+                                const keyCarrera = carreraNombre.includes('10K') ? '10K' : carreraNombre;
+                                const prev = registros10KMap.get(keyCarrera);
+
+                                const nuevoReg = {
+                                    dorsal: (col[idxDorsal] && col[idxDorsal] !== 'ABONO') ? col[idxDorsal] : (prev ? prev.dorsal : 'S/N'),
+                                    nombre: (col[idxNombre] && col[idxNombre].trim()) ? col[idxNombre].trim() : (prev ? prev.nombre : 'Atleta'),
+                                    tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : (prev ? prev.tel : ''),
                                     carrera: carreraNombre,
                                     edicion: "10k",
                                     saldoNum: montoNum,
                                     saldoRaw: valorSaldoRaw,
-                                    esSolvente: esSolv,
-                                    textil: col[idxTextil] || '',
-                                    reserva: (idxReserva !== -1 ? col[idxReserva] : ''),
-                                    genero: generoFormateado
-                                });
+                                    esSolvente: esSolv || montoNum <= 0,
+                                    textil: (col[idxTextil] && col[idxTextil] !== 'N/A') ? col[idxTextil] : (prev ? prev.textil : ''),
+                                    reserva: (idxReserva !== -1 && col[idxReserva] && col[idxReserva] !== 'NO') ? col[idxReserva] : (prev ? prev.reserva : ''),
+                                    genero: (rawGen && rawGen !== 'N/A') ? generoFormateado : (prev ? prev.genero : 'MASCULINO')
+                                };
+
+                                registros10KMap.set(keyCarrera, nuevoReg);
                             }
+                        }
+
+                        for (const reg of registros10KMap.values()) {
+                            registrosAtleta.push(reg);
                         }
                     }
                 }

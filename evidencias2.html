@@ -96,13 +96,28 @@
             font-family: 'Montserrat', sans-serif;
         }
         .diploma-card.edicion-2da {
-            border-color: #38bdf8;
-            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.95), 0 0 40px rgba(56, 189, 248, 0.45);
+            border-color: #10b981;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.95), 0 0 45px rgba(16, 185, 129, 0.45);
             background: 
-                radial-gradient(ellipse at 85% 15%, rgba(56, 189, 248, 0.35) 0%, transparent 45%),
-                radial-gradient(ellipse at 15% 85%, rgba(99, 102, 241, 0.30) 0%, transparent 45%),
-                radial-gradient(circle at 50% 50%, rgba(226, 232, 240, 0.10) 0%, transparent 60%),
-                linear-gradient(135deg, #0b1736 0%, #060d21 50%, #02050d 100%);
+                radial-gradient(ellipse at 85% 15%, rgba(16, 185, 129, 0.35) 0%, transparent 45%),
+                radial-gradient(ellipse at 15% 85%, rgba(5, 150, 105, 0.30) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(52, 211, 153, 0.10) 0%, transparent 60%),
+                linear-gradient(135deg, #05221a 0%, #03120e 50%, #010806 100%);
+        }
+        .diploma-card.edicion-2da .diploma-splash-1 {
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.5) 0%, rgba(5, 150, 105, 0.22) 45%, transparent 75%);
+        }
+        .diploma-card.edicion-2da .diploma-splash-2 {
+            background: radial-gradient(circle, rgba(52, 211, 153, 0.45) 0%, rgba(16, 185, 129, 0.2) 50%, transparent 75%);
+        }
+        .diploma-card.edicion-2da .diploma-splash-3 {
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%);
+        }
+        .diploma-card.edicion-2da .diploma-inner-border {
+            border: 2px solid rgba(52, 211, 153, 0.28);
+        }
+        .diploma-card.edicion-2da .texto-atleta-diploma {
+            text-shadow: 0 0 22px rgba(16, 185, 129, 0.8), 0 0 45px rgba(52, 211, 153, 0.4);
         }
         .diploma-card.edicion-4ta {
             border-color: #f59e0b;
@@ -112,6 +127,18 @@
                 radial-gradient(ellipse at 15% 85%, rgba(234, 88, 12, 0.25) 0%, transparent 45%),
                 radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 60%),
                 linear-gradient(135deg, #241303 0%, #120801 50%, #050200 100%);
+        }
+        .diploma-card.edicion-4ta .diploma-splash-1 {
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.45) 0%, rgba(234, 88, 12, 0.2) 45%, transparent 75%);
+        }
+        .diploma-card.edicion-4ta .diploma-splash-2 {
+            background: radial-gradient(circle, rgba(234, 88, 12, 0.45) 0%, rgba(245, 158, 11, 0.2) 50%, transparent 75%);
+        }
+        .diploma-card.edicion-4ta .diploma-splash-3 {
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.28) 0%, transparent 70%);
+        }
+        .diploma-card.edicion-4ta .texto-atleta-diploma {
+            text-shadow: 0 0 22px rgba(245, 158, 11, 0.75), 0 0 45px rgba(234, 88, 12, 0.35);
         }
         /* Estilos del Certificado Gráfico Histórico (1era Edición - fondo-certificado.webp) */
         .diploma-1ra-grafico {
@@ -714,7 +741,7 @@
                     <div class="relative z-10 text-center my-auto py-5">
                         <div class="inline-flex items-center gap-2.5 mb-2.5">
                             <i class="fa-solid fa-medal text-amber-400 text-base md:text-lg"></i>
-                            <span class="text-xs md:text-sm uppercase font-black tracking-[0.35em] text-[#00D2FF]">Certificado Oficial de Finalista</span>
+                            <span id="cert-subtitulo-honor" class="text-xs md:text-sm uppercase font-black tracking-[0.35em] text-[#00D2FF]">Certificado Oficial de Finalista</span>
                             <i class="fa-solid fa-medal text-amber-400 text-base md:text-lg"></i>
                         </div>
                         
@@ -764,7 +791,7 @@
                                 Jacquespierre Petit
                             </div>
                             <div class="w-24 md:w-32 border-b border-white/20 mb-1"></div>
-                            <span class="block text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] text-[#00D2FF]">Director General</span>
+                            <span id="cert-director-cargo" class="block text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] text-[#00D2FF]">Director General</span>
                             <span class="block text-[7px] md:text-[8px] text-white/40 uppercase tracking-widest">Reto Virtual VZLA</span>
                         </div>
 
@@ -1970,11 +1997,21 @@
 
                     cardBody.classList.remove('edicion-2da', 'edicion-4ta');
 
+                    const subHonorEl = document.getElementById('cert-subtitulo-honor');
+                    const dirCargoEl = document.getElementById('cert-director-cargo');
+
                     if (edicionActual === '2da') {
                         cardBody.classList.add('edicion-2da');
-                        badgeEd.className = "inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/40 mt-1 shadow-sm";
+                        badgeEd.className = "inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 mt-1 shadow-sm";
                         badgeEd.innerText = "2da Edición 5K";
                         fechaEl.innerText = "Junio, 2026";
+                        if (subHonorEl) {
+                            subHonorEl.className = "text-xs md:text-sm uppercase font-black tracking-[0.35em] text-emerald-400";
+                            subHonorEl.innerText = "Diploma de Honor • 2da Edición";
+                        }
+                        if (certDorsal) certDorsal.className = "text-lg md:text-2xl font-black text-emerald-400";
+                        if (modEl) modEl.className = "block text-[8px] md:text-[9px] text-emerald-400 uppercase tracking-widest mt-0.5 font-bold";
+                        if (dirCargoEl) dirCargoEl.className = "block text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] text-emerald-400";
                         if (leyendaEl) {
                             leyendaEl.innerText = "Por conquistar con temple, velocidad y espíritu indomable los 5 Kilómetros, consagrándose con honor en la 2da Edición del Reto Virtual VZLA.";
                         }
@@ -1983,6 +2020,13 @@
                         badgeEd.className = "inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40 mt-1 shadow-sm";
                         badgeEd.innerText = "4ta Edición 5K";
                         fechaEl.innerText = "Diciembre, 2026";
+                        if (subHonorEl) {
+                            subHonorEl.className = "text-xs md:text-sm uppercase font-black tracking-[0.35em] text-amber-400";
+                            subHonorEl.innerText = "Certificado Oficial de Finalista";
+                        }
+                        if (certDorsal) certDorsal.className = "text-lg md:text-2xl font-black text-amber-400";
+                        if (modEl) modEl.className = "block text-[8px] md:text-[9px] text-amber-400 uppercase tracking-widest mt-0.5 font-bold";
+                        if (dirCargoEl) dirCargoEl.className = "block text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] text-amber-400";
                         if (leyendaEl) {
                             leyendaEl.innerText = "Por conquistar con garra, disciplina y perseverancia los 5 Kilómetros, dejando huella indeleble en la Gran 4ta Edición del Reto Virtual VZLA.";
                         }
@@ -1990,6 +2034,13 @@
                         badgeEd.className = "inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/40 mt-1 shadow-sm";
                         badgeEd.innerText = "3ra Edición 5K";
                         fechaEl.innerText = "Octubre, 2026";
+                        if (subHonorEl) {
+                            subHonorEl.className = "text-xs md:text-sm uppercase font-black tracking-[0.35em] text-[#00D2FF]";
+                            subHonorEl.innerText = "Certificado Oficial de Finalista";
+                        }
+                        if (certDorsal) certDorsal.className = "text-lg md:text-2xl font-black text-[#00D2FF]";
+                        if (modEl) modEl.className = "block text-[8px] md:text-[9px] text-[#00D2FF] uppercase tracking-widest mt-0.5 font-bold";
+                        if (dirCargoEl) dirCargoEl.className = "block text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] text-[#00D2FF]";
                         if (leyendaEl) {
                             leyendaEl.innerText = "Por superar el desafío de los 5 Kilómetros con determinación, pasión y constancia, coronando con orgullo la 3ra Edición del Reto Virtual VZLA.";
                         }

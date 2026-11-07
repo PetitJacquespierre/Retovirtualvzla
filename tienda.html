@@ -122,9 +122,10 @@
                     <a href="index.html#ediciones" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Calendario</a>
                     <a href="evidencias2.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Evidencia</a>
                     <a href="entrenador.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Entrenador IA</a>
+                    <a href="tienda.html" class="chameleon-text text-[10px] xl:text-xs font-black uppercase tracking-widest transition-all drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">Tienda</a>
 
                     <div class="relative group">
-                        <button class="flex items-center text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">
+                        <button class="flex items-center text-white/80 group-hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">
                             Info <i class="fa-solid fa-chevron-down ml-2 text-[8px]"></i>
                         </button>
                         <div class="absolute right-0 mt-2 w-56 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
@@ -134,9 +135,6 @@
                                 </a>
                                 <a href="aliados.html" class="flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
                                     <i class="fa-solid fa-handshake mr-3 text-sm opacity-70"></i> Aliados
-                                </a>
-                                <a href="tienda.html" class="flex items-center px-4 py-3 text-xs font-bold text-[#00D2FF] bg-white/5 rounded-lg transition-all">
-                                    <i class="fa-solid fa-shop mr-3 text-sm"></i> Tienda
                                 </a>
                             </div>
                         </div>
@@ -175,11 +173,11 @@
                 <a href="index.html#ediciones" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Calendario</a>
                 <a href="evidencias2.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Evidencia</a>
                 <a href="entrenador.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Entrenador IA</a>
+                <a href="tienda.html" class="text-[#00D2FF] text-lg font-bold uppercase tracking-widest">Tienda</a>
                 
                 <div class="flex flex-wrap justify-center gap-4 mt-2">
                     <a href="faq.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">FAQ</a>
                     <a href="aliados.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">Aliados</a>
-                    <a href="tienda.html" class="text-[#00D2FF] text-sm font-bold uppercase tracking-widest">Tienda</a>
                 </div>
                 <div class="border-t border-white/20 w-full pt-5 flex flex-col gap-3 text-center">
                     <a href="inscripcion.html?modo=5K" class="btn-nav-movil text-white text-base font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Tercera Edición 5K / Combo</a>
@@ -190,33 +188,42 @@
         </div>
     </nav>
 
-    <!-- HERO TIENDA OFICIAL CON IMAGEN DE FONDO -->
-    <header class="relative py-16 md:py-28 px-4 text-center bg-[#050B1A] border-b border-[#00D2FF]/20 overflow-hidden flex items-center justify-center min-h-[340px] md:min-h-[400px]">
-        <!-- Imagen de fondo de tienda banner-tienda2.jpg con superposición oscura para legibilidad -->
-        <div class="absolute inset-0 bg-[url('img/banner-tienda2.jpg')] bg-cover bg-center opacity-35 mix-blend-luminosity scale-105 pointer-events-none"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#0b132b] via-[#050B1A]/85 to-[#001E50]/90 pointer-events-none"></div>
-        
-        <!-- Rejilla y orbes sutiles -->
-        <div class="grid-3d opacity-60"></div>
-        <div class="glow-orb w-[280px] md:w-[400px] h-[280px] md:h-[400px] bg-[#00D2FF]/15 top-0 left-1/4 blur-[100px]"></div>
-
-        <div class="max-w-4xl mx-auto relative z-10 flex flex-col items-center">
+    <!-- HERO TIENDA OFICIAL A TODO COLOR Y LUMINOSIDAD -->
+    <header class="relative bg-[#050B1A] border-b border-[#00D2FF]/25 overflow-hidden">
+        <!-- Vista en Escritorio y Tablet: Imagen panorámica a todo color sin velos oscuros sobre los corredores -->
+        <div class="relative w-full min-h-[260px] sm:min-h-[360px] md:min-h-[440px] lg:min-h-[500px] flex items-end">
+            <!-- Fotografía principal en alta nitidez y color vivo -->
+            <img src="img/banner-tienda2.jpg" alt="Tienda Oficial Reto Virtual Venezuela - Franelas e Indumentaria" class="absolute inset-0 w-full h-full object-cover object-[65%_center] sm:object-center brightness-105 contrast-105 saturate-110 pointer-events-none select-none">
             
-            <!-- Badge superior simple -->
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00D2FF]/10 border border-[#00D2FF]/40 text-[#00D2FF] text-[10px] md:text-xs font-black uppercase tracking-[0.25em] mb-4 shadow-[0_0_20px_rgba(0,210,255,0.2)]">
-                <i class="fa-solid fa-shop text-amber-400"></i>
-                ARTÍCULOS OFICIALES PARA CORREDORES
+            <!-- Degradados direccionales suaves: protegen solo el borde inferior e izquierdo dejando a los corredores 100% iluminados -->
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0b132b] via-[#0b132b]/35 to-transparent pointer-events-none"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#050B1A]/75 via-[#050B1A]/20 to-transparent pointer-events-none"></div>
+
+            <!-- Contenido Editorial anclado abajo a la izquierda para lucir las franelas y el letrero TIENDA OFICIAL del arte -->
+            <div class="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-6 pt-28 md:pb-10 md:pt-40">
+                <div class="max-w-xl bg-[#050B1A]/75 backdrop-blur-md border border-white/15 border-t-white/30 rounded-2xl p-4 sm:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.7)] text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D2FF]/15 border border-[#00D2FF]/40 text-[#00D2FF] text-[10px] font-black uppercase tracking-[0.2em] mb-2.5">
+                        <i class="fa-solid fa-shirt text-amber-400"></i> INDUMENTARIA & COLECCIÓN OFICIAL
+                    </div>
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-black uppercase italic tracking-tighter text-white leading-none mb-2">
+                        EQUÍPATE COMO <span class="chameleon-text">FINISHER</span>
+                    </h1>
+                    <p class="text-slate-200 text-xs sm:text-sm font-medium leading-relaxed mb-4">
+                        Franelas oficiales de competencia, medallas de ediciones históricas y medalleros de colección con envío a toda Venezuela.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg bg-white/10 text-white border border-white/10">
+                            <i class="fa-solid fa-medal text-amber-400"></i> Medallas $5
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg bg-white/10 text-white border border-white/10">
+                            <i class="fa-solid fa-trophy text-[#00D2FF]"></i> Medalleros $7
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/30">
+                            <i class="fa-solid fa-fire text-pink-400"></i> Franelas 10K
+                        </span>
+                    </div>
+                </div>
             </div>
-
-            <!-- Título Principal Limpio -->
-            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black uppercase italic tracking-tighter text-white leading-tight mb-4 drop-shadow-[0_4px_25px_rgba(0,0,0,0.9)]">
-                TIENDA <span class="chameleon-text">OFICIAL</span>
-            </h1>
-
-            <p class="text-slate-300 text-xs sm:text-sm md:text-base max-w-xl mx-auto font-medium tracking-wide px-2">
-                Medallas de colección, medalleros y accesorios oficiales de Reto Virtual Venezuela para celebrar cada kilómetro recorrido.
-            </p>
-
         </div>
     </header>
 

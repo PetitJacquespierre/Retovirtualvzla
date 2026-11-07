@@ -95,6 +95,15 @@
             color: #ffffff;
             font-family: 'Montserrat', sans-serif;
         }
+        .diploma-card.edicion-2da {
+            border-color: #38bdf8;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.95), 0 0 40px rgba(56, 189, 248, 0.45);
+            background: 
+                radial-gradient(ellipse at 85% 15%, rgba(56, 189, 248, 0.35) 0%, transparent 45%),
+                radial-gradient(ellipse at 15% 85%, rgba(99, 102, 241, 0.30) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(226, 232, 240, 0.10) 0%, transparent 60%),
+                linear-gradient(135deg, #0b1736 0%, #060d21 50%, #02050d 100%);
+        }
         .diploma-card.edicion-4ta {
             border-color: #f59e0b;
             box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.95), 0 0 40px rgba(245, 158, 11, 0.4);
@@ -104,6 +113,51 @@
                 radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 60%),
                 linear-gradient(135deg, #241303 0%, #120801 50%, #050200 100%);
         }
+        /* Estilos del Certificado Gráfico Histórico (1era Edición - fondo-certificado.webp) */
+        .diploma-1ra-grafico {
+            position: relative;
+            width: 100%;
+            min-width: 720px;
+            max-width: 850px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            display: none;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .imagen-fondo-certificado-1ra {
+            width: 100%;
+            min-width: 720px;
+            height: auto;
+            display: block;
+        }
+        .texto-nombre-cert-1ra {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #FFFFFF;
+            font-size: clamp(20px, 4vw, 34px);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            white-space: nowrap;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .texto-dorsal-cert-1ra,
+        .texto-tiempo-cert-1ra {
+            position: absolute;
+            bottom: 27%;
+            color: #FFFFFF;
+            font-size: clamp(18px, 3.2vw, 25px);
+            font-weight: 800;
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .texto-dorsal-cert-1ra { left: 25%; }
+        .texto-tiempo-cert-1ra { right: 10%; }
         .diploma-splash-1 {
             position: absolute;
             top: -50px;
@@ -277,22 +331,30 @@
                 Sube tu tiempo oficial con captura de pantalla, consulta tu posición en el podio y genera tu diploma de finisher.
             </p>
 
-            <!-- SELECTOR DE CARRERA PRINCIPAL CON PLAZOS OFICIALES -->
-            <div class="flex flex-wrap justify-center items-center gap-3 mt-8">
+            <!-- SELECTOR MAESTRO DE LAS 4 EDICIONES CON PLAZOS Y ESTATUS -->
+            <div class="flex flex-wrap justify-center items-center gap-2.5 mt-8">
+                <button onclick="seleccionarEdicion('1ra')" id="btn-ed-1ra" class="px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex flex-col sm:flex-row items-center gap-2">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-trophy text-xs text-slate-300"></i> 1ra Edición 5K</span>
+                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-slate-300 font-bold">Marzo 2026</span>
+                </button>
+                <button onclick="seleccionarEdicion('2da')" id="btn-ed-2da" class="px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex flex-col sm:flex-row items-center gap-2">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-xs text-sky-400"></i> 2da Edición 5K</span>
+                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-sky-300 font-bold">Junio 2026</span>
+                </button>
                 <button onclick="seleccionarEdicion('3ra')" id="btn-ed-3ra" class="px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-[#00D2FF] text-[#001E50] shadow-lg shadow-[#00D2FF]/20 flex flex-col sm:flex-row items-center gap-2">
                     <span class="flex items-center gap-2"><i class="fa-solid fa-person-running text-sm"></i> 3ra Edición 5K</span>
-                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-[#001E50] text-[#00D2FF] font-bold">Todo Octubre</span>
+                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-[#001E50] text-[#00D2FF] font-bold">Activa • Por Defecto</span>
                 </button>
-                <button onclick="seleccionarEdicion('4ta')" id="btn-ed-4ta" class="px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex flex-col sm:flex-row items-center gap-2">
-                    <span class="flex items-center gap-2"><i class="fa-solid fa-fire-flame-curved text-sm"></i> 4ta Edición 5K</span>
+                <button onclick="seleccionarEdicion('4ta')" id="btn-ed-4ta" class="px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex flex-col sm:flex-row items-center gap-2">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-fire-flame-curved text-sm text-amber-400"></i> 4ta Edición 5K</span>
                     <span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-amber-300 font-bold">Hasta Diciembre</span>
                 </button>
-                <button onclick="seleccionarEdicion('10k')" id="btn-ed-10k" class="px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/5 text-white/30 border border-white/5 cursor-not-allowed flex items-center gap-2" title="Disponible en Noviembre">
+                <button onclick="seleccionarEdicion('10k')" id="btn-ed-10k" class="px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/5 text-white/30 border border-white/5 cursor-not-allowed flex items-center gap-2" title="Disponible en Noviembre">
                     <i class="fa-solid fa-lock text-xs"></i> 10K Especial <span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-slate-400">Noviembre</span>
                 </button>
             </div>
-            <p class="text-center text-[11px] text-white/40 mt-3 font-semibold">
-                ⚠️ Si adquiriste el <strong class="text-[#00D2FF]">Combo Dúo (3ra + 4ta)</strong>, debes enviar <strong class="text-white">dos evidencias separadas</strong>: una seleccionando la 3ra Edición y otra seleccionando la 4ta Edición.
+            <p id="subtexto-selector-edicion" class="text-center text-[11px] text-white/40 mt-3 font-semibold">
+                ⚠️ Estás situado en la <strong class="text-[#00D2FF]">3ra Edición 5K</strong> por defecto. Si adquiriste el <strong class="text-white">Combo Dúo (3ra + 4ta)</strong>, envía una evidencia en 3ra y otra seleccionando la 4ta Edición.
             </p>
         </div>
     </header>
@@ -716,6 +778,14 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Certificado Conmemorativo con Fondo Gráfico Histórico (Exclusivo 1ra Edición) -->
+                <div class="diploma-1ra-grafico" id="diploma-1ra-body">
+                    <img src="img/fondo-certificado.webp" alt="Certificado 1ra Edición" class="imagen-fondo-certificado-1ra" id="img-fondo-cert-1ra">
+                    <h2 class="texto-nombre-cert-1ra" id="cert-1ra-nombre">---</h2>
+                    <p class="texto-dorsal-cert-1ra" id="cert-1ra-dorsal">---</p>
+                    <p class="texto-tiempo-cert-1ra" id="cert-1ra-tiempo">---</p>
+                </div>
             </div>
 
             <!-- Botón de Descarga -->
@@ -770,7 +840,7 @@
         let base64Captura = null;
         let mimeTypeCaptura = 'image/jpeg';
 
-        // 1. Selector de Edición
+        // 1. Selector Maestro de las 4 Ediciones (Por defecto: 3ra Edición)
         function seleccionarEdicion(edicion) {
             if (edicion === '10k') {
                 alert("La Edición Especial 10K abrirá su periodo de recepción de evidencias en Noviembre.");
@@ -779,31 +849,72 @@
 
             edicionActual = edicion;
 
-            // Estilos de botones
-            const btn3 = document.getElementById('btn-ed-3ra');
-            const btn4 = document.getElementById('btn-ed-4ta');
+            const configEdiciones = {
+                '1ra': {
+                    btnId: 'btn-ed-1ra',
+                    label: '<span class="flex items-center gap-1.5"><i class="fa-solid fa-trophy text-xs"></i> 1ra Edición 5K</span>',
+                    sub: 'Marzo 2026',
+                    badgeForm: 'Validación Conmemorativa • 1ra Edición 5K (Ranking Histórico Cerrado)',
+                    tituloRanking: 'Ranking Oficial 1ra Edición 5K',
+                    subtexto: '🏆 <strong>1ra Edición 5K (Histórico Oficial):</strong> El ranking competitivo está cerrado con sus 51 corredores originales. Si adquiriste la medalla conmemorativa, puedes validar tu tiempo abajo y descargar tu certificado oficial.'
+                },
+                '2da': {
+                    btnId: 'btn-ed-2da',
+                    label: '<span class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-xs"></i> 2da Edición 5K</span>',
+                    sub: 'Junio 2026',
+                    badgeForm: 'Validación Conmemorativa • 2da Edición 5K (Ranking Histórico Cerrado)',
+                    tituloRanking: 'Ranking Oficial 2da Edición 5K',
+                    subtexto: '⚡ <strong>2da Edición 5K (Histórico Oficial):</strong> El ranking competitivo está cerrado con sus 42 corredores oficiales. Si adquiriste la medalla conmemorativa, puedes validar tu tiempo con IA y descargar tu diploma.'
+                },
+                '3ra': {
+                    btnId: 'btn-ed-3ra',
+                    label: '<span class="flex items-center gap-2"><i class="fa-solid fa-person-running text-sm"></i> 3ra Edición 5K</span>',
+                    sub: 'Activa • Por Defecto',
+                    badgeForm: 'Reportando para 3ra Edición 5K (Edición Principal Activa)',
+                    tituloRanking: 'Ranking 3ra Edición 5K',
+                    subtexto: '⚠️ Estás situado en la <strong class="text-[#00D2FF]">3ra Edición 5K</strong> por defecto. Si adquiriste el <strong class="text-white">Combo Dúo (3ra + 4ta)</strong>, envía una evidencia aquí y otra seleccionando la 4ta Edición.'
+                },
+                '4ta': {
+                    btnId: 'btn-ed-4ta',
+                    label: '<span class="flex items-center gap-1.5"><i class="fa-solid fa-fire-flame-curved text-sm"></i> 4ta Edición 5K</span>',
+                    sub: 'Hasta Diciembre',
+                    badgeForm: 'Reportando para 4ta Edición 5K (Plazo: Hasta Diciembre)',
+                    tituloRanking: 'Ranking 4ta Edición 5K',
+                    subtexto: '🔥 Estás situado en la <strong class="text-amber-400">4ta Edición 5K</strong>. Todas las evidencias validadas aquí se registran directamente en la hoja oficial de la 4ta Edición.'
+                }
+            };
 
-            if (edicion === '3ra') {
-                btn3.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-[#00D2FF] text-[#001E50] shadow-lg shadow-[#00D2FF]/20 flex flex-col sm:flex-row items-center gap-2";
-                btn3.innerHTML = `<span class="flex items-center gap-2"><i class="fa-solid fa-person-running text-sm"></i> 3ra Edición 5K</span><span class="text-[9px] px-2 py-0.5 rounded-full bg-[#001E50] text-[#00D2FF] font-bold">Todo Octubre</span>`;
-                btn4.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex flex-col sm:flex-row items-center gap-2";
-                btn4.innerHTML = `<span class="flex items-center gap-2"><i class="fa-solid fa-fire-flame-curved text-sm"></i> 4ta Edición 5K</span><span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-amber-300 font-bold">Hasta Diciembre</span>`;
-                document.getElementById('badge-edicion-form').innerText = "Reportando para 3ra Edición 5K (Plazo: Todo Octubre)";
-                document.getElementById('titulo-ranking').innerText = "Ranking 3ra Edición 5K";
-            } else {
-                btn4.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-[#00D2FF] text-[#001E50] shadow-lg shadow-[#00D2FF]/20 flex flex-col sm:flex-row items-center gap-2";
-                btn4.innerHTML = `<span class="flex items-center gap-2"><i class="fa-solid fa-fire-flame-curved text-sm"></i> 4ta Edición 5K</span><span class="text-[9px] px-2 py-0.5 rounded-full bg-[#001E50] text-[#00D2FF] font-bold">Hasta Diciembre</span>`;
-                btn3.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex flex-col sm:flex-row items-center gap-2";
-                btn3.innerHTML = `<span class="flex items-center gap-2"><i class="fa-solid fa-person-running text-sm"></i> 3ra Edición 5K</span><span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-amber-300 font-bold">Todo Octubre</span>`;
-                document.getElementById('badge-edicion-form').innerText = "Reportando para 4ta Edición 5K (Plazo: Hasta Diciembre)";
-                document.getElementById('titulo-ranking').innerText = "Ranking 4ta Edición 5K";
-            }
+            ['1ra', '2da', '3ra', '4ta'].forEach(ed => {
+                const cfg = configEdiciones[ed];
+                const btn = document.getElementById(cfg.btnId);
+                if (!btn) return;
+
+                if (ed === edicion) {
+                    btn.className = "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-[#00D2FF] text-[#001E50] shadow-lg shadow-[#00D2FF]/20 flex flex-col sm:flex-row items-center gap-2";
+                    btn.innerHTML = `${cfg.label}<span class="text-[9px] px-2 py-0.5 rounded-full bg-[#001E50] text-[#00D2FF] font-bold">${cfg.sub}</span>`;
+                } else {
+                    btn.className = "px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex flex-col sm:flex-row items-center gap-2";
+                    btn.innerHTML = `${cfg.label}<span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-slate-300 font-bold">${cfg.sub}</span>`;
+                }
+            });
+
+            const actualCfg = configEdiciones[edicion] || configEdiciones['3ra'];
+            document.getElementById('badge-edicion-form').innerText = actualCfg.badgeForm;
+            document.getElementById('titulo-ranking').innerText = actualCfg.tituloRanking;
+            const subEl = document.getElementById('subtexto-selector-edicion');
+            if (subEl) subEl.innerHTML = actualCfg.subtexto;
+
+            // Ocultar certificado previo al cambiar de edición para que regenere con el diseño correspondiente
+            const contCert = document.getElementById('contenedor-certificado');
+            if (contCert) contCert.style.display = 'none';
+            const btnDescBox = document.getElementById('btn-descarga-box');
+            if (btnDescBox) btnDescBox.classList.add('hidden');
 
             // Resetear validación de cédula si la escribió
             const ci = document.getElementById('inputCedula').value.trim();
             if (ci) verificarCedula();
 
-            // Cargar ranking de la edición
+            // Cargar ranking de la edición seleccionada
             cargarRanking();
         }
 
@@ -1459,16 +1570,16 @@
                 if (respAtleta.ok) {
                     const dataAtleta = await respAtleta.json();
                     if (dataAtleta.encontrado && dataAtleta.registros && dataAtleta.registros.length > 0) {
-                        // Buscar el registro correspondiente a la edición activa (3ra o 4ta)
+                        // Buscar el registro correspondiente a la edición activa (1ra, 2da, 3ra o 4ta)
                         const reg = dataAtleta.registros.find(r => {
-                            if (edicionActual === '3ra') {
-                                return (r.edicion === '3ra') || (r.carrera && (r.carrera.includes('3ra') || r.carrera.includes('Combo')));
-                            }
-                            if (edicionActual === '4ta') {
-                                return (r.edicion === '4ta') || (r.carrera && (r.carrera.includes('4ta') || r.carrera.includes('Combo')));
-                            }
+                            if (edicionActual === '1ra') return (r.edicion === '1ra') || (r.carrera && r.carrera.includes('1ra'));
+                            if (edicionActual === '2da') return (r.edicion === '2da') || (r.carrera && r.carrera.includes('2da'));
+                            if (edicionActual === '3ra') return (r.edicion === '3ra') || (r.carrera && (r.carrera.includes('3ra') || r.carrera.includes('Combo')));
+                            if (edicionActual === '4ta') return (r.edicion === '4ta') || (r.carrera && (r.carrera.includes('4ta') || r.carrera.includes('Combo')));
                             return true;
                         });
+
+                        const mapEdLabel = { '1ra': '1ra Edición', '2da': '2da Edición', '3ra': '3ra Edición', '4ta': '4ta Edición' };
 
                         if (!reg) {
                             // Está registrado en otra distancia (ej. 10K) pero NO en esta edición de 5K
@@ -1478,7 +1589,7 @@
                             document.getElementById('hiddenDorsal').value = '';
                             document.getElementById('hiddenGenero').value = '';
                             document.getElementById('bloque-inputs-evidencia').classList.add('opacity-40', 'pointer-events-none');
-                            estadoCi.innerHTML = `<span class="text-rose-400 font-bold"><i class="fa-solid fa-circle-xmark mr-1"></i>No inscrito en ${edicionActual === '4ta' ? '4ta Edición' : '3ra Edición'}</span>`;
+                            estadoCi.innerHTML = `<span class="text-rose-400 font-bold"><i class="fa-solid fa-circle-xmark mr-1"></i>No inscrito en ${mapEdLabel[edicionActual] || '3ra Edición'}</span>`;
                             return;
                         }
 
@@ -1786,7 +1897,13 @@
                     }
                 }
 
-                const nombreEd = edicionActual === '4ta' ? '4ta Edición' : '3ra Edición';
+                const mapNombreEd = {
+                    '1ra': '1ra Edición',
+                    '2da': '2da Edición',
+                    '3ra': '3ra Edición',
+                    '4ta': '4ta Edición'
+                };
+                const nombreEd = mapNombreEd[edicionActual] || '3ra Edición';
 
                 if (!atleta) {
                     alert(`⚠️ No se encontró evidencia de carrera registrada para el Dorsal o Cédula "${raw}" en la ${nombreEd}.\n\nPara obtener tu certificado oficial debes haber completado tus 5K y reportado tu captura de tiempo en esta edición.`);
@@ -1808,46 +1925,79 @@
                     nombreFinal = 'CARLOS ANTONIO NATERA CANELO';
                 }
 
-                const certNombre = document.getElementById('cert-nombre');
-                const certDorsal = document.getElementById('cert-dorsal');
-                const certTiempo = document.getElementById('cert-tiempo');
-                if (certNombre) certNombre.innerText = nombreFinal;
-                if (certDorsal) certDorsal.innerText = '#' + dorsalLimpio;
-                if (certTiempo) certTiempo.innerText = atleta.tiempo || 'FINISHER OFICIAL';
-
-                // Dinamismo de Edición 3ra vs 4ta
                 const cardBody = document.getElementById('diploma-card-body');
-                const badgeEd = document.getElementById('cert-edicion-badge');
-                const fechaEl = document.getElementById('cert-fecha');
-                const modEl = document.getElementById('cert-modalidad-badge');
-                const leyendaEl = document.getElementById('cert-leyenda-edicion');
-                const qrImg = document.getElementById('cert-qr-img');
+                const card1ra = document.getElementById('diploma-1ra-body');
 
-                const urlValidacion = `https://www.retovirtualvzla.com/evidencias2.html?edicion=${edicionActual}&dorsal=${dorsalLimpio}`;
-                if (qrImg) {
-                    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(urlValidacion)}`;
-                }
+                // MODO 1RA EDICIÓN: Certificado Gráfico Histórico con fondo-certificado.webp
+                if (edicionActual === '1ra') {
+                    if (cardBody) cardBody.style.display = 'none';
+                    if (card1ra) card1ra.style.display = 'block';
 
-                if (edicionActual === '4ta') {
-                    cardBody.classList.add('edicion-4ta');
-                    badgeEd.className = "inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40 mt-1 shadow-sm";
-                    badgeEd.innerText = "4ta Edición 5K";
-                    fechaEl.innerText = "Diciembre, 2026";
-                    if (leyendaEl) {
-                        leyendaEl.innerText = "Por conquistar con garra, disciplina y perseverancia los 5 Kilómetros, dejando huella indeleble en la Gran 4ta Edición del Reto Virtual VZLA.";
-                    }
+                    const n1ra = document.getElementById('cert-1ra-nombre');
+                    const d1ra = document.getElementById('cert-1ra-dorsal');
+                    const t1ra = document.getElementById('cert-1ra-tiempo');
+                    if (n1ra) n1ra.innerText = nombreFinal;
+                    if (d1ra) d1ra.innerText = dorsalLimpio;
+                    if (t1ra) t1ra.innerText = atleta.tiempo || 'FINISHER';
+
+                    // Guardar también en los campos base para el nombre del archivo de descarga
+                    const certNombre = document.getElementById('cert-nombre');
+                    const certDorsal = document.getElementById('cert-dorsal');
+                    if (certNombre) certNombre.innerText = nombreFinal;
+                    if (certDorsal) certDorsal.innerText = '#' + dorsalLimpio;
                 } else {
-                    cardBody.classList.remove('edicion-4ta');
-                    badgeEd.className = "inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/40 mt-1 shadow-sm";
-                    badgeEd.innerText = "3ra Edición 5K";
-                    fechaEl.innerText = "Octubre, 2026";
-                    if (leyendaEl) {
-                        leyendaEl.innerText = "Por superar el desafío de los 5 Kilómetros con determinación, pasión y constancia, coronando con orgullo la 3ra Edición del Reto Virtual VZLA.";
-                    }
-                }
+                    // MODO 2DA, 3RA Y 4TA EDICIÓN: Diploma Digital Moderno Generado por Código
+                    if (card1ra) card1ra.style.display = 'none';
+                    if (cardBody) cardBody.style.display = 'flex';
 
-                if (atleta.modalidad) {
-                    modEl.innerText = `Modalidad ${atleta.modalidad}`;
+                    const certNombre = document.getElementById('cert-nombre');
+                    const certDorsal = document.getElementById('cert-dorsal');
+                    const certTiempo = document.getElementById('cert-tiempo');
+                    if (certNombre) certNombre.innerText = nombreFinal;
+                    if (certDorsal) certDorsal.innerText = '#' + dorsalLimpio;
+                    if (certTiempo) certTiempo.innerText = atleta.tiempo || 'FINISHER OFICIAL';
+
+                    const badgeEd = document.getElementById('cert-edicion-badge');
+                    const fechaEl = document.getElementById('cert-fecha');
+                    const modEl = document.getElementById('cert-modalidad-badge');
+                    const leyendaEl = document.getElementById('cert-leyenda-edicion');
+                    const qrImg = document.getElementById('cert-qr-img');
+
+                    const urlValidacion = `https://www.retovirtualvzla.com/evidencias2.html?edicion=${edicionActual}&dorsal=${dorsalLimpio}`;
+                    if (qrImg) {
+                        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(urlValidacion)}`;
+                    }
+
+                    cardBody.classList.remove('edicion-2da', 'edicion-4ta');
+
+                    if (edicionActual === '2da') {
+                        cardBody.classList.add('edicion-2da');
+                        badgeEd.className = "inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/40 mt-1 shadow-sm";
+                        badgeEd.innerText = "2da Edición 5K";
+                        fechaEl.innerText = "Junio, 2026";
+                        if (leyendaEl) {
+                            leyendaEl.innerText = "Por conquistar con temple, velocidad y espíritu indomable los 5 Kilómetros, consagrándose con honor en la 2da Edición del Reto Virtual VZLA.";
+                        }
+                    } else if (edicionActual === '4ta') {
+                        cardBody.classList.add('edicion-4ta');
+                        badgeEd.className = "inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40 mt-1 shadow-sm";
+                        badgeEd.innerText = "4ta Edición 5K";
+                        fechaEl.innerText = "Diciembre, 2026";
+                        if (leyendaEl) {
+                            leyendaEl.innerText = "Por conquistar con garra, disciplina y perseverancia los 5 Kilómetros, dejando huella indeleble en la Gran 4ta Edición del Reto Virtual VZLA.";
+                        }
+                    } else {
+                        badgeEd.className = "inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/40 mt-1 shadow-sm";
+                        badgeEd.innerText = "3ra Edición 5K";
+                        fechaEl.innerText = "Octubre, 2026";
+                        if (leyendaEl) {
+                            leyendaEl.innerText = "Por superar el desafío de los 5 Kilómetros con determinación, pasión y constancia, coronando con orgullo la 3ra Edición del Reto Virtual VZLA.";
+                        }
+                    }
+
+                    if (atleta.modalidad) {
+                        modEl.innerText = `Modalidad ${atleta.modalidad}`;
+                    }
                 }
 
                 const contenedor = document.getElementById('contenedor-certificado');
@@ -1870,7 +2020,9 @@
         }
 
         function descargarImagenCertificado() {
-            const cardElement = document.getElementById('diploma-card-body');
+            const cardElement = (edicionActual === '1ra')
+                ? document.getElementById('diploma-1ra-body')
+                : document.getElementById('diploma-card-body');
             const numDorsal = document.getElementById('cert-dorsal').innerText.replace('#', '');
             const nombreAtleta = document.getElementById('cert-nombre').innerText.trim().replace(/\s+/g, '_');
 
@@ -1907,16 +2059,15 @@
             }
         });
 
-        // Inicialización al cargar la página
+        // Inicialización al cargar la página (Por defecto siempre en 3ra Edición)
         window.addEventListener('DOMContentLoaded', () => {
             try {
-                // Detectar si viene una edición seleccionada por URL (ej: evidencias2.html?edicion=4ta)
                 const urlParams = new URLSearchParams(window.location.search);
                 const edicionUrl = urlParams.get('edicion');
-                if (edicionUrl === '4ta') {
-                    seleccionarEdicion('4ta');
+                if (edicionUrl === '1ra' || edicionUrl === '2da' || edicionUrl === '3ra' || edicionUrl === '4ta') {
+                    seleccionarEdicion(edicionUrl);
                 } else {
-                    cargarRanking();
+                    seleccionarEdicion('3ra');
                 }
             } catch (err) {
                 console.warn("Error no bloqueante al cargar ranking inicial:", err);

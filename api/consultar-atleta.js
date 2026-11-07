@@ -23,9 +23,58 @@ export default async function handler(req, res) {
 
     try {
         // =========================================================================
-        // ACCIÓN 1: OBTENER RANKING PÚBLICO DE EVIDENCIAS (3ra o 4ta Edición)
+        // ACCIÓN 1: OBTENER RANKING PÚBLICO DE EVIDENCIAS (1ra, 2da, 3ra o 4ta Edición)
         // =========================================================================
         if (accion === 'ranking_evidencias') {
+            // Caso A: 1ra o 2da Edición (Rankings Históricos Cerrados Oficiales)
+            if (edicion === '1ra' || edicion === '2da') {
+                const gidRank = (edicion === '1ra') ? '1297920374' : '316140127';
+                const urlRank = `${CSV_BASE}gid=${gidRank}&t=${Date.now()}`;
+
+                const resp = await fetch(urlRank);
+                if (!resp.ok) {
+                    return res.status(502).json({ error: 'No se pudo conectar con la hoja de ranking histórico' });
+                }
+
+                const csvText = await resp.text();
+                const filas = csvText.split(/\r?\n/).filter(f => f.trim().length > 0);
+                if (filas.length <= 1) {
+                    return res.status(200).json({ ranking: [] });
+                }
+
+                const headers = parseCsvLine(filas[0]).map(h => h.toLowerCase());
+                let idxDorsal = 0, idxNombre = 1, idxGenero = 2, idxTiempo = 3;
+                headers.forEach((t, idx) => {
+                    if (t.includes('dorsal') || t.includes('numero')) idxDorsal = idx;
+                    if (t.includes('nombre') || t.includes('corredor')) idxNombre = idx;
+                    if (t.includes('genero') || t.includes('sexo') || t.includes('cat')) idxGenero = idx;
+                    if (t.includes('tiempo') || t.includes('crono')) idxTiempo = idx;
+                });
+
+                let lista = [];
+                for (let i = 1; i < filas.length; i++) {
+                    const cols = parseCsvLine(filas[i]);
+                    let dRaw = cols[idxDorsal] ? cols[idxDorsal].replace(/\D/g, '') : '';
+                    if (!dRaw || dRaw.length > 3) continue;
+                    const dPad = dRaw.padStart(3, '0');
+                    const nombre = cols[idxNombre] || 'Corredor';
+                    const genero = cols[idxGenero] || 'M';
+                    const tiempoRaw = cols[idxTiempo] || '';
+                    const tiempo = (!tiempoRaw || tiempoRaw.toLowerCase() === 'pendiente') ? 'Pendiente' : tiempoRaw;
+
+                    lista.push({
+                        dorsal: dPad,
+                        nombre: nombre,
+                        genero: genero.toUpperCase().startsWith('F') ? 'FEMENINO' : 'MASCULINO',
+                        tiempo: tiempo,
+                        estatus: 'Aprobado'
+                    });
+                }
+
+                return res.status(200).json({ ranking: lista });
+            }
+
+            // Caso B: 3ra o 4ta Edición (Evidencias en Vivo)
             const sheetName = (edicion === '4ta') ? 'Evidencias_4ta' : 'Evidencias_3ra';
             const url = `${CSV_BASE}sheet=${encodeURIComponent(sheetName)}&t=${Date.now()}`;
             
@@ -43,6 +92,7 @@ export default async function handler(req, res) {
 
             const headers = parseCsvLine(filas[0]).map(h => h.toLowerCase());
 
+            const idxEdicion = headers.findIndex(h => h.includes('edicion'));
             const idxDorsal = headers.findIndex(h => h.includes('dorsal'));
             const idxNombre = headers.findIndex(h => h.includes('nombre'));
             const idxGenero = headers.findIndex(h => h.includes('genero') || h.includes('sexo'));
@@ -53,6 +103,12 @@ export default async function handler(req, res) {
 
             for (let i = 1; i < filas.length; i++) {
                 const cols = parseCsvLine(filas[i]);
+                const edFila = (idxEdicion !== -1 ? cols[idxEdicion] : cols[1] || '').trim().toLowerCase();
+                // Si se consulta 3ra edición, ignorar registros conmemorativos de 1ra o 2da que hayan caído en esta hoja
+                if (edicion !== '4ta' && (edFila === '1ra' || edFila === '2da')) {
+                    continue;
+                }
+
                 const dorsal = (idxDorsal !== -1 ? cols[idxDorsal] : cols[3]) || 'S/N';
                 let nombre = (idxNombre !== -1 ? cols[idxNombre] : cols[4]) || 'Corredor';
                 const genero = (idxGenero !== -1 ? cols[idxGenero] : cols[5]) || '-';
@@ -91,6 +147,103 @@ export default async function handler(req, res) {
                 return res.status(400).json({ error: 'Cédula o dorsal requerido' });
             }
 
+            // Si es 1ra o 2da Edición: Buscar primero en el Ranking Oficial de 1ra/2da y en Evidencias Conmemorativas
+            if (edicion === '1ra' || edicion === '2da') {
+                let dorsalResuelto = (dorsalParam && dorsalParam.length <= 3) ? dorsalPad : '';
+
+                // Si el usuario buscó por Cédula (5 o más dígitos), resolver qué Dorsal tiene en esa edición o Tienda
+                if (ciClean && ciClean.length >= 5) {
+                    const gidsBusqueda = (edicion === '1ra')
+                        ? ['0', '2019500245', '1584884677']
+                        : ['368824798', '2019500245', '1584884677'];
+
+                    for (const g of gidsBusqueda) {
+                        if (dorsalResuelto) break;
+                        try {
+                            const rSheet = await fetch(`${CSV_BASE}gid=${g}&t=${Date.now()}`);
+                            if (rSheet.ok) {
+                                const tSheet = await rSheet.text();
+                                const fSheet = tSheet.split(/\r?\n/).filter(f => f.trim().length > 0);
+                                if (fSheet.length > 1) {
+                                    const hS = parseCsvLine(fSheet[0]).map(h => h.toLowerCase());
+                                    const idxC = hS.findIndex(h => h.includes('cedula') || h.includes('ci'));
+                                    const idxD = hS.findIndex(h => h.includes('dorsal')) !== -1 ? hS.findIndex(h => h.includes('dorsal')) : 0;
+                                    for (let k = 1; k < fSheet.length; k++) {
+                                        const cS = parseCsvLine(fSheet[k]);
+                                        const cVal = (idxC !== -1 && cS[idxC]) ? cS[idxC].replace(/\D/g, '').trim() : '';
+                                        if (cVal === ciClean) {
+                                            const dVal = cS[idxD] ? cS[idxD].replace(/\D/g, '').trim() : '';
+                                            if (dVal) {
+                                                dorsalResuelto = dVal.padStart(3, '0');
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } catch (e) {}
+                    }
+                }
+
+                // 1) Buscar en el Ranking Oficial de 1ra o 2da Edición
+                const gidRank = (edicion === '1ra') ? '1297920374' : '316140127';
+                try {
+                    const respRank = await fetch(`${CSV_BASE}gid=${gidRank}&t=${Date.now()}`);
+                    if (respRank.ok) {
+                        const csvRank = await respRank.text();
+                        const filasRank = csvRank.split(/\r?\n/).filter(f => f.trim().length > 0);
+                        for (let i = 1; i < filasRank.length; i++) {
+                            const cols = parseCsvLine(filasRank[i]);
+                            const fDorsal = cols[0] ? cols[0].replace(/\D/g, '').padStart(3, '0') : '';
+                            if (dorsalResuelto && fDorsal === dorsalResuelto) {
+                                return res.status(200).json({
+                                    yaSubio: true,
+                                    registro: {
+                                        dorsal: fDorsal,
+                                        nombre: cols[1] || 'Atleta',
+                                        tiempo: cols[3] || 'FINISHER',
+                                        fecha: edicion === '1ra' ? 'Marzo, 2026' : 'Junio, 2026',
+                                        estatus: 'Aprobado'
+                                    }
+                                });
+                            }
+                        }
+                    }
+                } catch (e) {}
+
+                // 2) Buscar si subió evidencia conmemorativa rezagada en Evidencias_3ra con etiqueta 1ra/2da
+                try {
+                    const respEv = await fetch(`${CSV_BASE}sheet=Evidencias_3ra&t=${Date.now()}`);
+                    if (respEv.ok) {
+                        const csvEv = await respEv.text();
+                        const filasEv = csvEv.split(/\r?\n/).filter(f => f.trim().length > 0);
+                        for (let i = 1; i < filasEv.length; i++) {
+                            const cols = parseCsvLine(filasEv[i]);
+                            const edFila = (cols[1] || '').trim().toLowerCase();
+                            if (edFila !== edicion.toLowerCase()) continue;
+
+                            const filaCI = cols[2] ? cols[2].replace(/\D/g, '').trim() : '';
+                            const filaDorsal = cols[3] ? cols[3].replace(/\D/g, '').padStart(3, '0') : '';
+                            if ((ciClean && filaCI === ciClean) || (dorsalResuelto && filaDorsal === dorsalResuelto)) {
+                                const rawSt = (cols[8] || '').toString().trim();
+                                return res.status(200).json({
+                                    yaSubio: true,
+                                    registro: {
+                                        dorsal: filaDorsal || cols[3] || '',
+                                        nombre: cols[4] || '',
+                                        tiempo: cols[6] || '',
+                                        fecha: cols[0] || '',
+                                        estatus: rawSt ? rawSt : 'Aprobado'
+                                    }
+                                });
+                            }
+                        }
+                    }
+                } catch (e) {}
+
+                return res.status(200).json({ yaSubio: false, registro: null });
+            }
+
             const sheetName = (edicion === '4ta') ? 'Evidencias_4ta' : 'Evidencias_3ra';
             const url = `${CSV_BASE}sheet=${encodeURIComponent(sheetName)}&t=${Date.now()}`;
             
@@ -107,6 +260,9 @@ export default async function handler(req, res) {
 
             for (let i = 1; i < filas.length; i++) {
                 const cols = parseCsvLine(filas[i]);
+                const edFila = (cols[1] || '').trim().toLowerCase();
+                if (edicion === '3ra' && (edFila === '1ra' || edFila === '2da')) continue;
+
                 const filaCI = cols[2] ? cols[2].replace(/\D/g, '').trim() : '';
                 const filaDorsal = cols[3] ? cols[3].replace(/\D/g, '').padStart(3, '0') : '';
 
@@ -173,6 +329,98 @@ export default async function handler(req, res) {
             }
             return nom;
         };
+
+        // 0. Consultar 1ra o 2da Edición 5K (Hoja histórica + Tienda Medallas M1/M2 + Combos 3ra)
+        if (edicion === '1ra' || edicion === '2da') {
+            const gidHist = (edicion === '1ra') ? '0' : '368824798';
+            const carreraLabel = (edicion === '1ra') ? '1ra Edición 5K' : '2da Edición 5K';
+
+            // A) Buscar en la hoja original de 1ra o 2da Edición
+            try {
+                const respHist = await fetch(`${CSV_BASE}gid=${gidHist}&t=${Date.now()}`);
+                if (respHist.ok) {
+                    const csvH = await respHist.text();
+                    const filasH = csvH.split(/\r?\n/).filter(f => f.trim().length > 0);
+                    if (filasH.length > 1) {
+                        const hH = parseCsv(filasH[0]).map(h => h.toLowerCase());
+                        const idxDorsal = hH.findIndex(h => h.includes('dorsal')) !== -1 ? hH.findIndex(h => h.includes('dorsal')) : 0;
+                        const idxCI = hH.findIndex(h => h.includes('cedula') || h.includes('ci')) !== -1 ? hH.findIndex(h => h.includes('cedula') || h.includes('ci')) : 1;
+                        const idxNombre = hH.findIndex(h => h.includes('nombre')) !== -1 ? hH.findIndex(h => h.includes('nombre')) : 2;
+                        const idxGen = hH.findIndex(h => h.includes('genero') || h.includes('sexo'));
+
+                        for (let i = 1; i < filasH.length; i++) {
+                            const col = parseCsv(filasH[i]);
+                            const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
+                            const filaDorsal = col[idxDorsal] ? col[idxDorsal].replace(/\D/g, '').trim() : '';
+                            const dNum = filaDorsal ? filaDorsal.padStart(3, '0') : 'S/N';
+
+                            const coincide = (filaCI && filaCI === queryTerm) || (filaDorsal && (filaDorsal === queryTerm || dNum === dorsalQueryPad));
+                            if (coincide) {
+                                const rawGen = idxGen !== -1 && col[idxGen] ? col[idxGen].trim() : '';
+                                let genFinal = rawGen.toUpperCase().startsWith('F') ? 'FEMENINO' : (rawGen.toUpperCase().startsWith('M') ? 'MASCULINO' : '');
+                                registrosAtleta.push({
+                                    dorsal: dNum,
+                                    nombre: normalizarNombre(col[idxNombre], filaCI, dNum),
+                                    tel: '',
+                                    carrera: carreraLabel,
+                                    edicion: edicion,
+                                    saldoNum: 0,
+                                    saldoRaw: "SOLVENTE",
+                                    esSolvente: true,
+                                    textil: '',
+                                    reserva: '',
+                                    genero: genFinal
+                                });
+                            }
+                        }
+                    }
+                }
+            } catch (e) {}
+
+            // B) Buscar en Tienda_Medallas (atletas que adquirieron M1 o M2 conmemorativa)
+            if (registrosAtleta.length === 0) {
+                try {
+                    const respTienda = await fetch(`${CSV_BASE}gid=2019500245&t=${Date.now()}`);
+                    if (respTienda.ok) {
+                        const csvT = await respTienda.text();
+                        const filasT = csvT.split(/\r?\n/).filter(f => f.trim().length > 0);
+                        if (filasT.length > 1) {
+                            const hT = parseCsv(filasT[0]).map(h => h.toLowerCase());
+                            const idxCI = hT.findIndex(h => h.includes('cedula') || h.includes('ci'));
+                            const idxDorsal = hT.findIndex(h => h.includes('dorsal'));
+                            const idxNombre = hT.findIndex(h => h.includes('nombre'));
+                            const idxM1 = hT.findIndex(h => h === 'm1' || h.includes('m1'));
+                            const idxM2 = hT.findIndex(h => h === 'm2' || h.includes('m2'));
+
+                            for (let i = 1; i < filasT.length; i++) {
+                                const col = parseCsv(filasT[i]);
+                                const filaCI = (idxCI !== -1 && col[idxCI]) ? col[idxCI].replace(/\D/g, '').trim() : '';
+                                const filaDorsal = (idxDorsal !== -1 && col[idxDorsal]) ? col[idxDorsal].replace(/\D/g, '').trim() : '';
+                                const dNum = filaDorsal ? filaDorsal.padStart(3, '0') : 'S/N';
+                                const cantMed = edicion === '1ra' ? Number(col[idxM1] || 0) : Number(col[idxM2] || 0);
+
+                                const coincide = (filaCI && filaCI === queryTerm) || (filaDorsal && (filaDorsal === queryTerm || dNum === dorsalQueryPad));
+                                if (coincide && cantMed > 0) {
+                                    registrosAtleta.push({
+                                        dorsal: dNum,
+                                        nombre: normalizarNombre(col[idxNombre], filaCI, dNum),
+                                        tel: '',
+                                        carrera: carreraLabel,
+                                        edicion: edicion,
+                                        saldoNum: 0,
+                                        saldoRaw: "SOLVENTE",
+                                        esSolvente: true,
+                                        textil: '',
+                                        reserva: '',
+                                        genero: ''
+                                    });
+                                }
+                            }
+                        }
+                    }
+                } catch (e) {}
+            }
+        }
 
         // 1. Consultar 3ra Edición 5K (si no se filtró por otra edición)
         if (!edicion || edicion === '3ra') {

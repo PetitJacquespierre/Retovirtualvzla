@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     if (req.method === 'OPTIONS') return res.status(200).end();
 
     const SPREADSHEET_ID = "1vg9nwhkFxwN4qVzjkfmXTrIVoHVYxeMH3-PXjqzeWao";
-    const CSV_BASE = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&`;
+    const CSV_BASE = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&headers=1&`;
 
     const accion = req.query.accion || (req.body && req.body.accion) || 'consultar';
     const edicion = req.query.edicion || (req.body && req.body.edicion) || '';
@@ -141,8 +141,8 @@ export default async function handler(req, res) {
         const parseCsv = (line) => line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
 
         const GOOGLE_CSV_URL_10K = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5yMHsenxCWE5kZBDUZ8UcYqDtdAHstfqXcvWkuYZPQ_4n2xSrfs6ptk7k21r1kcMHHLtWjz8SEHwl/pub?gid=244601533&single=true&output=csv";
-        const GOOGLE_CSV_URL_3RA = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&gid=1584884677`;
-        const GOOGLE_CSV_URL_4TA = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&gid=95585629`;
+        const GOOGLE_CSV_URL_3RA = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&headers=1&gid=1584884677`;
+        const GOOGLE_CSV_URL_4TA = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&headers=1&gid=95585629`;
 
         if (accion === 'total_dorsales') {
             const resp10k = await fetch(GOOGLE_CSV_URL_10K + "&t=" + Date.now(), { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });

@@ -33,10 +33,10 @@ Archivo de contexto local y memoria viva para la plataforma de carreras deportiv
 - [x] FOMO en tiempo real en `index.html` para la Edición 10K conectado a Google Sheets (conteo dinámico y porcentaje).
 - [x] Tienda Oficial (`tienda.html`) estilo marketplace con Medallas 1ra/2da Edición ($5), Medallero Hexagonal ($7), auto-detección de dorsal por cédula y registro en Google Sheets (`Tienda_Medallas`).
 - [ ] Culminar completamente la 3ra y 4ta Edición de 5K.
-- [ ] 🚨 **TO-DO PRIORITARIO (POST 3RA/4TA EDICIÓN — ANTES DE INICIAR LOS 10K):** Unificar `evidencias2.html` y `resultados.html` en un **único Centro de "Evidencias, Ranking y Resultados"** tomando como base el diseño de `evidencias2.html`:
-  - Integrar selector de todas las ediciones (`1ra`, `2da`, `3ra`, `4ta` y `10K`) en `evidencias2.html`.
-  - Mostrar automáticamente solo Ranking + Generador de Diploma Neón para ediciones cerradas (`1ra`, `2da`, `3ra`, `4ta`) y habilitar el formulario de carga con IA para la edición activa (`10K`).
-  - Unificar los enlaces del menú de navegación en uno solo (*"Ranking y Evidencias"*) y redirigir `resultados.html` hacia `evidencias2.html` para no romper enlaces antiguos.
+- [x] 🚨 **UNIFICACIÓN COMPLETADA (`evidencias2.html`):** Unificado `evidencias2.html` y `resultados.html` en un **único Centro de Evidencias, Ranking y Diplomas**:
+  - Integrado selector maestro de todas las ediciones (`1ra`, `2da`, `3ra` por defecto, `4ta` y `10K`) en `evidencias2.html`.
+  - Diploma histórico original (`fondo-certificado.webp`) para `1ra Edición` y diplomas generados por código con identidad cromática diferenciada para `2da Edición` (Esmeralda), `3ra Edición` (Cian Eléctrico) y `4ta Edición` (Oro Imperial).
+  - Eliminado `resultados.html` de todos los menús de navegación y configurada redirección automática hacia `evidencias2.html`.
 - [ ] 🚨 **RECORDATORIO OBLIGATORIO (POST-5K):** Activar campaña publicitaria pagada para los 10K (vender los ~50 cupos restantes hasta llegar a 100).
 - [ ] Integración y verificación de reportes de pago móvil / transferencias.
 

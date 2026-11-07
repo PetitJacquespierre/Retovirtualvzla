@@ -227,354 +227,209 @@
         </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL ESTILO MERCADOLIBRE / MARKETPLACE RESPONSIVO -->
+    <!-- CONTENIDO PRINCIPAL ESTILO ALIEXPRESS / MERCADOLIBRE (CARDS CUADRADAS 1:1 + CARRITO DESPLEGABLE) -->
     <main class="flex-grow py-6 md:py-10 px-3 sm:px-6">
         <div class="max-w-6xl mx-auto">
 
-            <!-- Contenedor Principal: Catálogo (Izquierda) + Carrito/Checkout (Derecha) -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                
-                <!-- COLUMNA IZQUIERDA: PRODUCTOS (7 columnas en PC, 100% en móvil) -->
-                <div class="lg:col-span-7 space-y-6">
-                    
-                    <!-- Categoría 1: Disponibles Bajo Pedido ($5 USD) -->
-                    <div class="bg-[#131f3a] border border-slate-800 rounded-2xl p-3.5 sm:p-5">
-                        <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-800">
-                            <h2 class="text-xs sm:text-sm font-black uppercase tracking-wider text-white flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-[#00D2FF]"></span> Ediciones Anteriores • $5 USD
-                            </h2>
-                            <span class="text-[10px] text-[#00D2FF] bg-[#00D2FF]/10 px-2 py-0.5 rounded font-bold">Bajo Pedido</span>
-                        </div>
-
-                        <!-- Grid 2 columnas en móvil y PC (Tarjetas tipo MercadoLibre) -->
-                        <div class="grid grid-cols-2 gap-3 sm:gap-4">
-                            
-                            <!-- Producto 1: Medalla 1ra Edición con giro 3D -->
-                            <div class="bg-[#001E50] border border-white/10 hover:border-[#00D2FF] rounded-xl overflow-hidden flex flex-col justify-between transition-all shadow-md group medal-card-hover">
-                                <div class="relative aspect-[4/5] bg-slate-950 overflow-hidden">
-                                    <span class="absolute top-2 left-2 bg-blue-600/90 backdrop-blur-sm text-white text-[8px] sm:text-[9px] font-black uppercase px-2 py-0.5 rounded shadow z-10">
-                                        Bajo Pedido
-                                    </span>
-                                    <img src="img/medalla1.jpg" alt="Medalla 1ra Edición" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                </div>
-
-                                <div class="p-2.5 sm:p-3.5 flex flex-col justify-between flex-grow">
-                                    <div>
-                                        <span class="text-[9px] sm:text-[10px] text-[#00D2FF] font-bold uppercase block">1ra Edición • Marzo</span>
-                                        <h3 class="text-xs sm:text-sm font-bold text-white leading-tight mt-0.5 line-clamp-2">
-                                            Medalla Finisher 5K (Montaña)
-                                        </h3>
-                                        <div class="mt-1.5 flex items-baseline gap-1">
-                                            <span class="text-base sm:text-xl font-black text-white">$5</span>
-                                            <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">USD</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Control de cantidad adaptado a móvil -->
-                                    <div class="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between">
-                                        <span class="text-[10px] text-slate-300 font-semibold hidden sm:inline">Cant:</span>
-                                        <div class="flex items-center justify-between w-full sm:w-auto gap-1.5 bg-slate-950/80 border border-white/15 rounded-lg p-1">
-                                            <button type="button" onclick="cambiarCantidad('m1', -1)" class="w-7 h-7 sm:w-6 sm:h-6 rounded bg-white/10 hover:bg-white/20 active:bg-white/30 text-white text-xs flex items-center justify-center font-black transition-colors">
-                                                -
-                                            </button>
-                                            <span id="cant-m1" class="w-6 text-center text-xs font-black text-[#00D2FF]">0</span>
-                                            <button type="button" onclick="cambiarCantidad('m1', 1)" class="w-7 h-7 sm:w-6 sm:h-6 rounded bg-[#00D2FF] hover:bg-[#00D2FF]/80 active:scale-95 text-[#001E50] text-xs flex items-center justify-center font-black transition-all">
-                                                +
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Producto 2: Medalla 2da Edición con giro 3D -->
-                            <div class="bg-[#001E50] border border-white/10 hover:border-[#00D2FF] rounded-xl overflow-hidden flex flex-col justify-between transition-all shadow-md group medal-card-hover">
-                                <div class="relative aspect-[4/5] bg-slate-950 overflow-hidden">
-                                    <span class="absolute top-2 left-2 bg-blue-600/90 backdrop-blur-sm text-white text-[8px] sm:text-[9px] font-black uppercase px-2 py-0.5 rounded shadow z-10">
-                                        Bajo Pedido
-                                    </span>
-                                    <img src="img/medalla2.jpg" alt="Medalla 2da Edición" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                </div>
-
-                                <div class="p-2.5 sm:p-3.5 flex flex-col justify-between flex-grow">
-                                    <div>
-                                        <span class="text-[9px] sm:text-[10px] text-[#00D2FF] font-bold uppercase block">2da Edición • Junio</span>
-                                        <h3 class="text-xs sm:text-sm font-bold text-white leading-tight mt-0.5 line-clamp-2">
-                                            Medalla Finisher 5K (Guacamaya)
-                                        </h3>
-                                        <div class="mt-1.5 flex items-baseline gap-1">
-                                            <span class="text-base sm:text-xl font-black text-white">$5</span>
-                                            <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">USD</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Control de cantidad adaptado a móvil -->
-                                    <div class="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between">
-                                        <span class="text-[10px] text-slate-300 font-semibold hidden sm:inline">Cant:</span>
-                                        <div class="flex items-center justify-between w-full sm:w-auto gap-1.5 bg-slate-950/80 border border-white/15 rounded-lg p-1">
-                                            <button type="button" onclick="cambiarCantidad('m2', -1)" class="w-7 h-7 sm:w-6 sm:h-6 rounded bg-white/10 hover:bg-white/20 active:bg-white/30 text-white text-xs flex items-center justify-center font-black transition-colors">
-                                                -
-                                            </button>
-                                            <span id="cant-m2" class="w-6 text-center text-xs font-black text-[#00D2FF]">0</span>
-                                            <button type="button" onclick="cambiarCantidad('m2', 1)" class="w-7 h-7 sm:w-6 sm:h-6 rounded bg-[#00D2FF] hover:bg-[#00D2FF]/80 active:scale-95 text-[#001E50] text-xs flex items-center justify-center font-black transition-all">
-                                                +
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- Categoría 2: Ediciones de Temporada ($10 USD) -->
-                    <div class="bg-[#131f3a] border border-slate-800 rounded-2xl p-3.5 sm:p-5">
-                        <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-800">
-                            <h2 class="text-xs sm:text-sm font-black uppercase tracking-wider text-white flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-amber-400"></span> Ediciones Actuales • $10 USD
-                            </h2>
-                            <span class="text-[10px] text-amber-300 bg-amber-400/10 px-2 py-0.5 rounded font-bold">Próximamente</span>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3 sm:gap-4">
-                            
-                            <!-- Producto 3: Medalla 3ra Edición -->
-                            <div class="bg-[#001E50]/80 border border-white/10 hover:border-amber-400/50 rounded-xl overflow-hidden flex flex-col justify-between transition-all shadow-md group medal-card-hover">
-                                <div class="relative aspect-[4/5] bg-slate-950 overflow-hidden">
-                                    <span class="absolute top-2 left-2 bg-amber-500 text-slate-950 text-[8px] sm:text-[9px] font-black uppercase px-2 py-0.5 rounded shadow z-10">
-                                        Próximamente
-                                    </span>
-                                    <img src="img/medalla3.jpg" alt="Medalla 3ra Edición" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                </div>
-
-                                <div class="p-2.5 sm:p-3.5 flex flex-col justify-between flex-grow">
-                                    <div>
-                                        <span class="text-[9px] sm:text-[10px] text-amber-400 font-bold uppercase block">3ra Edición • Octubre</span>
-                                        <h3 class="text-xs sm:text-sm font-bold text-white leading-tight mt-0.5 line-clamp-2">
-                                            Medalla Oficial 5K (Faro y Costa)
-                                        </h3>
-                                        <div class="mt-1.5 flex items-baseline gap-1">
-                                            <span class="text-base sm:text-xl font-black text-amber-400">$10</span>
-                                            <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">USD</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-2.5 pt-2 border-t border-white/10">
-                                        <button type="button" onclick="consultarDisponibilidad('Medalla 3ra Edición (Octubre)')" class="w-full bg-white/10 hover:bg-white/20 text-white text-[10px] sm:text-xs font-bold py-2 px-2 rounded-lg flex items-center justify-center gap-1.5 transition-colors">
-                                            <i class="fa-brands fa-whatsapp text-green-400"></i> Consultar
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Producto 4: Medalla 4ta Edición -->
-                            <div class="bg-[#001E50]/80 border border-white/10 hover:border-amber-400/50 rounded-xl overflow-hidden flex flex-col justify-between transition-all shadow-md group medal-card-hover">
-                                <div class="relative aspect-[4/5] bg-slate-950 overflow-hidden">
-                                    <span class="absolute top-2 left-2 bg-amber-500 text-slate-950 text-[8px] sm:text-[9px] font-black uppercase px-2 py-0.5 rounded shadow z-10">
-                                        Próximamente
-                                    </span>
-                                    <img src="img/medalla4.jpg" alt="Medalla 4ta Edición" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                </div>
-
-                                <div class="p-2.5 sm:p-3.5 flex flex-col justify-between flex-grow">
-                                    <div>
-                                        <span class="text-[9px] sm:text-[10px] text-amber-400 font-bold uppercase block">4ta Edición • Diciembre</span>
-                                        <h3 class="text-xs sm:text-sm font-bold text-white leading-tight mt-0.5 line-clamp-2">
-                                            Medalla Oficial 5K (Salto Ángel)
-                                        </h3>
-                                        <div class="mt-1.5 flex items-baseline gap-1">
-                                            <span class="text-base sm:text-xl font-black text-amber-400">$10</span>
-                                            <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">USD</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-2.5 pt-2 border-t border-white/10">
-                                        <button type="button" onclick="consultarDisponibilidad('Medalla 4ta Edición (Diciembre)')" class="w-full bg-white/10 hover:bg-white/20 text-white text-[10px] sm:text-xs font-bold py-2 px-2 rounded-lg flex items-center justify-center gap-1.5 transition-colors">
-                                            <i class="fa-brands fa-whatsapp text-green-400"></i> Consultar
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- Categoría 3: Medallero Hexagonal Oficial ($7 USD) -->
-                    <div class="bg-[#131f3a] border border-slate-800 rounded-2xl p-3.5 sm:p-5">
-                        <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-800">
-                            <h2 class="text-xs sm:text-sm font-black uppercase tracking-wider text-white flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Medallero Oficial • $7 USD
-                            </h2>
-                            <span class="text-[10px] text-emerald-300 bg-emerald-400/10 border border-emerald-400/30 px-2 py-0.5 rounded font-bold">Disponible</span>
-                        </div>
-
-                        <!-- Tarjeta de Producto Medallero con Foto Real -->
-                        <div class="bg-[#001E50] border border-white/10 hover:border-emerald-400/60 rounded-xl overflow-hidden flex flex-col sm:flex-row transition-all shadow-md group medal-card-hover">
-                            <!-- Foto del Medallero -->
-                            <div class="relative w-full sm:w-48 aspect-square sm:aspect-auto bg-slate-950 overflow-hidden shrink-0">
-                                <span class="absolute top-2 left-2 bg-emerald-500 text-slate-950 text-[8px] sm:text-[9px] font-black uppercase px-2 py-0.5 rounded shadow z-10">
-                                    Nuevo
-                                </span>
-                                <img src="img/medallero.jpg" alt="Medallero Hexagonal Reto Virtual" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            </div>
-
-                            <!-- Información y Pedido -->
-                            <div class="p-3.5 sm:p-4 flex flex-col justify-between flex-grow">
-                                <div>
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-[9px] sm:text-[10px] text-emerald-400 font-bold uppercase block">Exhibidor de Pared</span>
-                                        <div class="flex items-baseline gap-1">
-                                            <span class="text-lg sm:text-2xl font-black text-white">$7</span>
-                                            <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">USD</span>
-                                        </div>
-                                    </div>
-
-                                    <h3 class="text-sm sm:text-base font-bold text-white leading-tight mt-1">
-                                        Medallero Hexagonal Reto Virtual
-                                    </h3>
-                                    
-                                    <p class="text-xs text-slate-300 font-normal mt-1.5 leading-relaxed">
-                                        Coloca tu medalla en tu pared para que todo el mundo vea tus logros y cada kilómetro superado. Diseño modular hexagonal con acabado premium texturizado negro.
-                                    </p>
-                                </div>
-
-                                <!-- Control de Cantidad integrado a la Cesta -->
-                                <div class="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between">
-                                    <span class="text-[11px] text-slate-300 font-semibold">Cantidad:</span>
-                                    <div class="flex items-center gap-2 bg-slate-950/80 border border-white/15 rounded-lg p-1">
-                                        <button type="button" onclick="cambiarCantidad('medallero', -1)" class="w-8 h-8 rounded bg-white/10 hover:bg-white/20 active:bg-white/30 text-white text-xs flex items-center justify-center font-black transition-colors">
-                                            -
-                                        </button>
-                                        <span id="cant-medallero" class="w-7 text-center text-xs font-black text-emerald-400">0</span>
-                                        <button type="button" onclick="cambiarCantidad('medallero', 1)" class="w-8 h-8 rounded bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-[#001E50] text-xs flex items-center justify-center font-black transition-all">
-                                            +
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+            <!-- BARRA SUPERIOR DE TIENDA: FILTROS + BOTÓN VER CARRITO DE COMPRA -->
+            <div class="bg-[#131f3a]/90 backdrop-blur-md border border-white/10 rounded-2xl p-3 sm:p-4 mb-6 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+                <!-- Filtros rápidos estilo Marketplace -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
+                    <button type="button" onclick="filtrarCatalogo('todos')" id="filtro-todos" class="px-3.5 py-1.5 rounded-xl text-[11px] font-black uppercase tracking-wider bg-[#00D2FF] text-[#001E50] transition-all whitespace-nowrap">
+                        Todos (5)
+                    </button>
+                    <button type="button" onclick="filtrarCatalogo('medallas')" id="filtro-medallas" class="px-3.5 py-1.5 rounded-xl text-[11px] font-bold uppercase tracking-wider bg-white/5 hover:bg-white/10 text-slate-300 transition-all whitespace-nowrap">
+                        <i class="fa-solid fa-medal text-amber-400 mr-1"></i> Medallas 5K
+                    </button>
+                    <button type="button" onclick="filtrarCatalogo('accesorios')" id="filtro-accesorios" class="px-3.5 py-1.5 rounded-xl text-[11px] font-bold uppercase tracking-wider bg-white/5 hover:bg-white/10 text-slate-300 transition-all whitespace-nowrap">
+                        <i class="fa-solid fa-trophy text-emerald-400 mr-1"></i> Medalleros
+                    </button>
                 </div>
 
-                <!-- COLUMNA DERECHA: CESTA DE COMPRA Y PAGO (5 columnas en PC, 100% en móvil) -->
-                <div class="lg:col-span-5" id="cesta-compra">
-                    <div class="bg-[#001E50] border-2 border-[#00D2FF]/30 rounded-2xl p-4 sm:p-6 shadow-2xl lg:sticky lg:top-28 space-y-4">
-                        
-                        <!-- Cabecera Cesta -->
-                        <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                            <h2 class="text-sm sm:text-base font-black uppercase italic tracking-wider text-white flex items-center gap-2">
-                                <i class="fa-solid fa-cart-shopping text-[#00D2FF]"></i> Tu Cesta de Compra
-                            </h2>
-                            <span id="badge-items" class="bg-[#00D2FF] text-[#001E50] text-[10px] font-black px-2.5 py-0.5 rounded-full">0 medallas</span>
-                        </div>
+                <!-- Botón estilo AliExpress / eBay para abrir el Carrito bajo demanda -->
+                <button type="button" onclick="abrirCarrito()" class="ml-auto bg-[#001E50] hover:bg-[#002868] border-2 border-[#00D2FF]/50 hover:border-[#00D2FF] text-white px-4 py-2 rounded-xl flex items-center gap-2.5 transition-all shadow-[0_0_20px_rgba(0,210,255,0.15)] group">
+                    <div class="relative">
+                        <i class="fa-solid fa-cart-shopping text-[#00D2FF] text-sm group-hover:scale-110 transition-transform"></i>
+                        <span id="header-cart-count" class=" -top-2 -right-2.5 bg-[#00D2FF] text-[#001E50] text-[9px] font-black w-4 h-4 rounded-full inline-flex items-center justify-center">0</span>
+                    </div>
+                    <span class="text-[11px] sm:text-xs font-black uppercase tracking-wider">Ver Carrito de Compra</span>
+                    <span id="header-cart-total" class="text-[11px] font-mono font-black text-[#00D2FF] bg-[#00D2FF]/10 px-2 py-0.5 rounded-md border border-[#00D2FF]/20">$0</span>
+                </button>
+            </div>
 
-                        <!-- Desglose del Pedido -->
-                        <div class="bg-slate-950/50 rounded-xl p-3 space-y-2 text-xs border border-white/5">
-                            <div class="flex justify-between items-center text-slate-300">
-                                <span>Medalla 1ra Edición ($5 USD):</span>
-                                <span id="resumen-m1" class="font-bold text-white">0 un.</span>
-                            </div>
-                            <div class="flex justify-between items-center text-slate-300">
-                                <span>Medalla 2da Edición ($5 USD):</span>
-                                <span id="resumen-m2" class="font-bold text-white">0 un.</span>
-                            </div>
-                            <div class="flex justify-between items-center text-slate-300">
-                                <span>Medallero Hexagonal ($7 USD):</span>
-                                <span id="resumen-medallero" class="font-bold text-emerald-400">0 un.</span>
-                            </div>
-                            <div class="flex justify-between items-center pt-2 border-t border-white/10 text-sm font-black text-white">
-                                <span>Total a Pagar:</span>
-                                <span id="total-dolares" class="text-[#00D2FF] text-lg font-black">$0 USD</span>
-                            </div>
-                        </div>
+            <!-- GRILLA UNIFICADA DE PRODUCTOS CON IMÁGENES 100% CUADRADAS (1:1) ESTILO ALIEXPRESS / MERCADOLIBRE -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5">
 
-                        <!-- Paso 1: Datos del Comprador -->
-                        <div class="space-y-2.5 pt-1">
-                            <label class="text-[10px] font-black uppercase tracking-widest text-[#00D2FF] block">
-                                1. Datos para el Pedido
-                            </label>
-                            
-                            <!-- Búsqueda y Validación de Cédula / Dorsal -->
-                            <div>
-                                <label class="text-[10px] text-slate-300 font-semibold block mb-1">
-                                    Cédula de Identidad * <span class="text-[#00D2FF] text-[9px] font-normal">(Escribe tu cédula para auto-detectar tu dorsal)</span>
-                                </label>
-                                <div class="relative flex items-center">
-                                    <input type="text" id="cedulaAtleta" oninput="alEscribirCedulaTienda()" placeholder="Ej: 12345678" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF] pr-28">
-                                    <button type="button" onclick="consultarDorsalTienda()" class="absolute right-1.5 bg-[#00D2FF]/20 hover:bg-[#00D2FF]/40 border border-[#00D2FF]/50 text-[#00D2FF] text-[10px] font-bold px-2.5 py-1.5 rounded-lg transition-colors flex items-center gap-1">
-                                        <i class="fa-solid fa-magnifying-glass"></i> Buscar
-                                    </button>
-                                </div>
-                                <div id="status-cedula-tienda" class="text-[10px] mt-1 text-slate-400"></div>
-                            </div>
+                <!-- Producto 1: Medalla 1ra Edición (Cuadrada 1:1 + Consultar) -->
+                <div data-categoria="medallas" class="producto-card bg-[#0d182e] border border-white/10 hover:border-[#00D2FF]/60 rounded-2xl overflow-hidden flex flex-col justify-between transition-all shadow-lg group medal-card-hover">
+                    <div class="relative aspect-square w-full bg-slate-950 overflow-hidden">
+                        <span class="absolute top-2.5 left-2.5 bg-blue-600/90 backdrop-blur-sm text-white text-[8px] sm:text-[9px] font-black uppercase px-2.5 py-1 rounded-md shadow z-10">
+                            1ra Edición
+                        </span>
+                        <img src="img/medalla1.jpg" alt="Medalla 1ra Edición" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                    </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                                <div class="sm:col-span-2">
-                                    <label class="text-[10px] text-slate-300 font-semibold block mb-1">Nombre y Apellido *</label>
-                                    <input type="text" id="nombreAtleta" placeholder="Nombre y Apellido *" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF]">
-                                </div>
-                                <div>
-                                    <label class="text-[10px] text-slate-300 font-semibold block mb-1">N° Dorsal</label>
-                                    <input type="text" id="dorsalAtleta" placeholder="Ej: 045" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-[#00D2FF] font-black placeholder-slate-400 outline-none focus:border-[#00D2FF] text-center">
-                                </div>
+                    <div class="p-3 sm:p-4 flex flex-col justify-between flex-grow">
+                        <div>
+                            <div class="flex items-center justify-between gap-1 mb-1">
+                                <span class="text-[9px] sm:text-[10px] text-[#00D2FF] font-bold uppercase tracking-wider">Marzo 2026</span>
+                                <span class="text-[9px] text-amber-400 font-bold flex items-center gap-0.5"><i class="fa-solid fa-star text-[8px]"></i> 5.0</span>
                             </div>
-
-                            <div>
-                                <label class="text-[10px] text-slate-300 font-semibold block mb-1">Teléfono WhatsApp *</label>
-                                <input type="tel" id="telefonoAtleta" placeholder="0412-1234567 *" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF]">
-                            </div>
-
-                            <div>
-                                <label class="text-[10px] text-slate-300 font-semibold block mb-1">Número de Referencia de Pago *</label>
-                                <input type="text" id="refPagoAtleta" placeholder="Últimos 4 o 6 dígitos de la referencia *" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF]">
-                            </div>
-
-                            <div>
-                                <label class="text-[10px] text-slate-300 font-semibold block mb-1">Modalidad de Envío:</label>
-                                <select id="modalidadEnvio" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3 py-2.5 text-xs text-white outline-none focus:border-[#00D2FF]">
-                                    <option value="combo_inscrito">📦 Tengo cupo 3ra/4ta ed. (Mismo paquete sin flete extra)</option>
-                                    <option value="envio_independiente">🚚 Envío por Zoom/MRW (Cobro en destino)</option>
-                                    <option value="ya_enviado">⚠️ Ya recibí mi paquete anterior (Nuevo envío Zoom/MRW)</option>
-                                </select>
+                            <h3 class="text-xs sm:text-sm font-bold text-white leading-snug line-clamp-2">
+                                Medalla Finisher 5K (Montaña)
+                            </h3>
+                            <div class="mt-2 flex items-baseline gap-1">
+                                <span class="text-lg sm:text-2xl font-black text-white font-mono">$5</span>
+                                <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">USD</span>
                             </div>
                         </div>
 
-                        <!-- Paso 2: Datos de Pago Móvil / Binance -->
-                        <div class="space-y-2 pt-1">
-                            <label class="text-[10px] font-black uppercase tracking-widest text-[#00D2FF] block">
-                                2. Realiza tu Pago (Tasa BCV)
-                            </label>
-
-                            <div class="bg-slate-950/80 border border-white/10 rounded-xl p-3 text-xs space-y-1.5">
-                                <div class="flex items-center justify-between">
-                                    <span class="font-bold text-emerald-400 flex items-center gap-1.5">
-                                        <i class="fa-solid fa-mobile-screen"></i> Pago Móvil
-                                    </span>
-                                    <button type="button" onclick="copiarDatosPagoMovil()" class="text-[10px] font-bold uppercase bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-md text-white transition-colors flex items-center gap-1">
-                                        <i class="fa-regular fa-copy"></i> Copiar Datos
-                                    </button>
-                                </div>
-                                <div class="text-[11px] text-slate-200 font-mono leading-relaxed">
-                                    Banco: <strong>Mercantil (0105)</strong><br>
-                                    Tel: <strong>0412-7732710</strong> | C.I: <strong>14.074.229</strong>
-                                </div>
-                                <div class="text-[11px] text-slate-300 border-t border-white/10 pt-1.5 font-mono">
-                                    <span class="text-[#00D2FF] font-sans font-bold">Binance / Zinli:</span> petitjacquespierre@gmail.com
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Botón de Confirmación WhatsApp -->
-                        <div class="pt-2">
-                            <button type="button" id="btnConfirmarPedido" onclick="procesarPedidoWhatsApp()" class="w-full bg-[#25D366] hover:bg-[#20ba5a] text-[#001E50] font-black text-xs sm:text-sm uppercase tracking-wider py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 transition-all hover:scale-[1.01] active:scale-[0.99]">
-                                <i class="fa-brands fa-whatsapp text-lg"></i>
-                                <span>Enviar Pedido y Captura por WhatsApp</span>
+                        <div class="mt-3 pt-2.5 border-t border-white/10">
+                            <button type="button" onclick="consultarDisponibilidad('Medalla 1ra Edición (Marzo)', 5)" class="w-full bg-white/10 hover:bg-white/20 text-white text-[10px] sm:text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors border border-white/10">
+                                <i class="fa-brands fa-whatsapp text-green-400 text-sm"></i> Consultar
                             </button>
-                            <p class="text-[10px] text-center text-slate-400 mt-2">
-                                Se abrirá WhatsApp con tu orden lista para adjuntar el comprobante.
-                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 2: Medalla 2da Edición (Cuadrada 1:1 + Consultar) -->
+                <div data-categoria="medallas" class="producto-card bg-[#0d182e] border border-white/10 hover:border-[#00D2FF]/60 rounded-2xl overflow-hidden flex flex-col justify-between transition-all shadow-lg group medal-card-hover">
+                    <div class="relative aspect-square w-full bg-slate-950 overflow-hidden">
+                        <span class="absolute top-2.5 left-2.5 bg-blue-600/90 backdrop-blur-sm text-white text-[8px] sm:text-[9px] font-black uppercase px-2.5 py-1 rounded-md shadow z-10">
+                            2da Edición
+                        </span>
+                        <img src="img/medalla2.jpg" alt="Medalla 2da Edición" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                    </div>
+
+                    <div class="p-3 sm:p-4 flex flex-col justify-between flex-grow">
+                        <div>
+                            <div class="flex items-center justify-between gap-1 mb-1">
+                                <span class="text-[9px] sm:text-[10px] text-[#00D2FF] font-bold uppercase tracking-wider">Junio 2026</span>
+                                <span class="text-[9px] text-amber-400 font-bold flex items-center gap-0.5"><i class="fa-solid fa-star text-[8px]"></i> 5.0</span>
+                            </div>
+                            <h3 class="text-xs sm:text-sm font-bold text-white leading-snug line-clamp-2">
+                                Medalla Finisher 5K (Guacamaya)
+                            </h3>
+                            <div class="mt-2 flex items-baseline gap-1">
+                                <span class="text-lg sm:text-2xl font-black text-white font-mono">$5</span>
+                                <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">USD</span>
+                            </div>
                         </div>
 
+                        <div class="mt-3 pt-2.5 border-t border-white/10">
+                            <button type="button" onclick="consultarDisponibilidad('Medalla 2da Edición (Junio)', 5)" class="w-full bg-white/10 hover:bg-white/20 text-white text-[10px] sm:text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors border border-white/10">
+                                <i class="fa-brands fa-whatsapp text-green-400 text-sm"></i> Consultar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 3: Medalla 3ra Edición (Cuadrada 1:1 + Consultar) -->
+                <div data-categoria="medallas" class="producto-card bg-[#0d182e] border border-white/10 hover:border-amber-400/60 rounded-2xl overflow-hidden flex flex-col justify-between transition-all shadow-lg group medal-card-hover">
+                    <div class="relative aspect-square w-full bg-slate-950 overflow-hidden">
+                        <span class="absolute top-2.5 left-2.5 bg-amber-500 text-slate-950 text-[8px] sm:text-[9px] font-black uppercase px-2.5 py-1 rounded-md shadow z-10">
+                            3ra Edición
+                        </span>
+                        <img src="img/medalla3.jpg" alt="Medalla 3ra Edición" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                    </div>
+
+                    <div class="p-3 sm:p-4 flex flex-col justify-between flex-grow">
+                        <div>
+                            <div class="flex items-center justify-between gap-1 mb-1">
+                                <span class="text-[9px] sm:text-[10px] text-amber-400 font-bold uppercase tracking-wider">Octubre 2026</span>
+                                <span class="text-[9px] text-amber-400 font-bold flex items-center gap-0.5"><i class="fa-solid fa-star text-[8px]"></i> 5.0</span>
+                            </div>
+                            <h3 class="text-xs sm:text-sm font-bold text-white leading-snug line-clamp-2">
+                                Medalla Oficial 5K (Faro y Costa)
+                            </h3>
+                            <div class="mt-2 flex items-baseline gap-1">
+                                <span class="text-lg sm:text-2xl font-black text-amber-400 font-mono">$10</span>
+                                <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">USD</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 pt-2.5 border-t border-white/10">
+                            <button type="button" onclick="consultarDisponibilidad('Medalla 3ra Edición (Octubre)', 10)" class="w-full bg-white/10 hover:bg-white/20 text-white text-[10px] sm:text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors border border-white/10">
+                                <i class="fa-brands fa-whatsapp text-green-400 text-sm"></i> Consultar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 4: Medalla 4ta Edición (Cuadrada 1:1 + Consultar) -->
+                <div data-categoria="medallas" class="producto-card bg-[#0d182e] border border-white/10 hover:border-amber-400/60 rounded-2xl overflow-hidden flex flex-col justify-between transition-all shadow-lg group medal-card-hover">
+                    <div class="relative aspect-square w-full bg-slate-950 overflow-hidden">
+                        <span class="absolute top-2.5 left-2.5 bg-amber-500 text-slate-950 text-[8px] sm:text-[9px] font-black uppercase px-2.5 py-1 rounded-md shadow z-10">
+                            4ta Edición
+                        </span>
+                        <img src="img/medalla4.jpg" alt="Medalla 4ta Edición" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                    </div>
+
+                    <div class="p-3 sm:p-4 flex flex-col justify-between flex-grow">
+                        <div>
+                            <div class="flex items-center justify-between gap-1 mb-1">
+                                <span class="text-[9px] sm:text-[10px] text-amber-400 font-bold uppercase tracking-wider">Diciembre 2026</span>
+                                <span class="text-[9px] text-amber-400 font-bold flex items-center gap-0.5"><i class="fa-solid fa-star text-[8px]"></i> 5.0</span>
+                            </div>
+                            <h3 class="text-xs sm:text-sm font-bold text-white leading-snug line-clamp-2">
+                                Medalla Oficial 5K (Salto Ángel)
+                            </h3>
+                            <div class="mt-2 flex items-baseline gap-1">
+                                <span class="text-lg sm:text-2xl font-black text-amber-400 font-mono">$10</span>
+                                <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">USD</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 pt-2.5 border-t border-white/10">
+                            <button type="button" onclick="consultarDisponibilidad('Medalla 4ta Edición (Diciembre)', 10)" class="w-full bg-white/10 hover:bg-white/20 text-white text-[10px] sm:text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors border border-white/10">
+                                <i class="fa-brands fa-whatsapp text-green-400 text-sm"></i> Consultar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 5: Medallero Hexagonal Oficial (Cuadrado 1:1 + Añadir al Carrito estilo AliExpress) -->
+                <div data-categoria="accesorios" class="producto-card bg-[#0d182e] border border-emerald-500/30 hover:border-emerald-400 rounded-2xl overflow-hidden flex flex-col justify-between transition-all shadow-lg group medal-card-hover">
+                    <div class="relative aspect-square w-full bg-slate-950 overflow-hidden">
+                        <span class="absolute top-2.5 left-2.5 bg-emerald-500 text-slate-950 text-[8px] sm:text-[9px] font-black uppercase px-2.5 py-1 rounded-md shadow z-10">
+                            Disponible
+                        </span>
+                        <img src="img/medallero.jpg" alt="Medallero Hexagonal Reto Virtual" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                    </div>
+
+                    <div class="p-3 sm:p-4 flex flex-col justify-between flex-grow">
+                        <div>
+                            <div class="flex items-center justify-between gap-1 mb-1">
+                                <span class="text-[9px] sm:text-[10px] text-emerald-400 font-bold uppercase tracking-wider">Exhibidor Pared</span>
+                                <span class="text-[9px] text-amber-400 font-bold flex items-center gap-0.5"><i class="fa-solid fa-star text-[8px]"></i> 5.0</span>
+                            </div>
+                            <h3 class="text-xs sm:text-sm font-bold text-white leading-snug line-clamp-2">
+                                Medallero Hexagonal Reto Virtual
+                            </h3>
+                            <p class="text-[10px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                                Diseño modular hexagonal texturizado negro para exhibir tu medalla en la pared.
+                            </p>
+                            <div class="mt-2 flex items-baseline gap-1">
+                                <span class="text-lg sm:text-2xl font-black text-white font-mono">$7</span>
+                                <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">USD</span>
+                            </div>
+                        </div>
+
+                        <!-- Control Añadir a la Cesta estilo AliExpress -->
+                        <div class="mt-3 pt-2.5 border-t border-white/10 space-y-2">
+                            <div class="flex items-center justify-between gap-1.5 bg-slate-950/90 border border-white/15 rounded-xl p-1">
+                                <button type="button" onclick="cambiarCantidad('medallero', -1)" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 active:bg-white/30 text-white text-xs flex items-center justify-center font-black transition-colors">
+                                    -
+                                </button>
+                                <span id="cant-medallero" class="text-center text-xs font-black text-emerald-400 font-mono">0</span>
+                                <button type="button" onclick="cambiarCantidad('medallero', 1)" class="w-8 h-8 rounded-lg bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-[#001E50] text-xs flex items-center justify-center font-black transition-all" title="Añadir al carrito">
+                                    +
+                                </button>
+                            </div>
+                            <button type="button" onclick="agregarYAbrirCarrito('medallero')" class="w-full bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-[10px] sm:text-xs font-black uppercase tracking-wider py-2 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all">
+                                <i class="fa-solid fa-cart-plus"></i> Añadir al Carrito
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -583,16 +438,158 @@
         </div>
     </main>
 
-    <!-- Barra Flotante Inferior solo para Móvil cuando hay items en la cesta -->
-    <div id="barra-movil-cesta" class="fixed bottom-0 left-0 right-0 bg-[#001E50] border-t-2 border-[#00D2FF] p-3 px-4 flex items-center justify-between z-40 lg:hidden hidden shadow-[0_-10px_25px_rgba(0,0,0,0.5)]">
-        <div>
-            <span id="movil-items" class="text-[10px] text-[#00D2FF] font-black uppercase block">0 medallas seleccionadas</span>
-            <span id="movil-total" class="text-base font-black text-white">Total: $0 USD</span>
+    <!-- BARRA FLOTANTE INFERIOR ESTILO ALIEXPRESS / EBAY (Aparece al seleccionar artículos) -->
+    <div id="barra-movil-cesta" class="fixed bottom-4 left-1/2 -translate-x-1/2 w-[94%] max-w-xl bg-[#001E50]/95 backdrop-blur-xl border-2 border-[#00D2FF] rounded-2xl p-3 sm:px-5 flex items-center justify-between z-40 hidden shadow-[0_15px_40px_rgba(0,0,0,0.8)]">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#00D2FF]/15 border border-[#00D2FF]/40 flex items-center justify-center text-[#00D2FF]">
+                <i class="fa-solid fa-bag-shopping text-lg"></i>
+            </div>
+            <div>
+                <span id="movil-items" class="text-[10px] text-[#00D2FF] font-black uppercase tracking-wider block">0 artículos en tu cesta</span>
+                <span id="movil-total" class="text-sm sm:text-base font-black text-white font-mono">Total: $0 USD</span>
+            </div>
         </div>
-        <a href="#cesta-compra" class="bg-[#00D2FF] text-[#001E50] font-black text-xs uppercase px-4 py-2.5 rounded-xl shadow-md flex items-center gap-1.5">
-            Ir a Pagar <i class="fa-solid fa-arrow-down text-[10px]"></i>
-        </a>
+        <button type="button" onclick="abrirCarrito()" class="bg-[#00D2FF] hover:bg-[#00b8e6] text-[#001E50] font-black text-xs uppercase tracking-wider px-4 sm:px-5 py-3 rounded-xl shadow-lg flex items-center gap-2 transition-all hover:scale-105">
+            <span>Ver Carrito de Compra</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+        </button>
     </div>
+
+    <!-- DRAWER / MODAL DE CESTA DE COMPRA ESTILO ALIEXPRESS / EBAY (Oculto hasta que el usuario lo abre) -->
+    <div id="modal-carrito-overlay" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300" onclick="cerrarCarrito()"></div>
+
+    <aside id="drawer-carrito" class="fixed top-0 right-0 h-full w-full max-w-md bg-[#081226] border-l-2 border-[#00D2FF]/40 z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-[0_0_60px_rgba(0,0,0,0.9)]">
+        <!-- Cabecera fija del Drawer -->
+        <div class="p-4 sm:p-5 bg-[#001E50] border-b border-white/10 flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-2.5">
+                <i class="fa-solid fa-cart-shopping text-[#00D2FF] text-lg"></i>
+                <div>
+                    <h2 class="text-sm sm:text-base font-black uppercase italic tracking-wider text-white leading-none">
+                        Tu Cesta de Compra
+                    </h2>
+                    <span id="badge-items" class="text-[10px] text-[#00D2FF] font-bold">0 artículos seleccionados</span>
+                </div>
+            </div>
+            <button type="button" onclick="cerrarCarrito()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" aria-label="Cerrar carrito">
+                <i class="fa-solid fa-xmark text-base"></i>
+            </button>
+        </div>
+
+        <!-- Cuerpo desplazable del Carrito + Formulario de Envío -->
+        <div class="p-4 sm:p-5 overflow-y-auto flex-grow space-y-5">
+
+            <!-- Estado vacío cuando hay 0 productos -->
+            <div id="carrito-vacio-msg" class="bg-slate-950/60 border border-dashed border-white/15 rounded-2xl p-6 text-center space-y-2">
+                <i class="fa-solid fa-basket-shopping text-3xl text-slate-500"></i>
+                <p class="text-xs font-bold text-slate-300 uppercase tracking-wider">Tu carrito está vacío</p>
+                <p class="text-[11px] text-slate-400">Añade artículos desde el catálogo para completar tu pedido oficial.</p>
+            </div>
+
+            <!-- Desglose del Pedido -->
+            <div class="bg-slate-950/70 rounded-xl p-3.5 space-y-2.5 text-xs border border-white/10">
+                <div class="flex justify-between items-center text-slate-300">
+                    <span>Medallero Hexagonal ($7 USD):</span>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="cambiarCantidad('medallero', -1)" class="w-6 h-6 rounded bg-white/10 hover:bg-white/20 text-white text-xs font-black">-</button>
+                        <span id="resumen-medallero" class="font-bold text-emerald-400 font-mono w-10 text-center">0 un.</span>
+                        <button type="button" onclick="cambiarCantidad('medallero', 1)" class="w-6 h-6 rounded bg-emerald-500 text-[#001E50] text-xs font-black">+</button>
+                    </div>
+                </div>
+                <span id="resumen-m1" class="hidden">0 un.</span>
+                <span id="resumen-m2" class="hidden">0 un.</span>
+                <div class="flex justify-between items-center pt-2.5 border-t border-white/10 text-sm font-black text-white">
+                    <span>Total a Pagar:</span>
+                    <span id="total-dolares" class="text-[#00D2FF] text-lg font-black font-mono">$0 USD</span>
+                </div>
+            </div>
+
+            <!-- Paso 1: Datos del Comprador -->
+            <div class="space-y-2.5">
+                <label class="text-[10px] font-black uppercase tracking-widest text-[#00D2FF] block">
+                    1. Datos para el Pedido
+                </label>
+                
+                <!-- Búsqueda y Validación de Cédula / Dorsal -->
+                <div>
+                    <label class="text-[10px] text-slate-300 font-semibold block mb-1">
+                        Cédula de Identidad * <span class="text-[#00D2FF] text-[9px] font-normal">(Auto-detecta tu dorsal)</span>
+                    </label>
+                    <div class="relative flex items-center">
+                        <input type="text" id="cedulaAtleta" oninput="alEscribirCedulaTienda()" placeholder="Ej: 12345678" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF] pr-24">
+                        <button type="button" onclick="consultarDorsalTienda()" class="absolute right-1.5 bg-[#00D2FF]/20 hover:bg-[#00D2FF]/40 border border-[#00D2FF]/50 text-[#00D2FF] text-[10px] font-bold px-2.5 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+                            <i class="fa-solid fa-magnifying-glass"></i> Buscar
+                        </button>
+                    </div>
+                    <div id="status-cedula-tienda" class="text-[10px] mt-1 text-slate-400"></div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                    <div class="sm:col-span-2">
+                        <label class="text-[10px] text-slate-300 font-semibold block mb-1">Nombre y Apellido *</label>
+                        <input type="text" id="nombreAtleta" placeholder="Nombre y Apellido *" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF]">
+                    </div>
+                    <div>
+                        <label class="text-[10px] text-slate-300 font-semibold block mb-1">N° Dorsal</label>
+                        <input type="text" id="dorsalAtleta" placeholder="Ej: 045" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-[#00D2FF] font-black placeholder-slate-400 outline-none focus:border-[#00D2FF] text-center">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[10px] text-slate-300 font-semibold block mb-1">Teléfono WhatsApp *</label>
+                    <input type="tel" id="telefonoAtleta" placeholder="0412-1234567 *" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF]">
+                </div>
+
+                <div>
+                    <label class="text-[10px] text-slate-300 font-semibold block mb-1">Número de Referencia de Pago *</label>
+                    <input type="text" id="refPagoAtleta" placeholder="Últimos 4 o 6 dígitos de la referencia *" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 outline-none focus:border-[#00D2FF]">
+                </div>
+
+                <div>
+                    <label class="text-[10px] text-slate-300 font-semibold block mb-1">Modalidad de Envío:</label>
+                    <select id="modalidadEnvio" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3 py-2.5 text-xs text-white outline-none focus:border-[#00D2FF]">
+                        <option value="combo_inscrito">📦 Tengo cupo 3ra/4ta ed. (Mismo paquete sin flete extra)</option>
+                        <option value="envio_independiente">🚚 Envío por Zoom/MRW (Cobro en destino)</option>
+                        <option value="ya_enviado">⚠️ Ya recibí mi paquete anterior (Nuevo envío Zoom/MRW)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Paso 2: Datos de Pago Móvil / Binance -->
+            <div class="space-y-2">
+                <label class="text-[10px] font-black uppercase tracking-widest text-[#00D2FF] block">
+                    2. Realiza tu Pago (Tasa BCV)
+                </label>
+
+                <div class="bg-slate-950/80 border border-white/10 rounded-xl p-3 text-xs space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-emerald-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-mobile-screen"></i> Pago Móvil
+                        </span>
+                        <button type="button" onclick="copiarDatosPagoMovil()" class="text-[10px] font-bold uppercase bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-md text-white transition-colors flex items-center gap-1">
+                            <i class="fa-regular fa-copy"></i> Copiar Datos
+                        </button>
+                    </div>
+                    <div class="text-[11px] text-slate-200 font-mono leading-relaxed">
+                        Banco: <strong>Mercantil (0105)</strong><br>
+                        Tel: <strong>0412-7732710</strong> | C.I: <strong>14.074.229</strong>
+                    </div>
+                    <div class="text-[11px] text-slate-300 border-t border-white/10 pt-1.5 font-mono">
+                        <span class="text-[#00D2FF] font-sans font-bold">Binance / Zinli:</span> petitjacquespierre@gmail.com
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pie fijo del Drawer: Botón Confirmar por WhatsApp -->
+        <div class="p-4 bg-[#001E50] border-t border-white/10 shrink-0">
+            <button type="button" id="btnConfirmarPedido" onclick="procesarPedidoWhatsApp()" class="w-full bg-[#25D366] hover:bg-[#20ba5a] text-[#001E50] font-black text-xs sm:text-sm uppercase tracking-wider py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 transition-all hover:scale-[1.01] active:scale-[0.99]">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span>Enviar Pedido y Captura por WhatsApp</span>
+            </button>
+            <p class="text-[10px] text-center text-slate-300 mt-1.5">
+                Se abrirá WhatsApp con tu orden lista para adjuntar el comprobante.
+            </p>
+        </div>
+    </aside>
 
     <!-- Footer -->
     <footer class="bg-[#001E50] py-16 px-4 border-t border-white/5 mt-12">
@@ -650,15 +647,67 @@
             });
         });
 
-        // ========== LÓGICA DE TIENDA Y CESTA ==========
+        // ========== LÓGICA DE TIENDA, FILTROS Y CARRITO DESPLEGABLE ==========
         let cantidades = { m1: 0, m2: 0, medallero: 0 };
         const PRECIO_MEDALLA = 5;
         const PRECIO_MEDALLERO = 7;
 
         function cambiarCantidad(producto, cambio) {
             cantidades[producto] = Math.max(0, cantidades[producto] + cambio);
-            document.getElementById('cant-' + producto).innerText = cantidades[producto];
+            const elCant = document.getElementById('cant-' + producto);
+            if (elCant) elCant.innerText = cantidades[producto];
             actualizarTotal();
+        }
+
+        function agregarYAbrirCarrito(producto) {
+            if (cantidades[producto] === 0) {
+                cambiarCantidad(producto, 1);
+            }
+            abrirCarrito();
+        }
+
+        function abrirCarrito() {
+            const overlay = document.getElementById('modal-carrito-overlay');
+            const drawer = document.getElementById('drawer-carrito');
+            overlay.classList.remove('hidden');
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+                drawer.classList.remove('translate-x-full');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarCarrito() {
+            const overlay = document.getElementById('modal-carrito-overlay');
+            const drawer = document.getElementById('drawer-carrito');
+            overlay.classList.add('opacity-0');
+            drawer.classList.add('translate-x-full');
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 300);
+            document.body.style.overflow = '';
+        }
+
+        function filtrarCatalogo(categoria) {
+            const cards = document.querySelectorAll('.producto-card');
+            cards.forEach(card => {
+                if (categoria === 'todos' || card.getAttribute('data-categoria') === categoria) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            const botones = ['todos', 'medallas', 'accesorios'];
+            botones.forEach(b => {
+                const btn = document.getElementById('filtro-' + b);
+                if (!btn) return;
+                if (b === categoria) {
+                    btn.className = "px-3.5 py-1.5 rounded-xl text-[11px] font-black uppercase tracking-wider bg-[#00D2FF] text-[#001E50] transition-all whitespace-nowrap";
+                } else {
+                    btn.className = "px-3.5 py-1.5 rounded-xl text-[11px] font-bold uppercase tracking-wider bg-white/5 hover:bg-white/10 text-slate-300 transition-all whitespace-nowrap";
+                }
+            });
         }
 
         function actualizarTotal() {
@@ -666,16 +715,31 @@
             const total = (cantidades.m1 * PRECIO_MEDALLA) + (cantidades.m2 * PRECIO_MEDALLA) + (cantidades.medallero * PRECIO_MEDALLERO);
 
             document.getElementById('total-dolares').innerText = '$' + total + ' USD';
-            document.getElementById('resumen-m1').innerText = cantidades.m1 + ' un.';
-            document.getElementById('resumen-m2').innerText = cantidades.m2 + ' un.';
+            const rM1 = document.getElementById('resumen-m1');
+            const rM2 = document.getElementById('resumen-m2');
+            if (rM1) rM1.innerText = cantidades.m1 + ' un.';
+            if (rM2) rM2.innerText = cantidades.m2 + ' un.';
             document.getElementById('resumen-medallero').innerText = cantidades.medallero + ' un.';
-            document.getElementById('badge-items').innerText = totalItems + (totalItems === 1 ? ' artículo' : ' artículos');
+            document.getElementById('badge-items').innerText = totalItems + (totalItems === 1 ? ' artículo seleccionado' : ' artículos seleccionados');
 
-            // Barra flotante en móvil
+            // Contador en el botón superior "Ver Carrito de Compra"
+            const headerCount = document.getElementById('header-cart-count');
+            const headerTotal = document.getElementById('header-cart-total');
+            if (headerCount) headerCount.innerText = totalItems;
+            if (headerTotal) headerTotal.innerText = '$' + total;
+
+            // Mensaje vacío en el drawer
+            const msgVacio = document.getElementById('carrito-vacio-msg');
+            if (msgVacio) {
+                if (totalItems > 0) msgVacio.classList.add('hidden');
+                else msgVacio.classList.remove('hidden');
+            }
+
+            // Barra flotante inferior cuando hay artículos seleccionados
             const barraMovil = document.getElementById('barra-movil-cesta');
             if (totalItems > 0) {
                 barraMovil.classList.remove('hidden');
-                document.getElementById('movil-items').innerText = totalItems + (totalItems === 1 ? ' artículo en cesta' : ' artículos en cesta');
+                document.getElementById('movil-items').innerText = totalItems + (totalItems === 1 ? ' artículo en tu cesta' : ' artículos en tu cesta');
                 document.getElementById('movil-total').innerText = 'Total: $' + total + ' USD';
             } else {
                 barraMovil.classList.add('hidden');
@@ -819,8 +883,8 @@
             }
         }
 
-        function consultarDisponibilidad(medalla) {
-            const mensaje = "Hola Reto Virtual VZLA! 🏅 Deseo consultar disponibilidad sobre la " + medalla + " ($10 USD).";
+        function consultarDisponibilidad(medalla, precio = 10) {
+            const mensaje = "Hola Reto Virtual VZLA! 🏅 Deseo consultar disponibilidad sobre la " + medalla + " ($" + precio + " USD).";
             const url = "https://wa.me/584127732710?text=" + encodeURIComponent(mensaje);
             window.open(url, '_blank');
         }

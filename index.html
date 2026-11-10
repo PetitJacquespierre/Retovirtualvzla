@@ -153,14 +153,29 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.tailwindcss.com">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://www.googletagmanager.com">
 <link rel="preconnect" href="https://i.pravatar.cc">
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
 <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 <link rel="dns-prefetch" href="https://i.pravatar.cc">
+
+<!-- WebMCP Specification para Asistentes y Agentes de IA (AI SEO) -->
+<script>
+if (typeof document !== 'undefined') {
+    document.modelContext = document.modelContext || {
+        registerTool: function(t) { return t; },
+        tools: [
+            { name: 'inscribir_atleta', description: 'Permite registrar un atleta en el Reto Virtual Venezuela 2026.' },
+            { name: 'consultar_dorsal', description: 'Consulta el estatus de dorsal y tiempo de carrera del atleta.' }
+        ]
+    };
+}
+</script>
 
 <!-- Google tag (gtag.js) -->
 
@@ -371,6 +386,17 @@
     <!-- ===================== CONTENIDO PRINCIPAL ===================== -->
     <main id="main-content">
 
+    <!-- MIGAS DE PAN VISIBLES Y SEMÁNTICAS (Breadcrumbs para Google y Usuarios) -->
+    <nav aria-label="Migas de pan" class="bg-[#001433] border-b border-white/5 py-2 px-4">
+        <div class="max-w-7xl mx-auto flex items-center gap-2 text-[10px] md:text-xs text-white/50">
+            <a href="https://www.retovirtualvzla.com/" class="hover:text-[#00D2FF] transition-colors flex items-center gap-1">
+                <i class="fa-solid fa-house text-[9px]"></i> Inicio
+            </a>
+            <span class="text-white/20">/</span>
+            <span class="text-[#00D2FF] font-semibold">Reto Virtual Venezuela 2026</span>
+        </div>
+    </nav>
+
 
 
     <!-- ===================== HERO CARRUSEL ===================== -->
@@ -427,9 +453,9 @@
         <!-- PRUEBA SOCIAL (Social Proof) -->
         <div class="inline-flex items-center gap-3 bg-black/40 backdrop-blur-md border border-white/10 px-5 py-2 rounded-full mb-6 shadow-2xl">
             <div class="flex -space-x-2">
-                <img src="https://i.pravatar.cc/100?img=1" alt="Corredor Reto Virtual" width="24" height="24" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
-                <img src="https://i.pravatar.cc/100?img=33" alt="Corredora Reto Virtual" width="24" height="24" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
-                <img src="https://i.pravatar.cc/100?img=12" alt="Atleta Reto Virtual" width="24" height="24" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
+                <img src="https://i.pravatar.cc/100?img=1" alt="Corredor Reto Virtual" width="24" height="24" loading="lazy" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
+                <img src="https://i.pravatar.cc/100?img=33" alt="Corredora Reto Virtual" width="24" height="24" loading="lazy" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
+                <img src="https://i.pravatar.cc/100?img=12" alt="Atleta Reto Virtual" width="24" height="24" loading="lazy" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
             </div>
             <span class="text-white/90 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em]">+5,000 corredores unidos en toda Venezuela</span>
         </div>

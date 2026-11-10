@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -33,17 +33,42 @@
     <meta name="twitter:description" content="Participa en las ediciones 5K y 10K a nivel nacional. Corre a tu ritmo y recibe tu medalla oficial en casa.">
     <meta name="twitter:image" content="https://www.retovirtualvzla.com/img/og-banner.jpeg">
 
-    <!-- Schema Markup JSON-LD -->
+    <!-- Schema Markup JSON-LD Completo (E-E-A-T, Organization, WebSite, Breadcrumbs, VideoObject, Entidades) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "SportsOrganization",
+          "@type": "WebSite",
+          "@id": "https://www.retovirtualvzla.com/#website",
+          "url": "https://www.retovirtualvzla.com/",
+          "name": "Reto Virtual Venezuela",
+          "description": "Circuito oficial de running y carreras virtuales 5K y 10K en toda Venezuela con entrega de medallas físicas oficiales.",
+          "inLanguage": "es-VE",
+          "publisher": {
+            "@id": "https://www.retovirtualvzla.com/#organization"
+          },
+          "about": [
+            { "@type": "Thing", "name": "Running" },
+            { "@type": "Thing", "name": "Carreras Virtuales" },
+            { "@type": "Thing", "name": "Atletismo en Venezuela" }
+          ],
+          "mentions": [
+            { "@type": "Thing", "name": "Carrera 5K" },
+            { "@type": "Thing", "name": "Carrera 10K" },
+            { "@type": "Thing", "name": "Medallas de Metal Coleccionables" }
+          ]
+        },
+        {
+          "@type": ["Organization", "SportsOrganization"],
           "@id": "https://www.retovirtualvzla.com/#organization",
           "name": "Reto Virtual Vzla",
+          "alternateName": "Reto Virtual Venezuela",
           "url": "https://www.retovirtualvzla.com/",
-          "logo": "https://www.retovirtualvzla.com/img/favicon.webp",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.retovirtualvzla.com/img/favicon.webp"
+          },
           "description": "Organización oficial de eventos deportivos y carreras virtuales 5K y 10K en toda Venezuela con entrega de medallas físicas oficiales.",
           "address": {
             "@type": "PostalAddress",
@@ -53,14 +78,38 @@
           },
           "areaServed": "VE",
           "sameAs": [
-            "https://www.instagram.com/retovirtual.vzla"
+            "https://www.instagram.com/retovirtual.vzla",
+            "https://www.tiktok.com/@retovirtual.vzla",
+            "https://www.strava.com/clubs/1859944",
+            "https://whatsapp.com/channel/0029VbD2Dmi7IUYZR6nmh60z"
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://www.retovirtualvzla.com/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://www.retovirtualvzla.com/"
+            }
+          ]
+        },
+        {
+          "@type": "VideoObject",
+          "@id": "https://www.retovirtualvzla.com/#video-medalla",
+          "name": "Medalla Oficial 10K Reto Virtual Venezuela",
+          "description": "Video demostrativo de la medalla física oficial de metal macizo con cinta lanyard para la Edición Especial 10K Reto Virtual Venezuela.",
+          "thumbnailUrl": "https://www.retovirtualvzla.com/img/medallahorizontallanyard.jpeg",
+          "uploadDate": "2026-10-01T00:00:00-04:00",
+          "contentUrl": "https://www.retovirtualvzla.com/img/medallagiratoria.mp4"
         },
         {
           "@type": "SportsEvent",
           "@id": "https://www.retovirtualvzla.com/#evento5k",
-          "name": "Reto Virtual Vzla - 3ra & 4ta Edición 5K",
-          "description": "Carrera virtual 5K nacional a tu propio ritmo con medalla física coleccionable enviada a nivel nacional.",
+          "name": "Reto Virtual Vzla - Temporada 2026",
+          "description": "Carreras virtuales 5K y 10K nacionales a tu propio ritmo con medalla física coleccionable enviada a nivel nacional.",
           "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
           "eventStatus": "https://schema.org/EventScheduled",
           "startDate": "2026-10-09",
@@ -77,17 +126,17 @@
               "name": "Inscripción 5K (3ra Edición)",
               "price": "10.00",
               "priceCurrency": "USD",
-              "availability": "https://schema.org/InStock",
+              "availability": "https://schema.org/SoldOut",
               "url": "https://www.retovirtualvzla.com/inscripcion.html",
               "validFrom": "2026-09-01"
             },
             {
               "@type": "Offer",
-              "name": "Combo Dúo 5K (3ra + 4ta Edición)",
-              "price": "16.00",
+              "name": "Edición Especial 10K (Abierta)",
+              "price": "15.00",
               "priceCurrency": "USD",
               "availability": "https://schema.org/InStock",
-              "url": "https://www.retovirtualvzla.com/inscripcion.html",
+              "url": "https://www.retovirtualvzla.com/inscripcion.html?modo=10K",
               "validFrom": "2026-09-01"
             }
           ]
@@ -98,6 +147,20 @@
 
 <link rel="icon" type="image/webp" href="img/favicon.webp">
 <link rel="manifest" href="manifest.json">
+
+<!-- Preconnect & DNS-Prefetch para optimización de Core Web Vitals y Latencia de Red -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.tailwindcss.com">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<link rel="preconnect" href="https://i.pravatar.cc">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="https://www.googletagmanager.com">
+<link rel="dns-prefetch" href="https://i.pravatar.cc">
 
 <!-- Google tag (gtag.js) -->
 
@@ -192,6 +255,11 @@
 </head>
 <body class="bg-white text-slate-900">
 
+    <!-- Enlace de salto accesible para lectores de pantalla y teclado (WCAG 2.4.1) -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[999999] focus:bg-[#00D2FF] focus:text-[#001E50] focus:px-4 focus:py-2 focus:font-black focus:rounded-lg focus:shadow-2xl">
+        Saltar al contenido principal
+    </a>
+
     <!-- ===================== SPLASH SCREEN ===================== -->
     <div id="splash" role="banner" aria-label="Pantalla de bienvenida">
         <div class="splash-scene">
@@ -208,94 +276,100 @@
     </div>
     <!-- ================== FIN SPLASH SCREEN =================== -->
 
-    <div class="bg-[#00D2FF] text-[#001E50] py-2.5 text-center text-[10px] font-black uppercase tracking-[0.25em] z-50 relative">
-        <i class="fa-solid fa-fire mr-2"></i>
-        🏆 CIRCUITO 5K (3RA Y 4TA EDICIÓN) ¡SOLD OUT TOTAL! · CUPOS DISPONIBLES: EDICIÓN ESPECIAL 10K —
-        <a href="inscripcion.html?modo=10K" class="underline underline-offset-2 hover:opacity-80 transition-opacity ml-1">Asegurar Kit 10K</a>
-        <i class="fa-solid fa-fire ml-2"></i>
-    </div>
+    <!-- ===================== HEADER SEMÁNTICO ===================== -->
+    <header class="relative z-50">
+        <div class="bg-[#00D2FF] text-[#001E50] py-2.5 text-center text-[10px] font-black uppercase tracking-[0.25em] z-50 relative">
+            <i class="fa-solid fa-fire mr-2"></i>
+            🏆 CIRCUITO 5K (3RA Y 4TA EDICIÓN) ¡SOLD OUT TOTAL! · CUPOS DISPONIBLES: EDICIÓN ESPECIAL 10K —
+            <a href="inscripcion.html?modo=10K" class="underline underline-offset-2 hover:opacity-80 transition-opacity ml-1">Asegurar Kit 10K</a>
+            <i class="fa-solid fa-fire ml-2"></i>
+        </div>
 
-    <nav class="bg-[#001E50] sticky top-0 z-50 shadow-2xl">
-        <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20 md:h-28">
-                
-                <div class="flex items-center gap-3 md:gap-5 cursor-pointer group -ml-2 md:-ml-4" onclick="location.href='index.html'">
-                    <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual" class="h-12 w-auto object-contain brightness-125 md:hidden">
-                    <img src="img/RV Texto Sin fondo.webp" alt="Reto Virtual" class="hidden md:block h-20 lg:h-28 w-auto object-contain brightness-125">
-                </div>
-
-                <div class="hidden lg:flex items-center space-x-4 xl:space-x-6">
-                    <a href="index.html" class="chameleon-text text-[10px] xl:text-xs font-black uppercase tracking-widest transition-all drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">Inicio</a>
-                    <a href="index.html#ediciones" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Calendario</a>
-                    <a href="evidencias2.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Evidencia</a>
-
-                    <a href="entrenador.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Entrenador IA</a>
-                    <a href="tienda.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Tienda</a>
-
-                    <div class="relative group">
-                        <button class="flex items-center text-white/80 group-hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">
-                            Info <i class="fa-solid fa-chevron-down ml-2 text-[8px]"></i>
-                        </button>
-                        <div class="absolute right-0 mt-2 w-56 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                            <div class="p-2">
-                                <a href="faq.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
-                                    <i class="fa-solid fa-circle-question mr-3 text-sm opacity-70"></i> Preguntas Frecuentes
-                                </a>
-                                <a href="aliados.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
-                                    <i class="fa-solid fa-handshake mr-3 text-sm opacity-70"></i> Aliados
-                                </a>
-                            </div>
-                        </div>
+        <nav class="bg-[#001E50] sticky top-0 z-50 shadow-2xl" aria-label="Navegación principal">
+            <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-20 md:h-28">
+                    
+                    <div class="flex items-center gap-3 md:gap-5 cursor-pointer group -ml-2 md:-ml-4" onclick="location.href='index.html'">
+                        <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual" width="48" height="48" class="h-12 w-auto object-contain brightness-125 md:hidden">
+                        <img src="img/RV Texto Sin fondo.webp" alt="Reto Virtual Venezuela" width="280" height="112" class="hidden md:block h-20 lg:h-28 w-auto object-contain brightness-125">
                     </div>
 
-                    <div class="relative group">
-                        <button class="border-2 border-white text-white px-5 py-2.5 rounded-full font-black text-[10px] xl:text-xs uppercase tracking-widest hover:bg-white hover:text-[#001E50] transition-all shadow-lg flex items-center gap-2">
-                            INSCRIBIRME <i class="fa-solid fa-chevron-down text-[8px]"></i>
-                        </button>
-                        <div class="absolute right-0 mt-2 w-64 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                            <div class="p-2 space-y-1">
-                                <button onclick="window.location.href='inscripcion.html?modo=10K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
-                                    <i class="fa-solid fa-medal mr-3 text-sm text-[#00D2FF]"></i> Edición Especial 10K (Abierta)
-                                </button>
-                                <button onclick="window.location.href='inscripcion.html?modo=ABONO'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all border-t border-white/10 pt-2">
-                                    <i class="fa-solid fa-money-bill-wave mr-3 text-sm"></i> Consultar Saldo / Abonar
-                                </button>
-                                <div class="px-4 py-2 text-[10px] font-bold text-slate-400 uppercase border-t border-white/10">
-                                    <i class="fa-solid fa-lock text-red-400 mr-1"></i> 5K: Sold Out Completo
+                    <div class="hidden lg:flex items-center space-x-4 xl:space-x-6">
+                        <a href="index.html" class="chameleon-text text-[10px] xl:text-xs font-black uppercase tracking-widest transition-all drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">Inicio</a>
+                        <a href="index.html#ediciones" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Calendario</a>
+                        <a href="evidencias2.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Evidencia</a>
+
+                        <a href="entrenador.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Entrenador IA</a>
+                        <a href="tienda.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Tienda</a>
+
+                        <div class="relative group">
+                            <button class="flex items-center text-white/80 group-hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">
+                                Info <i class="fa-solid fa-chevron-down ml-2 text-[8px]"></i>
+                            </button>
+                            <div class="absolute right-0 mt-2 w-56 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                                <div class="p-2">
+                                    <a href="faq.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
+                                        <i class="fa-solid fa-circle-question mr-3 text-sm opacity-70"></i> Preguntas Frecuentes
+                                    </a>
+                                    <a href="aliados.html" class="flex items-center px-4 py-4 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg transition-all">
+                                        <i class="fa-solid fa-handshake mr-3 text-sm opacity-70"></i> Aliados
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative group">
+                            <button class="border-2 border-white text-white px-5 py-2.5 rounded-full font-black text-[10px] xl:text-xs uppercase tracking-widest hover:bg-white hover:text-[#001E50] transition-all shadow-lg flex items-center gap-2">
+                                INSCRIBIRME <i class="fa-solid fa-chevron-down text-[8px]"></i>
+                            </button>
+                            <div class="absolute right-0 mt-2 w-64 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                                <div class="p-2 space-y-1">
+                                    <button onclick="window.location.href='inscripcion.html?modo=10K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
+                                        <i class="fa-solid fa-medal mr-3 text-sm text-[#00D2FF]"></i> Edición Especial 10K (Abierta)
+                                    </button>
+                                    <button onclick="window.location.href='inscripcion.html?modo=ABONO'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all border-t border-white/10 pt-2">
+                                        <i class="fa-solid fa-money-bill-wave mr-3 text-sm"></i> Consultar Saldo / Abonar
+                                    </button>
+                                    <div class="px-4 py-2 text-[10px] font-bold text-slate-400 uppercase border-t border-white/10">
+                                        <i class="fa-solid fa-lock text-red-400 mr-1"></i> 5K: Sold Out Completo
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <button id="menuToggle" class="lg:hidden text-white text-2xl focus:outline-none z-50">
-                    <i class="fa-solid fa-bars-staggered"></i>
-                </button>
-            </div>
-        </div>
-
-        <div id="mobileMenu" class="fixed inset-0 bg-[#001E50] z-40 transform translate-x-full transition-transform duration-300 lg:hidden">
-            <div class="flex flex-col items-center justify-center h-full space-y-5 px-8">
-                <a href="index.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Inicio</a>
-                <a href="index.html#ediciones" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Calendario</a>
-                <a href="evidencias2.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Evidencia</a>
-
-                <a href="entrenador.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Entrenador IA</a>
-                <a href="tienda.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Tienda</a>
-                
-                <div class="flex flex-wrap justify-center gap-4 mt-2">
-                    <a href="faq.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">FAQ</a>
-                    <a href="aliados.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">Aliados</a>
-
-                </div>
-                <div class="border-t border-white/20 w-full pt-5 flex flex-col gap-3 text-center">
-                    <a href="inscripcion.html?modo=10K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Edición Especial 10K (Abierta)</a>
-                    <a href="inscripcion.html?modo=ABONO" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-white transition-colors">Consultar Saldo / Abonar</a>
-                    <span class="text-xs uppercase tracking-wider text-red-400 font-bold"><i class="fa-solid fa-lock mr-1"></i> Circuito 5K: Sold Out Total</span>
+                    <button id="menuToggle" aria-label="Abrir menú de navegación" class="lg:hidden text-white text-2xl focus:outline-none z-50">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                    </button>
                 </div>
             </div>
-        </div>
-    </nav>
+
+            <div id="mobileMenu" class="fixed inset-0 bg-[#001E50] z-40 transform translate-x-full transition-transform duration-300 lg:hidden">
+                <div class="flex flex-col items-center justify-center h-full space-y-5 px-8">
+                    <a href="index.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Inicio</a>
+                    <a href="index.html#ediciones" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Calendario</a>
+                    <a href="evidencias2.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Evidencia</a>
+
+                    <a href="entrenador.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Entrenador IA</a>
+                    <a href="tienda.html" class="text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF]">Tienda</a>
+                    
+                    <div class="flex flex-wrap justify-center gap-4 mt-2">
+                        <a href="faq.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">FAQ</a>
+                        <a href="aliados.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">Aliados</a>
+
+                    </div>
+                    <div class="border-t border-white/20 w-full pt-5 flex flex-col gap-3 text-center">
+                        <a href="inscripcion.html?modo=10K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Edición Especial 10K (Abierta)</a>
+                        <a href="inscripcion.html?modo=ABONO" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-white transition-colors">Consultar Saldo / Abonar</a>
+                        <span class="text-xs uppercase tracking-wider text-red-400 font-bold"><i class="fa-solid fa-lock mr-1"></i> Circuito 5K: Sold Out Total</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ===================== CONTENIDO PRINCIPAL ===================== -->
+    <main id="main-content">
 
 
 
@@ -333,11 +407,11 @@
 
 <section class="hero-carousel" id="heroCarousel">
 
-  <!-- FLECHAS -->
-  <button class="carousel-arrow prev" onclick="heroCarousel.prev()">
+  <!-- FLECHAS CON ACCESIBILIDAD ARIA -->
+  <button class="carousel-arrow prev" aria-label="Slide anterior" onclick="heroCarousel.prev()">
     <i class="fa-solid fa-chevron-left text-sm"></i>
   </button>
-  <button class="carousel-arrow next" onclick="heroCarousel.next()">
+  <button class="carousel-arrow next" aria-label="Slide siguiente" onclick="heroCarousel.next()">
     <i class="fa-solid fa-chevron-right text-sm"></i>
   </button>
 
@@ -346,23 +420,23 @@
 
   <!-- ===== SLIDE 1: HERO PRINCIPAL ===== -->
   <div class="hero-slide" data-slide="1">
-    <img src="img/fondo1.webp" class="absolute inset-0 w-full h-full object-cover opacity-40 grayscale" alt="Runner" loading="eager">
+    <img src="img/fondo1.webp" width="1920" height="1080" class="absolute inset-0 w-full h-full object-cover opacity-40 grayscale" alt="Corredor en ruta Reto Virtual Venezuela" loading="eager">
     <div class="absolute inset-0 hero-gradient"></div>
     <div class="relative z-10 h-full flex items-center justify-center">
       <div class="max-w-5xl w-full">
         <!-- PRUEBA SOCIAL (Social Proof) -->
         <div class="inline-flex items-center gap-3 bg-black/40 backdrop-blur-md border border-white/10 px-5 py-2 rounded-full mb-6 shadow-2xl">
             <div class="flex -space-x-2">
-                <img src="https://i.pravatar.cc/100?img=1" alt="User" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
-                <img src="https://i.pravatar.cc/100?img=33" alt="User" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
-                <img src="https://i.pravatar.cc/100?img=12" alt="User" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
+                <img src="https://i.pravatar.cc/100?img=1" alt="Corredor Reto Virtual" width="24" height="24" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
+                <img src="https://i.pravatar.cc/100?img=33" alt="Corredora Reto Virtual" width="24" height="24" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
+                <img src="https://i.pravatar.cc/100?img=12" alt="Atleta Reto Virtual" width="24" height="24" class="w-6 h-6 rounded-full border-2 border-[#001E50]">
             </div>
             <span class="text-white/90 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em]">+5,000 corredores unidos en toda Venezuela</span>
         </div>
 
-        <h2 class="text-[#00D2FF] font-bold tracking-[0.6em] uppercase text-xs md:text-sm mb-6 animate-pulse drop-shadow-md">
+        <p class="text-[#00D2FF] font-bold tracking-[0.6em] uppercase text-xs md:text-sm mb-6 animate-pulse drop-shadow-md">
           Una Nación, Un Solo Cronómetro
-        </h2>
+        </p>
         <h1 class="font-heading text-5xl md:text-9xl font-black text-white leading-[0.85] mb-8 tracking-tighter uppercase drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
           RETO VIRTUAL <br><span class="text-[#00D2FF] italic">VENEZUELA</span>
         </h1>
@@ -420,7 +494,7 @@
           <div class="relative w-full max-w-[320px] aspect-[4/5] rounded-[2.2rem] overflow-hidden shadow-2xl border-2 border-[#00D2FF]/40 bg-[#00102A] group">
             
             <!-- Video real de la medalla girando -->
-            <video id="videoMedallaHero" autoplay loop muted playsinline class="w-full h-full object-cover">
+            <video id="videoMedallaHero" autoplay loop muted playsinline preload="metadata" poster="img/medallahorizontallanyard.jpeg" class="w-full h-full object-cover">
               <source src="img/medallagiratoria.mp4" type="video/mp4">
               Tu navegador no soporta videos HTML5.
             </video>
@@ -432,14 +506,14 @@
             </div>
 
             <!-- Botón interactivo para ver foto completa con lanyard -->
-            <button onclick="toggleVistaHeroMedalla()" class="absolute bottom-3 inset-x-3 bg-[#001E50]/90 hover:bg-[#00D2FF] text-white hover:text-[#001E50] backdrop-blur-md border border-white/20 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-lg">
+            <button onclick="toggleVistaHeroMedalla()" aria-label="Ver foto de medalla con lanyard" class="absolute bottom-3 inset-x-3 bg-[#001E50]/90 hover:bg-[#00D2FF] text-white hover:text-[#001E50] backdrop-blur-md border border-white/20 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-lg">
               <i class="fa-solid fa-camera text-xs"></i>
               <span id="btnToggleHeroText">Ver con Lanyard y Cinta</span>
             </button>
 
             <!-- Capa con foto estática con lanyard (oculta inicialmente, toggle con botón) -->
             <div id="fotoEstacionHero" class="absolute inset-0 bg-[#00102A] hidden transition-opacity duration-300">
-              <img src="img/medallahorizontallanyard.jpeg" alt="Medalla 10K Real con Lanyard Oficial" class="w-full h-full object-cover">
+              <img src="img/medallahorizontallanyard.jpeg" alt="Medalla 10K Real con Lanyard Oficial" width="600" height="750" loading="lazy" class="w-full h-full object-cover">
             </div>
 
           </div>
@@ -456,7 +530,7 @@
 
   <!-- ===== SLIDE 3: ÚNETE A LA COMUNIDAD ===== -->
 <div class="hero-slide" data-slide="2">
-  <img src="img/fondo1.webp" class="absolute inset-0 w-full h-full object-cover opacity-20 grayscale scale-105" alt="Comunidad" loading="lazy">
+  <img src="img/fondo1.webp" width="1920" height="1080" class="absolute inset-0 w-full h-full object-cover opacity-20 grayscale scale-105" alt="Comunidad runner Reto Virtual Venezuela" loading="lazy">
   <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(0,30,80,.97) 0%,rgba(0,30,80,.75) 50%,rgba(0,20,60,.97) 100%)"></div>
   <div class="relative z-10 h-full flex items-center justify-center px-4">
     <div class="max-w-5xl w-full text-center">
@@ -1191,13 +1265,13 @@ function toggleVistaHeroMedalla() {
 
       <!-- EDICIÓN 1 — Completada -->
       <div class="group relative aspect-[3/4] overflow-hidden rounded-2xl shadow-xl transition-all hover:scale-[1.02]">
-        <img src="img/Medalla1web.webp" class="absolute inset-0 w-full h-full object-cover" alt="Medalla Edición 1" loading="lazy">
+        <img src="img/Medalla1web.webp" width="600" height="800" class="absolute inset-0 w-full h-full object-cover" alt="Medalla Oficial Edición 1" loading="lazy">
         <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/60"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-white z-10">
           <div class="mb-3 bg-[#00D2FF]/20 backdrop-blur-sm border border-[#00D2FF] p-2 rounded-full shadow-lg">
             <i class="fa-solid fa-lock text-[#00D2FF] text-sm"></i>
           </div>
-          <h4 class="font-black text-2xl uppercase mb-1 tracking-tighter">Edición 1</h4>
+          <h3 class="font-black text-2xl uppercase mb-1 tracking-tighter">Edición 1</h3>
           <p class="text-[#00D2FF] text-[11px] font-bold uppercase tracking-[0.3em] mb-5">Misión Completada</p>
           <span class="border-2 border-white/50 px-5 py-1.5 rounded-full text-[11px] font-bold bg-white/10 backdrop-blur-sm">Culminada</span>
         </div>
@@ -1205,13 +1279,13 @@ function toggleVistaHeroMedalla() {
 
       <!-- EDICIÓN 2 — Completada -->
       <div class="group relative aspect-[3/4] overflow-hidden rounded-2xl shadow-xl transition-all hover:scale-[1.02]">
-        <img src="img/Medalla2web.webp" class="absolute inset-0 w-full h-full object-cover" alt="Medalla Edición 2" loading="lazy">
+        <img src="img/Medalla2web.webp" width="600" height="800" class="absolute inset-0 w-full h-full object-cover" alt="Medalla Oficial Edición 2" loading="lazy">
         <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/60"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-white z-10">
           <div class="mb-3 bg-[#00D2FF]/20 backdrop-blur-sm border border-[#00D2FF] p-2 rounded-full shadow-lg">
             <i class="fa-solid fa-lock text-[#00D2FF] text-sm"></i>
           </div>
-          <h4 class="font-black text-2xl uppercase mb-1 tracking-tighter">Edición 2</h4>
+          <h3 class="font-black text-2xl uppercase mb-1 tracking-tighter">Edición 2</h3>
           <p class="text-[#00D2FF] text-[11px] font-bold uppercase tracking-[0.3em] mb-5">Misión Completada</p>
           <span class="border-2 border-white/50 px-5 py-1.5 rounded-full text-[11px] font-bold bg-white/10 backdrop-blur-sm">Culminada</span>
         </div>
@@ -1219,7 +1293,7 @@ function toggleVistaHeroMedalla() {
 
       <!-- EDICIÓN 3 — SOLD OUT / EN CURSO -->
       <div class="group relative aspect-[3/4] overflow-hidden rounded-2xl shadow-2xl transition-all hover:scale-[1.02] border-2 border-amber-400/80">
-        <img src="img/Medalla3web.jpeg" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale contrast-125" alt="Medalla Edición 3" loading="lazy">
+        <img src="img/Medalla3web.jpeg" width="600" height="800" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale contrast-125" alt="Medalla Oficial Edición 3" loading="lazy">
         <div class="absolute inset-0 bg-gradient-to-t from-[#001E50] via-black/60 to-black/75"></div>
         
         <div class="absolute top-3 left-1/2 -translate-x-1/2 bg-red-600 text-white text-[9px] font-black px-4 py-1 rounded-full uppercase shadow-[0_0_15px_rgba(239,68,68,0.7)] tracking-wider z-20 flex items-center gap-1.5">
@@ -1231,7 +1305,7 @@ function toggleVistaHeroMedalla() {
           <div class="mb-2 bg-amber-400/20 backdrop-blur-sm border border-amber-400 p-2.5 rounded-full shadow-lg">
             <i class="fa-solid fa-trophy text-amber-400 text-base"></i>
           </div>
-          <h4 class="font-black text-2xl uppercase mb-1 tracking-tighter">Edición 3</h4>
+          <h3 class="font-black text-2xl uppercase mb-1 tracking-tighter">Edición 3</h3>
           <p class="text-amber-300 text-[10px] font-black uppercase tracking-[0.25em] mb-3">¡Inscripciones Cerradas!</p>
           <span class="border border-white/30 px-3 py-1.5 rounded-xl text-[10px] font-bold bg-black/40 backdrop-blur-sm text-slate-200 leading-tight">
             ¡Mil gracias a todos por el apoyo masivo! ❤️
@@ -1253,7 +1327,7 @@ function toggleVistaHeroMedalla() {
           <div class="mb-3 bg-red-500/20 backdrop-blur-sm border border-red-500/40 p-2.5 rounded-full shadow-lg">
             <i class="fa-solid fa-lock text-red-400 text-sm"></i>
           </div>
-          <h4 class="font-black text-2xl uppercase mb-1 tracking-tighter">Edición 4</h4>
+          <h3 class="font-black text-2xl uppercase mb-1 tracking-tighter">Edición 4</h3>
           <p class="text-red-400 text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Cupos Asignados</p>
           <span class="border border-white/20 px-4 py-1.5 rounded-full text-[10px] font-bold text-white/40 bg-white/5">Diciembre 04 - 13</span>
         </div>
@@ -1308,10 +1382,10 @@ function toggleVistaHeroMedalla() {
             <h2 class="text-[#001E50] text-4xl font-black uppercase tracking-tighter mb-4">Galería de Conquistadores</h2>
             <p class="text-slate-500 mb-12 max-w-2xl mx-auto text-sm">Las mejores postales de nuestra comunidad. Cada km cuenta una historia diferente.</p>
             <div class="flex gap-4 pb-10 overflow-x-auto snap-x">
-                <img src="img/tu-foto-1.webp" class="flex-none w-72 h-96 object-cover rounded-2xl snap-center shadow-lg" alt="Runner">
-                <img src="img/tu-foto-2.webp" class="flex-none w-72 h-96 object-cover rounded-2xl snap-center shadow-lg" alt="Runner">
-                <img src="img/tu-foto-3.webp" class="flex-none w-72 h-96 object-cover rounded-2xl snap-center shadow-lg" alt="Runner">
-                <img src="img/tu-foto-4.webp" class="flex-none w-72 h-96 object-cover rounded-2xl snap-center shadow-lg" alt="Runner">
+                <img src="img/tu-foto-1.webp" width="288" height="384" loading="lazy" class="flex-none w-72 h-96 object-cover rounded-2xl snap-center shadow-lg" alt="Corredor celebrando su medalla 5K Reto Virtual Venezuela">
+                <img src="img/tu-foto-2.webp" width="288" height="384" loading="lazy" class="flex-none w-72 h-96 object-cover rounded-2xl snap-center shadow-lg" alt="Corredora con su kit oficial Reto Virtual Venezuela">
+                <img src="img/tu-foto-3.webp" width="288" height="384" loading="lazy" class="flex-none w-72 h-96 object-cover rounded-2xl snap-center shadow-lg" alt="Atleta finisher de carrera virtual en Venezuela">
+                <img src="img/tu-foto-4.webp" width="288" height="384" loading="lazy" class="flex-none w-72 h-96 object-cover rounded-2xl snap-center shadow-lg" alt="Participante mostrando su medalla metálica oficial">
             </div>
             <div class="mt-8">
                 <a href="https://drive.google.com/drive/folders/1aaoaoAIUHxevRezYuz7j0CP_fcOvjOfb?usp=drive_link" target="_blank" class="inline-flex items-center gap-3 bg-slate-100 text-[#001E50] px-8 py-4 rounded-full font-black text-xs uppercase tracking-widest hover:bg-[#00D2FF] hover:text-white transition-all border border-slate-200">
@@ -1449,7 +1523,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="w-full sm:w-64 bg-white p-8 rounded-3xl border border-slate-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-2 group">
                 <a href="https://www.instagram.com/laflacapasteles.pf/" target="_blank" class="block">
                     <div class="h-22 flex flex-col items-center justify-center">
-                        <img src="img/laflacalogo.webp" alt="La Flaca" class="h-21 w-auto object-contain transition-transform group-hover:scale-110">
+                        <img src="img/laflacalogo.webp" alt="Pasteles La Flaca - Aliado Oficial Reto Virtual" width="84" height="84" loading="lazy" class="h-21 w-auto object-contain transition-transform group-hover:scale-110">
                     </div>
                     <div class="mt-4 text-center">
                         <span class="text-slate-900 font-black uppercase text-[10px] tracking-widest group-hover:text-[#00D2FF] transition-colors">La Flaca</span>
@@ -1461,7 +1535,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="w-full sm:w-64 bg-white p-8 rounded-3xl border border-slate-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-2 group">
                 <a href="https://www.instagram.com/_jcolina/" target="_blank" class="block">
                     <div class="h-22 flex flex-col items-center justify-center">
-                        <img src="img/JoseColinaCOACHLOGO.webp" alt="_JCOLINA" class="h-21 w-auto object-contain transition-transform group-hover:scale-110">
+                        <img src="img/JoseColinaCOACHLOGO.webp" alt="Coach José Colina - Aliado Oficial Reto Virtual" width="84" height="84" loading="lazy" class="h-21 w-auto object-contain transition-transform group-hover:scale-110">
                     </div>
                     <div class="mt-4 text-center">
                         <span class="text-slate-900 font-black uppercase text-[10px] tracking-widest group-hover:text-[#00D2FF] transition-colors">José Colina Running Coach</span>
@@ -1536,11 +1610,12 @@ document.addEventListener('DOMContentLoaded', function() {
             </p>
         </div>
     </section>
+    </main>
 
-        <footer class="bg-[#001E50] py-20 px-4 border-t border-white/5">
+    <footer class="bg-[#001E50] py-20 px-4 border-t border-white/5" role="contentinfo">
         <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-16 text-center md:text-left">
             <div>
-                <img src="img/RV-Isotipo-sinfondo.webp" class="h-14 mx-auto md:mx-0 mb-6 grayscale brightness-200 opacity-40">
+                <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual Venezuela" width="56" height="56" loading="lazy" class="h-14 w-14 mx-auto md:mx-0 mb-6 grayscale brightness-200 opacity-40 object-contain">
                 <p class="text-white/30 text-[10px] uppercase tracking-[0.4em] leading-relaxed">
                     Reto Virtual VZLA es una producción <br>
                 <span class="text-white/60 font-bold">Nacional Independiente</span>. <br>
@@ -1548,22 +1623,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 </p>
             </div>
             <div class="flex flex-col items-center justify-center gap-6">
-                <h4 class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.3em]">Síguenos en la ruta</h4>
+                <p class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.3em]">Síguenos en la ruta</p>
                 <div class="flex gap-8">
-                    <a href="https://whatsapp.com/channel/0029VbD2Dmi7IUYZR6nmh60z" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="https://www.instagram.com/retovirtual.vzla/" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://www.tiktok.com/@retovirtual.vzla" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="https://www.strava.com/clubs/1859944" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-strava"></i></a>
+                    <a href="https://whatsapp.com/channel/0029VbD2Dmi7IUYZR6nmh60z" target="_blank" rel="noopener noreferrer" aria-label="Canal oficial de WhatsApp" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/retovirtual.vzla/" target="_blank" rel="noopener noreferrer" aria-label="Instagram oficial Reto Virtual" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@retovirtual.vzla" target="_blank" rel="noopener noreferrer" aria-label="TikTok oficial Reto Virtual" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.strava.com/clubs/1859944" target="_blank" rel="noopener noreferrer" aria-label="Club oficial en Strava" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-strava"></i></a>
                 </div>
             </div>
             <!-- Tercera columna centrada horizontalmente para Grow Studio -->
             <div class="flex flex-col md:items-end items-center justify-center gap-4 pt-8 md:pt-0 border-t border-white/10 md:border-none md:border-l md:pl-8 col-span-1 text-center md:text-right">
                 <span class="text-[#64748b] text-[10px] uppercase tracking-[0.3em] font-bold">Desarrollado por</span>
-                <a href="https://growstudioweb.vercel.app/" target="_blank" class="flex items-center justify-center md:justify-end gap-3 hover:scale-105 transition-transform cursor-pointer group">
+                <a href="https://growstudioweb.vercel.app/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center md:justify-end gap-3 hover:scale-105 transition-transform cursor-pointer group">
                     <span class="chameleon-text font-black text-base md:text-lg tracking-[0.1em]">GROW STUDIO</span>
-                    <img src="img/grow-logo.png" alt="Grow Studio" class="h-7 md:h-8 object-contain drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_15px_rgba(0,210,255,0.9)] transition-all">
+                    <img src="img/grow-logo.png" alt="Grow Studio" width="120" height="32" loading="lazy" class="h-7 md:h-8 object-contain drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_15px_rgba(0,210,255,0.9)] transition-all">
                 </a>
             </div>
+        </div>
+
+        <!-- Enlaces E-E-A-T & Confianza (Auditoría SEO / Transparencia Legal) -->
+        <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 flex flex-wrap justify-center gap-8 text-[11px] text-white/50 uppercase tracking-widest font-semibold">
+            <a href="faq.html" class="hover:text-[#00D2FF] transition-colors">Contacto</a>
+            <a href="index.html#el-reto" class="hover:text-[#00D2FF] transition-colors">Sobre Nosotros</a>
+            <a href="faq.html" class="hover:text-[#00D2FF] transition-colors">Aviso Legal</a>
+            <a href="faq.html" class="hover:text-[#00D2FF] transition-colors">Privacidad</a>
         </div>
     </footer>
 

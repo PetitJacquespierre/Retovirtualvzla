@@ -168,12 +168,17 @@
 <script>
 if (typeof document !== 'undefined') {
     document.modelContext = document.modelContext || {
-        registerTool: function(t) { return t; },
-        tools: [
-            { name: 'inscribir_atleta', description: 'Permite registrar un atleta en el Reto Virtual Venezuela 2026.' },
-            { name: 'consultar_dorsal', description: 'Consulta el estatus de dorsal y tiempo de carrera del atleta.' }
-        ]
+        tools: [],
+        registerTool: function(t) { this.tools.push(t); return t; }
     };
+    document.modelContext.registerTool({
+        name: 'inscribir_atleta',
+        description: 'Permite registrar un atleta en el Reto Virtual Venezuela 2026 (5K y 10K).'
+    });
+    document.modelContext.registerTool({
+        name: 'consultar_dorsal',
+        description: 'Consulta el estatus de dorsal y tiempo de carrera del atleta.'
+    });
 }
 </script>
 
@@ -387,14 +392,20 @@ if (typeof document !== 'undefined') {
     <main id="main-content">
 
     <!-- MIGAS DE PAN VISIBLES Y SEMÁNTICAS (Breadcrumbs para Google y Usuarios) -->
-    <nav aria-label="Migas de pan" class="bg-[#001433] border-b border-white/5 py-2 px-4">
-        <div class="max-w-7xl mx-auto flex items-center gap-2 text-[10px] md:text-xs text-white/50">
-            <a href="https://www.retovirtualvzla.com/" class="hover:text-[#00D2FF] transition-colors flex items-center gap-1">
-                <i class="fa-solid fa-house text-[9px]"></i> Inicio
-            </a>
-            <span class="text-white/20">/</span>
-            <span class="text-[#00D2FF] font-semibold">Reto Virtual Venezuela 2026</span>
-        </div>
+    <nav aria-label="Breadcrumb" class="breadcrumb breadcrumbs bg-[#001433] border-b border-white/5 py-2 px-4" itemscope itemtype="https://schema.org/BreadcrumbList">
+        <ol class="max-w-7xl mx-auto flex items-center gap-2 text-[10px] md:text-xs text-white/50 list-none m-0 p-0">
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="flex items-center gap-1">
+                <a itemprop="item" href="https://www.retovirtualvzla.com/" class="hover:text-[#00D2FF] transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-house text-[9px]"></i> <span itemprop="name">Inicio</span>
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+            <li class="text-white/20" aria-hidden="true">/</li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+                <span itemprop="name" class="text-[#00D2FF] font-semibold">Reto Virtual Venezuela 2026</span>
+                <meta itemprop="position" content="2">
+            </li>
+        </ol>
     </nav>
 
 
@@ -446,7 +457,7 @@ if (typeof document !== 'undefined') {
 
   <!-- ===== SLIDE 1: HERO PRINCIPAL ===== -->
   <div class="hero-slide" data-slide="1">
-    <img src="img/fondo1.webp" width="1920" height="1080" class="absolute inset-0 w-full h-full object-cover opacity-40 grayscale" alt="Corredor en ruta Reto Virtual Venezuela" loading="eager">
+    <img src="img/fondo1.webp" width="1920" height="1080" class="absolute inset-0 w-full h-full object-cover opacity-40 grayscale" alt="Corredor en ruta Reto Virtual Venezuela" loading="lazy">
     <div class="absolute inset-0 hero-gradient"></div>
     <div class="relative z-10 h-full flex items-center justify-center">
       <div class="max-w-5xl w-full">
@@ -1653,11 +1664,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <!-- Enlaces E-E-A-T & Confianza (Auditoría SEO / Transparencia Legal) -->
         <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 flex flex-wrap justify-center gap-8 text-[11px] text-white/50 uppercase tracking-widest font-semibold">
-            <a href="faq.html" class="hover:text-[#00D2FF] transition-colors">Contacto</a>
-            <a href="index.html#el-reto" class="hover:text-[#00D2FF] transition-colors">Sobre Nosotros</a>
-            <a href="faq.html" class="hover:text-[#00D2FF] transition-colors">Aviso Legal</a>
-            <a href="faq.html" class="hover:text-[#00D2FF] transition-colors">Privacidad</a>
+            <a href="/contacto" class="hover:text-[#00D2FF] transition-colors">Contacto</a>
+            <a href="index.html#el-reto" class="hover:text-[#00D2FF] transition-colors">Sobre nosotros</a>
+            <a href="/aviso-legal" class="hover:text-[#00D2FF] transition-colors">Aviso legal</a>
+            <a href="/politica-de-privacidad" class="hover:text-[#00D2FF] transition-colors">Política de privacidad y cookies</a>
         </div>
+        <form toolname="inscribir_reto_virtual" tooldescription="Inscribirse en Reto Virtual Venezuela 2026" action="inscripcion.html" method="get" class="hidden"></form>
     </footer>
 
         <!-- Tu contenido HTML termina aquí -->

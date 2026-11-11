@@ -3,7 +3,12 @@
     { "source": "/index.html", "destination": "/", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" }
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/contacto", "destination": "/faq.html" },
+    { "source": "/sobre-nosotros", "destination": "/faq.html" },
+    { "source": "/aviso-legal", "destination": "/faq.html" },
+    { "source": "/privacidad", "destination": "/faq.html" },
+    { "source": "/politica-de-privacidad", "destination": "/faq.html" }
   ],
   "headers": [
     {

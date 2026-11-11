@@ -108,8 +108,8 @@
             <div class="flex justify-between items-center h-20 md:h-28">
                 
                 <div class="flex items-center gap-3 md:gap-5 cursor-pointer group -ml-2 md:-ml-4" onclick="location.href='index.html'">
-                    <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual" class="h-12 w-auto object-contain brightness-125 md:hidden">
-                    <img src="img/RV Texto Sin fondo.webp" alt="Reto Virtual" class="hidden md:block h-20 lg:h-28 w-auto object-contain brightness-125">
+                    <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual" width="48" height="48" class="h-12 w-auto object-contain brightness-125 md:hidden">
+                    <img src="img/RV Texto Sin fondo.webp" alt="Reto Virtual" width="280" height="112" class="hidden md:block h-20 lg:h-28 w-auto object-contain brightness-125">
                 </div>
 
                 <div class="hidden lg:flex items-center space-x-4 xl:space-x-6">
@@ -186,7 +186,7 @@
     </nav>
 
     <div class="w-full h-48 md:h-64 relative overflow-hidden bg-[#001E50]">
-        <img src="img/banner_trotando.webp" alt="Runners" class="w-full h-full object-cover object-center absolute inset-0">
+        <img src="img/banner_trotando.webp" alt="Runners" width="1920" height="600" loading="lazy" class="w-full h-full object-cover object-center absolute inset-0">
         <div class="absolute inset-0 bg-gradient-to-r from-[#001E50]/90 via-[#001E50]/75 to-[#00D2FF]/40 mix-blend-multiply"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4 z-10">
             <h1 id="textoBannerPrincipal" class="text-white font-black text-2xl md:text-5xl uppercase tracking-tighter italic drop-shadow-md">PORTAL DE INSCRIPCIONES</h1>
@@ -308,10 +308,10 @@
                         </video>
 
                         <!-- 2. Foto Real de la Medalla con Cinta/Lanyard (Toggle) -->
-                        <img id="imgMedallaLanyard" src="img/medallahorizontallanyard.jpeg" alt="Medalla 10K con Cinta Oficial" class="w-full h-full object-cover hidden">
+                        <img id="imgMedallaLanyard" src="img/medallahorizontallanyard.jpeg" alt="Medalla 10K con Cinta Oficial" width="600" height="750" loading="lazy" class="w-full h-full object-cover hidden">
 
                         <!-- 3. Imagen para Prenda Textil (Franelilla Olímpica / Franela con mangas) -->
-                        <img id="imgKitTextil" src="img/10k_franelilla_olimpica.jpg" alt="Kit 10K" class="w-full h-full object-cover hidden">
+                        <img id="imgKitTextil" src="img/10k_franelilla_olimpica.jpg" alt="Kit 10K" width="600" height="600" loading="lazy" class="w-full h-full object-cover hidden">
 
                         <!-- Badge Superior Izquierda Dinámico -->
                         <div id="badgeKitPreview" class="absolute top-3 left-3 bg-[#001E50]/85 backdrop-blur-md border border-[#00D2FF]/40 text-white text-[10px] md:text-xs font-black uppercase px-3 py-1.5 rounded-full flex items-center gap-2 shadow-lg">
@@ -320,7 +320,7 @@
                         </div>
 
                         <!-- Botón Toggle de la Medalla (Alternar entre Video 360° y Foto con Cinta) -->
-                        <button type="button" id="btnToggleMedallaVista" onclick="toggleMedallaVista()" class="absolute bottom-3 left-3 bg-[#001E50]/90 hover:bg-[#00D2FF] text-white hover:text-[#001E50] border border-white/20 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-xl backdrop-blur-md cursor-pointer">
+                        <button type="button" id="btnToggleMedallaVista" onclick="toggleMedallaVista()" aria-label="Alternar vista de medalla entre video y foto con cinta" class="absolute bottom-3 left-3 bg-[#001E50]/90 hover:bg-[#00D2FF] text-white hover:text-[#001E50] border border-white/20 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-xl backdrop-blur-md cursor-pointer">
                             <i class="fa-solid fa-camera text-xs"></i>
                             <span id="lblToggleMedalla">Ver con Cinta y Lanyard</span>
                         </button>
@@ -554,7 +554,7 @@
     <footer class="bg-[#001E50] py-20 px-4 border-t border-white/5">
         <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-16 text-center md:text-left">
             <div>
-                <img src="img/RV-Isotipo-sinfondo.webp" class="h-14 mx-auto md:mx-0 mb-6 grayscale brightness-200 opacity-40">
+                <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual Venezuela" width="56" height="56" loading="lazy" class="h-14 mx-auto md:mx-0 mb-6 grayscale brightness-200 opacity-40">
                 <p class="text-white/30 text-[10px] uppercase tracking-[0.4em] leading-relaxed">
                     Reto Virtual VZLA es una producción <br>
                 <span class="text-white/60 font-bold">Nacional Independiente</span>. <br>
@@ -574,7 +574,7 @@
                 <span class="text-[#64748b] text-[10px] uppercase tracking-[0.3em] font-bold">Desarrollado por</span>
                 <a href="https://growstudioweb.vercel.app/" target="_blank" class="flex items-center justify-center md:justify-end gap-3 hover:scale-105 transition-transform cursor-pointer group">
                     <span class="chameleon-text font-black text-base md:text-lg tracking-[0.1em]">GROW STUDIO</span>
-                    <img src="img/grow-logo.png" alt="Grow Studio" class="h-7 md:h-8 object-contain drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_15px_rgba(0,210,255,0.9)] transition-all">
+                    <img src="img/grow-logo.png" alt="Grow Studio" width="120" height="32" loading="lazy" class="h-7 md:h-8 object-contain drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_15px_rgba(0,210,255,0.9)] transition-all">
                 </a>
             </div>
         </div>

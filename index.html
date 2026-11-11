@@ -284,7 +284,7 @@ if (typeof document !== 'undefined') {
                 <div class="particle p5"></div><div class="particle p6"></div>
             </div>
             <div class="rv-logo">
-                <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual VZLA" width="240" height="240">
+                <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual VZLA" width="240" height="240" loading="eager" fetchpriority="high">
             </div>
         </div>
         <div class="splash-progress"></div>
@@ -305,8 +305,8 @@ if (typeof document !== 'undefined') {
                 <div class="flex justify-between items-center h-20 md:h-28">
                     
                     <div class="flex items-center gap-3 md:gap-5 cursor-pointer group -ml-2 md:-ml-4" onclick="location.href='index.html'">
-                        <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual" width="48" height="48" class="h-12 w-auto object-contain brightness-125 md:hidden">
-                        <img src="img/RV Texto Sin fondo.webp" alt="Reto Virtual Venezuela" width="280" height="112" class="hidden md:block h-20 lg:h-28 w-auto object-contain brightness-125">
+                        <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual" width="48" height="48" loading="eager" class="h-12 w-auto object-contain brightness-125 md:hidden">
+                        <img src="img/RV Texto Sin fondo.webp" alt="Reto Virtual Venezuela" width="280" height="112" loading="eager" class="hidden md:block h-20 lg:h-28 w-auto object-contain brightness-125">
                     </div>
 
                     <div class="hidden lg:flex items-center space-x-4 xl:space-x-6">
@@ -318,7 +318,7 @@ if (typeof document !== 'undefined') {
                         <a href="tienda.html" class="text-white/80 hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">Tienda</a>
 
                         <div class="relative group">
-                            <button class="flex items-center text-white/80 group-hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">
+                            <button aria-label="Abrir menú de información" class="flex items-center text-white/80 group-hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">
                                 Info <i class="fa-solid fa-chevron-down ml-2 text-[8px]"></i>
                             </button>
                             <div class="absolute right-0 mt-2 w-56 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
@@ -334,15 +334,15 @@ if (typeof document !== 'undefined') {
                         </div>
 
                         <div class="relative group">
-                            <button class="border-2 border-white text-white px-5 py-2.5 rounded-full font-black text-[10px] xl:text-xs uppercase tracking-widest hover:bg-white hover:text-[#001E50] transition-all shadow-lg flex items-center gap-2">
+                            <button aria-label="Abrir opciones de inscripción" class="border-2 border-white text-white px-5 py-2.5 rounded-full font-black text-[10px] xl:text-xs uppercase tracking-widest hover:bg-white hover:text-[#001E50] transition-all shadow-lg flex items-center gap-2">
                                 INSCRIBIRME <i class="fa-solid fa-chevron-down text-[8px]"></i>
                             </button>
                             <div class="absolute right-0 mt-2 w-64 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                                 <div class="p-2 space-y-1">
-                                    <button onclick="window.location.href='inscripcion.html?modo=10K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
+                                    <button onclick="window.location.href='inscripcion.html?modo=10K'" aria-label="Inscribirme en Edición Especial 10K" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
                                         <i class="fa-solid fa-medal mr-3 text-sm text-[#00D2FF]"></i> Edición Especial 10K (Abierta)
                                     </button>
-                                    <button onclick="window.location.href='inscripcion.html?modo=ABONO'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all border-t border-white/10 pt-2">
+                                    <button onclick="window.location.href='inscripcion.html?modo=ABONO'" aria-label="Consultar Saldo o Abonar inscripción" class="w-full flex items-center px-4 py-3 text-xs font-bold text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all border-t border-white/10 pt-2">
                                         <i class="fa-solid fa-money-bill-wave mr-3 text-sm"></i> Consultar Saldo / Abonar
                                     </button>
                                     <div class="px-4 py-2 text-[10px] font-bold text-slate-400 uppercase border-t border-white/10">
@@ -850,15 +850,7 @@ function toggleVistaHeroMedalla() {
           <!-- Marco con glow pulsante -->
           <div class="kit-photo-glow rounded-3xl overflow-hidden border"
                style="border-color:rgba(0,210,255,0.25);max-width:480px;">
-            <img
-              src="img/10k_franela.webp"
-              alt="Kit de carrera oficial 10K 2026 — camiseta, dorsal y medalla"
-              width="480"
-              height="480"
-              loading="lazy"
-              class="w-full h-full object-cover block"
-              style="aspect-ratio:1/1;"
-            />
+            <img src="img/10k_franela.webp" alt="Kit de carrera oficial 10K 2026 — camiseta, dorsal y medalla" width="480" height="480" loading="lazy" class="w-full h-full object-cover block" style="aspect-ratio:1/1;">
           </div>
 
           <!-- Nota inferior -->
@@ -1132,20 +1124,12 @@ function toggleVistaHeroMedalla() {
 
             <!-- CARA FRONTAL -->
             <div class="medal-face bg-[#001840]">
-              <img src="img/medalla-frente.webp"
-                   alt="Medalla Especial 10K cara frontal"
-                   class="w-full h-full object-cover"
-                   width="360" height="378"
-                   loading="lazy" />
+              <img src="img/medalla-frente.webp" alt="Medalla Especial 10K cara frontal" width="360" height="378" loading="lazy" class="w-full h-full object-cover">
             </div>
 
             <!-- CARA TRASERA -->
             <div class="medal-face medal-face-back bg-[#001840]">
-              <img src="img/medalla-trasera.webp"
-                   alt="Medalla Especial 10K cara trasera"
-                   class="w-full h-full object-cover"
-                   width="360" height="378"
-                   loading="lazy" />
+              <img src="img/medalla-trasera.webp" alt="Medalla Especial 10K cara trasera" width="360" height="378" loading="lazy" class="w-full h-full object-cover">
             </div>
 
           </div>
@@ -1529,7 +1513,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p class="text-[10px] text-slate-900 font-black uppercase tracking-[0.4em] mb-6 italic">Presentador Oficial</p>
                 
                 <a href="https://www.instagram.com/team_fs__/" target="_blank" class="block group">
-                    <img src="img/teamfslogo.webp" alt="TeamFS Logo" class="h-34 mx-auto object-contain transition-transform group-hover:scale-110">
+                    <img src="img/teamfslogo.webp" alt="TeamFS Logo" width="136" height="136" loading="lazy" class="h-34 mx-auto object-contain transition-transform group-hover:scale-110">
                     
                     <div class="mt-6">
                         <span class="text-slate-900 font-black uppercase text-[11px] tracking-widest group-hover:text-[#00D2FF] transition-colors">Team FS</span>

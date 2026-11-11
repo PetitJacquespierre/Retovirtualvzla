@@ -4,8 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda Oficial | Reto Virtual VZLA 2026</title>
+    <meta name="description" content="Tienda oficial de Reto Virtual Venezuela. Adquiere medallas oficiales de colección, medalleros hexagonales e indumentaria técnica de running.">
+    <meta name="robots" content="index, follow">
     <link rel="icon" type="image/webp" href="img/favicon.webp">
     <link rel="canonical" href="https://www.retovirtualvzla.com/tienda.html">
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="es_VE">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Reto Virtual Vzla">
+    <meta property="og:title" content="Tienda Oficial | Reto Virtual VZLA 2026">
+    <meta property="og:description" content="Adquiere medallas oficiales de colección, medalleros e indumentaria técnica de running con envíos a toda Venezuela.">
+    <meta property="og:image" content="https://www.retovirtualvzla.com/img/og-banner.jpeg">
+    <meta property="og:url" content="https://www.retovirtualvzla.com/tienda.html">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://www.retovirtualvzla.com/tienda.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://www.retovirtualvzla.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tienda Oficial",
+              "item": "https://www.retovirtualvzla.com/tienda.html"
+            }
+          ]
+        },
+        {
+          "@type": "Store",
+          "@id": "https://www.retovirtualvzla.com/tienda.html#store",
+          "name": "Tienda Oficial Reto Virtual Venezuela",
+          "url": "https://www.retovirtualvzla.com/tienda.html",
+          "description": "Tienda oficial de productos, medallas de colección y medalleros del circuito Reto Virtual Venezuela.",
+          "parentOrganization": {
+            "@id": "https://www.retovirtualvzla.com/#organization"
+          }
+        }
+      ]
+    }
+    </script>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CQ0KVLFL1W"></script>
@@ -113,8 +161,8 @@
             <div class="flex justify-between items-center h-20 md:h-24">
                 
                 <div class="flex items-center gap-3 md:gap-5 cursor-pointer group -ml-2 md:-ml-4" onclick="location.href='index.html'">
-                    <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual" class="h-11 w-auto object-contain brightness-125 md:hidden">
-                    <img src="img/RV Texto Sin fondo.webp" alt="Reto Virtual" class="hidden md:block h-16 lg:h-20 w-auto object-contain brightness-125">
+                    <img src="img/RV-Isotipo-sinfondo.webp" alt="Reto Virtual" width="44" height="44" class="h-11 w-auto object-contain brightness-125 md:hidden">
+                    <img src="img/RV Texto Sin fondo.webp" alt="Reto Virtual" width="280" height="80" class="hidden md:block h-16 lg:h-20 w-auto object-contain brightness-125">
                 </div>
 
                 <div class="hidden lg:flex items-center space-x-4 xl:space-x-6">
@@ -125,7 +173,7 @@
                     <a href="tienda.html" class="chameleon-text text-[10px] xl:text-xs font-black uppercase tracking-widest transition-all drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">Tienda</a>
 
                     <div class="relative group">
-                        <button class="flex items-center text-white/80 group-hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">
+                        <button aria-label="Abrir información" class="flex items-center text-white/80 group-hover:text-[#00D2FF] text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all">
                             Info <i class="fa-solid fa-chevron-down ml-2 text-[8px]"></i>
                         </button>
                         <div class="absolute right-0 mt-2 w-56 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
@@ -141,18 +189,18 @@
                     </div>
 
                     <div class="relative group">
-                        <button class="border-2 border-white text-white px-5 py-2.5 rounded-full font-black text-[10px] xl:text-xs uppercase tracking-widest hover:bg-white hover:text-[#001E50] transition-all shadow-lg flex items-center gap-2">
+                        <button aria-label="Abrir opciones de inscripción" class="border-2 border-white text-white px-5 py-2.5 rounded-full font-black text-[10px] xl:text-xs uppercase tracking-widest hover:bg-white hover:text-[#001E50] transition-all shadow-lg flex items-center gap-2">
                             INSCRIBIRME <i class="fa-solid fa-chevron-down text-[8px]"></i>
                         </button>
                         <div class="absolute right-0 mt-2 w-64 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                             <div class="p-2 space-y-1">
-                                <button onclick="window.location.href='inscripcion.html?modo=5K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
+                                <button onclick="window.location.href='inscripcion.html?modo=5K'" aria-label="Inscribirme en Tercera Edición 5K" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
                                     <i class="fa-solid fa-person-running mr-3 text-sm"></i> Tercera Edición 5K / Combo
                                 </button>
-                                <button onclick="window.location.href='inscripcion.html?modo=10K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
+                                <button onclick="window.location.href='inscripcion.html?modo=10K'" aria-label="Inscribirme en Edición Especial 10K" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
                                     <i class="fa-solid fa-medal mr-3 text-sm"></i> Edición Especial 10K
                                 </button>
-                                <button onclick="window.location.href='inscripcion.html?modo=ABONO'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all border-t border-white/10 pt-2">
+                                <button onclick="window.location.href='inscripcion.html?modo=ABONO'" aria-label="Consultar saldo o abonar" class="w-full flex items-center px-4 py-3 text-xs font-bold text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all border-t border-white/10 pt-2">
                                     <i class="fa-solid fa-money-bill-wave mr-3 text-sm"></i> Consultar Saldo / Abonar
                                 </button>
                             </div>
@@ -160,7 +208,7 @@
                     </div>
                 </div>
 
-                <button id="menuToggle" class="lg:hidden text-white text-2xl focus:outline-none z-50">
+                <button id="menuToggle" aria-label="Abrir menú de navegación" class="lg:hidden text-white text-2xl focus:outline-none z-50">
                     <i class="fa-solid fa-bars-staggered"></i>
                 </button>
             </div>
@@ -193,7 +241,7 @@
         <!-- Vista en Escritorio y Tablet: Imagen panorámica a todo color sin velos oscuros sobre los corredores -->
         <div class="relative w-full min-h-[260px] sm:min-h-[360px] md:min-h-[440px] lg:min-h-[500px] flex items-end">
             <!-- Fotografía principal en alta nitidez y color vivo -->
-            <img src="img/banner-tienda2.jpg" alt="Tienda Oficial Reto Virtual Venezuela - Franelas e Indumentaria" class="absolute inset-0 w-full h-full object-cover object-[65%_center] sm:object-center brightness-105 contrast-105 saturate-110 pointer-events-none select-none">
+            <img src="img/banner-tienda2.jpg" alt="Tienda Oficial Reto Virtual Venezuela - Franelas e Indumentaria" width="1920" height="600" loading="lazy" class="absolute inset-0 w-full h-full object-cover object-[65%_center] sm:object-center brightness-105 contrast-105 saturate-110 pointer-events-none select-none">
             
             <!-- Degradados direccionales suaves: protegen solo el borde inferior e izquierdo dejando a los corredores 100% iluminados -->
             <div class="absolute inset-0 bg-gradient-to-t from-[#0b132b] via-[#0b132b]/35 to-transparent pointer-events-none"></div>
@@ -266,7 +314,7 @@
                         <span class="absolute top-2.5 left-2.5 bg-blue-600/90 backdrop-blur-sm text-white text-[8px] sm:text-[9px] font-black uppercase px-2.5 py-1 rounded-md shadow z-10">
                             1ra Edición
                         </span>
-                        <img src="img/medalla1.jpg" alt="Medalla 1ra Edición" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                        <img src="img/medalla1.jpg" alt="Medalla 1ra Edición" width="400" height="400" loading="lazy" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
                     </div>
 
                     <div class="p-3 sm:p-4 flex flex-col justify-between flex-grow">
@@ -298,7 +346,7 @@
                         <span class="absolute top-2.5 left-2.5 bg-blue-600/90 backdrop-blur-sm text-white text-[8px] sm:text-[9px] font-black uppercase px-2.5 py-1 rounded-md shadow z-10">
                             2da Edición
                         </span>
-                        <img src="img/medalla2.jpg" alt="Medalla 2da Edición" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                        <img src="img/medalla2.jpg" alt="Medalla 2da Edición" width="400" height="400" loading="lazy" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
                     </div>
 
                     <div class="p-3 sm:p-4 flex flex-col justify-between flex-grow">
@@ -330,7 +378,7 @@
                         <span class="absolute top-2.5 left-2.5 bg-amber-500 text-slate-950 text-[8px] sm:text-[9px] font-black uppercase px-2.5 py-1 rounded-md shadow z-10">
                             3ra Edición
                         </span>
-                        <img src="img/medalla3.jpg" alt="Medalla 3ra Edición" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                        <img src="img/medalla3.jpg" alt="Medalla 3ra Edición" width="400" height="400" loading="lazy" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
                     </div>
 
                     <div class="p-3 sm:p-4 flex flex-col justify-between flex-grow">
@@ -362,7 +410,7 @@
                         <span class="absolute top-2.5 left-2.5 bg-amber-500 text-slate-950 text-[8px] sm:text-[9px] font-black uppercase px-2.5 py-1 rounded-md shadow z-10">
                             4ta Edición
                         </span>
-                        <img src="img/medalla4.jpg" alt="Medalla 4ta Edición" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                        <img src="img/medalla4.jpg" alt="Medalla 4ta Edición" width="400" height="400" loading="lazy" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
                     </div>
 
                     <div class="p-3 sm:p-4 flex flex-col justify-between flex-grow">
@@ -394,7 +442,7 @@
                         <span class="absolute top-2.5 left-2.5 bg-emerald-500 text-slate-950 text-[8px] sm:text-[9px] font-black uppercase px-2.5 py-1 rounded-md shadow z-10">
                             Disponible
                         </span>
-                        <img src="img/medallero.jpg" alt="Medallero Hexagonal Reto Virtual" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                        <img src="img/medallero.jpg" alt="Medallero Hexagonal Reto Virtual" width="400" height="400" loading="lazy" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
                     </div>
 
                     <div class="p-3 sm:p-4 flex flex-col justify-between flex-grow">
@@ -595,7 +643,7 @@
     <footer class="bg-[#001E50] py-16 px-4 border-t border-white/5 mt-12">
         <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-12 text-center md:text-left">
             <div>
-                <img src="img/RV-Isotipo-sinfondo.webp" alt="Isotipo Reto Virtual" class="h-12 mx-auto md:mx-0 mb-4 grayscale brightness-200 opacity-40">
+                <img src="img/RV-Isotipo-sinfondo.webp" alt="Isotipo Reto Virtual" width="48" height="48" loading="lazy" class="h-12 mx-auto md:mx-0 mb-4 grayscale brightness-200 opacity-40">
                 <p class="text-white/30 text-[10px] uppercase tracking-[0.3em] leading-relaxed">
                     Reto Virtual VZLA es una producción <br>
                     <span class="text-white/60 font-bold">Nacional Independiente</span>. <br>
@@ -605,17 +653,17 @@
             <div class="flex flex-col items-center justify-center gap-4">
                 <h4 class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.3em]">Síguenos en la ruta</h4>
                 <div class="flex gap-8">
-                    <a href="https://whatsapp.com/channel/0029VbD2Dmi7IUYZR6nmh60z" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-2xl transition-all transform hover:scale-110"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="https://www.instagram.com/retovirtual.vzla/" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-2xl transition-all transform hover:scale-110"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://www.tiktok.com/@retovirtual.vzla" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-2xl transition-all transform hover:scale-110"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="https://www.strava.com/clubs/1859944" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-2xl transition-all transform hover:scale-110"><i class="fa-brands fa-strava"></i></a>
+                    <a href="https://whatsapp.com/channel/0029VbD2Dmi7IUYZR6nmh60z" target="_blank" rel="noopener noreferrer" aria-label="Canal oficial de WhatsApp" class="text-white/40 hover:text-[#00D2FF] text-2xl transition-all transform hover:scale-110"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/retovirtual.vzla/" target="_blank" rel="noopener noreferrer" aria-label="Instagram oficial Reto Virtual" class="text-white/40 hover:text-[#00D2FF] text-2xl transition-all transform hover:scale-110"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@retovirtual.vzla" target="_blank" rel="noopener noreferrer" aria-label="TikTok oficial Reto Virtual" class="text-white/40 hover:text-[#00D2FF] text-2xl transition-all transform hover:scale-110"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.strava.com/clubs/1859944" target="_blank" rel="noopener noreferrer" aria-label="Club oficial en Strava" class="text-white/40 hover:text-[#00D2FF] text-2xl transition-all transform hover:scale-110"><i class="fa-brands fa-strava"></i></a>
                 </div>
             </div>
             <div class="flex flex-col md:items-end items-center justify-center gap-3 pt-6 md:pt-0 border-t border-white/10 md:border-none md:border-l md:pl-8 col-span-1 text-center md:text-right">
                 <span class="text-[#64748b] text-[10px] uppercase tracking-[0.3em] font-bold">Desarrollado por</span>
-                <a href="https://growstudioweb.vercel.app/" target="_blank" class="flex items-center justify-center md:justify-end gap-3 hover:scale-105 transition-transform cursor-pointer group">
+                <a href="https://growstudioweb.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Sitio web de Grow Studio" class="flex items-center justify-center md:justify-end gap-3 hover:scale-105 transition-transform cursor-pointer group">
                     <span class="chameleon-text font-black text-base md:text-lg tracking-[0.1em]">GROW STUDIO</span>
-                    <img src="img/grow-logo.png" alt="Grow Studio" class="h-7 md:h-8 object-contain drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_15px_rgba(0,210,255,0.9)] transition-all">
+                    <img src="img/grow-logo.png" alt="Grow Studio" width="120" height="32" loading="lazy" class="h-7 md:h-8 object-contain drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_15px_rgba(0,210,255,0.9)] transition-all">
                 </a>
             </div>
         </div>

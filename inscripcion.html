@@ -635,6 +635,11 @@
             // 1. Activar el formulario de inmediato según la URL (0 milisegundos)
             const urlParams = new URLSearchParams(window.location.search);
             const modoURL = urlParams.get('modo');
+            const nombreURL = urlParams.get('nombre');
+            if (nombreURL) {
+                const inputNombre = document.getElementById('nombreEnvio');
+                if (inputNombre) inputNombre.value = decodeURIComponent(nombreURL);
+            }
             if (modoURL) {
                 activarFlujo(modoURL.toUpperCase());
             }

@@ -1,21 +1,26 @@
 {
   "short_name": "RetoVirtual",
-  "name": "Reto Virtual VZLA",
+  "name": "Reto Virtual Venezuela 2026",
+  "description": "Circuito oficial de running y carreras virtuales 5K y 10K en toda Venezuela.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#001E50",
+  "theme_color": "#001E50",
+  "orientation": "portrait",
+  "categories": ["sports", "fitness", "lifestyle"],
   "icons": [
     {
-      "src": "img/favicon.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "img/favicon.webp",
+      "type": "image/webp",
+      "sizes": "192x192",
+      "purpose": "any"
     },
     {
-      "src": "img/favicon.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "img/RV-Isotipo-sinfondo.webp",
+      "type": "image/webp",
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
-  ],
-  "start_url": "/index.html",
-  "background_color": "#000000",
-  "theme_color": "#000000",
-  "display": "standalone",
-  "orientation": "portrait"
+  ]
 }

@@ -208,7 +208,11 @@ if (typeof document !== 'undefined') {
             background: linear-gradient(to bottom, rgba(0,30,80,0.95), rgba(0,30,80,0.6), rgba(0,30,80,0.98));
         }
 
-        /* ========== SPLASH SCREEN OPTIMIZADO ========== */
+        /* ========== SPLASH SCREEN OPTIMIZADO (ANTI-BLOQUEO GROW STUDIO) ========== */
+        @keyframes splash-auto-fade {
+            0%, 60% { opacity: 1; visibility: visible; }
+            100%    { opacity: 0; visibility: hidden; pointer-events: none; }
+        }
         #splash {
             position: fixed;
             inset: 0;
@@ -219,10 +223,11 @@ if (typeof document !== 'undefined') {
             align-items: center;
             z-index: 99999;
             cursor: pointer;
-            transition: opacity 0.45s ease-out, visibility 0.45s ease-out;
+            transition: opacity 0.35s ease-out, visibility 0.35s ease-out;
             will-change: opacity, visibility;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            animation: splash-auto-fade 1.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         .splash-scene {
             position: relative;
@@ -294,6 +299,31 @@ if (typeof document !== 'undefined') {
         </div>
         <div class="splash-progress"></div>
     </div>
+    <script>
+    (function(){
+        const s = document.getElementById("splash");
+        if (!s) return;
+        if (sessionStorage.getItem('rv_splash_shown') === 'true') {
+            s.style.display = 'none';
+            s.remove();
+            return;
+        }
+        let dismissed = false;
+        function dismissSplash() {
+            if (dismissed) return;
+            dismissed = true;
+            try { sessionStorage.setItem('rv_splash_shown', 'true'); } catch(e){}
+            s.style.opacity = '0';
+            s.style.pointerEvents = 'none';
+            setTimeout(() => { if (s && s.parentNode) s.remove(); }, 350);
+        }
+        s.addEventListener('click', dismissSplash);
+        s.addEventListener('touchstart', dismissSplash, { passive: true });
+        window.addEventListener('keydown', dismissSplash, { once: true });
+        window.addEventListener('wheel', dismissSplash, { passive: true, once: true });
+        setTimeout(dismissSplash, 1100);
+    })();
+    </script>
     <!-- ================== FIN SPLASH SCREEN =================== -->
 
     <!-- ===================== HEADER SEMÁNTICO ===================== -->
@@ -2089,44 +2119,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 menuIcon.classList.add('fa-bars-staggered');
             });
         });
-
-        
-
-        // ========== SPLASH SCREEN OPTIMIZADO (ESTÁNDAR GROW STUDIO) ==========
-        const splashEl = document.getElementById("splash");
-        if (splashEl) {
-            // Si el usuario ya vio el splash en esta sesión de navegación, removerlo inmediatamente
-            if (sessionStorage.getItem('rv_splash_shown') === 'true') {
-                splashEl.style.display = 'none';
-                splashEl.remove();
-            } else {
-                let splashDismissed = false;
-                const dismissSplash = () => {
-                    if (splashDismissed) return;
-                    splashDismissed = true;
-                    try { sessionStorage.setItem('rv_splash_shown', 'true'); } catch (e) {}
-                    splashEl.style.opacity = '0';
-                    splashEl.style.pointerEvents = 'none';
-                    setTimeout(() => {
-                        if (splashEl && splashEl.parentNode) splashEl.remove();
-                    }, 450);
-                };
-
-                // Omitir de inmediato al tocar o hacer clic
-                splashEl.addEventListener('click', dismissSplash);
-                splashEl.addEventListener('touchstart', dismissSplash, { passive: true });
-
-                // Cierre automático seguro a los 2 segundos exactos
-                setTimeout(dismissSplash, 2000);
-
-                // Salvavidas absoluto a los 3.5 segundos
-                setTimeout(() => {
-                    if (document.getElementById('splash')) dismissSplash();
-                }, 3500);
-            }
-        }
-
- // ========= ACTIVAR LA INSTALACION DE LA APP ============
+    </script>
 
   <!-- ===================== TOAST FLOTANTE DE PRUEBA SOCIAL EN VIVO ===================== -->
   <div id="toast-social-proof" class="fixed bottom-5 left-4 md:left-6 z-40 max-w-sm bg-[#001433]/95 border border-[#00D2FF]/30 backdrop-blur-xl rounded-2xl p-4 shadow-[0_15px_35px_rgba(0,0,0,0.6)] transform translate-y-32 opacity-0 transition-all duration-500 ease-out pointer-events-auto">

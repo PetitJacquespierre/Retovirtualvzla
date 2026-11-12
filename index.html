@@ -441,25 +441,6 @@ if (typeof document !== 'undefined') {
     <!-- ===================== CONTENIDO PRINCIPAL ===================== -->
     <main id="main-content">
 
-    <!-- MIGAS DE PAN VISIBLES Y SEMÁNTICAS (Breadcrumbs para Google y Usuarios) -->
-    <nav aria-label="Breadcrumb" class="breadcrumb breadcrumbs bg-[#001433] border-b border-white/5 py-2 px-4" itemscope itemtype="https://schema.org/BreadcrumbList">
-        <ol class="max-w-7xl mx-auto flex items-center gap-2 text-[10px] md:text-xs text-white/50 list-none m-0 p-0">
-            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="flex items-center gap-1">
-                <a itemprop="item" href="https://www.retovirtualvzla.com/" class="hover:text-[#00D2FF] transition-colors flex items-center gap-1">
-                    <i class="fa-solid fa-house text-[9px]"></i> <span itemprop="name">Inicio</span>
-                </a>
-                <meta itemprop="position" content="1">
-            </li>
-            <li class="text-white/20" aria-hidden="true">/</li>
-            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
-                <span itemprop="name" class="text-[#00D2FF] font-semibold">Reto Virtual Venezuela 2026</span>
-                <meta itemprop="position" content="2">
-            </li>
-        </ol>
-    </nav>
-
-
-
     <!-- ===================== HERO CARRUSEL ===================== -->
 <style>
 /* CARRUSEL */
@@ -1678,11 +1659,37 @@ function generarDorsalAleatorio() {
     <li class="flex items-center gap-3 font-semibold" style="color:#ffffff"><i class="fa-solid fa-check-double text-[#00D2FF]"></i> Ranking nacional en tiempo real</li>
 </ul>
                 </div>
-                <div class="bg-white/5 rounded-3xl p-12 border border-white/10 text-center">
-    <i class="fa-solid fa-puzzle-piece text-8xl text-[#00D2FF]/20 mb-6 block"></i>
-                    <i class="fa-solid fa-puzzle-piece text-8xl text-[#001E50]/10 mb-6"></i>
-                    <h3 class="text-2xl font-black text-white uppercase mb-4 tracking-tighter">Completa la Serie</h3>
-                    <p class="text-white/50 text-sm italic">"Cuatro carreras, un solo destino. ¿Tienes lo necesario para completar el mapa?"</p>
+                <div class="relative bg-gradient-to-b from-white/10 to-white/[0.02] rounded-3xl p-8 md:p-10 border border-white/10 border-t-white/25 text-center shadow-[0_25px_50px_-12px_rgba(0,0,0,0.6)] backdrop-blur-md">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D2FF]/10 border border-[#00D2FF]/30 mb-5">
+                        <span class="w-2 h-2 rounded-full bg-[#00D2FF] animate-pulse"></span>
+                        <span class="text-[#00D2FF] text-[10px] font-black uppercase tracking-[0.25em] font-mono">Mapa Nacional // 4 Piezas</span>
+                    </div>
+
+                    <div class="relative mx-auto mb-6 max-w-xs group">
+                        <div class="absolute inset-0 bg-[#00D2FF]/20 blur-2xl rounded-full opacity-50 group-hover:opacity-80 transition-opacity"></div>
+                        <img src="img/pieza1-2.webp" alt="Ensamble real de medallas del mapa de Venezuela" width="320" height="240" loading="lazy" class="relative z-10 w-full h-auto object-contain rounded-2xl drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] transform group-hover:scale-105 transition-transform duration-500">
+                    </div>
+
+                    <!-- Miniaturas de las 4 etapas del circuito -->
+                    <div class="grid grid-cols-4 gap-2.5 max-w-sm mx-auto mb-6">
+                        <div class="bg-black/40 p-1.5 rounded-xl border border-white/10 hover:border-[#00D2FF]/60 transition-colors" title="1ra Edición 5K">
+                            <img src="img/Medalla1web.webp" alt="Medalla 1ra Edición" width="80" height="80" loading="lazy" class="w-full h-14 object-contain">
+                        </div>
+                        <div class="bg-black/40 p-1.5 rounded-xl border border-white/10 hover:border-[#00D2FF]/60 transition-colors" title="2da Edición 5K">
+                            <img src="img/Medalla2web.webp" alt="Medalla 2da Edición" width="80" height="80" loading="lazy" class="w-full h-14 object-contain">
+                        </div>
+                        <div class="bg-black/40 p-1.5 rounded-xl border border-white/10 hover:border-[#00D2FF]/60 transition-colors" title="3ra Edición 5K">
+                            <img src="img/Medalla3web.jpeg" alt="Medalla 3ra Edición" width="80" height="80" loading="lazy" class="w-full h-14 object-cover rounded-lg">
+                        </div>
+                        <div class="bg-black/40 p-1.5 rounded-xl border border-white/10 hover:border-[#00D2FF]/60 transition-colors" title="4ta Edición 5K">
+                            <img src="img/medalla4.jpg" alt="Medalla 4ta Edición" width="80" height="80" loading="lazy" class="w-full h-14 object-cover rounded-lg">
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-black text-white uppercase mb-3 tracking-tighter">Completa la Serie</h3>
+                    <p class="text-white/70 text-xs md:text-sm leading-relaxed" style="text-align: justify; text-justify: inter-word; hyphens: auto;">
+                        Cuatro carreras, un solo destino físico. Cada medalla es una pieza coleccionable diseñada para encajar y formar el mapa completo de Venezuela en tu vitrina.
+                    </p>
                 </div>
             </div>
         </div>
@@ -1936,26 +1943,6 @@ document.addEventListener('DOMContentLoaded', function() {
         <span class="text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.5em] mb-4 block">Alianza Estratégica</span>
         <h2 class="text-[#001E50] text-4xl font-black uppercase mb-16 tracking-tighter italic">Nuestros <span class="text-[#00D2FF]">Aliados</span></h2>
         
-       <!-- <div class="mb-20">
-            <div class="max-w-sm mx-auto bg-white p-8 rounded-[3rem] shadow-2xl border-2 border-[#00D2FF]/10 transition-transform hover:scale-105">
-                <p class="text-[10px] text-slate-900 font-black uppercase tracking-[0.4em] mb-6 italic">Presentador Oficial</p>
-                
-                <a href="https://www.instagram.com/team_fs__/" target="_blank" class="block group">
-                    <img src="img/teamfslogo.webp" alt="TeamFS Logo" width="136" height="136" loading="lazy" class="h-34 mx-auto object-contain transition-transform group-hover:scale-110">
-                    
-                    <div class="mt-6">
-                        <span class="text-slate-900 font-black uppercase text-[11px] tracking-widest group-hover:text-[#00D2FF] transition-colors">Team FS</span>
-                        <p class="text-[9px] text-[#00D2FF] font-bold uppercase mt-2 opacity-0 group-hover:opacity-100 transition-all italic">Fuerza y Salud</p>
-                    </div>
-
-                    <div class="mt-4 flex justify-center gap-2">
-                        <span class="h-1 w-8 bg-[#00D2FF] rounded-full group-hover:w-12 transition-all"></span>
-                        <span class="h-1 w-2 bg-[#00D2FF]/30 rounded-full"></span>
-                    </div>
-                </a>
-            </div>
-        </div> -->
-
         <div class="flex flex-wrap justify-center gap-6">
             
             <div class="w-full sm:w-64 bg-white p-8 rounded-3xl border border-slate-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-2 group">
@@ -2081,10 +2068,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <!-- Enlaces E-E-A-T & Confianza (Auditoría SEO / Transparencia Legal) -->
         <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 flex flex-wrap justify-center gap-8 text-[11px] text-white/50 uppercase tracking-widest font-semibold">
-            <a href="/contacto" class="hover:text-[#00D2FF] transition-colors">Contacto</a>
+            <a href="faq.html#contacto" class="hover:text-[#00D2FF] transition-colors">Contacto</a>
             <a href="index.html#el-reto" class="hover:text-[#00D2FF] transition-colors">Sobre nosotros</a>
-            <a href="/aviso-legal" class="hover:text-[#00D2FF] transition-colors">Aviso legal</a>
-            <a href="/politica-de-privacidad" class="hover:text-[#00D2FF] transition-colors">Política de privacidad y cookies</a>
+            <a href="faq.html#aviso-legal" class="hover:text-[#00D2FF] transition-colors">Aviso legal</a>
+            <a href="faq.html#privacidad" class="hover:text-[#00D2FF] transition-colors">Política de privacidad y cookies</a>
         </div>
         <form toolname="inscribir_reto_virtual" tooldescription="Inscribirse en Reto Virtual Venezuela 2026" action="inscripcion.html" method="get" class="hidden"></form>
     </footer>

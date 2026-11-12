@@ -144,15 +144,15 @@
                         </button>
                         <div class="absolute right-0 mt-2 w-64 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                             <div class="p-2 space-y-1">
-                                <button onclick="window.location.href='inscripcion.html?modo=5K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
-                                    <i class="fa-solid fa-person-running mr-3 text-sm"></i> Tercera Edición 5K / Combo
-                                </button>
-                                <button onclick="window.location.href='inscripcion.html?modo=10K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
-                                    <i class="fa-solid fa-medal mr-3 text-sm"></i> Edición Especial 10K
+                                <button onclick="window.location.href='inscripcion.html?modo=10K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
+                                    <i class="fa-solid fa-medal mr-3 text-sm text-[#00D2FF]"></i> Edición Especial 10K (Abierta)
                                 </button>
                                 <button onclick="window.location.href='inscripcion.html?modo=ABONO'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all border-t border-white/10 pt-2">
                                     <i class="fa-solid fa-money-bill-wave mr-3 text-sm"></i> Consultar Saldo / Abonar
                                 </button>
+                                <div class="px-4 py-2 text-[10px] font-bold text-slate-400 uppercase border-t border-white/10">
+                                    <i class="fa-solid fa-lock text-red-400 mr-1"></i> 5K: Sold Out Completo
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -178,9 +178,9 @@
                     <a href="aliados.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">Aliados</a>
                 </div>
                 <div class="border-t border-white/20 w-full pt-5 flex flex-col gap-3 text-center">
-                    <a href="inscripcion.html?modo=5K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Tercera Edición 5K / Combo</a>
-                    <a href="inscripcion.html?modo=10K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Edición Especial 10K</a>
+                    <a href="inscripcion.html?modo=10K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Edición Especial 10K (Abierta)</a>
                     <a href="inscripcion.html?modo=ABONO" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-white transition-colors">Consultar Saldo / Abonar</a>
+                    <span class="text-xs uppercase tracking-wider text-red-400 font-bold"><i class="fa-solid fa-lock mr-1"></i> Circuito 5K: Sold Out Total</span>
                 </div>
             </div>
         </div>
@@ -199,6 +199,26 @@
             </div>
         </div>
     </header>
+    <!-- Navegación rápida de secciones -->
+    <div class="bg-white border-b border-slate-200 py-4 px-4 sticky top-20 md:top-28 z-30 shadow-sm">
+        <div class="max-w-4xl mx-auto flex flex-wrap justify-center gap-2">
+            <a href="#seccion-evidencia" class="px-4 py-1.5 rounded-full bg-slate-100 hover:bg-[#001E50] hover:text-white text-[#001E50] text-[10px] font-bold uppercase tracking-wider transition-all">
+                <i class="fa-solid fa-cloud-arrow-up mr-1 text-accent"></i> Evidencias
+            </a>
+            <a href="#faqList" class="px-4 py-1.5 rounded-full bg-slate-100 hover:bg-[#001E50] hover:text-white text-[#001E50] text-[10px] font-bold uppercase tracking-wider transition-all">
+                <i class="fa-solid fa-circle-question mr-1 text-accent"></i> Preguntas
+            </a>
+            <a href="#contacto" class="px-4 py-1.5 rounded-full bg-slate-100 hover:bg-[#001E50] hover:text-white text-[#001E50] text-[10px] font-bold uppercase tracking-wider transition-all">
+                <i class="fa-solid fa-headset mr-1 text-accent"></i> Contacto Directo
+            </a>
+            <a href="#aviso-legal" class="px-4 py-1.5 rounded-full bg-slate-100 hover:bg-[#001E50] hover:text-white text-[#001E50] text-[10px] font-bold uppercase tracking-wider transition-all">
+                <i class="fa-solid fa-scale-balanced mr-1 text-accent"></i> Aviso Legal
+            </a>
+            <a href="#privacidad" class="px-4 py-1.5 rounded-full bg-slate-100 hover:bg-[#001E50] hover:text-white text-[#001E50] text-[10px] font-bold uppercase tracking-wider transition-all">
+                <i class="fa-solid fa-shield-halved mr-1 text-accent"></i> Privacidad
+            </a>
+        </div>
+    </div>
 
     <main class="max-w-4xl mx-auto px-6 py-16">
         
@@ -217,7 +237,7 @@
                     <i class="fa-solid fa-chevron-down text-accent chevron-icon transition-transform"></i>
                 </div>
                 <div class="faq-answer !opacity-100 !max-h-[800px] !pt-6">
-                    <p class="text-slate-500 text-sm mb-6 leading-relaxed">Para que <b>TeamFS</b> valide tu tiempo oficial, sigue este proceso de 3 pasos:</p>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed" style="text-align: justify; text-justify: inter-word;">Para que el <b>Comité Técnico Oficial de Reto Virtual VZLA</b> valide tu tiempo en el ranking nacional, sigue este proceso de 3 pasos:</p>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center">
                             <span class="text-accent font-black text-2xl">01</span>
@@ -235,7 +255,12 @@
                             <p class="text-[11px] text-slate-400 mt-1 leading-tight">Sube todo al link de registro o envíalo vía WhatsApp oficial.</p>
                         </div>
                     </div>
-                    <p class="text-xs text-slate-400 italic">Nota: El sistema de resultados se actualiza cada 24 horas después de recibir tu evidencia.</p>
+                    <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-slate-100">
+                        <p class="text-xs text-slate-400 italic">El sistema de resultados se actualiza en menos de 24 horas tras recibir tu evidencia.</p>
+                        <a href="evidencias2.html" class="inline-flex items-center gap-2 bg-[#001E50] text-white text-[11px] font-black uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-[#00D2FF] hover:text-[#001E50] transition-all">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Ir a Subir Evidencia
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -294,7 +319,135 @@
 
         </div>
 
-        <div class="bg-boston-navy rounded-[3rem] p-12 text-center shadow-2xl relative overflow-hidden mt-24">
+        <!-- ===================== SECCIÓN CONTACTO DIRECTO ===================== -->
+        <section id="contacto" class="pt-20 scroll-mt-28">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="h-px flex-1 bg-slate-200"></span>
+                <span class="text-[#001E50] font-black text-xs uppercase tracking-[0.4em] flex items-center gap-2">
+                    <i class="fa-solid fa-headset text-accent"></i> Contacto Oficial
+                </span>
+                <span class="h-px flex-1 bg-slate-200"></span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <!-- Tarjeta protagonista (7 cols): Atención Directa WhatsApp -->
+                <div class="md:col-span-7 bg-[#001E50] text-white rounded-3xl p-8 border border-[#00D2FF]/20 shadow-xl flex flex-col justify-between">
+                    <div>
+                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D2FF]/15 text-[#00D2FF] text-[10px] font-black uppercase tracking-widest mb-4 font-mono">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Atención al Corredor
+                        </span>
+                        <h2 class="text-2xl md:text-3xl font-black uppercase tracking-tight mb-3">Comunícate con <span class="text-[#00D2FF] italic">Nuestro Equipo</span></h2>
+                        <p class="text-white/70 text-sm leading-relaxed mb-6" style="text-align: justify; text-justify: inter-word;">
+                            ¿Tienes dudas sobre tu inscripción, asignación de dorsal, validación de evidencia o envío nacional de tu medalla por Zoom o MRW? Nuestro equipo de soporte atiende de manera personalizada cada solicitud.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="https://wa.me/584127732710" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#00D2FF] text-[#001E50] font-black text-xs uppercase tracking-wider px-6 py-3.5 rounded-full hover:bg-white transition-all shadow-lg">
+                            <i class="fa-brands fa-whatsapp text-base"></i> WhatsApp +58 412 7732710
+                        </a>
+                        <a href="inscripcion.html?modo=ABONO" class="inline-flex items-center gap-2 border border-white/25 text-white font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-full hover:bg-white/10 transition-all">
+                            <i class="fa-solid fa-magnifying-glass"></i> Consultar Mi Dorsal
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tarjeta de soporte (5 cols): Horarios y Canales -->
+                <div class="md:col-span-5 bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col justify-between gap-4">
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-[#001E50] flex-shrink-0">
+                                <i class="fa-regular fa-clock text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-black uppercase text-[#001E50] tracking-wider">Horario de Atención</h3>
+                                <p class="text-xs text-slate-500 mt-1">Lunes a Sábado: 8:00 AM – 6:00 PM (Hora VET)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 pt-3 border-t border-slate-100">
+                            <div class="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-[#001E50] flex-shrink-0">
+                                <i class="fa-brands fa-instagram text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-black uppercase text-[#001E50] tracking-wider">Comunidad Oficial</h3>
+                                <a href="https://www.instagram.com/retovirtual.vzla/" target="_blank" rel="noopener noreferrer" class="text-xs text-[#0088cc] font-bold hover:underline mt-1 block">@retovirtual.vzla</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 pt-3 border-t border-slate-100">
+                            <div class="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-[#001E50] flex-shrink-0">
+                                <i class="fa-solid fa-location-dot text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-black uppercase text-[#001E50] tracking-wider">Cobertura Nacional</h3>
+                                <p class="text-xs text-slate-500 mt-1">Todo el territorio de Venezuela (Zoom / MRW)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== AVISO LEGAL Y TÉRMINOS ===================== -->
+        <section id="aviso-legal" class="pt-20 scroll-mt-28">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="h-px flex-1 bg-slate-200"></span>
+                <span class="text-[#001E50] font-black text-xs uppercase tracking-[0.4em] flex items-center gap-2">
+                    <i class="fa-solid fa-scale-balanced text-accent"></i> Aviso Legal y Condiciones
+                </span>
+                <span class="h-px flex-1 bg-slate-200"></span>
+            </div>
+
+            <div class="bg-white rounded-3xl p-8 md:p-10 border border-slate-200 shadow-sm space-y-6">
+                <div>
+                    <h3 class="text-sm font-black uppercase text-[#001E50] tracking-wider mb-2">1. Naturaleza del Evento y Titularidad</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed" style="text-align: justify; text-justify: inter-word; hyphens: auto;">
+                        <b>Reto Virtual Venezuela (Reto Virtual VZLA)</b> es una producción deportiva nacional independiente enfocada en promover la actividad física y el running a distancia en toda Venezuela. Toda la identidad visual, diseño de medallas coleccionables, dorsales oficiales y contenidos de esta plataforma son propiedad exclusiva de Reto Virtual VZLA.
+                    </p>
+                </div>
+
+                <div class="pt-4 border-t border-slate-100">
+                    <h3 class="text-sm font-black uppercase text-[#001E50] tracking-wider mb-2">2. Descargo de Responsabilidad Física y Médica</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed" style="text-align: justify; text-justify: inter-word; hyphens: auto;">
+                        Al tratarse de una competencia en modalidad virtual donde cada participante selecciona libremente su ruta, horario, clima y superficie (parque, asfalto o caminadora), el atleta declara bajo su propia responsabilidad encontrarse en óptimas condiciones de salud física y cardiovascular para completar la distancia inscrita (5K o 10K). Reto Virtual VZLA queda exonerado de cualquier lesión, accidente de tránsito o incidente ocurrido durante la ejecución del recorrido personal del participante.
+                    </p>
+                </div>
+
+                <div class="pt-4 border-t border-slate-100">
+                    <h3 class="text-sm font-black uppercase text-[#001E50] tracking-wider mb-2">3. Políticas de Cupos, Pagos y Envíos Nacionales</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed" style="text-align: justify; text-justify: inter-word; hyphens: auto;">
+                        Las inscripciones quedan formalizadas una vez verificado el pago correspondiente y asignado el dorsal oficial. Debido a que las medallas físicas son piezas de edición limitada fabricadas por lote, una vez asignado el cupo o declarado un evento como <b>Agotado (Sold Out)</b>, los montos abonados no son reembolsables, aunque pueden ser transferidos a otro participante antes del cierre administrativo previo aviso a soporte. Los envíos de kits y medallas se realizan a nivel nacional mediante agencias autorizadas (Zoom o MRW) bajo la modalidad de cobro en destino.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== POLÍTICA DE PRIVACIDAD Y COOKIES ===================== -->
+        <section id="privacidad" class="pt-20 scroll-mt-28">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="h-px flex-1 bg-slate-200"></span>
+                <span class="text-[#001E50] font-black text-xs uppercase tracking-[0.4em] flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-accent"></i> Política de Privacidad y Cookies
+                </span>
+                <span class="h-px flex-1 bg-slate-200"></span>
+            </div>
+
+            <div class="bg-white rounded-3xl p-8 md:p-10 border border-slate-200 shadow-sm space-y-6">
+                <div>
+                    <h3 class="text-sm font-black uppercase text-[#001E50] tracking-wider mb-2">1. Tratamiento y Uso de Datos Personales</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed" style="text-align: justify; text-justify: inter-word; hyphens: auto;">
+                        Los datos suministrados por el atleta en los formularios de inscripción y carga de evidencias (nombre completo, número de cédula, número telefónico, talla, ciudad y dirección de agencia de envíos) son utilizados única y exclusivamente para la gestión operativa del evento: emisión de dorsales digitales, publicación de resultados en el ranking oficial y coordinación de envíos de medallas. Reto Virtual VZLA no vende, alquila ni cede bases de datos personales a terceros ajenos a la logística de entrega.
+                    </p>
+                </div>
+
+                <div class="pt-4 border-t border-slate-100">
+                    <h3 class="text-sm font-black uppercase text-[#001E50] tracking-wider mb-2">2. Uso de Cookies, Caché PWA y Analítica</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed" style="text-align: justify; text-justify: inter-word; hyphens: auto;">
+                        Este sitio web utiliza almacenamiento local (Service Worker y memoria de sesión) para ofrecer carga instantánea como Aplicación Web Progresiva (PWA) y recordar preferencias básicas de navegación. Asimismo, emplea herramientas estándar de analítica anónima (Google Analytics) para medir el rendimiento técnico del sitio y mejorar la experiencia de inscripción del corredor. Puedes gestionar o desactivar las cookies y notificaciones en cualquier momento desde la configuración de tu navegador.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="bg-boston-navy rounded-[3rem] p-12 text-center shadow-2xl relative overflow-hidden mt-20">
             <div class="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-3xl"></div>
             <h3 class="text-white font-black text-2xl uppercase mb-4 tracking-tighter italic">¿No encontraste respuesta?</h3>
             <p class="text-white/60 text-xs uppercase tracking-[0.3em] mb-10">Nuestro equipo de soporte está en línea</p>
@@ -311,7 +464,7 @@
                 <p class="text-white/30 text-[10px] uppercase tracking-[0.4em] leading-relaxed">
                     Reto Virtual VZLA es una producción <br>
                 <span class="text-white/60 font-bold">Nacional Independiente</span>. <br>
-                    ©&copy; <span class="current-year">2026</span> Reto Virtual VZLA. Todos los derechos reservados.
+                    &copy; <span class="current-year">2026</span> Reto Virtual VZLA. Todos los derechos reservados.
                 </p>
             </div>
             <div class="flex flex-col items-center justify-center gap-6">
@@ -331,6 +484,12 @@
                     <img src="img/grow-logo.png" alt="Grow Studio" width="120" height="32" loading="lazy" class="h-7 md:h-8 object-contain drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_15px_rgba(0,210,255,0.9)] transition-all">
                 </a>
             </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 flex flex-wrap justify-center gap-8 text-[11px] text-white/50 uppercase tracking-widest font-semibold">
+            <a href="#contacto" class="hover:text-[#00D2FF] transition-colors">Contacto</a>
+            <a href="index.html#el-reto" class="hover:text-[#00D2FF] transition-colors">Sobre nosotros</a>
+            <a href="#aviso-legal" class="hover:text-[#00D2FF] transition-colors">Aviso legal</a>
+            <a href="#privacidad" class="hover:text-[#00D2FF] transition-colors">Política de privacidad y cookies</a>
         </div>
     </footer>
 

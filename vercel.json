@@ -1,6 +1,10 @@
 {
   "redirects": [
-    { "source": "/index.html", "destination": "/", "permanent": true }
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/10kfundador.html", "destination": "/inscripcion.html", "permanent": true },
+    { "source": "/10kfundador", "destination": "/inscripcion.html", "permanent": true },
+    { "source": "/liberados.html", "destination": "/inscripcion.html", "permanent": true },
+    { "source": "/liberados", "destination": "/inscripcion.html", "permanent": true }
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },

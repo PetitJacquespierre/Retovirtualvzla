@@ -584,9 +584,9 @@
         const FECHA_LIMITE_PAGO = "15 de Julio de 2026";
 
         // ========== SISTEMA DE TASA BCV SANDÍA PRODUCTION ==========
-        const urlApiDivisasBCV = "https://script.google.com/macros/s/AKfycbyazhyYfK-vURGv34XF-oTW1_34rTVRs2WM7-aNlswf-mIGhIwgaLgwfGx1xZxfm50/exec";
-        const tasaRespaldoLocal = 887.30;
-        let tasaBCV = parseFloat(sessionStorage.getItem("tasa_bcv_cache")) || parseFloat(localStorage.getItem("reto_bcv_rate")) || tasaRespaldoLocal;
+        const urlApiDivisasBCV = "/api/bcv";
+        const tasaRespaldoLocal = 914.02;
+        let tasaBCV = parseFloat(sessionStorage.getItem("tasa_bcv_direct_v3")) || parseFloat(localStorage.getItem("reto_bcv_rate_v3")) || tasaRespaldoLocal;
 
         function formatVE(num) {
             return new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
@@ -767,8 +767,8 @@
         }
 
         async function sincronizarTasaBCV() {
-            const cacheGuardada = sessionStorage.getItem("tasa_bcv_cache");
-            const tiempoGuardado = sessionStorage.getItem("tasa_bcv_time");
+            const cacheGuardada = sessionStorage.getItem("tasa_bcv_direct_v3");
+            const tiempoGuardado = sessionStorage.getItem("tasa_bcv_time_v3");
             const ahora = Date.now();
 
             // Si ya consultó hace menos de 10 minutos (600.000 ms), usar caché y no consultar red
@@ -785,9 +785,9 @@
                     const data = await respuesta.json();
                     if (data && data.usd && parseFloat(data.usd) > 10) {
                         tasaBCV = parseFloat(data.usd);
-                        sessionStorage.setItem("tasa_bcv_cache", tasaBCV);
-                        sessionStorage.setItem("tasa_bcv_time", ahora.toString());
-                        localStorage.setItem("reto_bcv_rate", tasaBCV);
+                        sessionStorage.setItem("tasa_bcv_direct_v3", tasaBCV);
+                        sessionStorage.setItem("tasa_bcv_time_v3", ahora.toString());
+                        localStorage.setItem("reto_bcv_rate_v3", tasaBCV);
                         actualizarPantallaTasa();
                         return;
                     }
@@ -795,14 +795,14 @@
             } catch (e) {
                 // Respaldo secundario local /api/bcv
                 try {
-                    const res2 = await fetch("/api/bcv");
+                    const res2 = await fetch("https://admin-growstudio.vercel.app/api/bcv", { cache: "no-store" });
                     if (res2.ok) {
                         const data2 = await res2.json();
                         if (data2 && data2.usd && parseFloat(data2.usd) > 10) {
                             tasaBCV = parseFloat(data2.usd);
-                            sessionStorage.setItem("tasa_bcv_cache", tasaBCV);
-                            sessionStorage.setItem("tasa_bcv_time", ahora.toString());
-                            localStorage.setItem("reto_bcv_rate", tasaBCV);
+                            sessionStorage.setItem("tasa_bcv_direct_v3", tasaBCV);
+                            sessionStorage.setItem("tasa_bcv_time_v3", ahora.toString());
+                            localStorage.setItem("reto_bcv_rate_v3", tasaBCV);
                             actualizarPantallaTasa();
                         }
                     }

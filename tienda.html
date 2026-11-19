@@ -308,11 +308,14 @@
             <!-- GRILLA UNIFICADA DE PRODUCTOS CON IMÁGENES 100% CUADRADAS (1:1) ESTILO ALIEXPRESS / MERCADOLIBRE -->
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5">
 
-                <!-- Producto 1: Medalla 1ra Edición (Cuadrada 1:1 + Consultar) -->
-                <div data-categoria="medallas" class="producto-card bg-[#0d182e] border border-white/10 hover:border-[#00D2FF]/60 rounded-2xl overflow-hidden flex flex-col justify-between transition-all shadow-lg group medal-card-hover">
+                <!-- Producto 1: Medalla 1ra Edición (Habilitada para 1 sola compra / Última Unidad) -->
+                <div data-categoria="medallas" class="producto-card bg-[#0d182e] border border-[#00D2FF]/40 hover:border-[#00D2FF] rounded-2xl overflow-hidden flex flex-col justify-between transition-all shadow-lg group medal-card-hover">
                     <div class="relative aspect-square w-full bg-slate-950 overflow-hidden">
                         <span class="absolute top-2.5 left-2.5 bg-blue-600/90 backdrop-blur-sm text-white text-[8px] sm:text-[9px] font-black uppercase px-2.5 py-1 rounded-md shadow z-10">
                             1ra Edición
+                        </span>
+                        <span id="badge-stock-m1" class="absolute top-2.5 right-2.5 bg-emerald-500 text-slate-950 text-[8px] sm:text-[9px] font-black uppercase px-2 py-0.5 rounded-md shadow z-10 flex items-center gap-1 animate-pulse">
+                            <i class="fa-solid fa-fire text-amber-900"></i> ¡ÚLTIMA UNIDAD!
                         </span>
                         <img src="img/medalla1.jpg" alt="Medalla 1ra Edición" width="400" height="400" loading="lazy" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
                     </div>
@@ -326,15 +329,35 @@
                             <h3 class="text-xs sm:text-sm font-bold text-white leading-snug line-clamp-2">
                                 Medalla Finisher 5K (Montaña)
                             </h3>
+                            <p class="text-[10px] text-amber-300 font-bold mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-triangle-exclamation"></i> 1 disponible · Máximo 1 por atleta
+                            </p>
                             <div class="mt-2 flex items-baseline gap-1">
                                 <span class="text-lg sm:text-2xl font-black text-white font-mono">$5</span>
                                 <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">USD</span>
                             </div>
                         </div>
 
-                        <div class="mt-3 pt-2.5 border-t border-white/10">
-                            <button type="button" onclick="consultarDisponibilidad('Medalla 1ra Edición (Marzo)', 5)" class="w-full bg-white/10 hover:bg-white/20 text-white text-[10px] sm:text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors border border-white/10">
-                                <i class="fa-brands fa-whatsapp text-green-400 text-sm"></i> Consultar
+                        <!-- Contenedor de Compra Activa (1 Unidad Máximo) -->
+                        <div id="contenedor-compra-m1" class="mt-3 pt-2.5 border-t border-white/10 space-y-2">
+                            <div class="flex items-center justify-between gap-1.5 bg-slate-950/90 border border-white/15 rounded-xl p-1">
+                                <button type="button" onclick="cambiarCantidad('m1', -1)" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 active:bg-white/30 text-white text-xs flex items-center justify-center font-black transition-colors">
+                                    -
+                                </button>
+                                <span id="cant-m1" class="text-center text-xs font-black text-[#00D2FF] font-mono">0</span>
+                                <button type="button" onclick="cambiarCantidad('m1', 1)" class="w-8 h-8 rounded-lg bg-[#00D2FF] hover:bg-[#00b8e6] active:scale-95 text-[#001E50] text-xs flex items-center justify-center font-black transition-all" title="Añadir al carrito">
+                                    +
+                                </button>
+                            </div>
+                            <button type="button" onclick="agregarYAbrirCarrito('m1')" class="w-full bg-[#00D2FF]/20 hover:bg-[#00D2FF]/30 border border-[#00D2FF]/40 text-[#00D2FF] text-[10px] sm:text-xs font-black uppercase tracking-wider py-2 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all">
+                                <i class="fa-solid fa-cart-plus"></i> Añadir al Carrito ($5 USD)
+                            </button>
+                        </div>
+
+                        <!-- Contenedor Sold Out / Agotado (Triple Candado) -->
+                        <div id="contenedor-agotado-m1" class="mt-3 pt-2.5 border-t border-white/10 hidden">
+                            <button type="button" disabled class="w-full bg-red-950/60 border border-red-500/40 text-red-300 text-[10px] sm:text-xs font-black uppercase tracking-wider py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 opacity-80 cursor-not-allowed">
+                                <i class="fa-solid fa-lock"></i> AGOTADO / SOLD OUT
                             </button>
                         </div>
                     </div>
@@ -534,15 +557,31 @@
 
             <!-- Desglose del Pedido -->
             <div class="bg-slate-950/70 rounded-xl p-3.5 space-y-2.5 text-xs border border-white/10">
-                <div class="flex justify-between items-center text-slate-300">
-                    <span>Medallero Hexagonal ($7 USD):</span>
+                <!-- Fila Medalla 1ra Edición -->
+                <div id="fila-carrito-m1" class="flex justify-between items-center text-slate-300 hidden">
+                    <div>
+                        <span class="font-bold text-white block">Medalla 1ra Edición ($5 USD):</span>
+                        <span class="text-[9px] text-[#00D2FF] font-bold">Última unidad (Máx 1 un.)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="cambiarCantidad('m1', -1)" class="w-6 h-6 rounded bg-white/10 hover:bg-white/20 text-white text-xs font-black">-</button>
+                        <span id="resumen-m1" class="font-bold text-[#00D2FF] font-mono w-10 text-center">0 un.</span>
+                        <button type="button" onclick="cambiarCantidad('m1', 1)" class="w-6 h-6 rounded bg-[#00D2FF] text-[#001E50] text-xs font-black">+</button>
+                    </div>
+                </div>
+
+                <!-- Fila Medallero Hexagonal -->
+                <div id="fila-carrito-medallero" class="flex justify-between items-center text-slate-300">
+                    <div>
+                        <span class="font-bold text-white block">Medallero Hexagonal ($7 USD):</span>
+                        <span class="text-[9px] text-emerald-400 font-bold">Exhibidor de pared modular</span>
+                    </div>
                     <div class="flex items-center gap-2">
                         <button type="button" onclick="cambiarCantidad('medallero', -1)" class="w-6 h-6 rounded bg-white/10 hover:bg-white/20 text-white text-xs font-black">-</button>
                         <span id="resumen-medallero" class="font-bold text-emerald-400 font-mono w-10 text-center">0 un.</span>
                         <button type="button" onclick="cambiarCantidad('medallero', 1)" class="w-6 h-6 rounded bg-emerald-500 text-[#001E50] text-xs font-black">+</button>
                     </div>
                 </div>
-                <span id="resumen-m1" class="hidden">0 un.</span>
                 <span id="resumen-m2" class="hidden">0 un.</span>
                 <div class="flex justify-between items-center pt-2.5 border-t border-white/10 text-sm font-black text-white">
                     <span>Total a Pagar:</span>
@@ -697,10 +736,33 @@
 
         // ========== LÓGICA DE TIENDA, FILTROS Y CARRITO DESPLEGABLE ==========
         let cantidades = { m1: 0, m2: 0, medallero: 0 };
+        let stockM1 = 1; // Stock disponible para Medalla 1ra Edición (inicializado en 1, validado en tiempo real)
         const PRECIO_MEDALLA = 5;
         const PRECIO_MEDALLERO = 7;
 
         function cambiarCantidad(producto, cambio) {
+            if (producto === 'm1') {
+                if (stockM1 <= 0) {
+                    alert("Lo sentimos, la Medalla de la 1ra Edición se encuentra totalmente AGOTADA.");
+                    cantidades.m1 = 0;
+                    const elCant = document.getElementById('cant-m1');
+                    if (elCant) elCant.innerText = '0';
+                    actualizarTotal();
+                    return;
+                }
+                const nueva = cantidades.m1 + cambio;
+                if (nueva > stockM1) {
+                    alert("Atención: Solo queda 1 unidad disponible de la 1ra Edición (Máximo 1 por atleta).");
+                    cantidades.m1 = stockM1;
+                } else {
+                    cantidades.m1 = Math.max(0, nueva);
+                }
+                const elCant = document.getElementById('cant-m1');
+                if (elCant) elCant.innerText = cantidades.m1;
+                actualizarTotal();
+                return;
+            }
+
             cantidades[producto] = Math.max(0, cantidades[producto] + cambio);
             const elCant = document.getElementById('cant-' + producto);
             if (elCant) elCant.innerText = cantidades[producto];
@@ -708,6 +770,10 @@
         }
 
         function agregarYAbrirCarrito(producto) {
+            if (producto === 'm1' && stockM1 <= 0) {
+                alert("Lo sentimos, la Medalla de la 1ra Edición se encuentra totalmente AGOTADA.");
+                return;
+            }
             if (cantidades[producto] === 0) {
                 cambiarCantidad(producto, 1);
             }
@@ -763,11 +829,27 @@
             const total = (cantidades.m1 * PRECIO_MEDALLA) + (cantidades.m2 * PRECIO_MEDALLA) + (cantidades.medallero * PRECIO_MEDALLERO);
 
             document.getElementById('total-dolares').innerText = '$' + total + ' USD';
+            
+            // Fila de resumen M1 en el drawer
+            const filaM1 = document.getElementById('fila-carrito-m1');
             const rM1 = document.getElementById('resumen-m1');
-            const rM2 = document.getElementById('resumen-m2');
+            if (filaM1) {
+                if (cantidades.m1 > 0) filaM1.classList.remove('hidden');
+                else filaM1.classList.add('hidden');
+            }
             if (rM1) rM1.innerText = cantidades.m1 + ' un.';
+
+            // Fila de resumen Medallero en el drawer
+            const filaMed = document.getElementById('fila-carrito-medallero');
+            const rMed = document.getElementById('resumen-medallero');
+            if (filaMed) {
+                if (cantidades.medallero > 0) filaMed.classList.remove('hidden');
+                else filaMed.classList.add('hidden');
+            }
+            if (rMed) rMed.innerText = cantidades.medallero + ' un.';
+
+            const rM2 = document.getElementById('resumen-m2');
             if (rM2) rM2.innerText = cantidades.m2 + ' un.';
-            document.getElementById('resumen-medallero').innerText = cantidades.medallero + ' un.';
             document.getElementById('badge-items').innerText = totalItems + (totalItems === 1 ? ' artículo seleccionado' : ' artículos seleccionados');
 
             // Contador en el botón superior "Ver Carrito de Compra"
@@ -794,6 +876,60 @@
             }
         }
 
+        // Control dinámico de estado de stock para la Medalla 1ra Edición (Protocolo Triple Candado)
+        function actualizarEstadoStockM1(disponible) {
+            stockM1 = Math.max(0, parseInt(disponible, 10) || 0);
+            const badge = document.getElementById('badge-stock-m1');
+            const contCompra = document.getElementById('contenedor-compra-m1');
+            const contAgotado = document.getElementById('contenedor-agotado-m1');
+            const cantM1El = document.getElementById('cant-m1');
+
+            if (stockM1 <= 0) {
+                cantidades.m1 = 0;
+                if (cantM1El) cantM1El.innerText = '0';
+                if (badge) {
+                    badge.className = "absolute top-2.5 right-2.5 bg-red-600/95 text-white text-[8px] sm:text-[9px] font-black uppercase px-2 py-0.5 rounded-md shadow z-10 flex items-center gap-1";
+                    badge.innerHTML = `<i class="fa-solid fa-lock text-white"></i> AGOTADO`;
+                }
+                if (contCompra) contCompra.classList.add('hidden');
+                if (contAgotado) contAgotado.classList.remove('hidden');
+            } else {
+                if (badge) {
+                    badge.className = "absolute top-2.5 right-2.5 bg-emerald-500 text-slate-950 text-[8px] sm:text-[9px] font-black uppercase px-2 py-0.5 rounded-md shadow z-10 flex items-center gap-1 animate-pulse";
+                    badge.innerHTML = `<i class="fa-solid fa-fire text-amber-900"></i> ¡ÚLTIMA UNIDAD!`;
+                }
+                if (contCompra) contCompra.classList.remove('hidden');
+                if (contAgotado) contAgotado.classList.add('hidden');
+            }
+            actualizarTotal();
+        }
+
+        async function verificarStockTienda() {
+            try {
+                // Candado 1 local: si en este navegador ya se completó la compra, cerrar inmediatamente
+                if (localStorage.getItem('rv_m1_agotada') === 'true') {
+                    actualizarEstadoStockM1(0);
+                }
+                // Candado 2 remoto: validar en tiempo real contra Google Sheets
+                const resp = await fetch(`/api/consultar-atleta?accion=stock_tienda&t=${Date.now()}`);
+                if (resp.ok) {
+                    const data = await resp.json();
+                    if (data && data.m1) {
+                        actualizarEstadoStockM1(data.m1.stockDisponible);
+                    }
+                }
+            } catch (err) {
+                console.log("Verificación de stock tienda:", err);
+            }
+        }
+
+        // Ejecutar verificación automática al cargar el documento
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', verificarStockTienda);
+        } else {
+            verificarStockTienda();
+        }
+
         function copiarDatosPagoMovil() {
             const texto = "Mercantil (0105)\nTeléfono: 0412-7732710\nCédula: 14.074.229";
             navigator.clipboard.writeText(texto).then(() => {
@@ -807,6 +943,14 @@
             const totalItems = cantidades.m1 + cantidades.m2 + cantidades.medallero;
             if (totalItems === 0) {
                 alert("Por favor selecciona al menos un artículo (Medalla o Medallero) usando el botón '+' antes de continuar.");
+                return;
+            }
+
+            // CANDADO 1 (SUBMIT INTERCEPTOR): Si intenta pedir M1 y ya se agotó, bloquear inmediatamente
+            if (cantidades.m1 > 0 && stockM1 <= 0) {
+                alert("⚠️ ATENCIÓN: La última unidad de la Medalla de la 1ra Edición acaba de ser agotada. No es posible procesar este pedido.");
+                cantidades.m1 = 0;
+                actualizarEstadoStockM1(0);
                 return;
             }
 
@@ -860,6 +1004,15 @@
                 }).catch(() => {});
             } catch (e) {
                 console.log("Sheet log error", e);
+            }
+
+            // AUTO-CIERRE INMEDIATO DE EXISTENCIA SI SE ADQUIRIÓ LA 1RA EDICIÓN
+            if (cantidades.m1 > 0) {
+                stockM1 = 0;
+                try {
+                    localStorage.setItem('rv_m1_agotada', 'true');
+                } catch(e) {}
+                actualizarEstadoStockM1(0);
             }
 
             // Redacción del mensaje para WhatsApp

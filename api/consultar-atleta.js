@@ -301,6 +301,69 @@ export default async function handler(req, res) {
         const GOOGLE_CSV_URL_3RA = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&headers=1&gid=1584884677`;
         const GOOGLE_CSV_URL_4TA = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&headers=1&gid=95585629`;
         const GOOGLE_CSV_URL_ABONOS_10K = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=1083923837`;
+        const GOOGLE_CSV_URL_TIENDA = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=2019500245`;
+
+        // =========================================================================
+        // ACCIÓN: VERIFICAR STOCK EN TIENDA EN TIEMPO REAL (TRIPLE CANDADO)
+        // =========================================================================
+        if (accion === 'stock_tienda') {
+            try {
+                let respTienda = await fetch(GOOGLE_CSV_URL_TIENDA + "&t=" + Date.now(), { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });
+                if (!respTienda.ok) {
+                    respTienda = await fetch(`${CSV_BASE}gid=2019500245&t=${Date.now()}`);
+                }
+                if (respTienda.ok) {
+                    const text = await respTienda.text();
+                    const filas = text.split(/\r?\n/).filter(f => f.trim().length > 0);
+                    if (filas.length > 1) {
+                        const headers = parseCsvLine(filas[0]).map(h => h.toLowerCase());
+                        let idxM1 = -1;
+                        let idxM2 = -1;
+                        headers.forEach((h, i) => {
+                            if (h === 'm1' || h.includes('m1')) idxM1 = i;
+                            if (h === 'm2' || h.includes('m2')) idxM2 = i;
+                        });
+
+                        let totalM1 = 0;
+                        let totalM2 = 0;
+                        for (let i = 1; i < filas.length; i++) {
+                            const cols = parseCsvLine(filas[i]);
+                            if (idxM1 !== -1 && cols[idxM1]) {
+                                const cant = parseInt(cols[idxM1], 10);
+                                if (!isNaN(cant)) totalM1 += cant;
+                            }
+                            if (idxM2 !== -1 && cols[idxM2]) {
+                                const cant = parseInt(cols[idxM2], 10);
+                                if (!isNaN(cant)) totalM2 += cant;
+                            }
+                        }
+
+                        // Límite estricto para Medalla 1ra Edición: 7 unidades totales (6 vendidas + 1 restante)
+                        const MAX_M1 = 7;
+                        const dispM1 = Math.max(0, MAX_M1 - totalM1);
+
+                        return res.status(200).json({
+                            m1: {
+                                totalVendidas: totalM1,
+                                maxStock: MAX_M1,
+                                stockDisponible: dispM1,
+                                agotado: dispM1 <= 0
+                            },
+                            m2: {
+                                totalVendidas: totalM2,
+                                agotado: true
+                            }
+                        });
+                    }
+                }
+            } catch (e) {
+                console.error("Error verificando stock tienda:", e);
+            }
+            return res.status(200).json({
+                m1: { totalVendidas: 6, maxStock: 7, stockDisponible: 1, agotado: false },
+                m2: { totalVendidas: 6, agotado: true }
+            });
+        }
 
         if (accion === 'total_dorsales') {
             try {

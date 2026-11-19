@@ -296,18 +296,25 @@ export default async function handler(req, res) {
         // =========================================================================
         const parseCsv = (line) => line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
 
-        const GOOGLE_CSV_URL_10K = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5yMHsenxCWE5kZBDUZ8UcYqDtdAHstfqXcvWkuYZPQ_4n2xSrfs6ptk7k21r1kcMHHLtWjz8SEHwl/pub?gid=244601533&single=true&output=csv";
+        const GOOGLE_CSV_URL_10K = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=244601533`;
+        const GOOGLE_CSV_URL_10K_GVIZ = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&headers=1&gid=244601533`;
         const GOOGLE_CSV_URL_3RA = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&headers=1&gid=1584884677`;
         const GOOGLE_CSV_URL_4TA = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&headers=1&gid=95585629`;
+        const GOOGLE_CSV_URL_ABONOS_10K = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=1083923837`;
 
         if (accion === 'total_dorsales') {
-            const resp10k = await fetch(GOOGLE_CSV_URL_10K + "&t=" + Date.now(), { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });
-            if (resp10k.ok) {
-                const text = await resp10k.text();
-                const total = text.split(/\r?\n/).filter(f => f.trim().length > 0).length - 1;
-                return res.status(200).json({ total: Math.max(0, total) });
-            }
-            return res.status(200).json({ total: 22 });
+            try {
+                let resp10k = await fetch(GOOGLE_CSV_URL_10K + "&t=" + Date.now(), { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });
+                if (!resp10k.ok) {
+                    resp10k = await fetch(GOOGLE_CSV_URL_10K_GVIZ + "&t=" + Date.now());
+                }
+                if (resp10k.ok) {
+                    const text = await resp10k.text();
+                    const total = text.split(/\r?\n/).filter(f => f.trim().length > 0).length - 1;
+                    return res.status(200).json({ total: Math.max(0, total) });
+                }
+            } catch (e) {}
+            return res.status(200).json({ total: 48 });
         }
 
         if (!ciRaw || ciRaw.trim().length === 0) {
@@ -573,9 +580,12 @@ export default async function handler(req, res) {
         // 3. Consultar Edición 10K / General (si no se filtró estrictamente por 3ra o 4ta 5K)
         if (!edicion || edicion === '10k' || edicion === '10K') {
             try {
-                const response = await fetch(GOOGLE_CSV_URL_10K + "&t=" + Date.now(), {
+                let response = await fetch(GOOGLE_CSV_URL_10K + "&t=" + Date.now(), {
                     headers: { 'User-Agent': 'Vercel-Serverless-Atleta-Fetcher' }
                 });
+                if (!response.ok) {
+                    response = await fetch(GOOGLE_CSV_URL_10K_GVIZ + "&t=" + Date.now());
+                }
 
                 if (response.ok) {
                     const csvText = await response.text();
@@ -646,9 +656,12 @@ export default async function handler(req, res) {
                                 const keyCarrera = carreraNombre.includes('10K') ? '10K' : carreraNombre;
                                 const prev = registros10KMap.get(keyCarrera);
 
+                                const dFormateado = (col[idxDorsal] && col[idxDorsal] !== 'ABONO') ? String(col[idxDorsal]).replace(/\D/g, '').padStart(3, '0') : (prev ? prev.dorsal : 'S/N');
+                                const nombreFormateado = normalizarNombre(col[idxNombre], filaCI, dFormateado);
+
                                 const nuevoReg = {
-                                    dorsal: (col[idxDorsal] && col[idxDorsal] !== 'ABONO') ? col[idxDorsal] : (prev ? prev.dorsal : 'S/N'),
-                                    nombre: (col[idxNombre] && col[idxNombre].trim()) ? col[idxNombre].trim() : (prev ? prev.nombre : 'Atleta'),
+                                    dorsal: dFormateado,
+                                    nombre: nombreFormateado,
                                     tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : (prev ? prev.tel : ''),
                                     carrera: carreraNombre,
                                     edicion: "10k",

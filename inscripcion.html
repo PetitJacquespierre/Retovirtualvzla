@@ -261,11 +261,11 @@
             <div class="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-xl border border-slate-100 text-center">
                 <i class="fa-solid fa-magnifying-glass text-3xl text-[#00D2FF] mb-4"></i>
                 <h3 class="text-[#001E50] font-black text-2xl uppercase italic mb-2">Portal de Abonos y Saldos</h3>
-                <p class="text-xs text-slate-400 mb-6 font-bold">Consulta el estatus de tu cuenta en todas las ediciones (5K y 10K) con tu cédula.</p>
+                <p class="text-xs text-slate-400 mb-6 font-bold">Consulta el estatus de tu cuenta en todas las ediciones (5K y 10K) con tu cédula o teléfono.</p>
                 <div class="flex flex-col gap-4 text-left">
                     <div>
-                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Cédula de Identidad <span class="req">*</span></label>
-                        <input type="text" id="cedulaConsulta" placeholder="Ej: 12345678" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-3.5 font-black text-center text-lg text-[#001E50]">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Cédula de Identidad o Teléfono <span class="req">*</span></label>
+                        <input type="text" id="cedulaConsulta" placeholder="Ej: 12345678 o 04121234567" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-3.5 font-black text-center text-lg text-[#001E50]">
                     </div>
                     <div>
                         <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Teléfono Móvil (Opcional - Validación extra)</label>
@@ -975,7 +975,7 @@
         async function consultarSaldoServidor() {
             const ci = document.getElementById('cedulaConsulta').value.replace(/\D/g, '').trim();
             const telFiltro = document.getElementById('telefonoConsulta') ? document.getElementById('telefonoConsulta').value.replace(/\D/g, '').trim() : '';
-            if (ci.length < 5) return alert("⚠️ Ingresa una cédula válida.");
+            if (ci.length < 5) return alert("⚠️ Ingresa una cédula válida o número de teléfono.");
 
             const btn = document.getElementById('btnConsultarAbono');
             if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Consultando...'; }
@@ -1023,9 +1023,17 @@
                             if(!filas[i].trim()) continue;
                             const col = filas[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
                             const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
+                            const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
+
+                            const coincideCI = filaCI && filaCI === ci;
+                            const coincideTel = filaTel && ci.length >= 7 && (
+                                filaTel === ci ||
+                                filaTel.endsWith(ci) ||
+                                ci.endsWith(filaTel) ||
+                                (filaTel.length >= 7 && filaTel.slice(-7) === ci.slice(-7))
+                            );
                             
-                            if (filaCI === ci) {
-                                const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
+                            if (coincideCI || coincideTel) {
                                 if (telFiltro && telFiltro.length >= 4) {
                                     const ultimos4Usuario = telFiltro.slice(-4);
                                     const ultimos4Fila = filaTel.slice(-4);

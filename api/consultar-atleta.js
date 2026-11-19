@@ -436,21 +436,45 @@ export default async function handler(req, res) {
                         const idxNombre = h3.findIndex(h => h.includes('nombre')) !== -1 ? h3.findIndex(h => h.includes('nombre')) : 2;
                         const idxTel = h3.findIndex(h => h.includes('telefono') || h.includes('tlf')) !== -1 ? h3.findIndex(h => h.includes('telefono') || h.includes('tlf')) : 3;
                         const idxGen3 = h3.findIndex(h => h.includes('genero') || h.includes('sexo'));
+                        const idxSaldo3 = h3.findIndex(h => h.includes('saldopendiente') || h.includes('saldo'));
 
                         for (let i = 1; i < filas3.length; i++) {
                             const col = parseCsv(filas3[i]);
                             const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
                             const filaDorsal = col[idxDorsal] ? col[idxDorsal].replace(/\D/g, '').trim() : '';
+                            const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
                             const dNum = filaDorsal ? filaDorsal.padStart(3, '0') : 'S/N';
 
-                            const coincide = (filaCI && filaCI === queryTerm) || (filaDorsal && (filaDorsal === queryTerm || dNum === dorsalQueryPad));
+                            const coincideCI = filaCI && filaCI === queryTerm;
+                            const coincideDorsal = filaDorsal && (filaDorsal === queryTerm || dNum === dorsalQueryPad);
+                            const coincideTel = filaTel && queryTerm.length >= 7 && (
+                                filaTel === queryTerm ||
+                                filaTel.endsWith(queryTerm) ||
+                                queryTerm.endsWith(filaTel) ||
+                                (filaTel.length >= 7 && queryTerm.length >= 7 && filaTel.slice(-7) === queryTerm.slice(-7))
+                            );
+
+                            const coincide = coincideCI || coincideDorsal || coincideTel;
 
                             if (coincide) {
-                                const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
+                                if (telFiltro && telFiltro.length >= 4) {
+                                    const ultimos4Usuario = telFiltro.slice(-4);
+                                    const ultimos4Fila = filaTel.slice(-4);
+                                    if (ultimos4Fila && ultimos4Usuario !== ultimos4Fila) {
+                                        continue;
+                                    }
+                                }
+
                                 const rawGen = idxGen3 !== -1 && col[idxGen3] ? col[idxGen3].trim() : '';
                                 let genFinal = '';
                                 if (rawGen.toUpperCase().startsWith('F')) genFinal = 'FEMENINO';
                                 else if (rawGen.toUpperCase().startsWith('M')) genFinal = 'MASCULINO';
+
+                                const valorSaldoRaw = String((idxSaldo3 !== -1 && col[idxSaldo3]) ? col[idxSaldo3] : 'SOLVENTE').trim();
+                                const valUpper = valorSaldoRaw.toUpperCase();
+                                const esSolv = valUpper === 'SOLVENTE' || valUpper === '0' || valUpper === '0.00' || valUpper === '$0' || valUpper === '$0.00' || valUpper === '';
+                                const valorNormalizado = valorSaldoRaw.replace(',', '.').replace(/[^0-9.]/g, '');
+                                const montoNum = esSolv ? 0 : (parseFloat(valorNormalizado) || 0);
 
                                 registrosAtleta.push({
                                     dorsal: dNum,
@@ -458,9 +482,9 @@ export default async function handler(req, res) {
                                     tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
                                     carrera: "3ra Edición 5K",
                                     edicion: "3ra",
-                                    saldoNum: 0,
-                                    saldoRaw: "SOLVENTE",
-                                    esSolvente: true,
+                                    saldoNum: montoNum,
+                                    saldoRaw: valorSaldoRaw || "SOLVENTE",
+                                    esSolvente: esSolv || montoNum <= 0,
                                     textil: '',
                                     reserva: '',
                                     genero: genFinal
@@ -486,21 +510,45 @@ export default async function handler(req, res) {
                         const idxNombre = h4.findIndex(h => h.includes('nombre')) !== -1 ? h4.findIndex(h => h.includes('nombre')) : 2;
                         const idxTel = h4.findIndex(h => h.includes('telefono') || h.includes('tlf')) !== -1 ? h4.findIndex(h => h.includes('telefono') || h.includes('tlf')) : 3;
                         const idxGen4 = h4.findIndex(h => h.includes('genero') || h.includes('sexo'));
+                        const idxSaldo4 = h4.findIndex(h => h.includes('saldopendiente') || h.includes('saldo'));
 
                         for (let i = 1; i < filas4.length; i++) {
                             const col = parseCsv(filas4[i]);
                             const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
                             const filaDorsal = col[idxDorsal] ? col[idxDorsal].replace(/\D/g, '').trim() : '';
+                            const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
                             const dNum = filaDorsal ? filaDorsal.padStart(3, '0') : 'S/N';
 
-                            const coincide = (filaCI && filaCI === queryTerm) || (filaDorsal && (filaDorsal === queryTerm || dNum === dorsalQueryPad));
+                            const coincideCI = filaCI && filaCI === queryTerm;
+                            const coincideDorsal = filaDorsal && (filaDorsal === queryTerm || dNum === dorsalQueryPad);
+                            const coincideTel = filaTel && queryTerm.length >= 7 && (
+                                filaTel === queryTerm ||
+                                filaTel.endsWith(queryTerm) ||
+                                queryTerm.endsWith(filaTel) ||
+                                (filaTel.length >= 7 && queryTerm.length >= 7 && filaTel.slice(-7) === queryTerm.slice(-7))
+                            );
+
+                            const coincide = coincideCI || coincideDorsal || coincideTel;
 
                             if (coincide) {
-                                const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
+                                if (telFiltro && telFiltro.length >= 4) {
+                                    const ultimos4Usuario = telFiltro.slice(-4);
+                                    const ultimos4Fila = filaTel.slice(-4);
+                                    if (ultimos4Fila && ultimos4Usuario !== ultimos4Fila) {
+                                        continue;
+                                    }
+                                }
+
                                 const rawGen = idxGen4 !== -1 && col[idxGen4] ? col[idxGen4].trim() : '';
                                 let genFinal = '';
                                 if (rawGen.toUpperCase().startsWith('F')) genFinal = 'FEMENINO';
                                 else if (rawGen.toUpperCase().startsWith('M')) genFinal = 'MASCULINO';
+
+                                const valorSaldoRaw = String((idxSaldo4 !== -1 && col[idxSaldo4]) ? col[idxSaldo4] : 'SOLVENTE').trim();
+                                const valUpper = valorSaldoRaw.toUpperCase();
+                                const esSolv = valUpper === 'SOLVENTE' || valUpper === '0' || valUpper === '0.00' || valUpper === '$0' || valUpper === '$0.00' || valUpper === '';
+                                const valorNormalizado = valorSaldoRaw.replace(',', '.').replace(/[^0-9.]/g, '');
+                                const montoNum = esSolv ? 0 : (parseFloat(valorNormalizado) || 0);
 
                                 registrosAtleta.push({
                                     dorsal: dNum,
@@ -508,9 +556,9 @@ export default async function handler(req, res) {
                                     tel: filaTel ? (filaTel.slice(0, 4) + '***' + filaTel.slice(-3)) : '',
                                     carrera: "4ta Edición 5K",
                                     edicion: "4ta",
-                                    saldoNum: 0,
-                                    saldoRaw: "SOLVENTE",
-                                    esSolvente: true,
+                                    saldoNum: montoNum,
+                                    saldoRaw: valorSaldoRaw || "SOLVENTE",
+                                    esSolvente: esSolv || montoNum <= 0,
                                     textil: '',
                                     reserva: '',
                                     genero: genFinal
@@ -550,10 +598,20 @@ export default async function handler(req, res) {
                         for (let i = 1; i < filas.length; i++) {
                             const col = parseCsv(filas[i]);
                             const filaCI = col[idxCI] ? col[idxCI].replace(/\D/g, '').trim() : '';
+                            const filaDorsal = col[idxDorsal] ? col[idxDorsal].replace(/\D/g, '').trim() : '';
+                            const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
+                            const dNum = filaDorsal ? filaDorsal.padStart(3, '0') : 'S/N';
 
-                            if (filaCI === ci) {
-                                const filaTel = col[idxTel] ? col[idxTel].replace(/\D/g, '').trim() : '';
+                            const coincideCI = filaCI && filaCI === queryTerm;
+                            const coincideDorsal = filaDorsal && (filaDorsal === queryTerm || dNum === dorsalQueryPad);
+                            const coincideTel = filaTel && queryTerm.length >= 7 && (
+                                filaTel === queryTerm ||
+                                filaTel.endsWith(queryTerm) ||
+                                queryTerm.endsWith(filaTel) ||
+                                (filaTel.length >= 7 && queryTerm.length >= 7 && filaTel.slice(-7) === queryTerm.slice(-7))
+                            );
 
+                            if (coincideCI || coincideDorsal || coincideTel) {
                                 if (telFiltro && telFiltro.length >= 4) {
                                     const ultimos4Usuario = telFiltro.slice(-4);
                                     const ultimos4Fila = filaTel.slice(-4);

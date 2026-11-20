@@ -477,27 +477,39 @@
                 </div>
             </div>
 
-            <div id="opciones-pago-abono" class="hidden-step bg-gradient-to-br from-[#00102A] to-slate-900 p-6 rounded-[2rem] text-white mt-6 mb-6 max-w-lg mx-auto border border-[#00D2FF]/30">
+            <div id="opciones-pago-abono" class="hidden-step bg-gradient-to-br from-[#00102A] to-slate-900 p-6 rounded-[2rem] text-white mt-6 mb-6 max-w-lg mx-auto border border-[#00D2FF]/30 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-white/10 pb-3 mb-4">
                     <div>
                         <h3 class="text-[#00D2FF] font-black text-sm uppercase tracking-widest">Estado de Cuenta Oficial</h3>
                         <p id="label-atleta-encontrado" class="text-[11px] text-white/70 font-semibold"></p>
                     </div>
-                    <span class="bg-[#00D2FF]/20 text-[#00D2FF] font-black px-3 py-1 rounded-lg text-xs">Total Deuda: $<span id="label-deuda-actual">0.00</span></span>
+                    <span class="bg-[#00D2FF]/20 text-[#00D2FF] font-black px-3 py-1 rounded-lg text-xs font-mono">Total Deuda: $<span id="label-deuda-actual">0.00</span></span>
                 </div>
 
                 <!-- Desglose por carreras -->
                 <div id="desglose-deudas-container" class="space-y-2 mb-4"></div>
 
-                <p class="text-[10px] text-white/60 uppercase tracking-widest font-bold mb-3">¿Cuánto deseas abonar hoy?</p>
+                <!-- Aviso Oficial de Fase Final de Producción y Liquidación Completa -->
+                <div class="bg-[#00D2FF]/10 border border-[#00D2FF]/30 rounded-xl p-3.5 mb-4 text-[11px] text-slate-200 leading-relaxed flex items-start gap-3">
+                    <i class="fa-solid fa-truck-fast text-[#00D2FF] text-base mt-0.5 shrink-0"></i>
+                    <div>
+                        <span class="font-black text-white block uppercase tracking-wider text-[10px]">Fase de Confección Textil y Despacho</span>
+                        <p class="text-slate-300 mt-0.5" style="text-align: justify; text-justify: inter-word;">
+                            Para garantizar el corte de tu prenda en taller y emitir tu orden de despacho antes del 11 de diciembre, debes liquidar el saldo total pendiente de tu inscripción.
+                        </p>
+                    </div>
+                </div>
+
                 <div class="flex flex-col gap-3">
-                    <label id="contenedor-opcion-mitad" class="cursor-pointer flex items-center gap-3 bg-white/5 border p-3 rounded-xl">
-                        <input type="radio" name="opcionAbono" value="mitad" onchange="actualizarTotalAbono()" class="w-5 h-5 accent-[#00D2FF]">
-                        <span class="text-xs font-bold">Abonar una Cuota (Mitad) <span id="label-abono-mitad" class="text-[#00D2FF] block font-normal text-[10px]">Calculando...</span></span>
-                    </label>
-                    <label class="cursor-pointer flex items-center gap-3 bg-white/5 border p-3 rounded-xl">
-                        <input type="radio" name="opcionAbono" value="completo" onchange="actualizarTotalAbono()" checked class="w-5 h-5 accent-[#00D2FF]">
-                        <span class="text-xs font-black text-[#00D2FF]">Liquidar Deuda Completa <span id="label-abono-completo" class="text-white/50 block font-normal text-[10px]">Calculando...</span></span>
+                    <label class="cursor-pointer flex items-center justify-between bg-gradient-to-r from-emerald-500/20 to-cyan-500/10 border-2 border-[#00D2FF] p-4 rounded-xl shadow-lg hover:border-white transition-all">
+                        <div class="flex items-center gap-3">
+                            <input type="radio" name="opcionAbono" value="completo" onchange="actualizarTotalAbono()" checked class="w-5 h-5 accent-[#00D2FF]">
+                            <div>
+                                <span class="text-xs font-black text-white block uppercase tracking-wide">Liquidar Saldo Total Oficial</span>
+                                <span class="text-[#00D2FF] text-[10px] font-bold">Pagas tu saldo restante y quedas 100% solvente</span>
+                            </div>
+                        </div>
+                        <span id="label-abono-completo" class="text-sm font-black text-[#00D2FF] font-mono">$0.00 USD</span>
                     </label>
                 </div>
             </div>
@@ -961,12 +973,14 @@
         function actualizarTotalAbono() {
             if (flujoActual !== "ABONO") return;
             
-            const radioAbono = document.querySelector('input[name="opcionAbono"]:checked');
-            const tipoPago = radioAbono ? radioAbono.value : "completo";
-            let montoAPagar = tipoPago === "mitad" ? (deudaActual / 2) : deudaActual;
+            // Para atletas con deuda pendiente: liquidación total requerida para despacho oficial
+            let montoAPagar = deudaActual;
             
-            document.getElementById('label-abono-mitad').innerText = `Pagas $${(deudaActual/2).toFixed(2)} hoy.`;
-            document.getElementById('label-abono-completo').innerText = `Pagas los $${deudaActual.toFixed(2)} totales.`;
+            const elMitad = document.getElementById('label-abono-mitad');
+            if (elMitad) elMitad.innerText = `Pagas $${(deudaActual/2).toFixed(2)} hoy.`;
+            
+            const elCompleto = document.getElementById('label-abono-completo');
+            if (elCompleto) elCompleto.innerText = `$${deudaActual.toFixed(2)} USD`;
             
             document.getElementById('total-usd').innerText = `$${montoAPagar.toFixed(2)}`;
             document.getElementById('total-bs').innerText = formatVE(montoAPagar * tasaBCV) + " Bs.";
@@ -1136,19 +1150,13 @@
                         if (btnEnviar) { btnEnviar.disabled = true; btnEnviar.style.opacity = '0.4'; btnEnviar.style.cursor = 'not-allowed'; btnEnviar.innerText = 'CUENTA SALDADA ✔'; }
                         document.getElementById('opciones-pago-abono').classList.remove('hidden-step');
                         document.getElementById('label-deuda-actual').innerText = "0.00";
-                        if (document.getElementById('contenedor-opcion-mitad')) document.getElementById('contenedor-opcion-mitad').style.display = 'none';
                     } else {
                         deudaActual = sumaDeudas;
                         document.getElementById('label-deuda-actual').innerText = deudaActual.toFixed(2);
                         document.getElementById('opciones-pago-abono').classList.remove('hidden-step');
                         
-                        if (deudaActual <= 15) {
-                            if (document.getElementById('contenedor-opcion-mitad')) document.getElementById('contenedor-opcion-mitad').style.display = 'none';
-                            const radComp = document.querySelector('input[name="opcionAbono"][value="completo"]');
-                            if (radComp) radComp.checked = true;
-                        } else {
-                            if (document.getElementById('contenedor-opcion-mitad')) document.getElementById('contenedor-opcion-mitad').style.display = 'flex';
-                        }
+                        const radComp = document.querySelector('input[name="opcionAbono"][value="completo"]');
+                        if (radComp) radComp.checked = true;
                         
                         actualizarTotalAbono();
                         if (btnEnviar) { btnEnviar.disabled = false; btnEnviar.style.opacity = '1'; btnEnviar.style.cursor = 'pointer'; btnEnviar.innerText = 'ENVIAR REPORTE AL SISTEMA'; }

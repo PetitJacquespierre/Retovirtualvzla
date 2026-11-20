@@ -336,6 +336,14 @@
                         </button>
                     </div>
                 </div>
+                <!-- Aviso de Cierre de Confección Textil este Lunes -->
+                <div class="mb-3 p-3 bg-amber-50 border border-amber-300 rounded-xl flex items-center gap-2.5 text-xs text-amber-900 shadow-sm">
+                    <i class="fa-solid fa-clock-rotate-left text-amber-600 text-sm shrink-0"></i>
+                    <p class="text-[11px] font-medium leading-tight">
+                        <b class="font-black text-amber-800">Cierre de Confección:</b> La inclusión de franelilla/franela estará disponible solo hasta este lunes. Posteriormente, las inscripciones cerrarán el lote textil y pasarán exclusivamente a modalidad <b>Solo Medalla ($25 USD)</b>.
+                    </p>
+                </div>
+
                 <div id="selectorTextil10k" class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border">
                     <div class="flex flex-col gap-2">
                         <label class="text-[10px] font-bold uppercase text-slate-400">Modalidad / Kit 10K <span class="req">*</span></label>
@@ -961,7 +969,7 @@
                     let saldoRestante = costoKitCompleto - netoUSD;
                     
                     document.getElementById('label-abono-dinamico').innerText = `Pagas $10 hoy de inicial. Saldo restante: $${saldoRestante.toFixed(2)}`;
-                    campoNota.innerText = `⚠️ Estás abonando la inicial de $10. Tu saldo pendiente de $${saldoRestante.toFixed(2)} debe liquidarse en un plazo máximo de 15 a 30 días hábiles para garantizar la confección y despacho de tu kit.`;
+                    campoNota.innerText = `⚠️ Estás abonando la inicial de $10. Tu saldo pendiente de $${saldoRestante.toFixed(2)} deberá liquidarse para la emisión de tu guía de despacho y entrega de medalla oficial (11 de diciembre).`;
                     campoNota.classList.remove('hidden');
                 }
 

@@ -423,6 +423,21 @@
                         <span class="text-xs font-black text-[#00D2FF]">Pagar el 100% Completo hoy <span class="text-white/50 block font-normal text-[10px]">Saldas tu inscripción completa el día de hoy.</span></span>
                     </label>
                 </div>
+
+                <!-- Aviso Legal de Abonos y No Reembolso -->
+                <div class="mt-4 p-4 rounded-2xl bg-amber-500/10 border border-amber-400/30 text-amber-100 text-xs shadow-inner">
+                    <div class="flex items-start gap-2.5">
+                        <i class="fa-solid fa-shield-halved text-amber-400 text-sm mt-0.5 shrink-0"></i>
+                        <div class="space-y-1.5 text-[11px] leading-relaxed" style="text-align: justify; text-justify: inter-word; hyphens: auto;">
+                            <p>
+                                <b class="text-amber-300 font-bold">Condición de Entrega:</b> El abono inicial de $10 reserva formalmente tu cupo y dorsal. <strong>Ninguna medalla física ni kit textil será despachado o entregado sin haber completado el 100% del pago de la inscripción</strong> antes del 11 de diciembre de 2026.
+                            </p>
+                            <p>
+                                <b class="text-amber-300 font-bold">Política de No Reembolso:</b> Debido a la exclusividad de los cupos y la importación de piezas de colección, <strong>los montos abonados o pagados no son reembolsables por ningún motivo</strong>. En caso fortuito, puedes transferir tu cupo a otro corredor antes del cierre de lote.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div id="seccion-combo-5k" class="hidden-step bg-white p-6 md:p-8 rounded-[2.5rem] shadow-xl border border-slate-100 mb-8">
@@ -598,11 +613,16 @@
             </div>
 
             <div class="bg-[#001E50] p-6 rounded-[2rem] text-white">
-                <div class="mb-4 flex items-start gap-3 text-xs">
-                    <input id="aceptoReglamento" type="checkbox" class="w-4 h-4 mt-0.5 accent-[#00D2FF] cursor-pointer">
-                    <label for="aceptoReglamento" class="cursor-pointer leading-snug">
-                        He leído y acepto los <a href="https://drive.google.com/file/d/1fvV-3WW2GPp6MX7ubdsqberHklTZp3MD/view?usp=drive_link" target="_blank" class="text-[#00D2FF] font-bold underline hover:text-white transition-colors">Términos, Reglamento y Descargo de Responsabilidad Oficial</a>.
-                    </label>
+                <div class="mb-4 bg-white/5 border border-white/10 p-4 rounded-xl space-y-2">
+                    <div class="flex items-start gap-3 text-xs">
+                        <input id="aceptoReglamento" type="checkbox" class="w-4 h-4 mt-0.5 accent-[#00D2FF] cursor-pointer">
+                        <label for="aceptoReglamento" class="cursor-pointer leading-snug">
+                            He leído y acepto los <a href="https://drive.google.com/file/d/1fvV-3WW2GPp6MX7ubdsqberHklTZp3MD/view?usp=drive_link" target="_blank" class="text-[#00D2FF] font-bold underline hover:text-white transition-colors">Términos, Reglamento y Descargo de Responsabilidad Oficial</a>.
+                        </label>
+                    </div>
+                    <p class="text-[10px] text-slate-300 leading-relaxed pl-7" style="text-align: justify; text-justify: inter-word; hyphens: auto;">
+                        <i class="fa-solid fa-circle-info text-[#00D2FF] mr-1"></i> Declaro participar voluntariamente en óptimas condiciones de salud. Entiendo y acepto expresamente que <b>la medalla física no será entregada ni despachada sin haber cancelado el 100% de la inscripción</b> y que <b>los pagos o abonos no son reembolsables por ningún motivo</b> al tratarse de producción limitada.
+                    </p>
                 </div>
                 <button onclick="procesarInscripcion()" class="w-full bg-[#00D2FF] text-[#001E50] py-4 rounded-xl font-black uppercase text-xs tracking-widest flex items-center justify-center gap-2 transition-transform hover:scale-[1.01]">
                     ENVIAR REPORTE AL SISTEMA <i class="fa-brands fa-whatsapp"></i>

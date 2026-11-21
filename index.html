@@ -330,8 +330,8 @@ if (typeof document !== 'undefined') {
     <header class="relative z-50">
         <div class="bg-[#00D2FF] text-[#001E50] py-2.5 text-center text-[10px] font-black uppercase tracking-[0.25em] z-50 relative">
             <i class="fa-solid fa-fire mr-2"></i>
-            🏆 CIRCUITO 5K (3RA Y 4TA EDICIÓN) ¡SOLD OUT TOTAL! · CUPOS DISPONIBLES: EDICIÓN ESPECIAL 10K —
-            <a href="inscripcion.html?modo=10K" class="underline underline-offset-2 hover:opacity-80 transition-opacity ml-1">Asegurar Kit 10K</a>
+            🏆 CIRCUITO 5K ¡SOLD OUT TOTAL! · 🌟 EDICIÓN ESPECIAL 10K: FECHA CONFIRMADA 11 DE DICIEMBRE · MEDALLAS FÍSICAS EN MANO —
+            <a href="inscripcion.html?modo=10K" class="underline underline-offset-2 hover:opacity-80 transition-opacity ml-1 font-bold">ASEGURAR MI KIT 10K &rarr;</a>
             <i class="fa-solid fa-fire ml-2"></i>
         </div>
 
@@ -538,49 +538,60 @@ if (typeof document !== 'undefined') {
 
         <!-- Texto izquierda -->
         <div class="lg:w-1/2 text-center lg:text-left">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5 badge-iron-series">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-3 badge-iron-series">
             <i class="fa-solid fa-shield-halved text-[#00D2FF] text-xs"></i>
             <span class="text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.5em]">The Iron Series</span>
+          </div>
+          <div class="inline-flex items-center gap-2 bg-[#00D2FF]/20 border border-[#00D2FF]/50 px-3.5 py-1.5 rounded-full text-xs font-black text-[#00D2FF] uppercase tracking-wider mb-4 shadow-sm">
+            <i class="fa-solid fa-calendar-check text-[#00D2FF]"></i> Fecha Oficial: Jueves 11 de Diciembre de 2026
           </div>
           <h2 class="text-white font-black uppercase leading-none tracking-tighter mb-4">
             <span class="block" style="font-size:clamp(2rem,5.5vw,4rem)">EDICIÓN</span>
             <span class="block italic text-[#00D2FF]" style="font-size:clamp(2.5rem,7.5vw,6rem)">ESPECIAL</span>
             <span class="block" style="font-size:clamp(2.5rem,7.5vw,6rem)">10K</span>
           </h2>
-          <p class="text-white/60 text-sm md:text-base font-light leading-relaxed mb-6 max-w-sm mx-auto lg:mx-0">
-            Solo una edición. Solo un año. <strong class="text-white font-semibold">Medalla de metal macizo</strong> para quienes se atrevan a los 10K.
+          <p class="text-white/70 text-sm md:text-base font-light leading-relaxed mb-6 max-w-sm mx-auto lg:mx-0" style="text-align: justify; text-justify: inter-word; hyphens: auto;">
+            Solo una edición. Solo un año. <strong class="text-white font-semibold">Medallas físicas ya recibidas de producción</strong> en metal macizo de alta gama para quienes se atrevan a los 10K este 11 de diciembre.
           </p>
           <a href="inscripcion.html?modo=10K"
-             class="inline-flex items-center gap-2 bg-[#00D2FF] text-[#001E50] font-black text-xs uppercase tracking-[0.15em] px-6 py-3 rounded-full hover:bg-white transition-colors duration-300">
+             class="inline-flex items-center gap-2 bg-[#00D2FF] text-[#001E50] font-black text-xs uppercase tracking-[0.15em] px-6 py-3.5 rounded-full hover:bg-white transition-all duration-300 shadow-[0_0_20px_rgba(0,210,255,0.4)]">
             <i class="fa-solid fa-flag-checkered text-xs"></i>
             Quiero mi lugar en el 10K
           </a>
         </div>
 
-        <!-- Medalla Real derecha (Selector 3 Vistas: Video 360°, Giro 3D Táctil, Foto con Lanyard) -->
+        <!-- Medalla Real derecha (Selector 4 Vistas: En Mano, Video 360°, Giro 3D Táctil, Con Lanyard) -->
         <div class="lg:w-1/2 flex flex-col items-center gap-3">
           <!-- Selector de Modo de Visualización -->
-          <div class="flex items-center gap-1.5 p-1 bg-black/60 backdrop-blur-md rounded-full border border-white/10 shadow-lg mb-1">
-            <button type="button" id="tabMedallaVideo" onclick="cambiarVistaMedalla('video')" class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all bg-[#00D2FF] text-[#001E50] shadow-[0_0_12px_rgba(0,210,255,0.5)]">
+          <div class="flex items-center gap-1 p-1 bg-black/60 backdrop-blur-md rounded-full border border-white/10 shadow-lg mb-1 overflow-x-auto max-w-full">
+            <button type="button" id="tabMedallaMano" onclick="cambiarVistaMedalla('mano')" class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all bg-[#00D2FF] text-[#001E50] shadow-[0_0_12px_rgba(0,210,255,0.5)] whitespace-nowrap">
+              <i class="fa-solid fa-hand-holding-hand text-[9px] mr-1"></i> En Mano
+            </button>
+            <button type="button" id="tabMedallaVideo" onclick="cambiarVistaMedalla('video')" class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all text-white/70 hover:text-white whitespace-nowrap">
               <i class="fa-solid fa-play text-[9px] mr-1"></i> Video 360°
             </button>
-            <button type="button" id="tabMedalla3D" onclick="cambiarVistaMedalla('3d')" class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all text-white/70 hover:text-white">
-              <i class="fa-solid fa-arrows-rotate text-[9px] mr-1"></i> Giro 3D Táctil
-            </button>
-            <button type="button" id="tabMedallaFoto" onclick="cambiarVistaMedalla('foto')" class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all text-white/70 hover:text-white">
+            <button type="button" id="tabMedallaFoto" onclick="cambiarVistaMedalla('foto')" class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all text-white/70 hover:text-white whitespace-nowrap">
               <i class="fa-solid fa-camera text-[9px] mr-1"></i> Con Lanyard
+            </button>
+            <button type="button" id="tabMedalla3D" onclick="cambiarVistaMedalla('3d')" class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all text-white/70 hover:text-white whitespace-nowrap">
+              <i class="fa-solid fa-arrows-rotate text-[9px] mr-1"></i> Giro 3D
             </button>
           </div>
 
           <div class="relative w-full max-w-[320px] aspect-[4/5] rounded-[2.2rem] overflow-hidden shadow-2xl border-2 border-[#00D2FF]/40 bg-[#00102A] group select-none">
             
-            <!-- 1. Video real de la medalla girando -->
-            <video id="videoMedallaHero" autoplay loop muted playsinline preload="metadata" poster="img/medallahorizontallanyard.jpeg" class="w-full h-full object-cover">
+            <!-- 1. Foto real en mano (recién llegada) -->
+            <div id="fotoManoHero" class="absolute inset-0 bg-[#00102A] transition-opacity duration-300">
+              <img src="img/medalla_real_10k.jpg" alt="Medalla 10K Real en Mano" width="600" height="900" class="w-full h-full object-cover">
+            </div>
+
+            <!-- 2. Video real de la medalla girando -->
+            <video id="videoMedallaHero" loop muted playsinline preload="metadata" poster="img/medallahorizontallanyard.jpeg" class="w-full h-full object-cover hidden">
               <source src="img/medallagiratoria.mp4" type="video/mp4">
               Tu navegador no soporta videos HTML5.
             </video>
 
-            <!-- 2. Visor 3D Táctil Interactivo (Arrastre táctil / ratón) -->
+            <!-- 3. Visor 3D Táctil Interactivo (Arrastre táctil / ratón) -->
             <div id="capa3dMedallaHero" class="absolute inset-0 bg-[#00102A] hidden flex flex-col items-center justify-center p-4 cursor-grab active:cursor-grabbing overflow-hidden">
               <div class="absolute top-3 left-3 bg-[#00D2FF]/20 border border-[#00D2FF]/40 text-[#00D2FF] text-[9px] font-black uppercase px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-md z-20 pointer-events-none">
                 <i class="fa-solid fa-hand-pointer animate-pulse text-[10px]"></i>
@@ -597,7 +608,7 @@ if (typeof document !== 'undefined') {
               </div>
             </div>
 
-            <!-- 3. Capa con foto estática con lanyard -->
+            <!-- 4. Capa con foto estática con lanyard -->
             <div id="fotoEstacionHero" class="absolute inset-0 bg-[#00102A] hidden transition-opacity duration-300">
               <img src="img/medallahorizontallanyard.jpeg" alt="Medalla 10K Real con Lanyard Oficial" width="600" height="750" loading="lazy" class="w-full h-full object-cover">
             </div>
@@ -605,14 +616,14 @@ if (typeof document !== 'undefined') {
             <!-- Badge flotante de producto real -->
             <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md border border-[#00D2FF]/40 text-[#00D2FF] text-[9px] font-black uppercase px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-md pointer-events-none">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span id="badgeEstadoHero">Muestra Real</span>
+              <span id="badgeEstadoHero">Muestra Real en Mano</span>
             </div>
 
           </div>
 
-          <div class="flex items-center gap-2 opacity-60 text-center">
-            <i class="fa-solid fa-circle-check text-[#00D2FF] text-xs"></i>
-            <span class="text-white text-[9px] uppercase tracking-[0.25em] font-bold">Muestra física fabricada en metal macizo</span>
+          <div class="flex items-center gap-2 opacity-80 text-center">
+            <i class="fa-solid fa-circle-check text-emerald-400 text-xs"></i>
+            <span class="text-white text-[9px] uppercase tracking-[0.25em] font-bold">Medallas físicas ya recibidas en Venezuela</span>
           </div>
         </div>
 
@@ -760,42 +771,50 @@ const heroCarousel = (function() {
   return { goTo, next, prev };
 })();
 
-// Controlador de Modo de Visualización de Medalla (Video 360°, Giro 3D Táctil, Foto con Lanyard)
+// Controlador de Modo de Visualización de Medalla (En Mano, Video 360°, Giro 3D Táctil, Foto con Lanyard)
 function cambiarVistaMedalla(modo) {
+  const fotoMano = document.getElementById('fotoManoHero');
   const video = document.getElementById('videoMedallaHero');
   const capa3D = document.getElementById('capa3dMedallaHero');
   const capaFoto = document.getElementById('fotoEstacionHero');
+  
+  const tabMano = document.getElementById('tabMedallaMano');
   const tabVideo = document.getElementById('tabMedallaVideo');
   const tab3D = document.getElementById('tabMedalla3D');
   const tabFoto = document.getElementById('tabMedallaFoto');
   const badgeEstado = document.getElementById('badgeEstadoHero');
 
   // Reset tabs
-  [tabVideo, tab3D, tabFoto].forEach(t => {
+  [tabMano, tabVideo, tab3D, tabFoto].forEach(t => {
     if (t) {
-      t.className = "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all text-white/70 hover:text-white";
+      t.className = "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all text-white/70 hover:text-white whitespace-nowrap";
     }
   });
 
   // Ocultar todas las capas
+  if (fotoMano) fotoMano.classList.add('hidden');
   if (video) { video.classList.add('hidden'); video.pause(); }
   if (capa3D) capa3D.classList.add('hidden');
   if (capaFoto) capaFoto.classList.add('hidden');
 
-  if (modo === 'video') {
+  if (modo === 'mano') {
+    if (fotoMano) fotoMano.classList.remove('hidden');
+    if (tabMano) tabMano.className = "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all bg-[#00D2FF] text-[#001E50] shadow-[0_0_12px_rgba(0,210,255,0.5)] whitespace-nowrap";
+    if (badgeEstado) badgeEstado.textContent = "Muestra Real en Mano";
+  } else if (modo === 'video') {
     if (video) { video.classList.remove('hidden'); video.play(); }
-    if (tabVideo) tabVideo.className = "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all bg-[#00D2FF] text-[#001E50] shadow-[0_0_12px_rgba(0,210,255,0.5)]";
+    if (tabVideo) tabVideo.className = "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all bg-[#00D2FF] text-[#001E50] shadow-[0_0_12px_rgba(0,210,255,0.5)] whitespace-nowrap";
     if (badgeEstado) badgeEstado.textContent = "Video 360°";
   } else if (modo === '3d') {
     if (capa3D) {
       capa3D.classList.remove('hidden');
       initMedalla3DDrag();
     }
-    if (tab3D) tab3D.className = "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all bg-[#00D2FF] text-[#001E50] shadow-[0_0_12px_rgba(0,210,255,0.5)]";
+    if (tab3D) tab3D.className = "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all bg-[#00D2FF] text-[#001E50] shadow-[0_0_12px_rgba(0,210,255,0.5)] whitespace-nowrap";
     if (badgeEstado) badgeEstado.textContent = "Giro 3D Interactivo";
   } else if (modo === 'foto') {
     if (capaFoto) capaFoto.classList.remove('hidden');
-    if (tabFoto) tabFoto.className = "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all bg-[#00D2FF] text-[#001E50] shadow-[0_0_12px_rgba(0,210,255,0.5)]";
+    if (tabFoto) tabFoto.className = "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all bg-[#00D2FF] text-[#001E50] shadow-[0_0_12px_rgba(0,210,255,0.5)] whitespace-nowrap";
     if (badgeEstado) badgeEstado.textContent = "Con Cinta Oficial";
   }
 }
@@ -1002,33 +1021,61 @@ function initMedalla3DDrag() {
     <!-- Layout principal: foto + contenido -->
     <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
 
-      <!-- ── FOTO DEL KIT ── -->
-      <div class="lg:w-1/2 w-full flex justify-center">
-        <div class="relative">
+      <!-- ── FOTO DEL KIT INTERACTIVA ── -->
+      <div class="lg:w-1/2 w-full flex flex-col items-center">
+        <!-- Selector de Vista del Kit -->
+        <div class="flex items-center gap-1.5 p-1 bg-black/60 backdrop-blur-md rounded-full border border-white/10 shadow-lg mb-3 overflow-x-auto max-w-full">
+          <button type="button" id="tabKitFranela" onclick="cambiarKitShowcase('franela')" class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all bg-[#00D2FF] text-[#001E50] shadow-[0_0_12px_rgba(0,210,255,0.5)] whitespace-nowrap">
+            <i class="fa-solid fa-shirt text-[9px] mr-1"></i> Franela con Mangas
+          </button>
+          <button type="button" id="tabKitFranelilla" onclick="cambiarKitShowcase('franelilla')" class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all text-white/70 hover:text-white whitespace-nowrap">
+            <i class="fa-solid fa-vest text-[9px] mr-1"></i> Franelilla Olímpica
+          </button>
+          <button type="button" id="tabKitMedalla" onclick="cambiarKitShowcase('medalla')" class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all text-white/70 hover:text-white whitespace-nowrap">
+            <i class="fa-solid fa-medal text-[9px] mr-1"></i> Medalla en Mano
+          </button>
+        </div>
+
+        <div class="relative w-full max-w-[480px]">
           <!-- Etiqueta flotante -->
-          <div class="absolute -top-4 -left-4 z-20 flex flex-col items-end gap-2">
-  <!-- Badge edición (existente) -->
-  <div class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest"
-       style="background:linear-gradient(135deg,#00D2FF,#0090b3);color:#001E50;box-shadow:0 4px 20px rgba(0,210,255,0.4);">
-    <i class="fa-solid fa-star mr-1"></i> Edición 10K 2026
-  </div>
-  <!-- Badge FOMO nuevo -->
-  <div class="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5"
-       style="background:rgba(255,68,68,0.15);border:1px solid rgba(255,68,68,0.4);color:#ff6b6b;">
-    <i class="fa-solid fa-fire-flame-curved text-[10px]"></i>
-    ¡Últimos cupos!
-  </div>
-</div>
+          <div class="absolute -top-4 -left-4 z-20 flex flex-col items-start gap-2 pointer-events-none">
+            <!-- Badge edición -->
+            <div class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest"
+                 style="background:linear-gradient(135deg,#00D2FF,#0090b3);color:#001E50;box-shadow:0 4px 20px rgba(0,210,255,0.4);">
+              <i class="fa-solid fa-star mr-1"></i> Edición 10K · 11 Dic 2026
+            </div>
+            <!-- Badge FOMO / Producción Real -->
+            <div id="badgeKitShowcase" class="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 backdrop-blur-md">
+              <i class="fa-solid fa-check-circle text-[10px]"></i>
+              ¡Prendas & Medallas en Físico!
+            </div>
+          </div>
 
           <!-- Marco con glow pulsante -->
-          <div class="kit-photo-glow rounded-3xl overflow-hidden border"
-               style="border-color:rgba(0,210,255,0.25);max-width:480px;">
-            <img src="img/10k_franela.webp" alt="Kit de carrera oficial 10K 2026 — camiseta, dorsal y medalla" width="480" height="480" loading="lazy" class="w-full h-full object-cover block" style="aspect-ratio:1/1;">
+          <div class="kit-photo-glow rounded-3xl overflow-hidden border relative aspect-[4/5] bg-[#00102A]"
+               style="border-color:rgba(0,210,255,0.25);">
+            <img id="imgKitShowcase" src="img/franela_mangas_10k_real.jpg" alt="Kit de carrera oficial 10K 2026" width="600" height="750" loading="lazy" class="w-full h-full object-cover block transition-opacity duration-300">
+          </div>
+
+          <!-- Miniaturas táctiles abajo del visor -->
+          <div class="grid grid-cols-3 gap-2 w-full mt-3">
+            <button type="button" onclick="cambiarKitShowcase('franela')" class="group relative aspect-video rounded-xl overflow-hidden border border-white/20 hover:border-[#00D2FF] transition-all">
+              <img src="img/franela_mangas_10k_real.jpg" alt="Franela con Mangas" class="w-full h-full object-cover">
+              <span class="absolute inset-x-0 bottom-0 bg-black/80 text-white text-[8px] font-bold py-0.5 text-center">Franela</span>
+            </button>
+            <button type="button" onclick="cambiarKitShowcase('franelilla')" class="group relative aspect-video rounded-xl overflow-hidden border border-white/20 hover:border-[#00D2FF] transition-all">
+              <img src="img/franelilla_olimpica_10k_real.jpg" alt="Franelilla Olímpica" class="w-full h-full object-cover">
+              <span class="absolute inset-x-0 bottom-0 bg-black/80 text-white text-[8px] font-bold py-0.5 text-center">Franelilla</span>
+            </button>
+            <button type="button" onclick="cambiarKitShowcase('medalla')" class="group relative aspect-video rounded-xl overflow-hidden border border-white/20 hover:border-[#00D2FF] transition-all">
+              <img src="img/medalla_real_10k.jpg" alt="Medalla en Mano" class="w-full h-full object-cover">
+              <span class="absolute inset-x-0 bottom-0 bg-black/80 text-white text-[8px] font-bold py-0.5 text-center">Medalla Real</span>
+            </button>
           </div>
 
           <!-- Nota inferior -->
-          <p class="text-center mt-3 text-white/25 text-[9px] uppercase tracking-[0.3em]">
-            Diseño referencial · Sujeto a disponibilidad
+          <p class="text-center mt-3 text-white/35 text-[9px] uppercase tracking-[0.25em]">
+            Producción Oficial · Confección Dry-Fit y Metal Macizo
           </p>
         </div>
       </div>
@@ -1036,16 +1083,20 @@ function initMedalla3DDrag() {
       <!-- ── CONTENIDO DERECHO ── -->
       <div class="lg:w-1/2 w-full text-center lg:text-left">
 
+        <div class="inline-flex items-center gap-2 bg-[#00D2FF]/10 border border-[#00D2FF]/40 text-[#00D2FF] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider mb-4 shadow-sm">
+          <i class="fa-solid fa-calendar-check"></i> Carrera y Envíos: 11 de Diciembre de 2026
+        </div>
+
         <h2 class="font-black uppercase tracking-tighter leading-none mb-3"
             style="font-size:clamp(2.2rem,5.5vw,4.2rem);">
           <span class="text-white block">Lo Que</span>
           <span class="kit-shimmer-text block">Recibes</span>
         </h2>
 
-        <p class="mb-8 font-light leading-relaxed"
-           style="color:rgba(255,255,255,0.55);font-size:clamp(0.95rem,1.5vw,1.1rem);max-width:460px;">
+        <p class="mb-8 font-light leading-relaxed text-white/70"
+           style="font-size:clamp(0.95rem,1.5vw,1.1rem);max-width:460px;text-align:justify;text-justify:inter-word;hyphens:auto;">
           Cada participante de la <strong class="text-white font-semibold">Edición Especial 10K</strong>
-          recibe un kit físico de colección. Tres piezas. Una sola oportunidad.
+          recibe su kit físico conmemorativo de colección. Piezas forjadas con la más alta calidad, disponibles con despacho a nivel nacional.
         </p>
 
         <!-- Items del kit -->
@@ -1059,11 +1110,11 @@ function initMedalla3DDrag() {
               <i class="fa-solid fa-shirt" style="color:#00D2FF;font-size:1rem;"></i>
             </div>
             <div class="text-left">
-              <p class="font-black text-white text-sm uppercase tracking-wider">Camiseta Técnica Oficial</p>
-              <p class="text-white/40 text-xs mt-0.5">Tela deportiva sublimada · Diseño exclusivo 10K 2026</p>
+              <p class="font-black text-white text-sm uppercase tracking-wider">Prenda Técnica Oficial Sublimada</p>
+              <p class="text-white/40 text-xs mt-0.5">Elige Franela con mangas o Franelilla olímpica · Tela dry-fit pro</p>
             </div>
             <div class="ml-auto flex-shrink-0">
-              <span class="text-[#00D2FF] font-black text-xs uppercase tracking-widest">INC.</span>
+              <span class="text-[#00D2FF] font-black text-xs uppercase tracking-widest">A ELECCIÓN</span>
             </div>
           </div>
 
@@ -1076,7 +1127,7 @@ function initMedalla3DDrag() {
             </div>
             <div class="text-left">
               <p class="font-black text-white text-sm uppercase tracking-wider">Dorsal Numerado Oficial</p>
-              <p class="text-white/40 text-xs mt-0.5">Número personalizado · Diseño 10K · 2026</p>
+              <p class="text-white/40 text-xs mt-0.5">Número personalizado con tu nombre · Diseño exclusivo 10K</p>
             </div>
             <div class="ml-auto flex-shrink-0">
               <span class="text-[#00D2FF] font-black text-xs uppercase tracking-widest">INC.</span>
@@ -1094,15 +1145,15 @@ function initMedalla3DDrag() {
               <i class="fa-solid fa-medal" style="color:#00D2FF;font-size:1rem;"></i>
             </div>
             <div class="text-left relative z-10">
-              <p class="font-black text-white text-sm uppercase tracking-wider">Medalla Metal Macizo</p>
+              <p class="font-black text-white text-sm uppercase tracking-wider">Medalla Metal Macizo 10K</p>
               <p style="color:rgba(0,210,255,0.7);" class="text-xs mt-0.5 font-medium">
-                Diseño 2 caras · The Iron Series · Ed. Limitada
+                ¡Medallas físicas en mano! Relieve 3D esmaltado al horno · The Iron Series
               </p>
             </div>
             <div class="ml-auto flex-shrink-0 relative z-10">
               <span class="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider"
                     style="background:rgba(0,210,255,0.15);color:#00D2FF;border:1px solid rgba(0,210,255,0.3);">
-                PREMIUM
+                FÍSICA REAL
               </span>
             </div>
           </div>
@@ -1173,6 +1224,35 @@ function initMedalla3DDrag() {
 </section>
 <!-- ═══════ FIN BANNER KIT ═══════ -->
 <script>
+function cambiarKitShowcase(tipo) {
+  const img = document.getElementById('imgKitShowcase');
+  const tabFranela = document.getElementById('tabKitFranela');
+  const tabFranelilla = document.getElementById('tabKitFranelilla');
+  const tabMedalla = document.getElementById('tabKitMedalla');
+  const badge = document.getElementById('badgeKitShowcase');
+  if (!img) return;
+
+  [tabFranela, tabFranelilla, tabMedalla].forEach(t => {
+    if (t) t.className = "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all text-white/70 hover:text-white whitespace-nowrap";
+  });
+
+  const activeClass = "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all bg-[#00D2FF] text-[#001E50] shadow-[0_0_12px_rgba(0,210,255,0.5)] whitespace-nowrap";
+
+  if (tipo === 'franela') {
+    img.src = "img/franela_mangas_10k_real.jpg";
+    if (tabFranela) tabFranela.className = activeClass;
+    if (badge) badge.innerHTML = '<i class="fa-solid fa-shirt text-[10px]"></i> Franela con Mangas (Frente & Espalda)';
+  } else if (tipo === 'franelilla') {
+    img.src = "img/franelilla_olimpica_10k_real.jpg";
+    if (tabFranelilla) tabFranelilla.className = activeClass;
+    if (badge) badge.innerHTML = '<i class="fa-solid fa-vest text-[10px]"></i> Franelilla Olímpica (Frente & Espalda)';
+  } else if (tipo === 'medalla') {
+    img.src = "img/medalla_real_10k.jpg";
+    if (tabMedalla) tabMedalla.className = activeClass;
+    if (badge) badge.innerHTML = '<i class="fa-solid fa-medal text-[10px]"></i> Medalla Real en Mano (Metal Macizo)';
+  }
+}
+
 (async function initCuposFOMO(){
   const CUPOS_TOTALES = 100;
   const elRestantes   = document.getElementById('cupos-restantes');
@@ -1231,9 +1311,13 @@ function initMedalla3DDrag() {
 
       <!-- TEXTO -->
       <div class="lg:w-3/5 text-center lg:text-left r10k">
-        <div class="inline-flex items-center gap-2 iron-badge px-5 py-2 rounded-full mb-7">
+        <div class="inline-flex items-center gap-2 iron-badge px-5 py-2 rounded-full mb-3">
           <i class="fa-solid fa-shield-halved text-[#00D2FF] text-xs"></i>
           <span class="text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.5em]">The Iron Series</span>
+        </div>
+
+        <div class="inline-flex items-center gap-2 bg-[#00D2FF]/20 border border-[#00D2FF]/50 px-4 py-1.5 rounded-full text-xs font-black text-[#00D2FF] uppercase tracking-wider mb-6 shadow-sm">
+          <i class="fa-solid fa-calendar-check"></i> Fecha Oficial: Jueves 11 de Diciembre de 2026
         </div>
 
         <h2 class="text-white font-black uppercase leading-none tracking-tighter mb-5">
@@ -1248,9 +1332,9 @@ function initMedalla3DDrag() {
           <div class="h-px w-8 bg-[#00D2FF]/40"></div>
         </div>
 
-        <p class="text-white/65 text-base md:text-lg mb-10 font-light leading-relaxed max-w-xl mx-auto lg:mx-0">
+        <p class="text-white/70 text-base md:text-lg mb-10 font-light leading-relaxed max-w-xl mx-auto lg:mx-0" style="text-align: justify; text-justify: inter-word; hyphens: auto;">
           No es para todos. Es para quienes ya completaron su 5K y quieren probar de qué están hechos. 
-<strong class="text-white font-semibold">Cupos limitados, medalla de metal macizo,</strong> una sola oportunidad en 2026.
+          <strong class="text-white font-semibold">Cupos limitados, medallas de metal macizo ya recibidas de fábrica,</strong> con fecha oficial de carrera fijada para el <strong>11 de diciembre de 2026</strong>.
         </p>
 
         <div class="grid grid-cols-3 gap-3 mb-10 max-w-lg mx-auto lg:mx-0">
@@ -1778,6 +1862,35 @@ function generarDorsalAleatorio() {
         </div>
       </div>
 
+    </div>
+
+    <!-- ===== DESTACADO VIP: EDICIÓN ESPECIAL 10K (CUPOS ACTIVOS) ===== -->
+    <div class="mt-14 bg-gradient-to-r from-[#00102A] via-[#001E50] to-[#000d24] rounded-[2.5rem] p-8 md:p-12 border-2 border-[#00D2FF]/50 shadow-[0_10px_40px_rgba(0,30,80,0.5)] relative overflow-hidden">
+      <div class="absolute -right-20 -top-20 w-80 h-80 bg-[#00D2FF]/10 rounded-full blur-[100px] pointer-events-none"></div>
+      <div class="flex flex-col lg:flex-row items-center gap-8 justify-between relative z-10">
+        <div class="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+          <div class="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden border-2 border-[#00D2FF]/60 shadow-2xl shrink-0 group relative">
+            <img src="img/medalla_real_10k.jpg" alt="Medalla 10K Real en Mano" width="300" height="300" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <span class="absolute top-2 left-2 bg-[#001E50]/90 text-[#00D2FF] text-[8px] font-black uppercase px-2 py-0.5 rounded-full border border-[#00D2FF]/40">Real</span>
+          </div>
+          <div>
+            <div class="inline-flex items-center gap-2 bg-[#00D2FF]/20 border border-[#00D2FF]/40 px-3.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-[#00D2FF] mb-2.5">
+              <i class="fa-solid fa-fire text-amber-400"></i> Edición Especial 10K · Inscripciones Abiertas
+            </div>
+            <h3 class="text-white text-2xl md:text-3xl font-black uppercase italic tracking-tight">
+              ¿Listo para el Gran Desafío?
+            </h3>
+            <p class="text-white/75 text-xs md:text-sm mt-1.5 max-w-xl leading-relaxed" style="text-align: justify; text-justify: inter-word; hyphens: auto;">
+              El circuito 5K ha concluido exitosamente, pero la <strong class="text-white font-semibold">Edición Especial 10K</strong> tiene sus inscripciones activas con medallas físicas de metal macizo ya producidas y fecha oficial confirmada para este <strong>11 de Diciembre de 2026</strong>.
+            </p>
+          </div>
+        </div>
+        <div class="shrink-0 flex flex-col sm:flex-row items-center gap-3">
+          <a href="inscripcion.html?modo=10K" class="bg-[#00D2FF] text-[#001E50] px-8 py-4 rounded-full font-black text-xs uppercase tracking-wider hover:bg-white hover:scale-105 transition-all shadow-[0_0_25px_rgba(0,210,255,0.4)] whitespace-nowrap">
+            <i class="fa-solid fa-flag-checkered mr-2 text-xs"></i> Inscribirme en 10K &rarr;
+          </a>
+        </div>
+      </div>
     </div>
 
     <!-- ===== COMBO DÚO SOLD OUT ===== -->

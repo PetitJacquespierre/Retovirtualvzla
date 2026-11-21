@@ -198,6 +198,13 @@ if (typeof document !== 'undefined') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        * {
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            word-break: normal !important;
+        }
         body { font-family: 'Inter', sans-serif; }
         h1, h2, h3, .font-heading { font-family: 'Montserrat', sans-serif; }
         .bg-boston-navy { background-color: #001E50; }
@@ -330,7 +337,7 @@ if (typeof document !== 'undefined') {
     <header class="relative z-50">
         <div class="bg-[#00D2FF] text-[#001E50] py-2.5 text-center text-[10px] font-black uppercase tracking-[0.25em] z-50 relative">
             <i class="fa-solid fa-fire mr-2"></i>
-            🏆 CIRCUITO 5K ¡SOLD OUT TOTAL! · 🌟 EDICIÓN ESPECIAL 10K: FECHA CONFIRMADA 11 DE DICIEMBRE · MEDALLAS FÍSICAS EN MANO —
+            🏆 CIRCUITO 5K ¡SOLD OUT TOTAL! · 🌟 EDICIÓN ESPECIAL 10K: ENVÍOS Y CARRERA DESDE EL 11 DE DICIEMBRE · MEDALLAS FÍSICAS EN MANO —
             <a href="inscripcion.html?modo=10K" class="underline underline-offset-2 hover:opacity-80 transition-opacity ml-1 font-bold">ASEGURAR MI KIT 10K &rarr;</a>
             <i class="fa-solid fa-fire ml-2"></i>
         </div>
@@ -543,7 +550,7 @@ if (typeof document !== 'undefined') {
             <span class="text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.5em]">The Iron Series</span>
           </div>
           <div class="inline-flex items-center gap-2 bg-[#00D2FF]/20 border border-[#00D2FF]/50 px-3.5 py-1.5 rounded-full text-xs font-black text-[#00D2FF] uppercase tracking-wider mb-4 shadow-sm">
-            <i class="fa-solid fa-calendar-check text-[#00D2FF]"></i> Fecha Oficial: Jueves 11 de Diciembre de 2026
+            <i class="fa-solid fa-calendar-check text-[#00D2FF]"></i> Envíos y Carrera: Desde el 11 de Diciembre de 2026
           </div>
           <h2 class="text-white font-black uppercase leading-none tracking-tighter mb-4">
             <span class="block" style="font-size:clamp(2rem,5.5vw,4rem)">EDICIÓN</span>
@@ -551,7 +558,7 @@ if (typeof document !== 'undefined') {
             <span class="block" style="font-size:clamp(2.5rem,7.5vw,6rem)">10K</span>
           </h2>
           <p class="text-white/70 text-sm md:text-base font-light leading-relaxed mb-6 max-w-sm mx-auto lg:mx-0" style="text-align: justify; text-justify: inter-word;">
-            Solo una edición. Solo un año. <strong class="text-white font-semibold">Medallas físicas ya recibidas de producción</strong> en metal macizo de alta gama para quienes se atrevan a los 10K este 11 de diciembre.
+            Solo una edición. Solo un año. <strong class="text-white font-semibold">Medallas físicas ya recibidas de producción</strong> en metal macizo de alta gama para quienes se atrevan a los 10K <strong>desde el 11 de diciembre</strong>.
           </p>
           <a href="inscripcion.html?modo=10K"
              class="inline-flex items-center gap-2 bg-[#00D2FF] text-[#001E50] font-black text-xs uppercase tracking-[0.15em] px-6 py-3.5 rounded-full hover:bg-white transition-all duration-300 shadow-[0_0_20px_rgba(0,210,255,0.4)]">
@@ -1042,7 +1049,7 @@ function initMedalla3DDrag() {
             <!-- Badge edición -->
             <div class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest"
                  style="background:linear-gradient(135deg,#00D2FF,#0090b3);color:#001E50;box-shadow:0 4px 20px rgba(0,210,255,0.4);">
-              <i class="fa-solid fa-star mr-1"></i> Edición 10K · 11 Dic 2026
+              <i class="fa-solid fa-star mr-1"></i> Edición 10K · Desde 11 Dic 2026
             </div>
             <!-- Badge FOMO / Producción Real -->
             <div id="badgeKitShowcase" class="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 backdrop-blur-md">
@@ -1084,7 +1091,7 @@ function initMedalla3DDrag() {
       <div class="lg:w-1/2 w-full text-center lg:text-left">
 
         <div class="inline-flex items-center gap-2 bg-[#00D2FF]/10 border border-[#00D2FF]/40 text-[#00D2FF] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider mb-4 shadow-sm">
-          <i class="fa-solid fa-calendar-check"></i> Carrera y Envíos: 11 de Diciembre de 2026
+          <i class="fa-solid fa-calendar-check"></i> Carrera y Envíos Nacionales: Desde el 11 de Diciembre de 2026
         </div>
 
         <h2 class="font-black uppercase tracking-tighter leading-none mb-3"
@@ -1317,7 +1324,7 @@ function cambiarKitShowcase(tipo) {
         </div>
 
         <div class="inline-flex items-center gap-2 bg-[#00D2FF]/20 border border-[#00D2FF]/50 px-4 py-1.5 rounded-full text-xs font-black text-[#00D2FF] uppercase tracking-wider mb-6 shadow-sm">
-          <i class="fa-solid fa-calendar-check"></i> Fecha Oficial: Jueves 11 de Diciembre de 2026
+          <i class="fa-solid fa-calendar-check"></i> Carrera y Envíos: Desde el 11 de Diciembre de 2026
         </div>
 
         <h2 class="text-white font-black uppercase leading-none tracking-tighter mb-5">
@@ -1334,7 +1341,7 @@ function cambiarKitShowcase(tipo) {
 
         <p class="text-white/70 text-base md:text-lg mb-10 font-light leading-relaxed max-w-xl mx-auto lg:mx-0" style="text-align: justify; text-justify: inter-word;">
           No es para todos. Es para quienes ya completaron su 5K y quieren probar de qué están hechos. 
-          <strong class="text-white font-semibold">Cupos limitados, medallas de metal macizo ya recibidas de fábrica,</strong> con fecha oficial de carrera fijada para el <strong>11 de diciembre de 2026</strong>.
+          <strong class="text-white font-semibold">Cupos limitados, medallas de metal macizo ya recibidas de fábrica,</strong> con fecha oficial de carrera fijada <strong>desde el 11 de diciembre de 2026</strong>.
         </p>
 
         <div class="grid grid-cols-3 gap-3 mb-10 max-w-lg mx-auto lg:mx-0">
@@ -1881,7 +1888,7 @@ function generarDorsalAleatorio() {
               ¿Listo para el Gran Desafío?
             </h3>
             <p class="text-white/75 text-xs md:text-sm mt-1.5 max-w-xl leading-relaxed" style="text-align: justify; text-justify: inter-word;">
-              El circuito 5K ha concluido exitosamente, pero la <strong class="text-white font-semibold">Edición Especial 10K</strong> tiene sus inscripciones activas con medallas físicas de metal macizo ya producidas y fecha oficial confirmada para este <strong>11 de Diciembre de 2026</strong>.
+              El circuito 5K ha concluido exitosamente, pero la <strong class="text-white font-semibold">Edición Especial 10K</strong> tiene sus inscripciones activas con medallas físicas de metal macizo ya producidas y envíos oficiales <strong>desde el 11 de Diciembre de 2026</strong>.
             </p>
           </div>
         </div>

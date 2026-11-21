@@ -1,4 +1,4 @@
-const CACHE_NAME = 'retovirtual-cache-v10';
+const CACHE_NAME = 'retovirtual-cache-v11';
 
 // Instalar el Service Worker
 self.addEventListener('install', (e) => {

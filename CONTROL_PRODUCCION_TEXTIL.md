@@ -17,6 +17,16 @@
 
 ---
 
+## 🛍️ 2. PRENDAS EXTRA PARA VENTA LIBRE / CONTINGENCIA (EN RESERVA)
+> **ESTRATEGIA COMERCIAL:** Se proyecta añadir **4 prendas adicionales de stock libre** para venderlas por separado a corredores que las pidan a última hora o deseen una prenda extra.
+
+* **Cantidad planificada:** **4 prendas extra de stock comercial** (tallas y modelos exactos pendientes de confirmar según la indicación del organizador).
+* **Escenario de Producción Total proyectado:**
+  * 50 prendas inscritos + 4 personales organizadores = **54 fijas**
+  * Con las 4 de venta libre = **58 prendas totales**.
+
+---
+
 ## 📊 2. CONSOLIDADO TOTAL DE PRODUCCIÓN A PEDIR AL TALLER (HOY)
 
 ### Resumen General:

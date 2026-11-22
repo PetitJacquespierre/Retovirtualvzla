@@ -141,6 +141,17 @@
             0%, 100% { transform: translate(0, 0); }
             50% { transform: translate(30px, -25px); }
         }
+        /* Regla Editorial Grow Studio: Justificación limpia y cero palabras cortadas */
+        p, .editorial-justify {
+            text-align: justify;
+            text-justify: inter-word;
+            hyphens: none;
+            -webkit-hyphens: none;
+            word-break: normal;
+        }
+        .specular-card {
+            border-top: 1px solid rgba(255, 255, 255, 0.22);
+        }
     </style>
     <script>
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
@@ -284,7 +295,10 @@
                 <!-- Filtros rápidos estilo Marketplace -->
                 <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
                     <button type="button" onclick="filtrarCatalogo('todos')" id="filtro-todos" class="px-3.5 py-1.5 rounded-xl text-[11px] font-black uppercase tracking-wider bg-[#00D2FF] text-[#001E50] transition-all whitespace-nowrap">
-                        Todos (5)
+                        Todos (7)
+                    </button>
+                    <button type="button" onclick="filtrarCatalogo('textil')" id="filtro-textil" class="px-3.5 py-1.5 rounded-xl text-[11px] font-bold uppercase tracking-wider bg-white/5 hover:bg-white/10 text-slate-300 transition-all whitespace-nowrap flex items-center gap-1.5">
+                        <i class="fa-solid fa-shirt text-pink-400"></i> Indumentaria 10K
                     </button>
                     <button type="button" onclick="filtrarCatalogo('medallas')" id="filtro-medallas" class="px-3.5 py-1.5 rounded-xl text-[11px] font-bold uppercase tracking-wider bg-white/5 hover:bg-white/10 text-slate-300 transition-all whitespace-nowrap">
                         <i class="fa-solid fa-medal text-amber-400 mr-1"></i> Medallas 5K
@@ -307,6 +321,146 @@
 
             <!-- GRILLA UNIFICADA DE PRODUCTOS CON IMÁGENES 100% CUADRADAS (1:1) ESTILO ALIEXPRESS / MERCADOLIBRE -->
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5">
+
+                <!-- Producto Textil 1: Franelilla Olímpica Oficial 10K (Dama / Caballero + Tallas S-XL) -->
+                <div data-categoria="textil" class="producto-card specular-card bg-[#0d182e] border border-pink-500/40 hover:border-[#00D2FF] rounded-2xl overflow-hidden flex flex-col justify-between transition-all shadow-xl group medal-card-hover">
+                    <div class="relative aspect-square w-full bg-slate-950 overflow-hidden cursor-pointer" onclick="ampliarImagenTienda('img/franelilla_olimpica_10k_real.jpg', 'Franelilla Olímpica Oficial 10K · Corte Dama y Caballero')">
+                        <span class="absolute top-2.5 left-2.5 bg-gradient-to-r from-pink-600 to-purple-600 text-white text-[8px] sm:text-[9px] font-black uppercase px-2.5 py-1 rounded-md shadow z-10">
+                            Edición 10K
+                        </span>
+                        <span class="absolute top-2.5 right-2.5 bg-[#00D2FF] text-[#001E50] text-[8px] sm:text-[9px] font-black uppercase px-2 py-0.5 rounded-md shadow z-10 flex items-center gap-1">
+                            <i class="fa-solid fa-bolt"></i> Preventa
+                        </span>
+                        <img src="img/franelilla_olimpica_10k_real.jpg" alt="Franelilla Olímpica Oficial 10K" width="400" height="400" loading="lazy" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute bottom-2 right-2 bg-black/70 backdrop-blur-sm text-white/90 text-[9px] font-bold px-2 py-1 rounded-lg flex items-center gap-1 border border-white/15">
+                            <i class="fa-solid fa-magnifying-glass-plus text-[#00D2FF]"></i> Ver diseño
+                        </div>
+                    </div>
+
+                    <div class="p-3 sm:p-4 flex flex-col justify-between flex-grow">
+                        <div>
+                            <div class="flex items-center justify-between gap-1 mb-1">
+                                <span class="text-[9px] sm:text-[10px] text-pink-400 font-bold uppercase tracking-wider">Corte Olímpico</span>
+                                <span class="text-[9px] text-amber-400 font-bold flex items-center gap-0.5"><i class="fa-solid fa-star text-[8px]"></i> 5.0</span>
+                            </div>
+                            <h3 class="text-xs sm:text-sm font-bold text-white leading-snug">
+                                Franelilla Olímpica Oficial 10K
+                            </h3>
+                            <p class="text-[10px] text-slate-400 mt-1 leading-relaxed">
+                                Tejido atlético transpirable sublimado frente y espalda.
+                            </p>
+
+                            <!-- Selector de Corte: Caballero / Dama -->
+                            <div class="mt-2.5">
+                                <span class="text-[9px] font-black uppercase tracking-wider text-slate-300 block mb-1">1. Elige Corte:</span>
+                                <div class="grid grid-cols-2 gap-1.5" id="genero-group-franelilla">
+                                    <button type="button" onclick="seleccionarGeneroTextil('franelilla', 'Caballero')" id="btn-gen-franelilla-Caballero" class="py-1.5 px-2 rounded-lg text-[10px] font-black uppercase border border-[#00D2FF] bg-[#00D2FF]/20 text-white transition-all flex items-center justify-center gap-1">
+                                        <i class="fa-solid fa-mars text-[#00D2FF]"></i> Caballero
+                                    </button>
+                                    <button type="button" onclick="seleccionarGeneroTextil('franelilla', 'Dama')" id="btn-gen-franelilla-Dama" class="py-1.5 px-2 rounded-lg text-[10px] font-bold uppercase border border-white/15 bg-slate-950/60 text-slate-300 hover:border-pink-400/60 transition-all flex items-center justify-center gap-1">
+                                        <i class="fa-solid fa-venus text-pink-400"></i> Dama
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Selector de Talla: S, M, L, XL -->
+                            <div class="mt-2">
+                                <span class="text-[9px] font-black uppercase tracking-wider text-slate-300 block mb-1">2. Elige Talla:</span>
+                                <div class="grid grid-cols-4 gap-1" id="talla-group-franelilla">
+                                    <button type="button" onclick="seleccionarTallaTextil('franelilla', 'S')" id="btn-talla-franelilla-S" class="py-1 rounded-lg text-[10px] font-mono font-bold border border-white/15 bg-slate-950/60 text-slate-300 hover:border-[#00D2FF]/50 transition-all">S</button>
+                                    <button type="button" onclick="seleccionarTallaTextil('franelilla', 'M')" id="btn-talla-franelilla-M" class="py-1 rounded-lg text-[10px] font-mono font-black border border-[#00D2FF] bg-[#00D2FF] text-[#001E50] transition-all">M</button>
+                                    <button type="button" onclick="seleccionarTallaTextil('franelilla', 'L')" id="btn-talla-franelilla-L" class="py-1 rounded-lg text-[10px] font-mono font-bold border border-white/15 bg-slate-950/60 text-slate-300 hover:border-[#00D2FF]/50 transition-all">L</button>
+                                    <button type="button" onclick="seleccionarTallaTextil('franelilla', 'XL')" id="btn-talla-franelilla-XL" class="py-1 rounded-lg text-[10px] font-mono font-bold border border-white/15 bg-slate-950/60 text-slate-300 hover:border-[#00D2FF]/50 transition-all">XL</button>
+                                </div>
+                            </div>
+
+                            <div class="mt-2.5 flex items-baseline justify-between">
+                                <div class="flex items-baseline gap-1">
+                                    <span class="text-lg sm:text-2xl font-black text-white font-mono">$10</span>
+                                    <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">USD</span>
+                                </div>
+                                <span id="badge-cant-franelilla" class="text-[9px] font-mono font-bold text-[#00D2FF] hidden">0 en cesta</span>
+                            </div>
+                        </div>
+
+                        <!-- Botón Añadir a la Cesta -->
+                        <div class="mt-3 pt-2.5 border-t border-white/10">
+                            <button type="button" onclick="agregarPrendaAlCarrito('franelilla')" class="w-full bg-gradient-to-r from-[#00D2FF] to-cyan-400 hover:from-[#00b8e6] hover:to-cyan-300 active:scale-95 text-[#001E50] text-[10px] sm:text-xs font-black uppercase tracking-wider py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(0,210,255,0.25)] transition-all">
+                                <i class="fa-solid fa-cart-plus"></i> Añadir Franelilla ($10)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto Textil 2: Franela con Mangas Oficial 10K (Dama / Caballero + Tallas S-XL) -->
+                <div data-categoria="textil" class="producto-card specular-card bg-[#0d182e] border border-[#00D2FF]/40 hover:border-[#00D2FF] rounded-2xl overflow-hidden flex flex-col justify-between transition-all shadow-xl group medal-card-hover">
+                    <div class="relative aspect-square w-full bg-slate-950 overflow-hidden cursor-pointer" onclick="ampliarImagenTienda('img/franela_mangas_10k_real.jpg', 'Franela con Mangas Oficial 10K · Corte Dama y Caballero')">
+                        <span class="absolute top-2.5 left-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-[8px] sm:text-[9px] font-black uppercase px-2.5 py-1 rounded-md shadow z-10">
+                            Edición 10K
+                        </span>
+                        <span class="absolute top-2.5 right-2.5 bg-amber-400 text-slate-950 text-[8px] sm:text-[9px] font-black uppercase px-2 py-0.5 rounded-md shadow z-10 flex items-center gap-1">
+                            <i class="fa-solid fa-shirt"></i> Con Mangas
+                        </span>
+                        <img src="img/franela_mangas_10k_real.jpg" alt="Franela con Mangas Oficial 10K" width="400" height="400" loading="lazy" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute bottom-2 right-2 bg-black/70 backdrop-blur-sm text-white/90 text-[9px] font-bold px-2 py-1 rounded-lg flex items-center gap-1 border border-white/15">
+                            <i class="fa-solid fa-magnifying-glass-plus text-[#00D2FF]"></i> Ver diseño
+                        </div>
+                    </div>
+
+                    <div class="p-3 sm:p-4 flex flex-col justify-between flex-grow">
+                        <div>
+                            <div class="flex items-center justify-between gap-1 mb-1">
+                                <span class="text-[9px] sm:text-[10px] text-[#00D2FF] font-bold uppercase tracking-wider">Manga Corta</span>
+                                <span class="text-[9px] text-amber-400 font-bold flex items-center gap-0.5"><i class="fa-solid fa-star text-[8px]"></i> 5.0</span>
+                            </div>
+                            <h3 class="text-xs sm:text-sm font-bold text-white leading-snug">
+                                Franela con Mangas Oficial 10K
+                            </h3>
+                            <p class="text-[10px] text-slate-400 mt-1 leading-relaxed">
+                                Franela técnica de competencia full sublimada con mangas.
+                            </p>
+
+                            <!-- Selector de Corte: Caballero / Dama -->
+                            <div class="mt-2.5">
+                                <span class="text-[9px] font-black uppercase tracking-wider text-slate-300 block mb-1">1. Elige Corte:</span>
+                                <div class="grid grid-cols-2 gap-1.5" id="genero-group-franela">
+                                    <button type="button" onclick="seleccionarGeneroTextil('franela', 'Caballero')" id="btn-gen-franela-Caballero" class="py-1.5 px-2 rounded-lg text-[10px] font-black uppercase border border-[#00D2FF] bg-[#00D2FF]/20 text-white transition-all flex items-center justify-center gap-1">
+                                        <i class="fa-solid fa-mars text-[#00D2FF]"></i> Caballero
+                                    </button>
+                                    <button type="button" onclick="seleccionarGeneroTextil('franela', 'Dama')" id="btn-gen-franela-Dama" class="py-1.5 px-2 rounded-lg text-[10px] font-bold uppercase border border-white/15 bg-slate-950/60 text-slate-300 hover:border-pink-400/60 transition-all flex items-center justify-center gap-1">
+                                        <i class="fa-solid fa-venus text-pink-400"></i> Dama
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Selector de Talla: S, M, L, XL -->
+                            <div class="mt-2">
+                                <span class="text-[9px] font-black uppercase tracking-wider text-slate-300 block mb-1">2. Elige Talla:</span>
+                                <div class="grid grid-cols-4 gap-1" id="talla-group-franela">
+                                    <button type="button" onclick="seleccionarTallaTextil('franela', 'S')" id="btn-talla-franela-S" class="py-1 rounded-lg text-[10px] font-mono font-bold border border-white/15 bg-slate-950/60 text-slate-300 hover:border-[#00D2FF]/50 transition-all">S</button>
+                                    <button type="button" onclick="seleccionarTallaTextil('franela', 'M')" id="btn-talla-franela-M" class="py-1 rounded-lg text-[10px] font-mono font-black border border-[#00D2FF] bg-[#00D2FF] text-[#001E50] transition-all">M</button>
+                                    <button type="button" onclick="seleccionarTallaTextil('franela', 'L')" id="btn-talla-franela-L" class="py-1 rounded-lg text-[10px] font-mono font-bold border border-white/15 bg-slate-950/60 text-slate-300 hover:border-[#00D2FF]/50 transition-all">L</button>
+                                    <button type="button" onclick="seleccionarTallaTextil('franela', 'XL')" id="btn-talla-franela-XL" class="py-1 rounded-lg text-[10px] font-mono font-bold border border-white/15 bg-slate-950/60 text-slate-300 hover:border-[#00D2FF]/50 transition-all">XL</button>
+                                </div>
+                            </div>
+
+                            <div class="mt-2.5 flex items-baseline justify-between">
+                                <div class="flex items-baseline gap-1">
+                                    <span class="text-lg sm:text-2xl font-black text-white font-mono">$15</span>
+                                    <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">USD</span>
+                                </div>
+                                <span id="badge-cant-franela" class="text-[9px] font-mono font-bold text-[#00D2FF] hidden">0 en cesta</span>
+                            </div>
+                        </div>
+
+                        <!-- Botón Añadir a la Cesta -->
+                        <div class="mt-3 pt-2.5 border-t border-white/10">
+                            <button type="button" onclick="agregarPrendaAlCarrito('franela')" class="w-full bg-gradient-to-r from-[#00D2FF] to-cyan-400 hover:from-[#00b8e6] hover:to-cyan-300 active:scale-95 text-[#001E50] text-[10px] sm:text-xs font-black uppercase tracking-wider py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(0,210,255,0.25)] transition-all">
+                                <i class="fa-solid fa-cart-plus"></i> Añadir Franela ($15)
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Producto 1: Medalla 1ra Edición (Habilitada para 1 sola compra / Última Unidad) -->
                 <div data-categoria="medallas" class="producto-card bg-[#0d182e] border border-[#00D2FF]/40 hover:border-[#00D2FF] rounded-2xl overflow-hidden flex flex-col justify-between transition-all shadow-lg group medal-card-hover">
@@ -557,6 +711,9 @@
 
             <!-- Desglose del Pedido -->
             <div class="bg-slate-950/70 rounded-xl p-3.5 space-y-2.5 text-xs border border-white/10">
+                <!-- Filas dinámicas de Prendas Textiles 10K -->
+                <div id="lista-carrito-textil" class="space-y-2 hidden"></div>
+
                 <!-- Fila Medalla 1ra Edición -->
                 <div id="fila-carrito-m1" class="flex justify-between items-center text-slate-300 hidden">
                     <div>
@@ -571,7 +728,7 @@
                 </div>
 
                 <!-- Fila Medallero Hexagonal -->
-                <div id="fila-carrito-medallero" class="flex justify-between items-center text-slate-300">
+                <div id="fila-carrito-medallero" class="flex justify-between items-center text-slate-300 hidden">
                     <div>
                         <span class="font-bold text-white block">Medallero Hexagonal ($7 USD):</span>
                         <span class="text-[9px] text-emerald-400 font-bold">Exhibidor de pared modular</span>
@@ -633,7 +790,7 @@
                 <div>
                     <label class="text-[10px] text-slate-300 font-semibold block mb-1">Modalidad de Envío:</label>
                     <select id="modalidadEnvio" class="w-full bg-slate-950/80 border border-white/15 rounded-xl px-3 py-2.5 text-xs text-white outline-none focus:border-[#00D2FF]">
-                        <option value="combo_inscrito">📦 Tengo cupo 3ra/4ta ed. (Mismo paquete sin flete extra)</option>
+                        <option value="combo_inscrito">📦 Tengo cupo 10K / 3ra / 4ta ed. (Mismo paquete sin flete extra)</option>
                         <option value="envio_independiente">🚚 Envío por Zoom/MRW (Cobro en destino)</option>
                         <option value="ya_enviado">⚠️ Ya recibí mi paquete anterior (Nuevo envío Zoom/MRW)</option>
                     </select>
@@ -677,6 +834,21 @@
             </p>
         </div>
     </aside>
+
+    <!-- MODAL LIGHTBOX PARA VER DISEÑO DE PRENDAS EN ALTA DEFINICIÓN -->
+    <div id="modal-imagen-tienda" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[60] hidden items-center justify-center p-4" onclick="cerrarModalImagenTienda()">
+        <div class="relative max-w-2xl w-full bg-[#081226] border border-[#00D2FF]/40 rounded-3xl overflow-hidden shadow-2xl" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between px-5 py-3.5 bg-[#001E50] border-b border-white/10">
+                <h3 id="modal-imagen-titulo" class="text-xs sm:text-sm font-black uppercase tracking-wider text-white">Diseño Oficial 10K</h3>
+                <button type="button" onclick="cerrarModalImagenTienda()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" aria-label="Cerrar vista previa">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-3 sm:p-5 bg-slate-950 flex flex-col items-center">
+                <img id="modal-imagen-src" src="" alt="Prenda Oficial 10K" class="max-h-[75vh] w-auto object-contain rounded-xl">
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-[#001E50] py-16 px-4 border-t border-white/5 mt-12">
@@ -739,6 +911,104 @@
         let stockM1 = 1; // Stock disponible para Medalla 1ra Edición (inicializado en 1, validado en tiempo real)
         const PRECIO_MEDALLA = 5;
         const PRECIO_MEDALLERO = 7;
+        const PRECIO_FRANELILLA_10K = 10;
+        const PRECIO_FRANELA_10K = 15;
+
+        // Estado de selección de corte y talla en las tarjetas de indumentaria 10K
+        let seleccionTextil = {
+            franelilla: { genero: 'Caballero', talla: 'M', nombre: 'Franelilla Olímpica 10K', precio: PRECIO_FRANELILLA_10K },
+            franela: { genero: 'Caballero', talla: 'M', nombre: 'Franela con Mangas 10K', precio: PRECIO_FRANELA_10K }
+        };
+
+        // Lista de prendas agregadas al carrito: [{ id, tipo, nombre, genero, talla, precio, cantidad }]
+        let carritoTextil = [];
+
+        function seleccionarGeneroTextil(tipo, genero) {
+            if (!seleccionTextil[tipo]) return;
+            seleccionTextil[tipo].genero = genero;
+            ['Caballero', 'Dama'].forEach(g => {
+                const btn = document.getElementById(`btn-gen-${tipo}-${g}`);
+                if (!btn) return;
+                if (g === genero) {
+                    if (g === 'Dama') {
+                        btn.className = "py-1.5 px-2 rounded-lg text-[10px] font-black uppercase border border-pink-400 bg-pink-500/25 text-white transition-all flex items-center justify-center gap-1";
+                    } else {
+                        btn.className = "py-1.5 px-2 rounded-lg text-[10px] font-black uppercase border border-[#00D2FF] bg-[#00D2FF]/20 text-white transition-all flex items-center justify-center gap-1";
+                    }
+                } else {
+                    const iconColor = (g === 'Dama') ? 'text-pink-400' : 'text-[#00D2FF]';
+                    const iconClass = (g === 'Dama') ? 'fa-venus' : 'fa-mars';
+                    btn.className = "py-1.5 px-2 rounded-lg text-[10px] font-bold uppercase border border-white/15 bg-slate-950/60 text-slate-300 hover:border-white/40 transition-all flex items-center justify-center gap-1";
+                    btn.innerHTML = `<i class="fa-solid ${iconClass} ${iconColor}"></i> ${g}`;
+                }
+            });
+        }
+
+        function seleccionarTallaTextil(tipo, talla) {
+            if (!seleccionTextil[tipo]) return;
+            seleccionTextil[tipo].talla = talla;
+            ['S', 'M', 'L', 'XL'].forEach(t => {
+                const btn = document.getElementById(`btn-talla-${tipo}-${t}`);
+                if (!btn) return;
+                if (t === talla) {
+                    btn.className = "py-1 rounded-lg text-[10px] font-mono font-black border border-[#00D2FF] bg-[#00D2FF] text-[#001E50] transition-all shadow-[0_0_10px_rgba(0,210,255,0.4)]";
+                } else {
+                    btn.className = "py-1 rounded-lg text-[10px] font-mono font-bold border border-white/15 bg-slate-950/60 text-slate-300 hover:border-[#00D2FF]/50 transition-all";
+                }
+            });
+        }
+
+        function agregarPrendaAlCarrito(tipo) {
+            const conf = seleccionTextil[tipo];
+            if (!conf) return;
+            const itemKey = `${tipo}_${conf.genero}_${conf.talla}`;
+            const existente = carritoTextil.find(item => item.id === itemKey);
+            if (existente) {
+                existente.cantidad += 1;
+            } else {
+                carritoTextil.push({
+                    id: itemKey,
+                    tipo: tipo,
+                    nombre: conf.nombre,
+                    genero: conf.genero,
+                    talla: conf.talla,
+                    precio: conf.precio,
+                    cantidad: 1
+                });
+            }
+            actualizarTotal();
+            abrirCarrito();
+        }
+
+        function cambiarCantidadTextil(itemKey, cambio) {
+            const idx = carritoTextil.findIndex(item => item.id === itemKey);
+            if (idx === -1) return;
+            carritoTextil[idx].cantidad += cambio;
+            if (carritoTextil[idx].cantidad <= 0) {
+                carritoTextil.splice(idx, 1);
+            }
+            actualizarTotal();
+        }
+
+        function ampliarImagenTienda(src, titulo) {
+            const modal = document.getElementById('modal-imagen-tienda');
+            const img = document.getElementById('modal-imagen-src');
+            const tit = document.getElementById('modal-imagen-titulo');
+            if (img) img.src = src;
+            if (tit) tit.innerText = titulo || 'Diseño Oficial 10K';
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function cerrarModalImagenTienda() {
+            const modal = document.getElementById('modal-imagen-tienda');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
 
         function cambiarCantidad(producto, cambio) {
             if (producto === 'm1') {
@@ -812,21 +1082,79 @@
                 }
             });
 
-            const botones = ['todos', 'medallas', 'accesorios'];
+            const botones = ['todos', 'textil', 'medallas', 'accesorios'];
             botones.forEach(b => {
                 const btn = document.getElementById('filtro-' + b);
                 if (!btn) return;
                 if (b === categoria) {
-                    btn.className = "px-3.5 py-1.5 rounded-xl text-[11px] font-black uppercase tracking-wider bg-[#00D2FF] text-[#001E50] transition-all whitespace-nowrap";
+                    btn.className = "px-3.5 py-1.5 rounded-xl text-[11px] font-black uppercase tracking-wider bg-[#00D2FF] text-[#001E50] transition-all whitespace-nowrap flex items-center gap-1.5";
                 } else {
-                    btn.className = "px-3.5 py-1.5 rounded-xl text-[11px] font-bold uppercase tracking-wider bg-white/5 hover:bg-white/10 text-slate-300 transition-all whitespace-nowrap";
+                    btn.className = "px-3.5 py-1.5 rounded-xl text-[11px] font-bold uppercase tracking-wider bg-white/5 hover:bg-white/10 text-slate-300 transition-all whitespace-nowrap flex items-center gap-1.5";
                 }
             });
         }
 
         function actualizarTotal() {
-            const totalItems = cantidades.m1 + cantidades.m2 + cantidades.medallero;
-            const total = (cantidades.m1 * PRECIO_MEDALLA) + (cantidades.m2 * PRECIO_MEDALLA) + (cantidades.medallero * PRECIO_MEDALLERO);
+            let totalTextilItems = 0;
+            let totalTextilUSD = 0;
+            let cantFranelilla = 0;
+            let cantFranela = 0;
+
+            carritoTextil.forEach(item => {
+                totalTextilItems += item.cantidad;
+                totalTextilUSD += (item.cantidad * item.precio);
+                if (item.tipo === 'franelilla') cantFranelilla += item.cantidad;
+                if (item.tipo === 'franela') cantFranela += item.cantidad;
+            });
+
+            // Actualizar badges en las cards de textil
+            const badgeFranelilla = document.getElementById('badge-cant-franelilla');
+            if (badgeFranelilla) {
+                if (cantFranelilla > 0) {
+                    badgeFranelilla.innerText = `${cantFranelilla} en cesta`;
+                    badgeFranelilla.classList.remove('hidden');
+                } else {
+                    badgeFranelilla.classList.add('hidden');
+                }
+            }
+            const badgeFranela = document.getElementById('badge-cant-franela');
+            if (badgeFranela) {
+                if (cantFranela > 0) {
+                    badgeFranela.innerText = `${cantFranela} en cesta`;
+                    badgeFranela.classList.remove('hidden');
+                } else {
+                    badgeFranela.classList.add('hidden');
+                }
+            }
+
+            // Renderizar filas de textil en el drawer
+            const contTextil = document.getElementById('lista-carrito-textil');
+            if (contTextil) {
+                if (carritoTextil.length > 0) {
+                    contTextil.classList.remove('hidden');
+                    contTextil.innerHTML = carritoTextil.map(item => `
+                        <div class="flex justify-between items-center text-slate-300 pb-2 border-b border-white/5">
+                            <div>
+                                <span class="font-bold text-white block">${item.nombre} ($${item.precio} USD)</span>
+                                <span class="text-[10px] ${item.genero === 'Dama' ? 'text-pink-400' : 'text-[#00D2FF]'} font-bold uppercase">
+                                    Corte ${item.genero} · Talla ${item.talla}
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button type="button" onclick="cambiarCantidadTextil('${item.id}', -1)" class="w-6 h-6 rounded bg-white/10 hover:bg-white/20 text-white text-xs font-black">-</button>
+                                <span class="font-bold text-[#00D2FF] font-mono w-10 text-center">${item.cantidad} un.</span>
+                                <button type="button" onclick="cambiarCantidadTextil('${item.id}', 1)" class="w-6 h-6 rounded bg-[#00D2FF] text-[#001E50] text-xs font-black">+</button>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    contTextil.classList.add('hidden');
+                    contTextil.innerHTML = '';
+                }
+            }
+
+            const totalItems = cantidades.m1 + cantidades.m2 + cantidades.medallero + totalTextilItems;
+            const total = (cantidades.m1 * PRECIO_MEDALLA) + (cantidades.m2 * PRECIO_MEDALLA) + (cantidades.medallero * PRECIO_MEDALLERO) + totalTextilUSD;
 
             document.getElementById('total-dolares').innerText = '$' + total + ' USD';
             
@@ -940,9 +1268,16 @@
         }
 
         async function procesarPedidoWhatsApp() {
-            const totalItems = cantidades.m1 + cantidades.m2 + cantidades.medallero;
+            let totalTextilItems = 0;
+            let totalTextilUSD = 0;
+            carritoTextil.forEach(item => {
+                totalTextilItems += item.cantidad;
+                totalTextilUSD += (item.cantidad * item.precio);
+            });
+
+            const totalItems = cantidades.m1 + cantidades.m2 + cantidades.medallero + totalTextilItems;
             if (totalItems === 0) {
-                alert("Por favor selecciona al menos un artículo (Medalla o Medallero) usando el botón '+' antes de continuar.");
+                alert("Por favor selecciona al menos un artículo (Prenda 10K, Medalla o Medallero) antes de continuar.");
                 return;
             }
 
@@ -975,7 +1310,9 @@
 
             const dorsal = document.getElementById('dorsalAtleta').value.trim();
 
-            const totalUSD = (cantidades.m1 * PRECIO_MEDALLA) + (cantidades.m2 * PRECIO_MEDALLA) + (cantidades.medallero * PRECIO_MEDALLERO);
+            const totalUSD = (cantidades.m1 * PRECIO_MEDALLA) + (cantidades.m2 * PRECIO_MEDALLA) + (cantidades.medallero * PRECIO_MEDALLERO) + totalTextilUSD;
+            const resumenTextilDB = carritoTextil.map(item => `${item.cantidad}x ${item.nombre} (${item.genero} - Talla ${item.talla})`).join(' | ');
+
             const btn = document.getElementById('btnConfirmarPedido');
             const textoOriginal = btn.innerHTML;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Conectando...';
@@ -994,6 +1331,8 @@
                 datos.append("CantM1", cantidades.m1);
                 datos.append("CantM2", cantidades.m2);
                 datos.append("CantMedallero", cantidades.medallero);
+                datos.append("FranelaExtra", resumenTextilDB || "No");
+                datos.append("Textil10K", resumenTextilDB || "N/A");
                 datos.append("Total", totalUSD);
                 datos.append("Agencia", envioTexto);
                 
@@ -1017,6 +1356,9 @@
 
             // Redacción del mensaje para WhatsApp
             let itemsTexto = "";
+            carritoTextil.forEach(item => {
+                itemsTexto += "• " + item.cantidad + "x " + item.nombre + " — Corte " + item.genero + " · Talla " + item.talla + " ($" + (item.cantidad * item.precio) + " USD)\n";
+            });
             if (cantidades.m1 > 0) itemsTexto += "• " + cantidades.m1 + "x Medalla 1ra Edición ($" + (cantidades.m1 * PRECIO_MEDALLA) + " USD)\n";
             if (cantidades.m2 > 0) itemsTexto += "• " + cantidades.m2 + "x Medalla 2da Edición ($" + (cantidades.m2 * PRECIO_MEDALLA) + " USD)\n";
             if (cantidades.medallero > 0) itemsTexto += "• " + cantidades.medallero + "x Medallero Hexagonal ($" + (cantidades.medallero * PRECIO_MEDALLERO) + " USD)\n";

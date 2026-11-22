@@ -15,8 +15,9 @@
 ---
 
 ## ✅ 2. CÓMO DEBE COMUNICARSE SIEMPRE
-- ✔️ *"Envío nacional con Cobro a Destino por MRW, ZOOM o Tealca a tu agencia más cercana."*
+- ✔️ *"Envío nacional con Cobro a Destino por MRW o ZOOM a tu agencia más cercana."*
 - ✔️ *"El flete se cancela directamente en la taquilla de la agencia al retirar tu paquete."*
+- 📌 *(Trabajamos en principio exclusivamente con **MRW y ZOOM**).*
 
 ---
 
@@ -28,7 +29,7 @@
    - Dorsal digital numerado personalizado.
    - Certificado digital oficial de finalista.
    - *Abono inicial:* **$10 USD** | *Saldo restante:* **$15 USD** (antes del despacho).
-   - *(Despacho nacional Cobro a Destino por MRW/ZOOM/Tealca).*
+   - *(Despacho nacional Cobro a Destino por MRW o ZOOM).*
 
 2. **Kit Completo con Franelilla Olímpica ($35.00 USD):**
    - Medalla física conmemorativa de metal macizo 3D.
@@ -36,7 +37,7 @@
    - Dorsal digital numerado personalizado.
    - Certificado digital oficial de finalista.
    - *Abono inicial:* **$10 USD** | *Saldo restante:* **$25 USD** (antes del despacho).
-   - *(Despacho nacional Cobro a Destino por MRW/ZOOM/Tealca).*
+   - *(Despacho nacional Cobro a Destino por MRW o ZOOM).*
 
 3. **Kit Completo con Franela con Mangas ($40.00 USD):**
    - Medalla física conmemorativa de metal macizo 3D.
@@ -44,14 +45,14 @@
    - Dorsal digital numerado personalizado.
    - Certificado digital oficial de finalista.
    - *Abono inicial:* **$10 USD** | *Saldo restante:* **$30 USD** (antes del despacho).
-   - *(Despacho nacional Cobro a Destino por MRW/ZOOM/Tealca).*
+   - *(Despacho nacional Cobro a Destino por MRW o ZOOM).*
 
 4. **Modalidad de Pago Fraccionado (Abonos):**
    - Abono inicial para apartar cupo y dorsal: **$10 USD** (o al cambio en Bs por Pago Móvil).
    - Pago restante a liquidar **hasta el 30 de noviembre** (antes del inicio de la logística de despachos).
 
 5. **Envíos Nacionales:**
-   - Estrictamente **Cobro a Destino (COD)** por MRW, ZOOM o Tealca a cargo del corredor al retirar en agencia. NUNCA decir envío gratis ni envío incluido.
+   - Estrictamente **Cobro a Destino (COD)** por **MRW o ZOOM** a cargo del corredor al retirar en agencia. NUNCA decir envío gratis ni envío incluido.
 
 ---
 

@@ -1308,17 +1308,18 @@
                 return;
             }
 
-            const dorsal = document.getElementById('dorsalAtleta').value.trim();
+            const dorsal = document.getElementById('dorsalAtleta').value.trim() || "S/D";
 
             const totalUSD = (cantidades.m1 * PRECIO_MEDALLA) + (cantidades.m2 * PRECIO_MEDALLA) + (cantidades.medallero * PRECIO_MEDALLERO) + totalTextilUSD;
-            const resumenTextilDB = carritoTextil.map(item => `${item.cantidad}x ${item.nombre} (${item.genero} - Talla ${item.talla})`).join(' | ');
+            const resumenTextilDB = carritoTextil.map(item => `${item.cantidad}x ${item.nombre} (${item.genero} - Talla ${item.talla})`).join(' + ');
+            const detalleAgenciaYPrendas = resumenTextilDB ? `🎽 [${resumenTextilDB}] — ${envioTexto}` : envioTexto;
 
             const btn = document.getElementById('btnConfirmarPedido');
             const textoOriginal = btn.innerHTML;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Conectando...';
             btn.disabled = true;
 
-            // Registro en Google Sheets en segundo plano (usando FormData para Apps Script)
+            // Registro en Google Sheets en segundo plano (usando FormData para Apps Script -> Hoja Tienda_Medallas)
             try {
                 const urlBaseDeDatos = "https://script.google.com/macros/s/AKfycbyO9tDp2GreaVR-PVRIUS7zbJRQYydOv2S6mgPcYwyqHVM6-v0-TSQ1y-5UlWk6KVN8CA/exec";
                 const datos = new FormData();
@@ -1334,7 +1335,7 @@
                 datos.append("FranelaExtra", resumenTextilDB || "No");
                 datos.append("Textil10K", resumenTextilDB || "N/A");
                 datos.append("Total", totalUSD);
-                datos.append("Agencia", envioTexto);
+                datos.append("Agencia", detalleAgenciaYPrendas);
                 
                 fetch(urlBaseDeDatos, {
                     method: 'POST',
@@ -1405,22 +1406,26 @@
                 if (resp.ok) {
                     const data = await resp.json();
                     if (data.encontrado && data.registros && data.registros.length > 0) {
-                        const reg = data.registros[0];
+                        // Priorizar registro de Edición Especial 10K para vincular con su kit 10K
+                        const reg10k = data.registros.find(r => r.edicion === '10k' || (r.carrera && r.carrera.includes('10K')));
+                        const reg = reg10k || data.registros[0];
                         const nombreInput = document.getElementById('nombreAtleta');
                         const dorsalInput = document.getElementById('dorsalAtleta');
 
-                        if (!nombreInput.value || nombreInput.value.trim() === '') {
-                            nombreInput.value = reg.nombre || '';
+                        if (reg.nombre) {
+                            nombreInput.value = reg.nombre;
                         }
                         if (reg.dorsal) {
                             dorsalInput.value = reg.dorsal;
                         }
 
-                        statusCI.innerHTML = `<span class="text-green-400 font-bold"><i class="fa-solid fa-circle-check mr-1"></i>Atleta encontrado: <b>${reg.nombre}</b> (Dorsal #${reg.dorsal || 'S/N'})</span>`;
+                        const infoKitActual = reg.textil ? ` · Kit actual: <b>${reg.textil}</b>` : '';
+                        const edLabel = reg10k ? '10K' : (reg.carrera || '');
+                        statusCI.innerHTML = `<span class="text-green-400 font-bold"><i class="fa-solid fa-circle-check mr-1"></i>Atleta ${edLabel}: <b>${reg.nombre}</b> (Dorsal #${reg.dorsal || 'S/N'})${infoKitActual}</span>`;
                         return;
                     }
                 }
-                statusCI.innerHTML = `<span class="text-slate-400"><i class="fa-solid fa-circle-info mr-1"></i>No inscrito previamente. Puedes escribir tu nombre y dorsal manualmente.</span>`;
+                statusCI.innerHTML = `<span class="text-slate-400"><i class="fa-solid fa-circle-info mr-1"></i>Compra libre sin dorsal previo. Completa tu nombre y teléfono abajo.</span>`;
             } catch (err) {
                 statusCI.innerHTML = `<span class="text-slate-400">Puedes escribir tus datos manualmente.</span>`;
             }

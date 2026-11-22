@@ -20,21 +20,38 @@
 
 ---
 
-## 💰 3. ESTRUCTURA DE PRECIOS OFICIAL (SIN FLETE)
-1. **Kit Medalla ($15 USD):**
-   - Medalla física de metal macizo 3D de colección.
+## 💰 3. ESTRUCTURA DE PRECIOS OFICIAL 10K (FUENTE DE LA VERDAD - INSCRIPCION.HTML)
+> **ATENCIÓN ABSOLUTA:** Los precios oficiales de la Edición Especial 10K NO son los del 5K ($15/$25). Son los siguientes:
+
+1. **Solo Medalla de Metal 3D + Dorsal ($25.00 USD):**
+   - Medalla física conmemorativa de metal macizo 3D de colección.
    - Dorsal digital numerado personalizado.
    - Certificado digital oficial de finalista.
+   - *Abono inicial:* **$10 USD** | *Saldo restante:* **$15 USD** (antes del despacho).
    - *(Despacho nacional Cobro a Destino por MRW/ZOOM/Tealca).*
-2. **Kit Completo con Indumentaria ($25 USD):**
-   - Medalla física de metal macizo 3D.
-   - Franela técnica o Franelilla olímpica oficial de competencia.
+
+2. **Kit Completo con Franelilla Olímpica ($35.00 USD):**
+   - Medalla física conmemorativa de metal macizo 3D.
+   - Franelilla olímpica técnica oficial de competencia (corte Dama o Caballero).
    - Dorsal digital numerado personalizado.
    - Certificado digital oficial de finalista.
+   - *Abono inicial:* **$10 USD** | *Saldo restante:* **$25 USD** (antes del despacho).
    - *(Despacho nacional Cobro a Destino por MRW/ZOOM/Tealca).*
-3. **Modalidad de Pago Fraccionado:**
-   - Abono inicial para apartar cupo y dorsal: **$10 USD**.
-   - Pago restante ($5 USD o $15 USD según el kit) a cancelar **hasta el 30 de noviembre** (antes del inicio de la logística de despachos).
+
+3. **Kit Completo con Franela con Mangas ($40.00 USD):**
+   - Medalla física conmemorativa de metal macizo 3D.
+   - Franela técnica con mangas oficial de competencia (corte Dama o Caballero).
+   - Dorsal digital numerado personalizado.
+   - Certificado digital oficial de finalista.
+   - *Abono inicial:* **$10 USD** | *Saldo restante:* **$30 USD** (antes del despacho).
+   - *(Despacho nacional Cobro a Destino por MRW/ZOOM/Tealca).*
+
+4. **Modalidad de Pago Fraccionado (Abonos):**
+   - Abono inicial para apartar cupo y dorsal: **$10 USD** (o al cambio en Bs por Pago Móvil).
+   - Pago restante a liquidar **hasta el 30 de noviembre** (antes del inicio de la logística de despachos).
+
+5. **Envíos Nacionales:**
+   - Estrictamente **Cobro a Destino (COD)** por MRW, ZOOM o Tealca a cargo del corredor al retirar en agencia. NUNCA decir envío gratis ni envío incluido.
 
 ---
 

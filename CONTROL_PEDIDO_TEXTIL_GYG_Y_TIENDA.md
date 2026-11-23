@@ -17,11 +17,11 @@
 
 ---
 
-### 🧵 Compromiso con Fábrica (Gyg Graphics)
-* **Costo base por lote de 50 piezas:** **$387.00 USD** (promedio $7.74/pieza).
-* **Anticipo requerido para arrancar confección (75%):** **$290.25 USD**
-* **Restante contra entrega (25%):** **$96.75 USD**
-* **Diferencia para completar el 75% mañana lunes:** **~$78.00 a $92.00 USD** (se cubre con los próximos abonos de la semana o cobro de saldos restantes).
+### 🧵 Compromiso con Fábrica (Creaciones Gyg Graphics) — ESTADO: ¡PAGADO EL ANTICIPO!
+* **Cotización oficial aprobada (58 piezas en Tela Atlética):** **$455.34 USD**.
+* **Anticipo del 75% transferido hoy 23/11/2026 (a tasa BCV):** 👉 **314.127,35 Bs (~$341.51 USD) — ESTADO: PAGADO ✅**
+* **Comisión bancaria de transferencia:** 942,38 Bs.
+* **Saldo restante del 25% (al estar listas las piezas antes del despacho por MRW):** **$113.83 USD** (~104.700 Bs).
 
 ---
 

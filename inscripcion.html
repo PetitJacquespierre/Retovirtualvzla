@@ -404,8 +404,8 @@
                         <label class="text-[10px] font-bold uppercase text-slate-400">Modalidad / Kit 10K <span class="req">*</span></label>
                         <select id="tipoTextil10k" onchange="cambiarTipoKit10k()" class="bg-white border rounded-xl px-4 py-3 font-bold text-sm text-[#001E50]">
                             <option value="Solo Medalla" selected>Solo Medalla de Metal 3D + Dorsal ($25.00)</option>
-                            <option value="Franelilla Oscura">Kit Completo + Franelilla Olímpica ($35.00)</option>
-                            <option value="Franela Oscura">Kit Completo + Franela con mangas ($40.00)</option>
+                            <option value="Franelilla Oscura" disabled class="text-slate-400 bg-slate-100">🔒 Kit Completo + Franelilla Olímpica ($35.00) — [CONFECCIÓN CERRADA]</option>
+                            <option value="Franela Oscura" disabled class="text-slate-400 bg-slate-100">🔒 Kit Completo + Franela con mangas ($40.00) — [CONFECCIÓN CERRADA]</option>
                         </select>
                     </div>
                     <div id="contenedor-talla-10k" class="hidden flex-col gap-2">
@@ -414,6 +414,24 @@
                             <option value="" disabled selected>Elegir talla...</option>
                             <option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option>
                         </select>
+                    </div>
+                </div>
+
+                <!-- Placa Oficial de Cierre de Confección Textil (FOMO & Alta Conversión) -->
+                <div class="mt-4 p-4 rounded-2xl bg-gradient-to-r from-[#001E50] to-slate-900 border border-[#00D2FF]/40 text-white shadow-lg">
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-xl bg-[#00D2FF]/20 border border-[#00D2FF]/50 flex items-center justify-center shrink-0 text-[#00D2FF] mt-0.5">
+                            <i class="fa-solid fa-lock text-sm"></i>
+                        </div>
+                        <div class="space-y-1.5 text-[11px] leading-relaxed" style="text-align: justify; text-justify: inter-word; hyphens: none; word-break: normal;">
+                            <p class="font-bold text-white uppercase tracking-wider text-xs flex items-center gap-2">
+                                <span class="text-amber-400"><i class="fa-solid fa-clock"></i> Confección Textil Cerrada</span>
+                                <span class="bg-[#00D2FF]/20 text-[#00D2FF] text-[9px] px-2 py-0.5 rounded-full border border-[#00D2FF]/40 font-mono">CORTE EN TALLER EN CURSO</span>
+                            </p>
+                            <p class="text-slate-300">
+                                La lista oficial de confección para franelillas y franelas técnicas ha sido enviada a fábrica para garantizar la producción y entrega a tiempo. Únicamente se encuentran disponibles los últimos cupos para la <strong class="text-emerald-400 font-bold">Medalla Oficial 3D de Colección ($25.00 USD)</strong>, con opción de apartar hoy con solo <strong class="text-[#00D2FF] font-bold">$10.00 USD</strong> hasta agotar el lote de 100 medallas físicas de metal macizo.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1453,6 +1471,14 @@
                 if (flujoActual === "10K") {
                     let preTextil = document.getElementById('tipoTextil10k').value;
                     let costoKitCompleto = 25;
+
+                    // CANDADO OPERATIVO (Cierre de Confección Textil)
+                    if (preTextil !== "Solo Medalla") {
+                        alert("⚠️ CONFECCIÓN TEXTIL CERRADA:\n\nLa lista oficial de franelas y franelillas ya fue enviada a corte en taller.\n\nÚnicamente están habilitadas las inscripciones en modalidad 'Solo Medalla de Metal 3D ($25.00 USD)'. Tu selección ha sido ajustada automáticamente.");
+                        document.getElementById('tipoTextil10k').value = "Solo Medalla";
+                        cambiarTipoKit10k();
+                        return;
+                    }
 
                     if (preTextil === "Solo Medalla") {
                         kitTextilFinal = "Solo Medalla (Sin Prenda)";

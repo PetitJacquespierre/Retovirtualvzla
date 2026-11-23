@@ -25,24 +25,22 @@
 
 ---
 
-## 📊 2. DESGLOSE REAL DE PRENDAS (1 PRENDA POR ATLETA)
+## 📊 2. DESGLOSE REAL DE PRENDAS (ACTUALIZADO EN VIVO · DORSAL #001 AL #063)
 
-En la base de datos oficial hay **54 atletas registrados** (Dorsales 001 al 054).
-* **7 atletas** eligieron *"Solo Medalla"* (no llevan prenda).
-* **47 atletas** tienen su kit con prenda oficial (exactamente 1 prenda por atleta).
-
-*(Aclaratoria técnica: En la hoja existe una columna vieja llamada `FranelaExtra` que simplemente duplicaba el texto de `Textil10K`. Ningún atleta de la base tiene doble prenda; cada quien tiene estrictamente 1 sola prenda).*
+En la base de datos oficial hay **63 atletas registrados**.
+* **10 atletas** eligieron *"Solo Medalla"* (sin prenda textil).
+* **53 atletas** tienen su kit con prenda oficial (exactamente 1 prenda por atleta).
 
 ---
 
-### A. Desglose Exacto de los 47 Atletas
+### A. Desglose Exacto de los 53 Atletas (Base de Datos Oficial)
 | Modelo de Prenda | Corte | Talla S | Talla M | Talla L | Talla XL | Subtotal |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Franelilla Olímpica** | **Dama** | 5 | 10 | 1 | 2 | **18** |
-| **Franelilla Olímpica** | **Caballero** | 4 | 5 | 4 | 4 | **17** |
-| **Franela con Mangas** | **Dama** | 1 | 1 | 0 | 0 | **2** |
-| **Franela con Mangas** | **Caballero** | 1 | 5 | 3 | 1 | **10** |
-| **TOTAL ATLETAS BASE** | | **11** | **21** | **8** | **7** | **47 piezas** |
+| **Franelilla Olímpica** | **Dama** | 6 | 11 | 1 | 2 | **20** |
+| **Franelilla Olímpica** | **Caballero** | 4 | 7 | 5 | 3 | **19** |
+| **Franela con Mangas** | **Dama** | 2 | 1 | 0 | 0 | **3** |
+| **Franela con Mangas** | **Caballero** | 1 | 5 | 3 | 2 | **11** |
+| **TOTAL ATLETAS BASE** | | **13** | **24** | **9** | **7** | **53 piezas** |
 
 ---
 
@@ -56,23 +54,17 @@ En la base de datos oficial hay **54 atletas registrados** (Dorsales 001 al 054)
 
 ---
 
-### C. Decisión de Stock para Tienda
-* **Recomendación ejecutada:** **NO comprar unidades extras de reserva para la tienda en esta primera tanda.**
-* **Motivo:** Evita congelar liquidez innecesaria. Como los nuevos pedidos de la tienda pagan por adelantado, cualquier compra adicional se mete en la siguiente tanda de fabricación.
+## 🎯 3. RESUMEN FINAL DEFINITIVO A FABRICAR (57 PIEZAS)
 
----
-
-## 🎯 3. RESUMEN FINAL DEFINITIVO A FABRICAR (51 PIEZAS)
-
-Sumando los **47 atletas** + las **4 personales** (tú y tu esposa):
+Sumando los **53 atletas** + las **4 personales** (tú y tu esposa):
 
 | Modelo y Corte | Talla S | Talla M | Talla L | Talla XL | Total por Modelo |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Franelilla Olímpica Dama** | 6 *(5+1)* | 10 | 1 | 2 | **19** |
-| **Franelilla Olímpica Caballero** | 4 | 5 | 5 *(4+1)* | 4 | **18** |
-| **Franela con Mangas Dama** | 2 *(1+1)* | 1 | 0 | 0 | **3** |
-| **Franela con Mangas Caballero** | 1 | 5 | 4 *(3+1)* | 1 | **11** |
-| **TOTALES POR TALLA** | **13** | **21** | **10** | **7** | **51 piezas** |
+| **Franelilla Olímpica Dama** | 7 *(6+1)* | 11 | 1 | 2 | **21** |
+| **Franelilla Olímpica Caballero** | 4 | 7 | 6 *(5+1)* | 3 | **20** |
+| **Franela con Mangas Dama** | 3 *(2+1)* | 1 | 0 | 0 | **4** |
+| **Franela con Mangas Caballero** | 1 | 5 | 4 *(3+1)* | 2 | **12** |
+| **TOTALES POR TALLA** | **15** | **24** | **11** | **7** | **57 piezas** |
 
 ---
 

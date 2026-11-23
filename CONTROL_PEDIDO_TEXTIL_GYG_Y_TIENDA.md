@@ -25,62 +25,54 @@
 
 ---
 
-## 📊 2. DESGLOSE REAL DE PRENDAS COMPROMETIDAS (BASE DE DATOS 10K)
+## 📊 2. DESGLOSE REAL DE PRENDAS (1 PRENDA POR ATLETA)
 
-Escaneada la base de datos oficial (Dorsales 001 al 054), el registro de prendas solicitado por los atletas es:
+En la base de datos oficial hay **54 atletas registrados** (Dorsales 001 al 054).
+* **7 atletas** eligieron *"Solo Medalla"* (no llevan prenda).
+* **47 atletas** tienen su kit con prenda oficial (exactamente 1 prenda por atleta).
 
-### A. Prendas Base de Atletas Inscritos (47 Piezas)
-| Prenda | Corte | Talla S | Talla M | Talla L | Talla XL | Subtotal |
+*(Aclaratoria técnica: En la hoja existe una columna vieja llamada `FranelaExtra` que simplemente duplicaba el texto de `Textil10K`. Ningún atleta de la base tiene doble prenda; cada quien tiene estrictamente 1 sola prenda).*
+
+---
+
+### A. Desglose Exacto de los 47 Atletas
+| Modelo de Prenda | Corte | Talla S | Talla M | Talla L | Talla XL | Subtotal |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
 | **Franelilla Olímpica** | **Dama** | 5 | 10 | 1 | 2 | **18** |
 | **Franelilla Olímpica** | **Caballero** | 4 | 5 | 4 | 4 | **17** |
 | **Franela con Mangas** | **Dama** | 1 | 1 | 0 | 0 | **2** |
 | **Franela con Mangas** | **Caballero** | 1 | 5 | 3 | 1 | **10** |
-| **TOTALES BASE** | | **11** | **21** | **8** | **7** | **47 piezas** |
-
-*(Nota: 7 atletas de los 54 registrados eligieron "Solo Medalla" sin prenda).*
+| **TOTAL ATLETAS BASE** | | **11** | **21** | **8** | **7** | **47 piezas** |
 
 ---
 
-### B. Prendas Extras Pagadas por Atletas Inscritos (4 Piezas)
-1. **Dina Bergo (Dorsal #003):** 1 Franelilla Olímpica Dama — Talla L.
-2. **Jeicar Noriega (Dorsal #007):** 1 Franelilla Olímpica Dama — Talla M.
-3. **Leo Vera (Dorsal #008):** 1 Franela con Mangas Caballero — Talla M.
-4. **Maikol Rodríguez (Dorsal #013):** 1 Franelilla Olímpica Caballero — Talla XL.
-
----
-
-### C. Pedido Personal (4 Piezas)
-1. **Esposa:**
+### B. Pedido Personal (Tú y tu Esposa) — 4 Piezas
+1. **Esposa (2 piezas):**
    * 1 Franelilla Olímpica Dama — Talla S.
    * 1 Franela con Mangas Dama — Talla S.
-2. **Usuario:**
+2. **Usuario (2 piezas):**
    * 1 Franelilla Olímpica Caballero — Talla L.
    * 1 Franela con Mangas Caballero — Talla L.
 
 ---
 
-### D. Stock de Seguridad / Tienda Online (5 Piezas Recomendadas)
-Prendas con mayor rotación en el mercado runner venezolano:
-* 1 Franelilla Olímpica Dama — Talla M.
-* 1 Franelilla Olímpica Caballero — Talla M.
-* 1 Franelilla Olímpica Caballero — Talla L.
-* 1 Franela con Mangas Caballero — Talla M.
-* 1 Franela con Mangas Caballero — Talla L.
+### C. Decisión de Stock para Tienda
+* **Recomendación ejecutada:** **NO comprar unidades extras de reserva para la tienda en esta primera tanda.**
+* **Motivo:** Evita congelar liquidez innecesaria. Como los nuevos pedidos de la tienda pagan por adelantado, cualquier compra adicional se mete en la siguiente tanda de fabricación.
 
 ---
 
-## 🎯 3. RESUMEN FINAL DEL PEDIDO A ENVIAR A GYG GRAPHICS
+## 🎯 3. RESUMEN FINAL DEFINITIVO A FABRICAR (51 PIEZAS)
 
-| Renglón | Franelillas Olímpicas | Franelas con Mangas | Total Piezas |
-| :--- | :---: | :---: | :---: |
-| **Atletas Base (Dorsales 001-054)** | 35 | 12 | 47 |
-| **Extras Atletas (Dina, Jeicar, Leo, Maikol)** | 3 | 1 | 4 |
-| **Pedido Personal (Tú y tu esposa)** | 2 | 2 | 4 |
-| **Stock Tienda / Reserva** | 3 | 2 | 5 |
-| **TOTAL GENERAL DEL LOTE** | **43** | **17** | **60 piezas** |
+Sumando los **47 atletas** + las **4 personales** (tú y tu esposa):
 
-*(Si se mantiene el corte estricto en 50 piezas exactas, se envían las 47 base + 3 personales, y el resto se manda en la 2da tanda).*
+| Modelo y Corte | Talla S | Talla M | Talla L | Talla XL | Total por Modelo |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Franelilla Olímpica Dama** | 6 *(5+1)* | 10 | 1 | 2 | **19** |
+| **Franelilla Olímpica Caballero** | 4 | 5 | 5 *(4+1)* | 4 | **18** |
+| **Franela con Mangas Dama** | 2 *(1+1)* | 1 | 0 | 0 | **3** |
+| **Franela con Mangas Caballero** | 1 | 5 | 4 *(3+1)* | 1 | **11** |
+| **TOTALES POR TALLA** | **13** | **21** | **10** | **7** | **51 piezas** |
 
 ---
 

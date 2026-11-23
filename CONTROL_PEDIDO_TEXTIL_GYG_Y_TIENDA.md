@@ -44,27 +44,30 @@ En la base de datos oficial hay **63 atletas registrados**.
 
 ---
 
-### B. Pedido Personal (Tú y tu Esposa) — 4 Piezas
+### B. Prendas Adicionales y Pedido Personal (5 Piezas)
 1. **Esposa (2 piezas):**
    * 1 Franelilla Olímpica Dama — Talla S.
    * 1 Franela con Mangas Dama — Talla S.
 2. **Usuario (2 piezas):**
    * 1 Franelilla Olímpica Caballero — Talla L.
    * 1 Franela con Mangas Caballero — Talla L.
+3. **Jully Sabrina Polanco Pérez (Dorsal #043) — Adicional (1 pieza):**
+   * Ya tiene registrada 1 Franelilla Dama Talla M en la base.
+   * Adiciona: **1 Franela con Mangas Dama — Talla M** (liquida el miércoles).
 
 ---
 
-## 🎯 3. RESUMEN FINAL DEFINITIVO A FABRICAR (57 PIEZAS)
+## 🎯 3. RESUMEN FINAL DEFINITIVO A FABRICAR (58 PIEZAS)
 
-Sumando los **53 atletas** + las **4 personales** (tú y tu esposa):
+Sumando los **53 atletas base** + **4 personales** + **1 adicional de Yuli Sabrina**:
 
 | Modelo y Corte | Talla S | Talla M | Talla L | Talla XL | Total por Modelo |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Franelilla Olímpica Dama** | 7 *(6+1)* | 11 | 1 | 2 | **21** |
-| **Franelilla Olímpica Caballero** | 4 | 7 | 6 *(5+1)* | 3 | **20** |
-| **Franela con Mangas Dama** | 3 *(2+1)* | 1 | 0 | 0 | **4** |
-| **Franela con Mangas Caballero** | 1 | 5 | 4 *(3+1)* | 2 | **12** |
-| **TOTALES POR TALLA** | **15** | **24** | **11** | **7** | **57 piezas** |
+| **Franelilla Olímpica Dama** | **7** | **11** | **1** | **2** | **21** |
+| **Franelilla Olímpica Caballero** | **4** | **7** | **6** | **3** | **20** |
+| **Franela con Mangas Dama** | **3** | **2** *(1 base + 1 Yuli)* | **0** | **0** | **5** |
+| **Franela con Mangas Caballero** | **1** | **5** | **4** | **2** | **12** |
+| **TOTALES POR TALLA** | **15** | **25** | **11** | **7** | **58 piezas** |
 
 ---
 

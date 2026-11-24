@@ -42,7 +42,15 @@ Archivo de contexto local y memoria viva para la plataforma de carreras deportiv
 
 ---
 
-## 📣 6. ESTRATEGIA COMERCIAL & CAMPAÑA PROMOCIONAL PAGADA (RETO 10K)
+## 🚨 RECORDATORIO ACTIVO PARA MAÑANA (GYG GRAPHICS / TEXTIL)
+> **DISPARADOR / TRIGGER:** Apenas el usuario diga que le escribió o habló con la gente de **GYG Graphics (Creaciones Gyg Graphics)**, el asistente DEBE recordarle de inmediato:
+1. **Sumar la pieza de Luis Alberto García (#066 - Tucupita, Delta Amacuro):** Indicarle al taller que sume **1 Franelilla Olímpica Caballero** al lote en Tela Atlética (el pedido pasa de 58 a **59 piezas totales**).
+2. **Definir la Talla:** Confirmar con Luis Alberto si su franelilla caballero es talla S, M, L o XL para pasarle la talla exacta al taller.
+3. **Cálculo de Deuda Restante con Fábrica:**
+   - Monto base restante (25%): $113.83 USD.
+   - Franelilla adicional: +$7.00 USD.
+   - **Total exacto por liquidar con GYG:** 👉 **$120.83 USD**.
+   - Con los $35 USD que pagó Luis Alberto completo + los $15 USD de Yuli Sabrina del miércoles, ya tienes $50 USD en mano para amortizar esa cuenta. Solo faltarían ~$70.83 USD.
 > **DISPARADOR / TRIGGER:** Apenas se culmine la entrega y fase operativa de los **5K**, el asistente debe **recordar y activar proactivamente** esta campaña y los copys para pauta pagada (Meta Ads / Instagram / TikTok / WhatsApp).
 * **Meta:** Completar los 100 cupos totales (actualmente 42 inscritos, faltan ~50 cupos por agotar).
 * **Timing:** Octubre - Noviembre (2 meses antes del evento).

@@ -18,29 +18,31 @@
 ---
 
 ### 🧵 Compromiso con Fábrica (Creaciones Gyg Graphics) — ESTADO: ¡PAGADO EL ANTICIPO!
-* **Cotización oficial aprobada (58 piezas en Tela Atlética):** **$455.34 USD**.
-* **Anticipo del 75% transferido hoy 23/11/2026 (a tasa BCV):** 👉 **314.127,35 Bs (~$341.51 USD) — ESTADO: PAGADO ✅**
+* **Cotización inicial (58 piezas en Tela Atlética):** $455.34 USD.
+* **Adición Luis Alberto García (#066 Tucupita):** +1 Franelilla Caballero ($7.00 USD).
+* **Nuevo Total de la Orden (59 piezas):** **$462.34 USD**.
+* **Anticipo 75% Pagado el 23/11/2026 (a tasa BCV):** 👉 **314.127,35 Bs (~$341.51 USD) — PAGADO ✅**
 * **Comisión bancaria de transferencia:** 942,38 Bs.
-* **Saldo restante del 25% (al estar listas las piezas antes del despacho por MRW):** **$113.83 USD** (~104.700 Bs).
+* **SALDO TOTAL RESTANTE POR PAGAR:** 👉 **$120.83 USD** (exactamente $113.83 del 25% base + $7.00 de la pieza adicional).
 
 ---
 
-## 📊 2. DESGLOSE REAL DE PRENDAS (ACTUALIZADO EN VIVO · DORSAL #001 AL #063)
+## 📊 2. DESGLOSE REAL DE PRENDAS (ACTUALIZADO EN VIVO · DORSAL #001 AL #066)
 
-En la base de datos oficial hay **63 atletas registrados**.
-* **10 atletas** eligieron *"Solo Medalla"* (sin prenda textil).
-* **53 atletas** tienen su kit con prenda oficial (exactamente 1 prenda por atleta).
+En la base de datos oficial hay **66 atletas registrados**.
+* **12 atletas** eligieron *"Solo Medalla"* (#064 Elizabeth Paredes, #065 Karla Perez, etc.).
+* **54 atletas** tienen su kit con prenda oficial (exactamente 1 prenda por atleta, sumando a **#066 Luis Alberto García** de Tucupita, Delta Amacuro con Franelilla Olímpica).
 
 ---
 
-### A. Desglose Exacto de los 53 Atletas (Base de Datos Oficial)
+### A. Desglose Exacto de los 54 Atletas (Base de Datos Oficial)
 | Modelo de Prenda | Corte | Talla S | Talla M | Talla L | Talla XL | Subtotal |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
 | **Franelilla Olímpica** | **Dama** | 6 | 11 | 1 | 2 | **20** |
-| **Franelilla Olímpica** | **Caballero** | 4 | 7 | 5 | 3 | **19** |
+| **Franelilla Olímpica** | **Caballero** | 4 | 7 | 5 (+1 Luis García pend. talla) | 3 | **20** |
 | **Franela con Mangas** | **Dama** | 2 | 1 | 0 | 0 | **3** |
 | **Franela con Mangas** | **Caballero** | 1 | 5 | 3 | 2 | **11** |
-| **TOTAL ATLETAS BASE** | | **13** | **24** | **9** | **7** | **53 piezas** |
+| **TOTAL ATLETAS BASE** | | **13** | **24** | **10** | **7** | **54 piezas** |
 
 ---
 
@@ -57,17 +59,14 @@ En la base de datos oficial hay **63 atletas registrados**.
 
 ---
 
-## 🎯 3. RESUMEN FINAL DEFINITIVO A FABRICAR (58 PIEZAS)
+## 🎯 3. RESUMEN FINAL DEFINITIVO A FABRICAR (59 PIEZAS)
 
-Sumando los **53 atletas base** + **4 personales** + **1 adicional de Yuli Sabrina**:
+Sumando los **54 atletas base** + **4 personales** + **1 adicional de Yuli Sabrina**:
 
-| Modelo y Corte | Talla S | Talla M | Talla L | Talla XL | Total por Modelo |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Franelilla Olímpica Dama** | **7** | **11** | **1** | **2** | **21** |
-| **Franelilla Olímpica Caballero** | **4** | **7** | **6** | **3** | **20** |
-| **Franela con Mangas Dama** | **3** | **2** *(1 base + 1 Yuli)* | **0** | **0** | **5** |
-| **Franela con Mangas Caballero** | **1** | **5** | **4** | **2** | **12** |
-| **TOTALES POR TALLA** | **15** | **25** | **11** | **7** | **58 piezas** |
+* **Total Piezas a Fabricar:** **59 piezas** (58 ya presupuestadas + 1 Franelilla de Luis Alberto García de Tucupita).
+* **Ajuste Presupuestario:** +$7.00 USD (Total orden sube de $455.34 a **$462.34 USD**).
+* **Anticipo Pagado:** 314.127,35 Bs (~$341.51 USD).
+* **Diferencia a liquidar:** Se ajustan los $7.00 USD mañana o se suman al 25% final restante.
 
 ---
 

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Historia Instagram 1.000 Runners — Reto Virtual VZLA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800&family=Montserrat:ital,wght@0,800;0,900;1,900&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-dark: #070709;
+    --cyan: #00D2FF;
+    --magenta: #FF007A;
+    --gold: #FFD700;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #050811;
+    color: #F4F4F6;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px;
+    min-height: 100vh;
+  }
+  .controls-bar {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(0, 210, 255, 0.3);
+    border-radius: 16px;
+    padding: 14px 24px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  }
+  .btn-download {
+    background: linear-gradient(135deg, #00D2FF 0%, #FF007A 100%);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    box-shadow: 0 4px 20px rgba(255, 0, 122, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-download:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 0, 122, 0.7);
+  }
+  .story-preview-container {
+    width: 360px;
+    height: 640px; /* Escala 9:16 exacta */
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 35px rgba(0, 210, 255, 0.25);
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    position: relative;
+    background: #000;
+  }
+  canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .note {
+    margin-top: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #94a3b8;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="controls-bar">
+  <span style="font-family:'Montserrat',sans-serif; font-weight:900; color:#00D2FF; font-size:14px;">🎉 HITO HISTÓRICO: 1.000 SEGUIDORES</span>
+  <button class="btn-download" onclick="descargarStory()">⬇ Descargar Story HD (1080 × 1920 px)</button>
+</div>
+
+<div class="story-preview-container">
+  <canvas id="storyCanvas" width="1080" height="1920"></canvas>
+</div>
+
+<p class="note">
+  Formato exacto 9:16 (1080x1920 px) para Historias y Estados de Instagram / WhatsApp · Renderizado nativo en Ultra HD
+</p>
+
+<script>
+const canvas = document.getElementById('storyCanvas');
+const ctx = canvas.getContext('2d');
+
+const logoImg = new Image();
+logoImg.crossOrigin = 'anonymous';
+logoImg.src = 'img/RV_logo_oficial.webp';
+
+const medallaImg = new Image();
+medallaImg.crossOrigin = 'anonymous';
+medallaImg.src = 'img/medalla_real_10k.jpg';
+
+let assetsLoaded = 0;
+function checkReady() {
+  assetsLoaded++;
+  if (assetsLoaded >= 2) {
+    dibujarStory();
+  }
+}
+logoImg.onload = checkReady;
+medallaImg.onload = checkReady;
+// Fallback si tarda
+setTimeout(() => { if (assetsLoaded < 2) dibujarStory(); }, 500);
+
+function dibujarStory() {
+  const w = 1080;
+  const h = 1920;
+
+  // 1. Fondo Oscuro Deportivo con Gradiente Radial Dinámico
+  const bgGrad = ctx.createRadialGradient(w/2, h*0.42, 100, w/2, h/2, 950);
+  bgGrad.addColorStop(0, '#0c1b33');
+  bgGrad.addColorStop(0.5, '#050a16');
+  bgGrad.addColorStop(1, '#020408');
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, w, h);
+
+  // 2. Destellos y Rayos de Luz (Volumetric Glow)
+  // Glow Cian superior
+  const glowCyan = ctx.createRadialGradient(180, 260, 20, 180, 260, 450);
+  glowCyan.addColorStop(0, 'rgba(0, 210, 255, 0.28)');
+  glowCyan.addColorStop(1, 'rgba(0, 210, 255, 0)');
+  ctx.fillStyle = glowCyan;
+  ctx.fillRect(0, 0, w, h);
+
+  // Glow Magenta inferior
+  const glowMag = ctx.createRadialGradient(900, 1400, 30, 900, 1400, 500);
+  glowMag.addColorStop(0, 'rgba(255, 0, 122, 0.32)');
+  glowMag.addColorStop(1, 'rgba(255, 0, 122, 0)');
+  ctx.fillStyle = glowMag;
+  ctx.fillRect(0, 0, w, h);
+
+  // 3. Líneas de Velocidad / Speed Lines diagonales sutiles
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+  ctx.lineWidth = 2;
+  for (let x = -500; x < w + 500; x += 60) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x + 500, h);
+    ctx.stroke();
+  }
+
+  // 4. Confeti Festivo Flotante (Oro, Cian, Magenta, Blanco)
+  const confettiColors = ['#FFD700', '#00D2FF', '#FF007A', '#FFFFFF', '#38bdf8', '#fbbf24'];
+  const seedRandom = (s) => { let x = Math.sin(s++) * 10000; return x - Math.floor(x); };
+  for (let i = 0; i < 110; i++) {
+    const rx = seedRandom(i * 3) * w;
+    const ry = seedRandom(i * 7) * h;
+    const rSize = 10 + seedRandom(i * 11) * 18;
+    const rRot = seedRandom(i * 13) * Math.PI * 2;
+    const color = confettiColors[i % confettiColors.length];
+
+    ctx.save();
+    ctx.translate(rx, ry);
+    ctx.rotate(rRot);
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.4 + seedRandom(i * 17) * 0.55;
+
+    if (i % 3 === 0) {
+      // Confeti rectangular estilo streamer
+      ctx.fillRect(-rSize/2, -rSize/4, rSize * 1.6, rSize * 0.6);
+    } else if (i % 3 === 1) {
+      // Confeti circular
+      ctx.beginPath();
+      ctx.arc(0, 0, rSize * 0.45, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      // Chispas / Estrellas diamantadas
+      ctx.beginPath();
+      ctx.moveTo(0, -rSize);
+      ctx.lineTo(rSize * 0.4, 0);
+      ctx.lineTo(0, rSize);
+      ctx.lineTo(-rSize * 0.4, 0);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+  ctx.globalAlpha = 1.0;
+
+  // 5. CABECERA: Logo Oficial del Evento + Píldora de Celebración
+  if (logoImg.complete && logoImg.naturalWidth > 0) {
+    const logoW = 200;
+    const logoH = 200;
+    ctx.drawImage(logoImg, (w - logoW) / 2, 140, logoW, logoH);
+  }
+
+  // Píldora de Celebración
+  ctx.save();
+  const pillW = 420;
+  const pillH = 46;
+  const pillX = (w - pillW) / 2;
+  const pillY = 370;
+  ctx.fillStyle = 'rgba(0, 210, 255, 0.12)';
+  ctx.strokeStyle = '#00D2FF';
+  ctx.lineWidth = 1.8;
+  ctx.beginPath();
+  ctx.roundRect(pillX, pillY, pillW, pillH, 23);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle = '#00D2FF';
+  ctx.font = '900 17px "JetBrains Mono", monospace';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '3px';
+  ctx.fillText('COMUNIDAD OFICIAL RUNNERS', w/2, pillY + 30);
+  ctx.restore();
+
+  // 6. TEXTO DE IMPACTO: ¡GRACIAS VENEZUELA!
+  ctx.save();
+  ctx.font = '900 italic 42px "Montserrat", sans-serif';
+  ctx.fillStyle = '#FFFFFF';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = 'rgba(0, 210, 255, 0.6)';
+  ctx.shadowBlur = 20;
+  ctx.fillText('¡YA SOMOS MÁS DE!', w/2, 475);
+  ctx.restore();
+
+  // 7. EL GRAN "1.000" EN 3D LUMINOSO (PROTAGONISTA)
+  ctx.save();
+  ctx.textAlign = 'center';
+  ctx.font = '900 italic 250px "Montserrat", sans-serif';
+  
+  // Sombra de relieve 3D Magenta
+  ctx.fillStyle = '#FF007A';
+  ctx.fillText('1.000', w/2 + 8, 715 + 8);
+  
+  // Gradiente Cian a Blanco en el frente
+  const numGrad = ctx.createLinearGradient(0, 520, 0, 720);
+  numGrad.addColorStop(0, '#FFFFFF');
+  numGrad.addColorStop(0.5, '#00D2FF');
+  numGrad.addColorStop(1, '#0077B6');
+  ctx.fillStyle = numGrad;
+  ctx.shadowColor = 'rgba(0, 210, 255, 0.9)';
+  ctx.shadowBlur = 40;
+  ctx.fillText('1.000', w/2, 715);
+  ctx.restore();
+
+  // Palabra "RUNNERS" debajo de 1.000
+  ctx.save();
+  ctx.font = '900 italic 54px "Montserrat", sans-serif';
+  ctx.fillStyle = '#FFD700';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '8px';
+  ctx.shadowColor = 'rgba(255, 215, 0, 0.6)';
+  ctx.shadowBlur = 18;
+  ctx.fillText('RUNNERS 🏃‍♂️🔥', w/2, 785);
+  ctx.restore();
+
+  // 8. LA MEDALLA REAL 3D FLOTANTE CON AURA DE LUZ
+  const medalSize = 420;
+  const medalX = (w - medalSize) / 2;
+  const medalY = 845;
+
+  // Aura luminosa detrás de la medalla
+  const medalAura = ctx.createRadialGradient(w/2, medalY + medalSize/2, 50, w/2, medalY + medalSize/2, medalSize * 0.7);
+  medalAura.addColorStop(0, 'rgba(255, 215, 0, 0.45)');
+  medalAura.addColorStop(0.5, 'rgba(255, 0, 122, 0.25)');
+  medalAura.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = medalAura;
+  ctx.beginPath();
+  ctx.arc(w/2, medalY + medalSize/2, medalSize * 0.7, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Círculo contenedor con la medalla recortada
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(w/2, medalY + medalSize/2, medalSize/2, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.clip();
+  if (medallaImg.complete && medallaImg.naturalWidth > 0) {
+    ctx.drawImage(medallaImg, medalX, medalY, medalSize, medalSize);
+  } else {
+    ctx.fillStyle = '#1e293b';
+    ctx.fill();
+  }
+  ctx.restore();
+
+  // Anillo de brillo dorado alrededor de la medalla
+  ctx.save();
+  ctx.strokeStyle = '#FFD700';
+  ctx.lineWidth = 5;
+  ctx.shadowColor = 'rgba(255, 215, 0, 0.8)';
+  ctx.shadowBlur = 25;
+  ctx.beginPath();
+  ctx.arc(w/2, medalY + medalSize/2, medalSize/2 + 2, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
+
+  // Insignia encima de la medalla
+  ctx.save();
+  const tagW = 340;
+  const tagH = 44;
+  ctx.fillStyle = '#001438';
+  ctx.strokeStyle = '#FF007A';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.roundRect((w - tagW) / 2, medalY + medalSize - 20, tagW, tagH, 22);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = '900 16px "Montserrat", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('MEDALLA DE METAL 3D · 10K', w/2, medalY + medalSize + 8);
+  ctx.restore();
+
+  // 9. CIERRE INFERIOR DE AGRADECIMIENTO Y COMUNIDAD
+  ctx.save();
+  ctx.font = '900 36px "Montserrat", sans-serif';
+  ctx.fillStyle = '#FFFFFF';
+  ctx.textAlign = 'center';
+  ctx.fillText('¡GRACIAS POR CREER!', w/2, 1420);
+
+  ctx.font = '600 22px "Plus Jakarta Sans", sans-serif';
+  ctx.fillStyle = '#cbd5e1';
+  ctx.fillText('Una meta que construimos paso a paso.', w/2, 1465);
+  ctx.fillText('Cada kilómetro y cada mensaje cuentan.', w/2, 1500);
+  ctx.restore();
+
+  // Tarjeta de llamado a la acción / Web
+  ctx.save();
+  const ctaW = 760;
+  const ctaH = 110;
+  const ctaX = (w - ctaW) / 2;
+  const ctaY = 1570;
+  
+  const ctaGrad = ctx.createLinearGradient(ctaX, 0, ctaX + ctaW, 0);
+  ctaGrad.addColorStop(0, 'rgba(0, 210, 255, 0.15)');
+  ctaGrad.addColorStop(0.5, 'rgba(255, 0, 122, 0.15)');
+  ctaGrad.addColorStop(1, 'rgba(0, 210, 255, 0.15)');
+  
+  ctx.fillStyle = ctaGrad;
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.roundRect(ctaX, ctaY, ctaW, ctaH, 20);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle = '#00D2FF';
+  ctx.font = '900 20px "JetBrains Mono", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('ÚNETE AL RETO 10K · EDICIÓN ESPECIAL', w/2, ctaY + 44);
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = '800 26px "Montserrat", sans-serif';
+  ctx.fillText('retovirtualvzla.com', w/2, ctaY + 84);
+  ctx.restore();
+
+  // Firma Grow Studio al pie
+  ctx.fillStyle = 'rgba(148, 163, 184, 0.7)';
+  ctx.font = '700 13px "JetBrains Mono", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('POWERED BY GROW STUDIO · growstudioweb.com', w/2, 1780);
+}
+
+function descargarStory() {
+  const link = document.createElement('a');
+  link.download = 'Historia_Instagram_1000_Seguidores_RetoVirtualVzla.png';
+  link.href = canvas.toDataURL('image/png', 1.0);
+  link.click();
+}
+</script>
+
+</body>
+</html>

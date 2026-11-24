@@ -2,224 +2,473 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Dorsal 10K Edición Especial - Reto Virtual VZLA 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&family=Oswald:wght@700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador de Dorsales 10K Oficiales (13 x 20 cm) — Reto Virtual VZLA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800&family=Montserrat:ital,wght@0,700;0,800;0,900;1,900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --bg-dark: #070709;
+    --card-surface: rgba(15, 17, 23, 0.92);
+    --border-specular: rgba(255, 255, 255, 0.16);
+    --cyan-accent: #00D2FF;
+    --magenta-accent: #FF007A;
+    --navy-deep: #001438;
+    --titanium: #F4F4F6;
+    --text-muted: #8E929F;
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
-    background: radial-gradient(circle at center, #0e1e38 0%, #060b17 100%);
+    background: radial-gradient(circle at 50% 20%, #0e1e38 0%, #060b17 60%, #03060d 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 100vh;
-    font-family: 'Montserrat', sans-serif;
-    padding: 25px;
-    color: white;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    padding: 30px 16px;
+    color: var(--titanium);
+    -webkit-font-smoothing: antialiased;
   }
-  .controls-card {
-    background: rgba(15, 23, 42, 0.9);
-    border: 1px solid rgba(0, 210, 255, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    padding: 16px 24px;
-    border-radius: 16px;
+
+  .header-panel {
+    text-align: center;
+    max-width: 860px;
     margin-bottom: 24px;
-    display: flex;
-    gap: 16px;
+  }
+
+  .badge-studio {
+    display: inline-flex;
     align-items: center;
+    gap: 8px;
+    background: rgba(0, 210, 255, 0.08);
+    border: 1px solid rgba(0, 210, 255, 0.35);
+    border-radius: 9999px;
+    padding: 6px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--cyan-accent);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .header-panel h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+
+  .header-panel p {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Toolbar de Controles */
+  .controls-card {
+    background: var(--card-surface);
+    border-top: 1px solid var(--border-specular);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(0, 210, 255, 0.12);
+    backdrop-filter: blur(16px);
+    padding: 22px 28px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
     flex-wrap: wrap;
     justify-content: center;
+    max-width: 960px;
+    width: 100%;
   }
+
   .field-group {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
   }
+
   .field-group label {
     font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
     color: #94a3b8;
     font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
   }
-  .controls-card input {
-    background: #020617;
-    border: 1.5px solid #334155;
+
+  .controls-card input,
+  .controls-card select {
+    background: #030712;
+    border: 1.5px solid #1e293b;
     color: #00D2FF;
-    padding: 10px 16px;
+    padding: 10px 14px;
     border-radius: 10px;
     font-size: 15px;
-    font-weight: 900;
+    font-weight: 800;
+    font-family: 'Montserrat', sans-serif;
     outline: none;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
   }
-  .controls-card input:focus {
+
+  .controls-card input:focus,
+  .controls-card select:focus {
     border-color: #00D2FF;
     box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+    background: #050b1a;
   }
-  .btn-descargar {
-    background: linear-gradient(135deg, #00D2FF 0%, #FF007A 100%);
+
+  .btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     color: #FFFFFF;
     border: none;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 900;
-    padding: 12px 28px;
+    padding: 12px 22px;
     border-radius: 10px;
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-size: 13px;
-    box-shadow: 0 4px 20px rgba(255, 0, 122, 0.4);
-    transition: all 0.2s;
-    margin-top: 18px;
+    letter-spacing: 1px;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    height: 44px;
   }
+
+  .btn-descargar {
+    background: linear-gradient(135deg, #00D2FF 0%, #0077b6 50%, #FF007A 100%);
+    box-shadow: 0 4px 20px rgba(0, 210, 255, 0.35);
+  }
+
   .btn-descargar:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 0, 122, 0.6);
+    box-shadow: 0 8px 25px rgba(0, 210, 255, 0.55);
   }
+
+  .btn-print {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e2e8f0;
+  }
+
+  .btn-print:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+  }
+
+  /* Contenedor del Dorsal */
   #dorsal-container {
-    width: 820px;
+    width: 860px;
     max-width: 95vw;
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 210, 255, 0.2);
-    border-radius: 38px;
+    box-shadow: 0 35px 80px rgba(0, 0, 0, 0.95), 0 0 50px rgba(0, 210, 255, 0.18);
+    border-radius: 24px;
     overflow: hidden;
+    background: #FFFFFF;
+    transition: transform 0.3s ease;
   }
+
+  #dorsal-container:hover {
+    transform: scale(1.005);
+  }
+
   svg {
     display: block;
     width: 100%;
     height: auto;
   }
+
+  .specs-footer {
+    margin-top: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #64748b;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  /* Reglas de impresión directa 1:1 a 20 x 13 cm */
+  @media print {
+    body {
+      background: #FFFFFF;
+      padding: 0;
+      margin: 0;
+    }
+    .header-panel, .controls-card, .specs-footer {
+      display: none !important;
+    }
+    #dorsal-container {
+      width: 200mm !important;
+      height: 130mm !important;
+      max-width: none !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      margin: 0 !important;
+      page-break-inside: avoid;
+    }
+  }
 </style>
-    <link rel="stylesheet" href="css/wow-effects.css">
 </head>
 <body>
 
-<div class="controls-card">
-  <div class="field-group">
-    <label>Número de Dorsal</label>
-    <input type="text" id="input-dorsal" value="1001" oninput="actualizar()">
+<div class="header-panel">
+  <div class="badge-studio">
+    <span>⚡ PRODUCCIÓN OFICIAL · FORMATO IMPRENTA 13 x 20 CM</span>
   </div>
+  <h1>Dorsal Oficial 10K Edición Especial</h1>
+  <p>[ ESPECIFICACIÓN: LONA FRONTLIGHT O SUBLIMACIÓN · 200 mm × 130 mm ]</p>
+</div>
+
+<div class="controls-card">
+  <!-- Selector de Corredores Registrados -->
+  <div class="field-group">
+    <label>Cargar Atleta Registrado</label>
+    <select id="select-atleta" onchange="seleccionarAtleta(this.value)">
+      <option value="">-- Seleccionar Corredor --</option>
+      <option value="066|LUIS ALBERTO GARCIA">#066 · Luis Alberto García (Tucupita, Delta Amacuro)</option>
+      <option value="065|KARLA PATRICIA PEREZ LEON">#065 · Karla Perez (Maracaibo)</option>
+      <option value="064|ELIZABETH PAREDES BRAVO">#064 · Elizabeth Paredes (Maracaibo)</option>
+      <option value="063|CARMEN ELENA DIAZ">#063 · Carmen Díaz</option>
+      <option value="043|JULLY SABRINA POLANCO">#043 · Jully Sabrina Polanco</option>
+      <option value="001|MATYOLY MOLINA" selected>#001 · Matyoly Molina</option>
+      <option value="010|JOSE COLINA">#010 · Coach José Colina</option>
+      <option value="020|CORREDOR OFICIAL">#020 · Corredor Oficial</option>
+      <option value="100|ATLETA FINISHER">#100 · Atleta Finisher</option>
+    </select>
+  </div>
+
+  <div class="field-group">
+    <label>Dorsal (3 Dígitos)</label>
+    <input type="text" id="input-dorsal" value="001" maxlength="3" size="5" style="text-align: center;" oninput="actualizar()">
+  </div>
+
   <div class="field-group">
     <label>Nombre del Atleta</label>
-    <input type="text" id="input-nombre" value="MATYOLY MOLINA" size="25" oninput="actualizar()">
+    <input type="text" id="input-nombre" value="MATYOLY MOLINA" size="24" oninput="actualizar()">
   </div>
-  <button class="btn-descargar" onclick="descargarPNG()">⬇ Descargar PNG HD (2K)</button>
+
+  <button class="btn-action btn-descargar" onclick="descargarPNG()">⬇ Descargar PNG HD (300 DPI)</button>
+  <button class="btn-action btn-print" onclick="window.print()">🖨️ Imprimir 1:1</button>
 </div>
 
 <div id="dorsal-container">
-<svg id="svg-dorsal" viewBox="0 0 1024 768" xmlns="http://www.w3.org/2000/svg">
+<!-- Proporción exacta 200mm x 130mm (1200 x 780 px -> ratio 1.53846) -->
+<svg id="svg-dorsal" viewBox="0 0 1200 780" width="1200" height="780" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Ojales metálicos cromados -->
+    <!-- Ojales metálicos para imperdibles -->
     <radialGradient id="grommet-metal" cx="45%" cy="45%" r="55%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="35%" stop-color="#cbd5e1"/>
-      <stop offset="70%" stop-color="#64748b"/>
-      <stop offset="90%" stop-color="#334155"/>
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="30%" stop-color="#e2e8f0"/>
+      <stop offset="65%" stop-color="#94a3b8"/>
+      <stop offset="85%" stop-color="#475569"/>
       <stop offset="100%" stop-color="#0f172a"/>
     </radialGradient>
 
-    <!-- Gradientes deportivos -->
-    <linearGradient id="grad-bar-left" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00E5FF"/>
-      <stop offset="100%" stop-color="#00B4D8"/>
+    <!-- Gradiente de barras deportivas de velocidad -->
+    <linearGradient id="grad-racing-cyan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00D2FF"/>
+      <stop offset="100%" stop-color="#0077B6"/>
     </linearGradient>
 
-    <linearGradient id="grad-bar-right" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FF0066"/>
-      <stop offset="100%" stop-color="#E60067"/>
+    <linearGradient id="grad-racing-magenta" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF007A"/>
+      <stop offset="100%" stop-color="#BE185D"/>
     </linearGradient>
 
-    <clipPath id="clip-card">
-      <rect x="0" y="0" width="1024" height="768" rx="38"/>
+    <!-- Barra Grow Studio Inferior -->
+    <linearGradient id="grad-grow-bar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#060911"/>
+      <stop offset="50%" stop-color="#0a1020"/>
+      <stop offset="100%" stop-color="#060911"/>
+    </linearGradient>
+
+    <!-- Patrón sutil deportivo de fondo -->
+    <pattern id="sport-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 20 M 0 0 L 20 20" fill="none" stroke="#001438" stroke-width="0.3" opacity="0.04"/>
+    </pattern>
+
+    <clipPath id="clip-dorsal-card">
+      <rect x="0" y="0" width="1200" height="780" rx="20"/>
     </clipPath>
   </defs>
 
-  <g clip-path="url(#clip-card)">
-    <!-- 1. Fondo Blanco Nítido -->
-    <rect width="1024" height="768" fill="#FFFFFF"/>
+  <g clip-path="url(#clip-dorsal-card)">
+    <!-- 1. FONDO BLANCO NÍTIDO DE COMPETENCIA -->
+    <rect width="1200" height="780" fill="#FFFFFF"/>
+    <rect width="1200" height="780" fill="url(#sport-grid)"/>
 
-    <!-- 2. Acentos geométricos de velocidad en laterales -->
-    <g opacity="0.9">
-      <polygon points="12,230 32,210 42,285 22,305" fill="#00D2FF" opacity="0.6"/>
-      <polygon points="8,335 22,320 28,390 14,405" fill="#FF007A" opacity="0.6"/>
-      <polygon points="1012,230 992,210 982,285 1002,305" fill="#FF007A" opacity="0.6"/>
-      <polygon points="1016,335 1002,320 996,390 1010,405" fill="#00D2FF" opacity="0.6"/>
+    <!-- 2. FRANJA SUPERIOR CINEMÁTICA Y DEPORTIVA -->
+    <!-- Franja azul medianoche superior -->
+    <polygon points="0,0 1200,0 1200,140 0,140" fill="#001438"/>
+    
+    <!-- Chevrons dinámicos de velocidad (Cian y Magenta) -->
+    <polygon points="0,0 380,0 320,140 0,140" fill="url(#grad-racing-cyan)" opacity="0.95"/>
+    <polygon points="380,0 420,0 360,140 320,140" fill="#FFFFFF" opacity="0.3"/>
+    
+    <polygon points="1200,0 840,0 900,140 1200,140" fill="url(#grad-racing-magenta)" opacity="0.95"/>
+    <polygon points="840,0 800,0 860,140 900,140" fill="#FFFFFF" opacity="0.3"/>
+
+    <!-- Cabecera de Texto Izquierda: CIRCUITO NACIONAL -->
+    <text x="50" y="55" font-family="'JetBrains Mono', monospace" font-weight="800" font-size="16" fill="#001438" letter-spacing="3">CIRCUITO NACIONAL</text>
+    <text x="50" y="92" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="34" fill="#001438" letter-spacing="1">10K OFICIAL</text>
+    <text x="50" y="118" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="12" fill="#001438" letter-spacing="2">EDICIÓN ESPECIAL 2026</text>
+
+    <!-- LOGO CENTRAL: RETO VIRTUAL VENEZUELA -->
+    <g transform="translate(600, 70)">
+      <!-- Círculo blanco de realce para el logo central -->
+      <circle cx="0" cy="0" r="58" fill="#FFFFFF" stroke="#001438" stroke-width="3" filter="drop-shadow(0 4px 10px rgba(0,0,0,0.3))"/>
+      <image href="img/RV_logo_oficial.webp" x="-48" y="-48" width="96" height="96" preserveAspectRatio="xMidYMid meet"/>
     </g>
 
-    <!-- 3. CABECERA: LOGO OFICIAL DEL EVENTO -->
-    <image href="img/RV_logo_oficial.webp" x="422" y="24" width="180" height="150" preserveAspectRatio="xMidYMid meet"/>
+    <!-- Cabecera de Texto Derecha: VENEZUELA RUNNERS -->
+    <text x="1150" y="55" font-family="'JetBrains Mono', monospace" font-weight="800" font-size="16" fill="#FFFFFF" text-anchor="end" letter-spacing="3">RETO VIRTUAL</text>
+    <text x="1150" y="92" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="34" fill="#FFFFFF" text-anchor="end" letter-spacing="1">VENEZUELA</text>
+    <text x="1150" y="118" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="12" fill="#FFFFFF" opacity="0.85" text-anchor="end" letter-spacing="2">11 AL 25 DICIEMBRE</text>
 
-    <!-- 4. NÚMERO DORSAL GIGANTE (Con corte itálico moderno y relieve) -->
-    <text id="dorsal-shadow" x="516" y="446" font-family="'Oswald', sans-serif" font-weight="700" font-size="285" fill="#d1d5db" text-anchor="middle" letter-spacing="-3">1001</text>
-    <text id="dorsal-num" x="512" y="440" font-family="'Oswald', sans-serif" font-weight="700" font-size="285" fill="#001438" text-anchor="middle" letter-spacing="-3">1001</text>
+    <!-- 3. ZONA CENTRAL: NÚMERO DE TRES DÍGITOS GIGANTE -->
+    <g transform="translate(600, 395)">
+      <!-- Sombra 3D técnica de alto contraste -->
+      <text id="dorsal-shadow" x="7" y="7" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="280" fill="#cbd5e1" text-anchor="middle" letter-spacing="-6">001</text>
+      <!-- Número principal de carrera -->
+      <text id="dorsal-num" x="0" y="0" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="280" fill="#001438" text-anchor="middle" letter-spacing="-6">001</text>
+    </g>
 
-    <!-- 5. NOMBRE DEL ATLETA -->
-    <text id="atleta-nombre" x="512" y="555" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="52" fill="#FF007A" text-anchor="middle" letter-spacing="3">MATYOLY MOLINA</text>
+    <!-- Insignia de Modalidad y Validación -->
+    <g transform="translate(600, 445)">
+      <rect x="-160" y="-18" width="320" height="30" rx="15" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+      <text x="0" y="2" font-family="'JetBrains Mono', monospace" font-weight="800" font-size="13" fill="#001438" text-anchor="middle" letter-spacing="2">MODALIDAD 10K · VALIDACIÓN GPS</text>
+    </g>
 
-    <!-- 6. FRANJA INFERIOR: EDICIÓN ESPECIAL | 10K 2026 -->
-    <g transform="translate(0, 620)">
-      <!-- Panel Izquierdo: Azul Cian Brillante -->
-      <polygon points="0,0 525,0 445,148 0,148" fill="url(#grad-bar-left)"/>
-
-      <!-- Barras divisorias diagonales de carrera -->
-      <polygon points="535,0 555,0 475,148 455,148" fill="#001438"/>
-      <polygon points="565,0 580,0 500,148 485,148" fill="#00D2FF"/>
-
-      <!-- Panel Derecho: Magenta Neón -->
-      <polygon points="550,0 1024,0 1024,148 470,148" fill="url(#grad-bar-right)"/>
-
-      <!-- TEXTO IZQUIERDO: EDICIÓN ESPECIAL -->
-      <text x="245" y="96" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="46" fill="#001438" text-anchor="middle" letter-spacing="1">EDICIÓN ESPECIAL</text>
+    <!-- 4. PLACA DEL NOMBRE DEL ATLETA (PERSONALIZADO) -->
+    <g transform="translate(600, 550)">
+      <!-- Fondo de placa con bordes dinámicos -->
+      <polygon points="-460,-36 460,-36 430,36 -430,36" fill="#001438"/>
+      <!-- Borde superior cian neón de la placa -->
+      <polygon points="-460,-36 460,-36 455,-30 -455,-30" fill="#00D2FF"/>
+      <!-- Borde inferior magenta de la placa -->
+      <polygon points="-430,30 430,30 425,36 -425,36" fill="#FF007A"/>
       
-      <!-- TEXTO DERECHO: 10K 2026 -->
-      <text x="765" y="98" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="70" fill="#FFFFFF" text-anchor="middle" letter-spacing="3">10K 2026</text>
+      <!-- Nombre del atleta en caja alta -->
+      <text id="atleta-nombre" x="0" y="14" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="44" fill="#FFFFFF" text-anchor="middle" letter-spacing="3">MATYOLY MOLINA</text>
     </g>
 
-    <!-- 7. BORDE EXTERIOR -->
-    <rect x="0" y="0" width="1024" height="768" rx="38" fill="none" stroke="#e2e8f0" stroke-width="4"/>
+    <!-- 5. FRANJA INFERIOR OFICIAL: POWERED BY GROW STUDIO -->
+    <g transform="translate(0, 650)">
+      <!-- Fondo oscuro de barra de tecnología -->
+      <rect width="1200" height="130" fill="url(#grad-grow-bar)"/>
+      <!-- Línea superior iluminada de 1.5px (Specular Border) -->
+      <line x1="0" y1="0" x2="1200" y2="0" stroke="#00D2FF" stroke-width="2.5" opacity="0.8"/>
+      
+      <!-- LOGO DE GROW STUDIO -->
+      <image href="img/grow-logo.png" x="65" y="32" width="230" height="66" preserveAspectRatio="xMidYMid meet"/>
 
-    <!-- 8. LOS 4 OJALES METÁLICOS -->
-    <circle cx="56" cy="56" r="24" fill="url(#grommet-metal)"/>
-    <circle cx="56" cy="56" r="13" fill="#020617"/>
-    <circle cx="968" cy="56" r="24" fill="url(#grommet-metal)"/>
-    <circle cx="968" cy="56" r="13" fill="#020617"/>
-    <circle cx="56" cy="710" r="24" fill="url(#grommet-metal)"/>
-    <circle cx="56" cy="710" r="13" fill="#020617"/>
-    <circle cx="968" cy="710" r="24" fill="url(#grommet-metal)"/>
-    <circle cx="968" cy="710" r="13" fill="#020617"/>
+      <!-- TEXTO CENTRAL / DERECHO: POWERED BY GROW STUDIO -->
+      <g transform="translate(730, 48)">
+        <text x="0" y="0" font-family="'Montserrat', sans-serif" font-weight="900" font-size="20" fill="#F4F4F6" letter-spacing="3">POWERED BY GROW STUDIO</text>
+        <text x="0" y="28" font-family="'JetBrains Mono', monospace" font-weight="800" font-size="21" fill="#00D2FF" letter-spacing="2">growstudioweb.com</text>
+        <text x="0" y="52" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="11" fill="#94a3b8" letter-spacing="1.5">INGENIERÍA DE SOFTWARE & PLATAFORMA OFICIAL</text>
+      </g>
+
+      <!-- Divisor arquitectónico de 1px -->
+      <line x1="680" y1="20" x2="680" y2="110" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <circle cx="680" cy="65" r="4" fill="#00D2FF"/>
+    </g>
+
+    <!-- 6. LOS 4 OJALES METÁLICOS PARA GUÍA DE IMPERDIBLES (ESQUINAS) -->
+    <!-- Superior Izquierda -->
+    <circle cx="60" cy="60" r="28" fill="url(#grommet-metal)"/>
+    <circle cx="60" cy="60" r="14" fill="#030712"/>
+    <circle cx="60" cy="60" r="29" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+
+    <!-- Superior Derecha -->
+    <circle cx="1140" cy="60" r="28" fill="url(#grommet-metal)"/>
+    <circle cx="1140" cy="60" r="14" fill="#030712"/>
+    <circle cx="1140" cy="60" r="29" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+
+    <!-- Inferior Izquierda -->
+    <circle cx="60" cy="715" r="28" fill="url(#grommet-metal)"/>
+    <circle cx="60" cy="715" r="14" fill="#030712"/>
+    <circle cx="60" cy="715" r="29" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+
+    <!-- Inferior Derecha -->
+    <circle cx="1140" cy="715" r="28" fill="url(#grommet-metal)"/>
+    <circle cx="1140" cy="715" r="14" fill="#030712"/>
+    <circle cx="1140" cy="715" r="29" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+
+    <!-- 7. BORDE PERIMETRAL EXTERIOR DEL DORSAL -->
+    <rect x="1.5" y="1.5" width="1197" height="777" rx="20" fill="none" stroke="#cbd5e1" stroke-width="3"/>
   </g>
 </svg>
 </div>
 
+<p class="specs-footer">
+  📐 Medidas Reales: 200 mm (Ancho) × 130 mm (Alto) · Margen de Seguridad Perimetral: 5 mm · Proporción 1.538<br>
+  ⚡ Listo para plotter de impresión en Punto Fijo (Lona Banner Frontlight o Poliéster) · Resolución de Exportación: 2400 × 1560 px
+</p>
+
 <script>
 function actualizar() {
-  const num = document.getElementById('input-dorsal').value.trim() || '1001';
-  const nom = document.getElementById('input-nombre').value.trim().toUpperCase() || 'ATLETA';
+  let num = document.getElementById('input-dorsal').value.trim();
+  // Forzar 3 dígitos si es número
+  if (num && !isNaN(num) && num.length < 3) {
+    num = num.padStart(3, '0');
+  }
+  if (!num) num = '001';
+
+  let nom = document.getElementById('input-nombre').value.trim().toUpperCase() || 'NOMBRE DEL ATLETA';
+  
   document.getElementById('dorsal-num').textContent = num;
   document.getElementById('dorsal-shadow').textContent = num;
   document.getElementById('atleta-nombre').textContent = nom;
 }
 
+function seleccionarAtleta(val) {
+  if (!val) return;
+  const parts = val.split('|');
+  const num = parts[0];
+  const nom = parts[1];
+  document.getElementById('input-dorsal').value = num;
+  document.getElementById('input-nombre').value = nom;
+  actualizar();
+}
+
+// Convertir SVG a PNG de Ultra Alta Resolución (2400 x 1560 px) para imprenta
 function descargarPNG() {
   const svg = document.getElementById('svg-dorsal');
   const svgData = new XMLSerializer().serializeToString(svg);
   const canvas = document.createElement('canvas');
-  canvas.width = 2048;
-  canvas.height = 1536;
+  canvas.width = 2400;  // 300 DPI de alta densidad
+  canvas.height = 1560; // 200 mm x 130 mm a 300 DPI
   const ctx = canvas.getContext('2d');
+  
   const img = new Image();
+  img.crossOrigin = 'anonymous';
   img.onload = function() {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     const a = document.createElement('a');
     const num = document.getElementById('dorsal-num').textContent;
-    const nom = document.getElementById('atleta-nombre').textContent.replace(/\s+/g,'_');
-    a.download = `Dorsal_10K_Especial_${num}_${nom}.png`;
+    const nom = document.getElementById('atleta-nombre').textContent.replace(/\s+/g, '_');
+    a.download = `Dorsal_10K_Oficial_${num}_${nom}_20x13cm.png`;
     a.href = canvas.toDataURL('image/png');
     a.click();
   };
+  
   img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
 }
 </script>
 
-    <script src="js/wow-effects.js"></script>
 </body>
 </html>

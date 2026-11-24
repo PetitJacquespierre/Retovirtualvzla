@@ -5,19 +5,21 @@
 ---
 
 ## 💰 1. BALANCE FINANCIERO Y DISPONIBILIDAD DE CAJA
-> **Corte Actualizado:** Lunes, 23 de Noviembre de 2026 — 23:10 hrs.
+> **Corte Actualizado:** Martes, 24 de Noviembre de 2026 — 08:40 hrs.
 
-### 💵 Fondos Reales Disponibles en Caja
-* **Cuenta Bancaria (Banco Mercantil - Bolívares):**
-  * Saldo exacto en cuenta: 👉 **33.897,00 Bs** (~**$36.84 USD** al cambio oficial BCV).
-  * Incluye el abono inicial de **$10 USD** de Luis Alberto García (#066) + remanente post-pago de anticipo a fábrica.
+### 💵 Fondos Reales Disponibles en Caja y Banco
+* **Cuenta Moneda Extranjera USD (Banco Mercantil ••••6611):**
+  * Saldo comprado hoy vía Menudeo: 👉 **$60.00 USD** (3 compras de $20 a tasa BCV 919.8227 Bs).
+  * *Estatus de disponibilidad:* Bloqueo regulatorio BCV hasta mañana miércoles a las 3:00 PM (100% asegurados en cuenta).
+* **Cuenta Corriente Bolívares (Banco Mercantil ••••4288):**
+  * Saldo remanente en cuenta: 👉 **1.427,00 Bs** (~$1.55 USD).
 * **Otras Billeteras / Plataformas:**
-  * Billetera Zinli: ~$17.00 USD (intacta para emergencias / dominios futuros).
+  * Billetera Zinli: ~$17.00 USD (intacta para emergencias / herramientas).
   * Binance USDT: Saldo técnico reservado.
 
 ---
 
-### 🧵 Compromiso con Fábrica (Creaciones Gyg Graphics) — ESTADO: ¡PAGADO EL ANTICIPO!
+### 🧵 Compromiso con Fábrica (Creaciones Gyg Graphics) — 60 PIEZAS CONFIRMADAS
 * **Cotización inicial (58 piezas en Tela Atlética):** $455.34 USD.
 * **Adición 1 — Luis Alberto García (#066 Tucupita):** +1 Franelilla Caballero Talla L ($8.40 USD).
 * **Adición 2 — Nodil Moya (#068 Maturín):** +1 Franela con Mangas Dama Talla S ($7.80 USD).
@@ -25,6 +27,7 @@
 * **Anticipo 75% Pagado el 23/11/2026 (a tasa BCV):** 👉 **314.127,35 Bs (~$341.51 USD) — PAGADO ✅**
 * **Comisión bancaria de transferencia:** 942,38 Bs.
 * **SALDO TOTAL RESTANTE POR PAGAR A FÁBRICA (60 piezas):** 👉 **$130.03 USD** ($113.83 del 25% base + $16.20 de las 2 piezas nuevas).
+* **Cobertura con los $60 USD comprados:** ¡Ya tienes casi la mitad del saldo final cubierto y blindado en divisas ($60 de $130)! Con los pagos de Jully Sabrina ($15), Luis Alberto ($25) y Nodil ($15), la fábrica queda 100% liquidada sin tocar dinero propio.
 
 ---
 

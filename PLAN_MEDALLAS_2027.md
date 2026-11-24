@@ -6,17 +6,20 @@
 
 ---
 
-## 🧩 1. CONCEPTO DE DISEÑO: PUZZLE REAL DE 4 PIEZAS ("LOS 4 ELEMENTOS DEL PODER RUNNER")
+## 🌐 1. CONCEPTO DE DISEÑO DEFINITIVO: "ESFERA / GLOBO 3D DE 4 MEDALLAS" (4 ELEMENTOS)
 
-A diferencia del 2026 (donde las 4 medallas compartían la misma silueta exterior y solo cambiaba el arte interno), en **2027** las 4 medallas de 5K serán un **rompecabezas físico real que encaja entre sí**, manteniendo una geometría que permita que cada pieza también luzca completa e imponente por separado.
+Inspirado en el mecanismo de ingeniería del *Trilogy Run Globe* (revisado el 22/11/2026), en **2027** las 4 medallas de 5K dejan atrás el puzzle plano tradicional para convertirse en un **Globo / Esfera 3D armable de 4 medallas circulares** (`img/globo_3d_medallas_2027.jpg`).
+
+### ¿Por qué este modelo es superior comercial y operativamente?
+1. **100% Completas por Separado:** Cada una de las 4 medallas es un **círculo completo**. Quien compre una sola edición tiene una medalla redonda tradicional impecable, eliminando la sensación de "pieza incompleta".
+2. **Pasacintas en las 4 Medallas:** Todas tienen su pasacintas integrado en el borde superior; al armar la esfera, las 4 cintas bajan juntas por el polo inferior como un trofeo o antorcha.
+3. **Efecto Viral en Redes (TikTok / Reels):** Armar una esfera 3D deslizando las 3 primeras medallas y trabándolas con el anillo ecuatorial de la 4ta Edición genera videos orgánicos ultra llamativos que disparan la venta de las ediciones anteriores en `tienda.html`.
 
 ### Especificaciones Técnicas (Fabricación Nacional - Acrílico Multicapa 2D/3D):
-* **Material y Relieve:** Acrílico multicapa cortado a láser (base de 3mm + capa superior de relieve de 2mm/3mm en acrílico espejo/neón para dar **volumen 3D real al tacto** sin ser excesivamente grueso) + Impresión UV de alta definición.
-* **Identidad Oficial y Pieza Central (`RV 2027`):** Uso del isotipo oficial de **Reto Virtual Vzla (`RV`)** en el núcleo central y marcaje explícito de **`1RA EDICIÓN`**, **`2DA EDICIÓN`**, **`3RA EDICIÓN`** y **`4TA EDICIÓN`** junto con **`5K`** en cada pieza. **La pieza central (`RV 2027`) vendrá incluida junto con la 4ta Edición (Octubre)** para coronar y cerrar el puzzle completo.
-* **Solución de Pasacintas (Lanyard) en las 4 Piezas:**  
-  Todas las 4 medallas llevarán su **pasacintas en la parte superior** para que cualquiera pueda colgarse su medalla individualmente (incluso si solo compra la 3ra o la 4ta). Para que no estorbe al armar el puzzle de 4 piezas, se aplicará una de dos soluciones de corte láser:
-  1. **Conector-Pasacintas Integrado:** La orejita superior del pasacintas de la 3ra y 4ta edición tiene exactamente la forma hembra/macho que **encaja dentro de una muesca inferior** de la 1ra y 2da edición (el mismo pasacintas sirve de enganche del rompecabezas).
-  2. **Ojal Interno en el Escudo:** La ranura para pasar la cinta va calada *dentro* del borde superior del escudo (sin sobresalir), permitiendo que los bordes rectos encajen ras con ras.
+* **Material y Relieve:** Acrílico multicapa cortado a láser (base de 3mm + detalles de relieve en acrílico espejo/neón) + Impresión UV de alta definición por ambas caras.
+* **Mecanismo de Ensamble en 3D (Cero Imanes / Cero Pegamento):**
+  * **Medallas 1, 2 y 3 (Discos Verticales — `80 mm` de diámetro):** Cada una lleva una **ranura recta radial cortada a láser** desde el borde hasta pasar ligeramente el centro. Al deslizarse una dentro de la otra sobre el mismo eje central, se abren en **6 aletas verticales separadas a 60°**.
+  * **Medalla 4 (Anillo Ecuatorial de Bloqueo — `92 mm` de diámetro):** Lleva **6 ranuras radiales internas a 60°** (con gajos internos decorados o muescas de bloqueo). Se desliza horizontalmente desde arriba sobre las 3 primeras medallas y encaja justo en el ecuador (la parte más ancha de los discos), **trabando las 6 aletas en una Esfera 3D rígida**.
 * **Diseño 100% In-House ($0 Costo de Diseñador):**  
   Tanto los **renders promocionales 3D** como los **archivos vectoriales `.SVG` separados por capas de corte láser y relieve** se generarán directamente aquí en el proyecto, listos para entregar a fábrica (Maderitas) sin pagar cargos extra por diseño o vectorización.
 

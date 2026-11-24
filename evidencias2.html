@@ -140,6 +140,27 @@
         .diploma-card.edicion-4ta .texto-atleta-diploma {
             text-shadow: 0 0 22px rgba(245, 158, 11, 0.75), 0 0 45px rgba(234, 88, 12, 0.35);
         }
+        .diploma-card.edicion-10k {
+            border-color: #00D2FF;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.95), 0 0 50px rgba(0, 210, 255, 0.55);
+            background: 
+                radial-gradient(ellipse at 85% 15%, rgba(0, 210, 255, 0.35) 0%, transparent 45%),
+                radial-gradient(ellipse at 15% 85%, rgba(14, 165, 233, 0.28) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(0, 210, 255, 0.12) 0%, transparent 60%),
+                linear-gradient(135deg, #041426 0%, #020914 50%, #00040a 100%);
+        }
+        .diploma-card.edicion-10k .diploma-splash-1 {
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.5) 0%, rgba(14, 165, 233, 0.25) 45%, transparent 75%);
+        }
+        .diploma-card.edicion-10k .diploma-splash-2 {
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, rgba(0, 210, 255, 0.2) 50%, transparent 75%);
+        }
+        .diploma-card.edicion-10k .diploma-splash-3 {
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.3) 0%, transparent 70%);
+        }
+        .diploma-card.edicion-10k .texto-atleta-diploma {
+            text-shadow: 0 0 25px rgba(0, 210, 255, 0.9), 0 0 50px rgba(14, 165, 233, 0.5);
+        }
         /* Estilos del Certificado Gráfico Histórico (1era Edición - fondo-certificado.webp) */
         .diploma-1ra-grafico {
             position: relative;
@@ -391,8 +412,9 @@
                     <span class="flex items-center gap-1.5"><i class="fa-solid fa-fire-flame-curved text-sm text-amber-400"></i> 4ta Edición 5K</span>
                     <span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-amber-300 font-bold">Hasta Diciembre</span>
                 </button>
-                <button onclick="seleccionarEdicion('10k')" id="btn-ed-10k" class="px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/5 text-white/30 border border-white/5 cursor-not-allowed flex items-center gap-2" title="Disponible en Noviembre">
-                    <i class="fa-solid fa-lock text-xs"></i> 10K Especial <span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-slate-400">Noviembre</span>
+                <button onclick="seleccionarEdicion('10k')" id="btn-ed-10k" class="px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/10 flex flex-col sm:flex-row items-center gap-2">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-medal text-sm text-[#00D2FF]"></i> 10K Especial</span>
+                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-cyan-300 font-bold">Desde 11 Dic</span>
                 </button>
             </div>
             <p id="subtexto-selector-edicion" class="text-center text-[11px] text-white/40 mt-3 font-semibold">
@@ -883,13 +905,8 @@
         let base64Captura = null;
         let mimeTypeCaptura = 'image/jpeg';
 
-        // 1. Selector Maestro de las 4 Ediciones (Por defecto: 3ra Edición)
+        // 1. Selector Maestro de las Ediciones Oficiales
         function seleccionarEdicion(edicion) {
-            if (edicion === '10k') {
-                alert("La Edición Especial 10K abrirá su periodo de recepción de evidencias en Noviembre.");
-                return;
-            }
-
             edicionActual = edicion;
 
             const configEdiciones = {
@@ -924,10 +941,18 @@
                     badgeForm: 'Reportando para 4ta Edición 5K (Plazo: Hasta Diciembre)',
                     tituloRanking: 'Ranking 4ta Edición 5K',
                     subtexto: '🔥 Estás situado en la <strong class="text-amber-400">4ta Edición 5K</strong>. Todas las evidencias validadas aquí se registran directamente en la hoja oficial de la 4ta Edición.'
+                },
+                '10k': {
+                    btnId: 'btn-ed-10k',
+                    label: '<span class="flex items-center gap-1.5"><i class="fa-solid fa-medal text-sm text-[#00D2FF]"></i> 10K Especial</span>',
+                    sub: 'Desde 11 Dic',
+                    badgeForm: 'Reportando para Edición Especial 10K • The Iron Series (Desde 11 de Diciembre)',
+                    tituloRanking: 'Ranking Oficial Edición Especial 10K',
+                    subtexto: '🏆 Estás situado en la <strong class="text-[#00D2FF]">Edición Especial 10K</strong>. Valida tu tiempo oficial con IA, compite en el ranking nacional y descarga tu certificado de finisher conmemorativo.'
                 }
             };
 
-            ['1ra', '2da', '3ra', '4ta'].forEach(ed => {
+            ['1ra', '2da', '3ra', '4ta', '10k'].forEach(ed => {
                 const cfg = configEdiciones[ed];
                 const btn = document.getElementById(cfg.btnId);
                 if (!btn) return;
@@ -991,6 +1016,38 @@
 
         // Validación Biomecánica de Ritmo (Pace y Tiempo Humano Real)
         function validarRitmoBiometrico(segundosTotales, modalidad) {
+            const es10K = (edicionActual === '10k');
+
+            if (es10K) {
+                // Récord mundial 10K masculino es ~26:11 (1571 seg). Menos de 26 min sugiere vehículo o bicicleta.
+                if (segundosTotales < 1560) {
+                    return {
+                        valido: false,
+                        error: "🚨 Tiempo no válido: Un tiempo inferior a 26 minutos en 10K supera el récord olímpico mundial y sugiere el uso de vehículo o bicicleta. Por favor verifica tus horas y minutos."
+                    };
+                }
+
+                // En 10K corriendo, si pasa de 2 horas (7200 seg), se clasifica como ritmo de caminata / fondo largo
+                if (modalidad === 'CORRIENDO' && segundosTotales > 7200) {
+                    return {
+                        valido: true,
+                        avisoPace: "Ritmo de caminata detectado",
+                        sugerenciaModalidad: 'CAMINANDO'
+                    };
+                }
+
+                // En Caminata 10K, límite máximo razonable es 3 horas y 45 minutos (13500 seg)
+                if (segundosTotales > 13500) {
+                    return {
+                        valido: false,
+                        error: "⚠️ El tiempo ingresado supera las 3 horas y 45 minutos para 10 Kilómetros. Por favor verifica los números ingresados."
+                    };
+                }
+
+                return { valido: true };
+            }
+
+            // Validación para 5K (1ra, 2da, 3ra, 4ta)
             // Récord mundial 5K masculino es ~12:35 (755 segundos). Ningún humano real corre 5K en menos de 13 minutos (780 seg).
             if (segundosTotales < 780) {
                 return {
@@ -2026,7 +2083,7 @@
                         qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(urlValidacion)}`;
                     }
 
-                    cardBody.classList.remove('edicion-2da', 'edicion-4ta');
+                    cardBody.classList.remove('edicion-2da', 'edicion-4ta', 'edicion-10k');
 
                     const subHonorEl = document.getElementById('cert-subtitulo-honor');
                     const dirCargoEl = document.getElementById('cert-director-cargo');
@@ -2060,6 +2117,21 @@
                         if (dirCargoEl) dirCargoEl.className = "block text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] text-amber-400";
                         if (leyendaEl) {
                             leyendaEl.innerText = "Por conquistar con garra, disciplina y perseverancia los 5 Kilómetros, dejando huella indeleble en la Gran 4ta Edición del Reto Virtual VZLA.";
+                        }
+                    } else if (edicionActual === '10k') {
+                        cardBody.classList.add('edicion-10k');
+                        badgeEd.className = "inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/40 mt-1 shadow-sm";
+                        badgeEd.innerText = "Edición Especial 10K";
+                        fechaEl.innerText = "Diciembre, 2026";
+                        if (subHonorEl) {
+                            subHonorEl.className = "text-xs md:text-sm uppercase font-black tracking-[0.35em] text-[#00D2FF]";
+                            subHonorEl.innerText = "Certificado Oficial de Finalista • 10K";
+                        }
+                        if (certDorsal) certDorsal.className = "text-lg md:text-2xl font-black text-[#00D2FF]";
+                        if (modEl) modEl.className = "block text-[8px] md:text-[9px] text-[#00D2FF] uppercase tracking-widest mt-0.5 font-bold";
+                        if (dirCargoEl) dirCargoEl.className = "block text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] text-[#00D2FF]";
+                        if (leyendaEl) {
+                            leyendaEl.innerText = "Por forjar leyenda en el asfalto y conquistar los 10 Kilómetros con determinación, temple de acero y constancia, coronando con honor la Edición Especial 10K de Reto Virtual VZLA.";
                         }
                     } else {
                         badgeEd.className = "inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/40 mt-1 shadow-sm";
@@ -2146,8 +2218,8 @@
             try {
                 const urlParams = new URLSearchParams(window.location.search);
                 const edicionUrl = urlParams.get('edicion');
-                if (edicionUrl === '1ra' || edicionUrl === '2da' || edicionUrl === '3ra' || edicionUrl === '4ta') {
-                    seleccionarEdicion(edicionUrl);
+                if (edicionUrl === '1ra' || edicionUrl === '2da' || edicionUrl === '3ra' || edicionUrl === '4ta' || edicionUrl === '10k' || edicionUrl === '10K') {
+                    seleccionarEdicion(edicionUrl.toLowerCase());
                 } else {
                     seleccionarEdicion('3ra');
                 }

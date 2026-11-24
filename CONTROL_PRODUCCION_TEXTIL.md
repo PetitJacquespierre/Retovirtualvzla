@@ -1,6 +1,14 @@
 # 🎽 CONTROL DE PRODUCCIÓN TEXTIL — RETO VIRTUAL VZLA 10K
 **Documento Oficial de Registro de Confección, Tallas y Proveedores**  
-**Última actualización:** 21 de Noviembre, 2026 (Dorsales #001 al #053 + Prendas Organizadores)
+**Última actualización:** 24 de Noviembre, 2026 (Orden Oficial Cerrada: 60 Unidades al Taller)
+
+---
+
+## 🏭 0. ESTADO ACTUAL DE LA ORDEN DE CONFECCIÓN (TALLER)
+* **Total Prendas Mandadas a Fabricar:** **60 Unidades** (50 Atletas iniciales + 4 Personales directores + 4 Venta libre + 2 Nuevos atletas sumados).
+* **Estatus Financiero del Taller:**
+  * **Anticipo Pagado:** **75% ya liquidado y transferido al taller**.
+  * **Saldo Pendiente al Taller:** 25% restante contra entrega + ~$16.4 USD (por las 2 prendas adicionales de los chamos).
 
 ---
 

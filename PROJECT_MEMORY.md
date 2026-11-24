@@ -78,5 +78,9 @@ Archivo de contexto local y memoria viva para la plataforma de carreras deportiv
 * **2026-10-07:** Implementación de Comisario Deportivo con IA en `evidencias2.html`: Selector de modalidad (Running vs Caminata), selector de distancia con soporte para split de recorridos de 10K+, auditoría biomecánica de ritmo humano (detección de vehículos/trampas) y envío de metadatos de validación a Google Drive/Sheets.
 * **2026-10-19:** Creación de `PLAN_MEDALLAS_2027.md` con la estrategia integral para la Temporada 2027: Puzzle real de 4 piezas en acrílico (*"Los 4 Elementos del Poder Runner"*), calendario anual en 2 bloques de fabricación (`50-50-40-40`), preventa temprana en cuotas para el 10K de metal (Mayo/Junio), reseteo de dorsales a `001` y programa de descuento/lealtad para Atletas Veteranos 2026.
 * **2026-11-21:** Creación de `CONTROL_PRODUCCION_TEXTIL.md` para seguimiento riguroso de pedidos al taller de confección. Regla obligatoria: A toda orden para atletas (50 piezas en Dorsal #053) se le suman de forma fija las **4 prendas personales de los organizadores** (1 Franelilla L + 1 Franela L para él, 1 Franelilla S + 1 Franela S para su esposa). Total actual: **54 prendas** (41 franelillas y 13 franelas con mangas).
+* **2026-11-24:** Guardado enlace de referencia de TikTok de **Capa Zero (`@capazeroo`)** para futura revisión y análisis de automatización de videos con Remotion + IA:
+  - **Link del Video:** https://www.tiktok.com/@capazeroo/video/7711546534415863060?is_from_webapp=1&sender_device=pc
+  - **Web de Recursos de Capa Zero:** https://capazero.app
+  - **Estado Operativo 10K Confirmado:** Confección de franelas cerrada (60 piezas ya enviadas a fábrica GYG Graphics). Únicamente activa modalidad **Solo Medalla 3D ($25.00 USD, aparta con $10 USD)**. Liquidación del 100% del pago el **30 de noviembre de 2026** y carrera desde el **11 de diciembre de 2026**.
 
 

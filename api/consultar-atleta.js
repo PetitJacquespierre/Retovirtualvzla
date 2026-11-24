@@ -112,13 +112,19 @@ export default async function handler(req, res) {
                 return res.status(200).json({ ranking: lista });
             }
 
-            // Caso B: 3ra o 4ta Edición (Evidencias en Vivo)
-            const gidEv = (edicion === '4ta') ? '449902333' : '453355916';
-            const carreraLabel = (edicion === '4ta') ? '4ta Edición 5K' : '3ra Edición 5K';
-            const sheetName = (edicion === '4ta') ? 'Evidencias_4ta' : 'Evidencias_3ra';
+            // Caso B: 3ra, 4ta o 10K Edición (Evidencias en Vivo)
+            const es10K = (edicion.toLowerCase() === '10k');
+            const es4ta = (edicion.toLowerCase() === '4ta');
+            const gidEv = es10K ? '453355916' : (es4ta ? '449902333' : '453355916');
+            const carreraLabel = es10K ? 'Edición Especial 10K' : (es4ta ? '4ta Edición 5K' : '3ra Edición 5K');
+            const sheetName = es10K ? 'Evidencias_10k' : (es4ta ? 'Evidencias_4ta' : 'Evidencias_3ra');
             let resp = await fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=${gidEv}&t=${Date.now()}`, { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });
             if (!resp.ok) {
                 resp = await fetch(`${CSV_BASE}sheet=${encodeURIComponent(sheetName)}&t=${Date.now()}`);
+            }
+            if (!resp.ok && es10K) {
+                // Fallback a Evidencias_3ra donde Apps Script registra evidencias con columna Edición = '10k'
+                resp = await fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=453355916&t=${Date.now()}`, { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });
             }
             if (!resp.ok) {
                 return res.status(502).json({ error: 'No se pudo conectar con la hoja de evidencias' });
@@ -145,9 +151,15 @@ export default async function handler(req, res) {
             for (let i = 1; i < filas.length; i++) {
                 const cols = parseCsvLine(filas[i]);
                 const edFila = (idxEdicion !== -1 ? cols[idxEdicion] : cols[1] || '').trim().toLowerCase();
-                // Si se consulta 3ra edición, ignorar registros conmemorativos de 1ra o 2da que hayan caído en esta hoja
-                if (edicion !== '4ta' && (edFila === '1ra' || edFila === '2da')) {
-                    continue;
+                if (es10K) {
+                    if (edFila !== '10k') continue;
+                } else if (es4ta) {
+                    if (edFila && edFila !== '4ta') continue;
+                } else {
+                    // Si se consulta 3ra edición, ignorar registros conmemorativos de otras ediciones
+                    if (edFila === '1ra' || edFila === '2da' || edFila === '4ta' || edFila === '10k') {
+                        continue;
+                    }
                 }
 
                 const dorsal = (idxDorsal !== -1 ? cols[idxDorsal] : cols[3]) || 'S/N';
@@ -292,10 +304,16 @@ export default async function handler(req, res) {
                 return res.status(200).json({ yaSubio: false, registro: null });
             }
 
-            const sheetName = (edicion === '4ta') ? 'Evidencias_4ta' : 'Evidencias_3ra';
+            const es10K = (edicion.toLowerCase() === '10k');
+            const es4ta = (edicion.toLowerCase() === '4ta');
+            const sheetName = es10K ? 'Evidencias_10k' : (es4ta ? 'Evidencias_4ta' : 'Evidencias_3ra');
             const url = `${CSV_BASE}sheet=${encodeURIComponent(sheetName)}&t=${Date.now()}`;
             
-            const resp = await fetch(url);
+            let resp = await fetch(url);
+            if (!resp.ok && es10K) {
+                url = `${CSV_BASE}sheet=Evidencias_3ra&t=${Date.now()}`;
+                resp = await fetch(url);
+            }
             if (!resp.ok) {
                 return res.status(502).json({ error: 'No se pudo consultar evidencias' });
             }
@@ -309,7 +327,8 @@ export default async function handler(req, res) {
             for (let i = 1; i < filas.length; i++) {
                 const cols = parseCsvLine(filas[i]);
                 const edFila = (cols[1] || '').trim().toLowerCase();
-                if (edicion === '3ra' && (edFila === '1ra' || edFila === '2da')) continue;
+                if (es10K && edFila !== '10k') continue;
+                if (!es10K && edicion === '3ra' && (edFila === '1ra' || edFila === '2da' || edFila === '10k')) continue;
 
                 const filaCI = cols[2] ? cols[2].replace(/\D/g, '').trim() : '';
                 const filaDorsal = cols[3] ? cols[3].replace(/\D/g, '').padStart(3, '0') : '';

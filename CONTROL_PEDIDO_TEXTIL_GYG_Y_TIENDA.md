@@ -19,21 +19,32 @@
 
 ### 🧵 Compromiso con Fábrica (Creaciones Gyg Graphics) — ESTADO: ¡PAGADO EL ANTICIPO!
 * **Cotización inicial (58 piezas en Tela Atlética):** $455.34 USD.
-* **Adición Luis Alberto García (#066 Tucupita):** +1 Franelilla Caballero ($7.00 USD).
-* **Nuevo Total de la Orden (59 piezas):** **$462.34 USD**.
+* **Adición 1 — Luis Alberto García (#066 Tucupita):** +1 Franelilla Caballero Talla L ($8.40 USD).
+* **Adición 2 — Nodil Moya (#068 Maturín):** +1 Franela con Mangas Dama Talla S ($7.80 USD).
+* **Nuevo Total de la Orden (60 piezas):** **$471.54 USD**.
 * **Anticipo 75% Pagado el 23/11/2026 (a tasa BCV):** 👉 **314.127,35 Bs (~$341.51 USD) — PAGADO ✅**
 * **Comisión bancaria de transferencia:** 942,38 Bs.
-* **SALDO TOTAL RESTANTE POR PAGAR A FÁBRICA:** 👉 **$120.83 USD** ($113.83 del 25% base + $7.00 de la pieza adicional).
-* **Brecha neta por cubrir (Deuda $120.83 - Saldo en Banco $36.84):** 👉 **~$84.00 USD**.
+* **SALDO TOTAL RESTANTE POR PAGAR A FÁBRICA (60 piezas):** 👉 **$130.03 USD** ($113.83 del 25% base + $16.20 de las 2 piezas nuevas).
 
 ---
 
-## 📊 2. DESGLOSE REAL DE PRENDAS (ACTUALIZADO EN VIVO · DORSAL #001 AL #067)
+## 📊 2. DESGLOSE REAL DE PRENDAS (ACTUALIZADO EN VIVO · DORSAL #001 AL #068)
 
-En la base de datos oficial hay **67 atletas registrados** (¡67% de la meta!).
-* **13 atletas** eligieron *"Solo Medalla"* (sumando a **#067 César Sanguino** de San Cristóbal, Táchira, quien pagó 100% completo $25 USD).
-* **54 atletas** tienen su kit con prenda oficial (exactamente 1 prenda por atleta, incluyendo a **#066 Luis Alberto García** de Tucupita con Franelilla Olímpica).
-* **Prendas totales a fabricar en GYG Graphics:** **59 piezas** (54 atletas base + 4 personales + 1 adicional Jully Sabrina).
+En la base de datos oficial hay **68 atletas registrados** (¡68% de la meta alcanzada!).
+* **13 atletas** en *"Solo Medalla"* (#067 César Sanguino, etc.).
+* **55 atletas** con prenda textil oficial.
+* **Prendas totales a fabricar en GYG Graphics:** **60 piezas** (55 atletas base + 4 personales + 1 adicional Jully Sabrina).
+
+---
+
+### A. Desglose Exacto a Fabricar (60 Piezas)
+| Modelo y Corte | Talla S | Talla M | Talla L | Talla XL | Total por Modelo |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Franelilla Olímpica Dama** | **7** | **11** | **1** | **2** | **21** |
+| **Franelilla Olímpica Caballero** | **4** | **7** | **7** *(+1 Luis Alberto #066)* | **3** | **21** |
+| **Franela con Mangas Dama** | **4** *(+1 Nodil Moya #068)* | **2** *(1 base + 1 Yuli)* | **0** | **0** | **6** |
+| **Franela con Mangas Caballero** | **1** | **5** | **4** | **2** | **12** |
+| **TOTALES POR TALLA** | **16** | **25** | **12** | **7** | **60 piezas** |
 
 ---
 

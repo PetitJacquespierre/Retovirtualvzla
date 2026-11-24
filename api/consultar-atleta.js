@@ -26,12 +26,17 @@ export default async function handler(req, res) {
         // ACCIÓN 1: OBTENER RANKING PÚBLICO DE EVIDENCIAS (1ra, 2da, 3ra o 4ta Edición)
         // =========================================================================
         if (accion === 'ranking_evidencias') {
-            // Caso A: 1ra o 2da Edición (Rankings Históricos Cerrados Oficiales)
+            // Caso A: 1ra o 2da Edición (Pestañas 'Ranking' y '2E Ranking')
             if (edicion === '1ra' || edicion === '2da') {
                 const gidRank = (edicion === '1ra') ? '1297920374' : '316140127';
-                const urlRank = `${CSV_BASE}gid=${gidRank}&t=${Date.now()}`;
+                const carreraLabel = (edicion === '1ra') ? '1ra Edición 5K' : '2da Edición 5K';
+                const urlExport = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=${gidRank}&t=${Date.now()}`;
+                const urlGviz = `${CSV_BASE}gid=${gidRank}&t=${Date.now()}`;
 
-                const resp = await fetch(urlRank);
+                let resp = await fetch(urlExport, { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });
+                if (!resp.ok) {
+                    resp = await fetch(urlGviz);
+                }
                 if (!resp.ok) {
                     return res.status(502).json({ error: 'No se pudo conectar con la hoja de ranking histórico' });
                 }
@@ -52,6 +57,8 @@ export default async function handler(req, res) {
                 });
 
                 let lista = [];
+                const dorsalesEnLista = new Set();
+
                 for (let i = 1; i < filas.length; i++) {
                     const cols = parseCsvLine(filas[i]);
                     let dRaw = cols[idxDorsal] ? cols[idxDorsal].replace(/\D/g, '') : '';
@@ -62,23 +69,57 @@ export default async function handler(req, res) {
                     const tiempoRaw = cols[idxTiempo] || '';
                     const tiempo = (!tiempoRaw || tiempoRaw.toLowerCase() === 'pendiente') ? 'Pendiente' : tiempoRaw;
 
+                    dorsalesEnLista.add(dPad);
                     lista.push({
                         dorsal: dPad,
                         nombre: nombre,
                         genero: genero.toUpperCase().startsWith('F') ? 'FEMENINO' : 'MASCULINO',
+                        carrera: carreraLabel,
                         tiempo: tiempo,
                         estatus: 'Aprobado'
                     });
                 }
 
+                // También verificar si hay evidencias de 1ra o 2da alojadas temporalmente en Evidencias_3ra
+                try {
+                    const respEv = await fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=453355916&t=${Date.now()}`);
+                    if (respEv.ok) {
+                        const csvEv = await respEv.text();
+                        const filasEv = csvEv.split(/\r?\n/).filter(f => f.trim().length > 0);
+                        for (let j = 1; j < filasEv.length; j++) {
+                            const colsEv = parseCsvLine(filasEv[j]);
+                            const edFila = (colsEv[1] || '').trim().toLowerCase();
+                            if (edFila === edicion.toLowerCase()) {
+                                const dEvRaw = colsEv[3] ? colsEv[3].replace(/\D/g, '') : '';
+                                if (!dEvRaw) continue;
+                                const dEvPad = dEvRaw.padStart(3, '0');
+                                if (!dorsalesEnLista.has(dEvPad)) {
+                                    dorsalesEnLista.add(dEvPad);
+                                    lista.push({
+                                        dorsal: dEvPad,
+                                        nombre: colsEv[4] || 'Corredor',
+                                        genero: (colsEv[5] || 'M').toUpperCase().startsWith('F') ? 'FEMENINO' : 'MASCULINO',
+                                        carrera: carreraLabel,
+                                        tiempo: colsEv[6] || 'Pendiente',
+                                        estatus: 'Aprobado'
+                                    });
+                                }
+                            }
+                        }
+                    }
+                } catch (e) {}
+
                 return res.status(200).json({ ranking: lista });
             }
 
             // Caso B: 3ra o 4ta Edición (Evidencias en Vivo)
+            const gidEv = (edicion === '4ta') ? '449902333' : '453355916';
+            const carreraLabel = (edicion === '4ta') ? '4ta Edición 5K' : '3ra Edición 5K';
             const sheetName = (edicion === '4ta') ? 'Evidencias_4ta' : 'Evidencias_3ra';
-            const url = `${CSV_BASE}sheet=${encodeURIComponent(sheetName)}&t=${Date.now()}`;
-            
-            const resp = await fetch(url);
+            let resp = await fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=${gidEv}&t=${Date.now()}`, { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });
+            if (!resp.ok) {
+                resp = await fetch(`${CSV_BASE}sheet=${encodeURIComponent(sheetName)}&t=${Date.now()}`);
+            }
             if (!resp.ok) {
                 return res.status(502).json({ error: 'No se pudo conectar con la hoja de evidencias' });
             }
@@ -127,6 +168,7 @@ export default async function handler(req, res) {
                     dorsal: dPad,
                     nombre: nombre,
                     genero: genero.toUpperCase().startsWith('F') ? 'FEMENINO' : 'MASCULINO',
+                    carrera: carreraLabel,
                     tiempo: tiempo,
                     estatus: estatus
                 });
@@ -160,7 +202,7 @@ export default async function handler(req, res) {
                     for (const g of gidsBusqueda) {
                         if (dorsalResuelto) break;
                         try {
-                            const rSheet = await fetch(`${CSV_BASE}gid=${g}&t=${Date.now()}`);
+                            const rSheet = await fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=${g}&t=${Date.now()}`, { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });
                             if (rSheet.ok) {
                                 const tSheet = await rSheet.text();
                                 const fSheet = tSheet.split(/\r?\n/).filter(f => f.trim().length > 0);
@@ -185,23 +227,29 @@ export default async function handler(req, res) {
                     }
                 }
 
-                // 1) Buscar en el Ranking Oficial de 1ra o 2da Edición
+                // 1) Buscar en el Ranking Oficial de 1ra ('Ranking') o 2da Edición ('2E Ranking')
                 const gidRank = (edicion === '1ra') ? '1297920374' : '316140127';
                 try {
-                    const respRank = await fetch(`${CSV_BASE}gid=${gidRank}&t=${Date.now()}`);
+                    let respRank = await fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=${gidRank}&t=${Date.now()}`, { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });
+                    if (!respRank.ok) {
+                        respRank = await fetch(`${CSV_BASE}gid=${gidRank}&t=${Date.now()}`);
+                    }
                     if (respRank.ok) {
                         const csvRank = await respRank.text();
                         const filasRank = csvRank.split(/\r?\n/).filter(f => f.trim().length > 0);
                         for (let i = 1; i < filasRank.length; i++) {
                             const cols = parseCsvLine(filasRank[i]);
                             const fDorsal = cols[0] ? cols[0].replace(/\D/g, '').padStart(3, '0') : '';
-                            if (dorsalResuelto && fDorsal === dorsalResuelto) {
+                            const fTiempo = (cols[3] || '').trim();
+                            // Solo considerar que ya subió si tiene un tiempo registrado (no vacío ni 'Pendiente')
+                            const tieneTiempoValido = fTiempo !== '' && fTiempo.toLowerCase() !== 'pendiente';
+                            if (dorsalResuelto && fDorsal === dorsalResuelto && tieneTiempoValido) {
                                 return res.status(200).json({
                                     yaSubio: true,
                                     registro: {
                                         dorsal: fDorsal,
                                         nombre: cols[1] || 'Atleta',
-                                        tiempo: cols[3] || 'FINISHER',
+                                        tiempo: fTiempo,
                                         fecha: edicion === '1ra' ? 'Marzo, 2026' : 'Junio, 2026',
                                         estatus: 'Aprobado'
                                     }
@@ -407,7 +455,10 @@ export default async function handler(req, res) {
 
             // A) Buscar en la hoja original de 1ra o 2da Edición
             try {
-                const respHist = await fetch(`${CSV_BASE}gid=${gidHist}&t=${Date.now()}`);
+                let respHist = await fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=${gidHist}&t=${Date.now()}`, { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });
+                if (!respHist.ok) {
+                    respHist = await fetch(`${CSV_BASE}gid=${gidHist}&t=${Date.now()}`);
+                }
                 if (respHist.ok) {
                     const csvH = await respHist.text();
                     const filasH = csvH.split(/\r?\n/).filter(f => f.trim().length > 0);
@@ -450,7 +501,10 @@ export default async function handler(req, res) {
             // B) Buscar en Tienda_Medallas (atletas que adquirieron M1 o M2 conmemorativa)
             if (registrosAtleta.length === 0) {
                 try {
-                    const respTienda = await fetch(`${CSV_BASE}gid=2019500245&t=${Date.now()}`);
+                    let respTienda = await fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=2019500245&t=${Date.now()}`, { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });
+                    if (!respTienda.ok) {
+                        respTienda = await fetch(`${CSV_BASE}gid=2019500245&t=${Date.now()}`);
+                    }
                     if (respTienda.ok) {
                         const csvT = await respTienda.text();
                         const filasT = csvT.split(/\r?\n/).filter(f => f.trim().length > 0);
@@ -484,6 +538,28 @@ export default async function handler(req, res) {
                                         reserva: '',
                                         genero: ''
                                     });
+                                }
+                            }
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            // C) Si el registro encontrado no tenía columna de Género (ej. 2da Edición o Tienda), resolver género desde 1ra Edición o Evidencias_3ra
+            if (registrosAtleta.length > 0 && !registrosAtleta[0].genero) {
+                try {
+                    const respGen = await fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=0&t=${Date.now()}`, { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });
+                    if (respGen.ok) {
+                        const filasG = (await respGen.text()).split(/\r?\n/).filter(f => f.trim().length > 0);
+                        for (let g = 1; g < filasG.length; g++) {
+                            const cG = parseCsv(filasG[g]);
+                            const ciG = (cG[3] || '').replace(/\D/g, '').trim();
+                            const dorG = (cG[0] || '').replace(/\D/g, '').padStart(3, '0');
+                            if ((ciG && ciG === queryTerm) || (dorG && dorG === registrosAtleta[0].dorsal)) {
+                                const gStr = (cG[4] || '').trim().toUpperCase();
+                                if (gStr.startsWith('F') || gStr.startsWith('M')) {
+                                    registrosAtleta[0].genero = gStr.startsWith('F') ? 'FEMENINO' : 'MASCULINO';
+                                    break;
                                 }
                             }
                         }

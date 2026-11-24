@@ -670,16 +670,17 @@
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-white/5 text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] border-b border-white/10">
-                                <th class="py-4 px-4 text-center w-16">Pos</th>
-                                <th class="py-4 px-4 text-center w-24">Dorsal</th>
+                                <th class="py-4 px-3 text-center w-14">Pos</th>
+                                <th class="py-4 px-3 text-center w-20">Dorsal</th>
                                 <th class="py-4 px-4 text-left">Corredor</th>
-                                <th class="py-4 px-4 text-center hidden sm:table-cell w-28">Categoría</th>
-                                <th class="py-4 px-6 text-right w-32">Tiempo Oficial</th>
+                                <th class="py-4 px-3 text-center w-28">Categoría</th>
+                                <th class="py-4 px-3 text-center w-36">Carrera</th>
+                                <th class="py-4 px-5 text-right w-32">Tiempo Oficial</th>
                             </tr>
                         </thead>
                         <tbody id="tabla-ranking-body" class="divide-y divide-white/5 text-sm">
                             <tr>
-                                <td colspan="5" class="py-12 text-center text-slate-400">
+                                <td colspan="6" class="py-12 text-center text-slate-400">
                                     <i class="fa-solid fa-circle-notch fa-spin text-2xl text-[#00D2FF] mb-3 block"></i>
                                     Cargando posiciones oficiales...
                                 </td>
@@ -1755,7 +1756,11 @@
                     return;
                 }
 
-                alert("🎉 ¡Tu evidencia ha sido enviada con éxito! La captura se guardó en Google Drive y tu tiempo pasó al ranking en estado de revisión.");
+                if (edicionActual === '1ra' || edicionActual === '2da') {
+                    alert("🎉 ¡Tu evidencia ha sido registrada directamente en el Ranking Oficial de la " + edicionActual + " Edición! Ya puedes ver tu posición en la tabla y descargar tu diploma oficial abajo.");
+                } else {
+                    alert("🎉 ¡Tu evidencia ha sido enviada con éxito! La captura se guardó en Google Drive y tu tiempo pasó al ranking en estado de revisión.");
+                }
                 
                 // Limpiar formulario y recargar ranking
                 document.getElementById('formEvidencia').reset();
@@ -1784,7 +1789,7 @@
         // 5. Carga y Filtrado del Ranking
         async function cargarRanking() {
             const tbody = document.getElementById('tabla-ranking-body');
-            tbody.innerHTML = `<tr><td colspan="5" class="py-12 text-center text-slate-400"><i class="fa-solid fa-circle-notch fa-spin text-2xl text-[#00D2FF] mb-3 block"></i>Cargando posiciones oficiales...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" class="py-12 text-center text-slate-400"><i class="fa-solid fa-circle-notch fa-spin text-2xl text-[#00D2FF] mb-3 block"></i>Cargando posiciones oficiales...</td></tr>`;
 
             try {
                 const res = await fetch(`/api/consultar-atleta?accion=ranking_evidencias&edicion=${edicionActual}`);
@@ -1797,7 +1802,7 @@
 
             } catch (e) {
                 console.error("Error ranking:", e);
-                tbody.innerHTML = `<tr><td colspan="5" class="py-10 text-center text-slate-500 font-bold">Aún no hay tiempos validados para esta edición.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="py-10 text-center text-slate-500 font-bold">Aún no hay tiempos validados para esta edición.</td></tr>`;
             }
         }
 
@@ -1834,9 +1839,16 @@
                 });
 
                 if (filtrados.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="py-12 text-center text-slate-400 font-bold uppercase tracking-wider text-xs">No hay corredores registrados en esta categoría aún.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="6" class="py-12 text-center text-slate-400 font-bold uppercase tracking-wider text-xs">No hay corredores registrados en esta categoría aún.</td></tr>`;
                     return;
                 }
+
+                const mapCarreraDefault = {
+                    '1ra': '1ra Edición 5K',
+                    '2da': '2da Edición 5K',
+                    '3ra': '3ra Edición 5K',
+                    '4ta': '4ta Edición 5K'
+                };
 
                 filtrados.forEach((atleta, idx) => {
                     const tiempoStr = atleta.tiempo ? String(atleta.tiempo) : 'Pendiente';
@@ -1851,23 +1863,27 @@
 
                     const isFem = atleta.genero && atleta.genero.toUpperCase().startsWith('F');
                     const badgeGenero = isFem 
-                        ? `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-pink-500/15 text-pink-300 border border-pink-500/30"><i class="fa-solid fa-venus text-[9px]"></i> Fem</span>`
-                        : `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/30"><i class="fa-solid fa-mars text-[9px]"></i> Masc</span>`;
+                        ? `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-pink-500/15 text-pink-300 border border-pink-500/30"><i class="fa-solid fa-venus text-[9px]"></i> Femenino</span>`
+                        : `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/30"><i class="fa-solid fa-mars text-[9px]"></i> Masculino</span>`;
+
+                    const nombreCarrera = atleta.carrera || mapCarreraDefault[edicionActual] || '5K Oficial';
+                    const badgeCarrera = `<span class="inline-block px-2.5 py-0.5 rounded-lg text-[10px] font-bold uppercase tracking-wider bg-white/5 text-slate-300 border border-white/10 whitespace-nowrap">${nombreCarrera}</span>`;
 
                     const fila = document.createElement('tr');
                     fila.className = "hover:bg-white/5 transition-colors border-b border-white/5";
                     fila.innerHTML = `
-                        <td class="py-4 px-4 text-center">${posBadge}</td>
-                        <td class="py-4 px-4 text-center font-black text-[#00D2FF] text-sm">#${atleta.dorsal || '---'}</td>
+                        <td class="py-4 px-3 text-center">${posBadge}</td>
+                        <td class="py-4 px-3 text-center font-black text-[#00D2FF] text-sm font-mono">#${atleta.dorsal || '---'}</td>
                         <td class="py-4 px-4 font-bold text-white uppercase tracking-tight text-sm">${atleta.nombre || 'Atleta'}</td>
-                        <td class="py-4 px-4 text-center hidden sm:table-cell">${badgeGenero}</td>
-                        <td class="py-4 px-6 text-right font-mono font-bold text-[#00D2FF] text-sm">${tiempoStr}</td>
+                        <td class="py-4 px-3 text-center">${badgeGenero}</td>
+                        <td class="py-4 px-3 text-center">${badgeCarrera}</td>
+                        <td class="py-4 px-5 text-right font-mono font-bold text-[#00D2FF] text-sm">${tiempoStr}</td>
                     `;
                     tbody.appendChild(fila);
                 });
             } catch (err) {
                 console.error("Error al pintar tabla de ranking:", err);
-                tbody.innerHTML = `<tr><td colspan="5" class="py-10 text-center text-slate-500 font-bold">Ocurrió un error al procesar los resultados. Por favor recarga la página.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="py-10 text-center text-slate-500 font-bold">Ocurrió un error al procesar los resultados. Por favor recarga la página.</td></tr>`;
             }
         }
 

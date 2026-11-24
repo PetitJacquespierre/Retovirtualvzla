@@ -449,6 +449,28 @@
                     </label>
                 </div>
 
+                <!-- Motor de Cupones VIP (Grow Studio x Reto Virtual VZLA) -->
+                <div class="mt-4 p-4 rounded-2xl bg-[#070a14] border-t border-[#00D2FF]/40 border-b border-white/5 border-x border-white/10 shadow-xl">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[9px] font-mono font-bold uppercase tracking-widest text-[#00D2FF]">
+                            <i class="fa-solid fa-ticket mr-1"></i> Código VIP / Cortesía
+                        </span>
+                        <span class="text-[8px] font-mono uppercase tracking-wider text-slate-400">
+                            GROW STUDIO × RETO VIRTUAL VZLA
+                        </span>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" id="input-cupon-10k" placeholder="Ej: GROW10K" class="flex-1 bg-slate-900/90 border border-white/15 focus:border-[#00D2FF] rounded-xl px-3 py-2 text-xs font-mono font-bold text-white uppercase outline-none transition-all">
+                        <button type="button" id="btn-aplicar-cupon" onclick="aplicarCupon10k()" class="bg-[#00D2FF] hover:bg-cyan-300 text-[#001E50] font-black text-[11px] uppercase tracking-wider px-4 py-2 rounded-xl transition-all shrink-0 cursor-pointer">
+                            Aplicar
+                        </button>
+                        <button type="button" id="btn-quitar-cupon" onclick="quitarCupon10k()" class="hidden bg-red-500/20 hover:bg-red-500/30 border border-red-400/40 text-red-300 font-bold text-[11px] uppercase px-3 py-2 rounded-xl transition-all shrink-0 cursor-pointer">
+                            Quitar
+                        </button>
+                    </div>
+                    <p id="msg-cupon-10k" class="hidden mt-2 text-[11px] font-bold leading-snug" style="text-align: justify; text-justify: inter-word; hyphens: none; word-break: normal;"></p>
+                </div>
+
                 <!-- Aviso Legal de Abonos y No Reembolso -->
                 <div class="mt-4 p-4 rounded-2xl bg-amber-500/10 border border-amber-400/30 text-amber-100 text-xs shadow-inner">
                     <div class="flex items-start gap-2.5">
@@ -711,6 +733,77 @@
         let deudaActual = 0; 
         let dorsalAbonoActual = "";
         let textilAbonoActual = "";
+        let cupon10kActivo = null;
+
+        // =========================================================================
+        // MOTOR DE CUPONES VIP — GROW STUDIO × RETO VIRTUAL VZLA
+        // Puedes agregar, editar o eliminar códigos aquí fácilmente:
+        // tipo: 'fijo' (descuenta $ USD) | 'porcentaje' (%) | 'gratis' (100% cortesía)
+        // =========================================================================
+        const CUPONES_10K = {
+            "GROW10K":  { tipo: "fijo", valor: 5, etiqueta: "Bono Lista de Espera (-$5.00 USD)", soloCompleto: true },
+            "GROW50":   { tipo: "porcentaje", valor: 50, etiqueta: "Descuento Especial VIP 50%", soloCompleto: true },
+            "GROWFREE": { tipo: "gratis", valor: 100, etiqueta: "Pase de Cortesía 100% Exonerado", soloCompleto: true },
+            "VIP10K":   { tipo: "gratis", valor: 100, etiqueta: "Invitación Especial VIP (Cortesía)", soloCompleto: true }
+        };
+
+        function aplicarCupon10k() {
+            const input = document.getElementById('input-cupon-10k');
+            const msg = document.getElementById('msg-cupon-10k');
+            const codigo = (input.value || "").trim().toUpperCase();
+
+            if (!codigo) {
+                msg.innerText = "⚠️ Ingresa un código VIP válido para verificar.";
+                msg.className = "mt-2 text-[11px] font-bold text-amber-300 block";
+                return;
+            }
+
+            if (!CUPONES_10K[codigo]) {
+                msg.innerText = "❌ El código ingresado no es válido o ha expirado.";
+                msg.className = "mt-2 text-[11px] font-bold text-red-400 block";
+                return;
+            }
+
+            cupon10kActivo = codigo;
+            const conf = CUPONES_10K[codigo];
+
+            if (conf.soloCompleto) {
+                const radioCompleto = document.querySelector('input[name="opcion10k"][value="completo"]');
+                if (radioCompleto) radioCompleto.checked = true;
+            }
+
+            if (conf.tipo === "gratis") {
+                const refEl = document.getElementById('numReferenciaPago');
+                const fecEl = document.getElementById('fechaPago');
+                if (refEl && !refEl.value) refEl.value = `CORTESIA-${codigo}`;
+                if (fecEl && !fecEl.value) fecEl.value = new Date().toISOString().split('T')[0];
+            }
+
+            input.disabled = true;
+            document.getElementById('btn-aplicar-cupon').classList.add('hidden');
+            document.getElementById('btn-quitar-cupon').classList.remove('hidden');
+
+            msg.innerText = `✅ Código ${codigo} aplicado: ${conf.etiqueta}.`;
+            msg.className = "mt-2 text-[11px] font-bold text-emerald-400 block";
+
+            actualizarTotal();
+        }
+
+        function quitarCupon10k() {
+            cupon10kActivo = null;
+            const input = document.getElementById('input-cupon-10k');
+            const msg = document.getElementById('msg-cupon-10k');
+            input.disabled = false;
+            input.value = "";
+            document.getElementById('btn-aplicar-cupon').classList.remove('hidden');
+            document.getElementById('btn-quitar-cupon').classList.add('hidden');
+            msg.classList.add('hidden');
+
+            const refEl = document.getElementById('numReferenciaPago');
+            if (refEl && refEl.value.startsWith("CORTESIA-")) refEl.value = "";
+
+            actualizarTotal();
+        }
 
         // CONFIGURACIÓN DE CONEXIONES (ESTÁNDAR GROW STUDIO BACKEND)
         const urlConsultaAtleta = "/api/consultar-atleta";
@@ -1071,14 +1164,34 @@
                 }
 
                 const radioPago = document.querySelector('input[name="opcion10k"]:checked');
-                const tipoPago = radioPago ? radioPago.value : "inicial";
+                let tipoPago = radioPago ? radioPago.value : "inicial";
+
+                // Si hay un cupón VIP activo que exige pago completo, forzar modalidad completa
+                if (cupon10kActivo && CUPONES_10K[cupon10kActivo]?.soloCompleto && tipoPago !== "completo") {
+                    const radioComp = document.querySelector('input[name="opcion10k"][value="completo"]');
+                    if (radioComp) radioComp.checked = true;
+                    tipoPago = "completo";
+                }
+
                 let netoUSD = 0;
                 const campoNota = document.getElementById('notaInformativaPago');
 
                 if (tipoPago === "completo") {
-                    netoUSD = costoKitCompleto; 
+                    netoUSD = costoKitCompleto;
+                    if (cupon10kActivo && CUPONES_10K[cupon10kActivo]) {
+                        const c = CUPONES_10K[cupon10kActivo];
+                        if (c.tipo === "fijo") netoUSD = Math.max(0, costoKitCompleto - c.valor);
+                        else if (c.tipo === "porcentaje") netoUSD = Math.max(0, costoKitCompleto * (1 - c.valor / 100));
+                        else if (c.tipo === "gratis") netoUSD = 0;
+                    }
+
                     document.getElementById('label-abono-dinamico').innerText = "Saldas tu inscripción completa hoy.";
-                    campoNota.classList.add('hidden');
+                    if (cupon10kActivo) {
+                        campoNota.innerText = `🎟️ Beneficio VIP (${cupon10kActivo}) activo: Precio especial aplicado sobre pago único de $${netoUSD.toFixed(2)} USD.`;
+                        campoNota.classList.remove('hidden');
+                    } else {
+                        campoNota.classList.add('hidden');
+                    }
                 } else {
                     netoUSD = 10; 
                     let saldoRestante = costoKitCompleto - netoUSD;
@@ -1498,7 +1611,14 @@
                         reservaText = `SÍ - Abonó Inicial ($10)`; 
                         saldoText = saldoRestante.toFixed(2);
                     } else { 
-                        reservaText = "SÍ - Pagó 100% Completo"; 
+                        if (cupon10kActivo && CUPONES_10K[cupon10kActivo]) {
+                            const c = CUPONES_10K[cupon10kActivo];
+                            reservaText = (c.tipo === "gratis")
+                                ? `CORTESÍA VIP (Cupón ${cupon10kActivo})`
+                                : `SÍ - Pagó 100% (Cupón ${cupon10kActivo} - ${totalUSD})`;
+                        } else {
+                            reservaText = "SÍ - Pagó 100% Completo"; 
+                        }
                         saldoText = "0.00";
                     }
                 }

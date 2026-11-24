@@ -460,7 +460,7 @@
                         </span>
                     </div>
                     <div class="flex gap-2">
-                        <input type="text" id="input-cupon-10k" placeholder="Ej: GROW10K" class="flex-1 bg-slate-900/90 border border-white/15 focus:border-[#00D2FF] rounded-xl px-3 py-2 text-xs font-mono font-bold text-white uppercase outline-none transition-all">
+                        <input type="text" id="input-cupon-10k" placeholder="Ingresa tu código" class="flex-1 bg-slate-900/90 border border-white/15 focus:border-[#00D2FF] rounded-xl px-3 py-2 text-xs font-mono font-bold text-white uppercase outline-none transition-all">
                         <button type="button" id="btn-aplicar-cupon" onclick="aplicarCupon10k()" class="bg-[#00D2FF] hover:bg-cyan-300 text-[#001E50] font-black text-[11px] uppercase tracking-wider px-4 py-2 rounded-xl transition-all shrink-0 cursor-pointer">
                             Aplicar
                         </button>
@@ -734,23 +734,25 @@
         let dorsalAbonoActual = "";
         let textilAbonoActual = "";
         let cupon10kActivo = null;
+        let cupon10kData = null;
+        const FIRESTORE_RETO_BASE = "https://firestore.googleapis.com/v1/projects/grow-studio-menus/databases/(default)/documents/reto_cupones_10k";
 
         // =========================================================================
-        // MOTOR DE CUPONES VIP — GROW STUDIO × RETO VIRTUAL VZLA
-        // Puedes agregar, editar o eliminar códigos aquí fácilmente:
-        // tipo: 'fijo' (descuenta $ USD) | 'porcentaje' (%) | 'gratis' (100% cortesía)
+        // MOTOR DE CUPONES VIP — GROW STUDIO ADMIN × RETO VIRTUAL VZLA
+        // Valida en vivo contra Firebase Firestore (reto_cupones_10k) con fallback local
         // =========================================================================
         const CUPONES_10K = {
-            "GROW10K":  { tipo: "fijo", valor: 5, etiqueta: "Bono Lista de Espera (-$5.00 USD)", soloCompleto: true },
-            "GROW50":   { tipo: "porcentaje", valor: 50, etiqueta: "Descuento Especial VIP 50%", soloCompleto: true },
-            "GROWFREE": { tipo: "gratis", valor: 100, etiqueta: "Pase de Cortesía 100% Exonerado", soloCompleto: true },
-            "VIP10K":   { tipo: "gratis", valor: 100, etiqueta: "Invitación Especial VIP (Cortesía)", soloCompleto: true }
+            "GROW10K":  { tipo: "fijo", precioUSD: 20, etiqueta: "Bono Lista de Espera ($20.00 USD)", soloCompleto: true },
+            "GROWFREE": { tipo: "gratis", precioUSD: 0, etiqueta: "Pase de Cortesía 100% Exonerado", soloCompleto: true }
         };
 
-        function aplicarCupon10k() {
+        async function aplicarCupon10k(codigoParam) {
             const input = document.getElementById('input-cupon-10k');
             const msg = document.getElementById('msg-cupon-10k');
-            const codigo = (input.value || "").trim().toUpperCase();
+            const btnAplicar = document.getElementById('btn-aplicar-cupon');
+            const codigo = (codigoParam || (input ? input.value : "") || "").trim().toUpperCase();
+
+            if (input && codigoParam) input.value = codigo;
 
             if (!codigo) {
                 msg.innerText = "⚠️ Ingresa un código VIP válido para verificar.";
@@ -758,30 +760,76 @@
                 return;
             }
 
-            if (!CUPONES_10K[codigo]) {
+            if (btnAplicar) { btnAplicar.disabled = true; btnAplicar.innerText = "..."; }
+
+            let conf = null;
+            let fromFirestore = false;
+
+            try {
+                const res = await fetch(`${FIRESTORE_RETO_BASE}/${encodeURIComponent(codigo)}?t=${Date.now()}`);
+                if (res.ok) {
+                    const docJson = await res.json();
+                    const f = docJson.fields || {};
+                    const estado = f.estado?.stringValue || '';
+                    const habilitado = f.habilitado?.booleanValue === true;
+                    const tipo = f.tipo?.stringValue || 'REUTILIZABLE';
+                    const usosCount = Number(f.usosCount?.integerValue || f.usosCount?.doubleValue || 0);
+                    const maxUsos = f.maxUsos?.integerValue ? Number(f.maxUsos.integerValue) : (f.maxUsos?.doubleValue ? Number(f.maxUsos.doubleValue) : null);
+                    const precioUSD = Number(f.precioUSD?.doubleValue ?? f.precioUSD?.integerValue ?? 20);
+
+                    if (!habilitado || estado === 'PAUSADO' || estado === 'USADO' || (maxUsos !== null && usosCount >= maxUsos)) {
+                        msg.innerText = "❌ Este código VIP ya fue canjeado o está pausado.";
+                        msg.className = "mt-2 text-[11px] font-bold text-red-400 block";
+                        if (btnAplicar) { btnAplicar.disabled = false; btnAplicar.innerText = "Aplicar"; }
+                        return;
+                    }
+
+                    conf = {
+                        tipo: precioUSD === 0 ? "gratis" : "precio_final",
+                        precioUSD: precioUSD,
+                        etiqueta: precioUSD === 0 ? "Pase de Cortesía 100% Exonerado ($0.00)" : `Tarifa Especial VIP ($${precioUSD.toFixed(2)} USD)`,
+                        soloCompleto: true,
+                        usosCount: usosCount,
+                        maxUsos: maxUsos,
+                        modalidad: tipo
+                    };
+                    fromFirestore = true;
+                }
+            } catch (err) {
+                console.warn("Fallback local de cupones:", err);
+            }
+
+            if (!conf && CUPONES_10K[codigo]) {
+                conf = { ...CUPONES_10K[codigo] };
+            }
+
+            if (btnAplicar) { btnAplicar.disabled = false; btnAplicar.innerText = "Aplicar"; }
+
+            if (!conf) {
                 msg.innerText = "❌ El código ingresado no es válido o ha expirado.";
                 msg.className = "mt-2 text-[11px] font-bold text-red-400 block";
                 return;
             }
 
             cupon10kActivo = codigo;
-            const conf = CUPONES_10K[codigo];
+            cupon10kData = { ...conf, fromFirestore };
 
             if (conf.soloCompleto) {
                 const radioCompleto = document.querySelector('input[name="opcion10k"][value="completo"]');
                 if (radioCompleto) radioCompleto.checked = true;
             }
 
-            if (conf.tipo === "gratis") {
+            if (conf.precioUSD === 0 || conf.tipo === "gratis") {
                 const refEl = document.getElementById('numReferenciaPago');
                 const fecEl = document.getElementById('fechaPago');
                 if (refEl && !refEl.value) refEl.value = `CORTESIA-${codigo}`;
                 if (fecEl && !fecEl.value) fecEl.value = new Date().toISOString().split('T')[0];
             }
 
-            input.disabled = true;
-            document.getElementById('btn-aplicar-cupon').classList.add('hidden');
-            document.getElementById('btn-quitar-cupon').classList.remove('hidden');
+            if (input) input.disabled = true;
+            if (btnAplicar) btnAplicar.classList.add('hidden');
+            const btnQuitar = document.getElementById('btn-quitar-cupon');
+            if (btnQuitar) btnQuitar.classList.remove('hidden');
 
             msg.innerText = `✅ Código ${codigo} aplicado: ${conf.etiqueta}.`;
             msg.className = "mt-2 text-[11px] font-bold text-emerald-400 block";
@@ -791,13 +839,15 @@
 
         function quitarCupon10k() {
             cupon10kActivo = null;
+            cupon10kData = null;
             const input = document.getElementById('input-cupon-10k');
             const msg = document.getElementById('msg-cupon-10k');
-            input.disabled = false;
-            input.value = "";
-            document.getElementById('btn-aplicar-cupon').classList.remove('hidden');
-            document.getElementById('btn-quitar-cupon').classList.add('hidden');
-            msg.classList.add('hidden');
+            if (input) { input.disabled = false; input.value = ""; }
+            const btnAplicar = document.getElementById('btn-aplicar-cupon');
+            const btnQuitar = document.getElementById('btn-quitar-cupon');
+            if (btnAplicar) btnAplicar.classList.remove('hidden');
+            if (btnQuitar) btnQuitar.classList.add('hidden');
+            if (msg) msg.classList.add('hidden');
 
             const refEl = document.getElementById('numReferenciaPago');
             if (refEl && refEl.value.startsWith("CORTESIA-")) refEl.value = "";
@@ -841,6 +891,7 @@
             // 1. Activar el formulario de inmediato según la URL (0 milisegundos)
             const urlParams = new URLSearchParams(window.location.search);
             const modoURL = urlParams.get('modo');
+            const vipURL = urlParams.get('vip') || urlParams.get('cupon');
             const nombreURL = urlParams.get('nombre');
             if (nombreURL) {
                 const inputNombre = document.getElementById('nombreEnvio');
@@ -848,6 +899,12 @@
             }
             if (modoURL) {
                 activarFlujo(modoURL.toUpperCase());
+            } else if (vipURL) {
+                activarFlujo('10K');
+            }
+            if (vipURL) {
+                aplicarCupon10k(vipURL);
+            }
             }
 
             // 2. Cargar estados de Venezuela
@@ -1178,11 +1235,12 @@
 
                 if (tipoPago === "completo") {
                     netoUSD = costoKitCompleto;
-                    if (cupon10kActivo && CUPONES_10K[cupon10kActivo]) {
-                        const c = CUPONES_10K[cupon10kActivo];
-                        if (c.tipo === "fijo") netoUSD = Math.max(0, costoKitCompleto - c.valor);
-                        else if (c.tipo === "porcentaje") netoUSD = Math.max(0, costoKitCompleto * (1 - c.valor / 100));
-                        else if (c.tipo === "gratis") netoUSD = 0;
+                    if (cupon10kActivo && cupon10kData) {
+                        if (cupon10kData.precioUSD !== undefined) {
+                            netoUSD = Math.max(0, Number(cupon10kData.precioUSD));
+                        } else if (cupon10kData.tipo === "gratis") {
+                            netoUSD = 0;
+                        }
                     }
 
                     document.getElementById('label-abono-dinamico').innerText = "Saldas tu inscripción completa hoy.";
@@ -1611,9 +1669,8 @@
                         reservaText = `SÍ - Abonó Inicial ($10)`; 
                         saldoText = saldoRestante.toFixed(2);
                     } else { 
-                        if (cupon10kActivo && CUPONES_10K[cupon10kActivo]) {
-                            const c = CUPONES_10K[cupon10kActivo];
-                            reservaText = (c.tipo === "gratis")
+                        if (cupon10kActivo && cupon10kData) {
+                            reservaText = (cupon10kData.precioUSD === 0 || cupon10kData.tipo === "gratis")
                                 ? `CORTESÍA VIP (Cupón ${cupon10kActivo})`
                                 : `SÍ - Pagó 100% (Cupón ${cupon10kActivo} - ${totalUSD})`;
                         } else {
@@ -1663,6 +1720,25 @@
             fetch(urlBaseDeDatos, { method: 'POST', body: datos })
             .then(r => r.text())
             .then(dorsalReal => {
+                // Actualizar conteo de uso en Firestore si el cupón proviene de Grow Studio Admin
+                if (cupon10kActivo && cupon10kData && cupon10kData.fromFirestore) {
+                    const nuevosUsos = Number(cupon10kData.usosCount || 0) + 1;
+                    const maxU = cupon10kData.maxUsos;
+                    const quemado = maxU !== null && nuevosUsos >= maxU;
+                    fetch(`${FIRESTORE_RETO_BASE}/${encodeURIComponent(cupon10kActivo)}?updateMask.fieldPaths=usosCount&updateMask.fieldPaths=estado&updateMask.fieldPaths=habilitado&updateMask.fieldPaths=ultimoAtleta&updateMask.fieldPaths=fechaActualizacion`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            fields: {
+                                usosCount: { integerValue: String(nuevosUsos) },
+                                estado: { stringValue: quemado ? 'USADO' : 'HABILITADO' },
+                                habilitado: { booleanValue: !quemado },
+                                fechaActualizacion: { stringValue: new Date().toISOString() },
+                                ultimoAtleta: { mapValue: { fields: { nombre: { stringValue: nombre }, cedula: { stringValue: cedulaFinal } } } }
+                            }
+                        })
+                    }).catch(() => {});
+                }
                 let dorsalFinal = String(dorsalReal ? dorsalReal.trim() : dorsalFormateado).padStart(3, '0');
                 if (dorsalFinal === "000" || dorsalFinal === "NaN" || !dorsalReal) dorsalFinal = dorsalFormateado;
                 salirYRedirigir(nombre, totalUSD, refPago, dorsalFinal, cedulaFinal, tel, carreraToSend, fechaPago);

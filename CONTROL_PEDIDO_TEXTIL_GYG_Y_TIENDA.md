@@ -5,15 +5,15 @@
 ---
 
 ## 💰 1. BALANCE FINANCIERO Y DISPONIBILIDAD DE CAJA
+> **Corte Actualizado:** Lunes, 23 de Noviembre de 2026 — 23:10 hrs.
 
-### 💵 Fondos Disponibles en Caja (Hoy Domingo 22 de Noviembre)
-* **Billetera Binance (USDT):**
-  * Saldo base: ~**103.00 USDT**
-  * Pago de pareja (esposo y esposa): +**55.00 USDT**
-  * **Subtotal en USDT:** 👉 **~158.00 USDT**
-* **Cuenta Bancaria (Bolívares / Pago Móvil):**
-  * Recaudación fin de semana (4 inscritos x $10 + $14.12 Jenny Lamón + saldo): 👉 **~$40.00 a $54.00 USD** al cambio.
-* **Total disponible en mano:** 👉 **~$198.00 a $212.00 USD**
+### 💵 Fondos Reales Disponibles en Caja
+* **Cuenta Bancaria (Banco Mercantil - Bolívares):**
+  * Saldo exacto en cuenta: 👉 **33.897,00 Bs** (~**$36.84 USD** al cambio oficial BCV).
+  * Incluye el abono inicial de **$10 USD** de Luis Alberto García (#066) + remanente post-pago de anticipo a fábrica.
+* **Otras Billeteras / Plataformas:**
+  * Billetera Zinli: ~$17.00 USD (intacta para emergencias / dominios futuros).
+  * Binance USDT: Saldo técnico reservado.
 
 ---
 
@@ -23,7 +23,8 @@
 * **Nuevo Total de la Orden (59 piezas):** **$462.34 USD**.
 * **Anticipo 75% Pagado el 23/11/2026 (a tasa BCV):** 👉 **314.127,35 Bs (~$341.51 USD) — PAGADO ✅**
 * **Comisión bancaria de transferencia:** 942,38 Bs.
-* **SALDO TOTAL RESTANTE POR PAGAR:** 👉 **$120.83 USD** (exactamente $113.83 del 25% base + $7.00 de la pieza adicional).
+* **SALDO TOTAL RESTANTE POR PAGAR A FÁBRICA:** 👉 **$120.83 USD** ($113.83 del 25% base + $7.00 de la pieza adicional).
+* **Brecha neta por cubrir (Deuda $120.83 - Saldo en Banco $36.84):** 👉 **~$84.00 USD**.
 
 ---
 

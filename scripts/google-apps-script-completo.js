@@ -4,6 +4,7 @@ var sheetName = 'Inscripciones_10K';
 function autorizarPermisos() {
   var correo = Session.getActiveUser().getEmail() || "retovirtual5k.vzla@gmail.com";
   MailApp.sendEmail(correo, "✅ Permisos Activados", "Los permisos para Reto Virtual VZLA han sido autorizados correctamente.");
+  // Verificar acceso a Drive
   DriveApp.getRootFolder();
   Logger.log("Permisos autorizados con éxito.");
 }
@@ -51,7 +52,7 @@ function doPost(e) {
     var genero = e.parameter['Genero'] || '';
 
     // =========================================================================
-    // FLUJO 0: EVIDENCIAS DE CARRERA (1ra -> Ranking, 2da -> 2E Ranking, 3ra -> Evidencias_3ra, 4ta -> Evidencias_4ta)
+    // FLUJO 0: EVIDENCIAS DE CARRERA (1ra -> Ranking, 2da -> 2E Ranking, 3ra -> Evidencias_3ra, 4ta -> Evidencias_4ta + Drive)
     // =========================================================================
     if (tipoCarrera === 'EVIDENCIA') {
       var edicionEv = (e.parameter['Edicion'] || '3ra').toString().trim();
@@ -59,35 +60,34 @@ function doPost(e) {
       var dorsalEv = String(e.parameter['Dorsal'] || '').replace(/\D/g, '').padStart(3, '0');
       var tiempoEv = (e.parameter['Tiempo'] || '').toString().trim();
       var generoEv = (genero || 'MASCULINO').toString().trim().toUpperCase();
-      var generoCorto = generoEv.indexOf('F') === 0 ? 'F' : 'M';
+      var generoCorto = (generoEv.indexOf('F') === 0) ? 'F' : 'M';
       var modalidadEv = e.parameter['Modalidad'] || 'CORRIENDO';
       var auditoriaIA = e.parameter['AuditoriaIA'] || 'Verificado';
 
       // Subir la captura a Google Drive y obtener enlace público
-      var guardarCapturaDrive = function() {
-        var urlEvidencia = "Sin captura";
-        var imgBase64 = e.parameter['ImagenBase64'] || '';
-        var mimeType = e.parameter['MimeType'] || 'image/jpeg';
-        if (imgBase64 !== '') {
-          try {
-            var extension = (mimeType.indexOf('png') !== -1) ? 'png' : 'jpg';
-            var nombreArchivo = "Evidencia_" + edicionEv + "_Dorsal_" + dorsalEv + "_" + new Date().getTime() + "." + extension;
-            var bytes = Utilities.base64Decode(imgBase64);
-            var blob = Utilities.newBlob(bytes, mimeType, nombreArchivo);
-            var archivoDrive = DriveApp.createFile(blob);
-            archivoDrive.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
-            urlEvidencia = archivoDrive.getUrl();
-          } catch (errDrive) {
-            Logger.log("Error guardando en Drive: " + errDrive);
-            urlEvidencia = "Evidencia_" + edicionEv + "_Dorsal_" + dorsalEv + "_" + new Date().getTime() + ".jpg";
-          }
+      var urlEvidencia = "Sin captura";
+      var imgBase64 = e.parameter['ImagenBase64'] || '';
+      var mimeType = e.parameter['MimeType'] || 'image/jpeg';
+
+      if (imgBase64 !== '') {
+        try {
+          var extension = (mimeType.indexOf('png') !== -1) ? 'png' : 'jpg';
+          var nombreArchivo = "Evidencia_" + edicionEv + "_Dorsal_" + dorsalEv + "_" + new Date().getTime() + "." + extension;
+          var bytes = Utilities.base64Decode(imgBase64);
+          var blob = Utilities.newBlob(bytes, mimeType, nombreArchivo);
+          
+          var archivoDrive = DriveApp.createFile(blob);
+          archivoDrive.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+          urlEvidencia = archivoDrive.getUrl();
+        } catch (errDrive) {
+          Logger.log("Error guardando en Drive: " + errDrive);
+          urlEvidencia = "Evidencia_" + edicionEv + "_Dorsal_" + dorsalEv + "_" + new Date().getTime() + ".jpg";
         }
-        return urlEvidencia;
-      };
+      }
 
       // -----------------------------------------------------------------------
       // CASO A: 1ra Edición (Pestaña 'Ranking') y 2da Edición (Pestaña '2E Ranking')
-      // Formato de columnas en Ranking y 2E Ranking: [Dorsal, Nombre, Genero, Tiempo]
+      // Columnas en 'Ranking' y '2E Ranking': [Dorsal, Nombre, Genero, Tiempo]
       // -----------------------------------------------------------------------
       if (edicionEv === '1ra' || edicionEv === '2da') {
         var nombresRanking = (edicionEv === '1ra')
@@ -117,13 +117,12 @@ function doPost(e) {
           }
         }
 
-        var urlEv12 = guardarCapturaDrive();
-
         if (filaExistenteSinTiempo !== -1) {
-          // Si el dorsal ya estaba en la tabla pero con el tiempo en blanco, actualizar su tiempo
+          // Si el dorsal ya estaba en la tabla pero sin tiempo, actualizar su tiempo en la columna D
           sheetRank.getRange(filaExistenteSinTiempo, 4).setValue(tiempoEv);
         } else {
-          // Agregar nueva fila en 'Ranking' (1ra) o '2E Ranking' (2da): [Dorsal, Nombre, Genero (M/F), Tiempo]
+          // Guardar la fila exactamente en el orden de columnas de 'Ranking' / '2E Ranking':
+          // [Dorsal, Nombre, Genero (M/F), Tiempo]
           sheetRank.appendRow([
             "'" + dorsalEv,
             nombreAtleta,
@@ -132,17 +131,20 @@ function doPost(e) {
           ]);
         }
 
+        // Enviar correo de notificación al organizador con el link directo a la foto
         try {
           MailApp.sendEmail({
             to: correoDestino,
-            subject: "🏆 RANKING ACTUALIZADO (" + edicionEv + " Ed.) - Dorsal #" + dorsalEv + " - " + nombreAtleta,
+            subject: "🏆 NUEVO RANKING (" + edicionEv + " Ed.) - Dorsal #" + dorsalEv + " - " + nombreAtleta,
             htmlBody: "<div style='font-family: Arial, sans-serif; max-width: 600px; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px;'>" +
-                      "<h2 style='color: #001E50;'>🏆 Nuevo Tiempo Registrado en " + (edicionEv === '1ra' ? 'Ranking (1ra Edición)' : '2E Ranking (2da Edición)') + "</h2>" +
+                      "<h2 style='color: #001E50;'>🏆 Tiempo Registrado en " + (edicionEv === '1ra' ? 'Ranking (1ra Edición)' : '2E Ranking (2da Edición)') + "</h2>" +
                       "<p style='font-size: 16px; color: #00D2FF; font-weight: bold;'>Dorsal #" + dorsalEv + " — Tiempo: " + tiempoEv + "</p>" +
                       "<p><b>Atleta:</b> " + nombreAtleta + "<br>" +
                       "<b>Cédula:</b> " + ciLimpiaEv + "<br>" +
                       "<b>Género:</b> " + generoEv + " (" + generoCorto + ")<br>" +
-                      "<b>Captura en Drive:</b> <a href='" + urlEv12 + "' target='_blank'>Ver Captura de Carrera</a></p>" +
+                      "<b>Modalidad:</b> " + modalidadEv + "<br>" +
+                      "<b>Auditoría IA:</b> " + auditoriaIA + "<br>" +
+                      "<b>Captura en Drive:</b> <a href='" + urlEvidencia + "' target='_blank'>Ver Captura de Carrera</a></p>" +
                       "</div>"
           });
         } catch (errMail12) { Logger.log("Error email 1ra/2da: " + errMail12); }
@@ -154,6 +156,7 @@ function doPost(e) {
       // CASO B: 3ra Edición ('Evidencias_3ra') y 4ta Edición ('Evidencias_4ta')
       // -----------------------------------------------------------------------
       var nombrePestanaEv = (edicionEv === '4ta') ? 'Evidencias_4ta' : 'Evidencias_3ra';
+      
       var sheetEv = buscarPestana(doc, [nombrePestanaEv]);
       if (!sheetEv) {
         sheetEv = doc.insertSheet(nombrePestanaEv);
@@ -162,7 +165,7 @@ function doPost(e) {
         ]);
       }
 
-      // Evitar registros duplicados de la misma cédula EN LA MISMA EDICIÓN
+      // Evitar registros duplicados de la misma cédula en la misma edición
       var datosEv = sheetEv.getDataRange().getValues();
       for (var k = 1; k < datosEv.length; k++) {
         var edEnFila = String(datosEv[k][1] || '').trim().toLowerCase();
@@ -172,8 +175,8 @@ function doPost(e) {
         }
       }
 
-      var urlEvidencia = guardarCapturaDrive();
-
+      // Guardar la fila exactamente en el orden de columnas de Evidencias_3ra / Evidencias_4ta:
+      // [Fecha, Edicion, Cedula, Dorsal, Nombre, Genero, Tiempo, UrlEvidencia, Estatus]
       sheetEv.appendRow([
         new Date(),
         edicionEv,
@@ -186,6 +189,7 @@ function doPost(e) {
         "Pendiente"
       ]);
 
+      // Enviar correo de notificación al organizador con el link directo a la foto
       try {
         MailApp.sendEmail({
           to: correoDestino,

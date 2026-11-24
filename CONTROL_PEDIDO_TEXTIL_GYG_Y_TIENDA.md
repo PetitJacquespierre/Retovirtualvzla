@@ -28,11 +28,12 @@
 
 ---
 
-## 📊 2. DESGLOSE REAL DE PRENDAS (ACTUALIZADO EN VIVO · DORSAL #001 AL #066)
+## 📊 2. DESGLOSE REAL DE PRENDAS (ACTUALIZADO EN VIVO · DORSAL #001 AL #067)
 
-En la base de datos oficial hay **66 atletas registrados**.
-* **12 atletas** eligieron *"Solo Medalla"* (#064 Elizabeth Paredes, #065 Karla Perez, etc.).
-* **54 atletas** tienen su kit con prenda oficial (exactamente 1 prenda por atleta, sumando a **#066 Luis Alberto García** de Tucupita, Delta Amacuro con Franelilla Olímpica).
+En la base de datos oficial hay **67 atletas registrados** (¡67% de la meta!).
+* **13 atletas** eligieron *"Solo Medalla"* (sumando a **#067 César Sanguino** de San Cristóbal, Táchira, quien pagó 100% completo $25 USD).
+* **54 atletas** tienen su kit con prenda oficial (exactamente 1 prenda por atleta, incluyendo a **#066 Luis Alberto García** de Tucupita con Franelilla Olímpica).
+* **Prendas totales a fabricar en GYG Graphics:** **59 piezas** (54 atletas base + 4 personales + 1 adicional Jully Sabrina).
 
 ---
 

@@ -607,7 +607,188 @@ function copiarPromptCalibrado() {
   });
 }
 
-// Botón Principal: Generar con la IA Real (Llama al endpoint serverless /api/generar-estudio)
+// Motor de Estudio Digital HD: Composición de Alta Fidelidad en Canvas (Garantía Medalla Real 10K)
+function renderizarMontajeEstudioHD() {
+  return new Promise((resolve, reject) => {
+    try {
+      const est = estiloModalActivo;
+      let W = 1200;
+      let H = 1200;
+      if (est.ratio === "4:5") { W = 1080; H = 1350; }
+      else if (est.ratio === "3:4") { W = 1080; H = 1440; }
+      else if (est.ratio === "9:16") { W = 1080; H = 1920; }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = W;
+      canvas.height = H;
+      const ctx = canvas.getContext('2d');
+
+      // 1. Cargar fondo oficial del estilo (con la medalla real 10K idéntica)
+      const bgImg = new Image();
+      bgImg.crossOrigin = "anonymous";
+      bgImg.onload = () => {
+        // Dibujar fondo maestro
+        ctx.drawImage(bgImg, 0, 0, W, H);
+
+        // 2. Si el atleta subió su foto, integrarla con iluminación de estudio y piso espejo
+        if (imgIngrediente1) {
+          const cardW = Math.round(W * 0.44);
+          const cardH = Math.round(H * 0.60);
+          const cardX = Math.round(W * 0.52);
+          const cardY = Math.round(H * 0.20);
+
+          // Sombra física profunda
+          ctx.save();
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.90)';
+          ctx.shadowBlur = 45;
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 25;
+
+          // Marco redondeado elegante
+          const r = 24;
+          ctx.beginPath();
+          ctx.moveTo(cardX + r, cardY);
+          ctx.lineTo(cardX + cardW - r, cardY);
+          ctx.quadraticCurveTo(cardX + cardW, cardY, cardX + cardW, cardY + r);
+          ctx.lineTo(cardX + cardW, cardY + cardH - r);
+          ctx.quadraticCurveTo(cardX + cardW, cardY + cardH, cardX + cardW - r, cardY + cardH);
+          ctx.lineTo(cardX + r, cardY + cardH);
+          ctx.quadraticCurveTo(cardX, cardY + cardH, cardX, cardY + cardH - r);
+          ctx.lineTo(cardX, cardY + r);
+          ctx.quadraticCurveTo(cardX, cardY, cardX + r, cardY);
+          ctx.closePath();
+          ctx.fillStyle = '#060a12';
+          ctx.fill();
+          ctx.restore();
+
+          // Dibujar foto recortada en el marco
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(cardX + r, cardY);
+          ctx.lineTo(cardX + cardW - r, cardY);
+          ctx.quadraticCurveTo(cardX + cardW, cardY, cardX + cardW, cardY + r);
+          ctx.lineTo(cardX + cardW, cardY + cardH - r);
+          ctx.quadraticCurveTo(cardX + cardW, cardY + cardH, cardX + cardW - r, cardY + cardH);
+          ctx.lineTo(cardX + r, cardY + cardH);
+          ctx.quadraticCurveTo(cardX, cardY + cardH, cardX, cardY + cardH - r);
+          ctx.lineTo(cardX, cardY + r);
+          ctx.quadraticCurveTo(cardX, cardY, cardX + r, cardY);
+          ctx.closePath();
+          ctx.clip();
+
+          // Ajuste proporcional cover
+          const imgAspect = imgIngrediente1.width / imgIngrediente1.height;
+          const targetAspect = cardW / cardH;
+          let sx, sy, sw, sh;
+          if (imgAspect > targetAspect) {
+            sh = imgIngrediente1.height;
+            sw = sh * targetAspect;
+            sx = (imgIngrediente1.width - sw) / 2;
+            sy = 0;
+          } else {
+            sw = imgIngrediente1.width;
+            sh = sw / targetAspect;
+            sx = 0;
+            sy = (imgIngrediente1.height - sh) / 2;
+          }
+          ctx.drawImage(imgIngrediente1, sx, sy, sw, sh, cardX, cardY, cardW, cardH);
+
+          // Viñeta oscura inferior para texto
+          const grad = ctx.createLinearGradient(cardX, cardY + cardH * 0.65, cardX, cardY + cardH);
+          grad.addColorStop(0, 'rgba(0,0,0,0)');
+          grad.addColorStop(1, 'rgba(3, 7, 16, 0.95)');
+          ctx.fillStyle = grad;
+          ctx.fillRect(cardX, cardY, cardW, cardH);
+
+          // Borde especular cenital cian
+          ctx.strokeStyle = 'rgba(0, 210, 255, 0.45)';
+          ctx.lineWidth = 3;
+          ctx.stroke();
+          ctx.restore();
+
+          // Reflejo en piso espejo debajo de la tarjeta del atleta
+          ctx.save();
+          ctx.globalAlpha = 0.20;
+          ctx.translate(0, (cardY + cardH) * 2);
+          ctx.scale(1, -1);
+          ctx.drawImage(canvas, cardX, cardY + Math.round(cardH * 0.6), cardW, Math.round(cardH * 0.4), cardX, cardY + Math.round(cardH * 0.6), cardW, Math.round(cardH * 0.4));
+          ctx.restore();
+        }
+
+        // 3. HUD Técnico Inferior (Branded Reto Virtual Venezuela)
+        const hudH = Math.round(H * 0.13);
+        const hudY = H - hudH - Math.round(H * 0.025);
+        const hudW = Math.round(W * 0.94);
+        const hudX = Math.round((W - hudW) / 2);
+
+        ctx.save();
+        ctx.fillStyle = 'rgba(6, 9, 18, 0.92)';
+        ctx.strokeStyle = 'rgba(0, 210, 255, 0.40)';
+        ctx.lineWidth = 2;
+        ctx.shadowColor = 'rgba(0,0,0,0.7)';
+        ctx.shadowBlur = 25;
+
+        // Caja HUD redondeada
+        const hr = 18;
+        ctx.beginPath();
+        ctx.moveTo(hudX + hr, hudY);
+        ctx.lineTo(hudX + hudW - hr, hudY);
+        ctx.quadraticCurveTo(hudX + hudW, hudY, hudX + hudW, hudY + hr);
+        ctx.lineTo(hudX + hudW, hudY + hudH - hr);
+        ctx.quadraticCurveTo(hudX + hudW, hudY + hudH, hudX + hudW - hr, hudY + hudH);
+        ctx.lineTo(hudX + hr, hudY + hudH);
+        ctx.quadraticCurveTo(hudX, hudY + hudH, hudX, hudY + hudH - hr);
+        ctx.lineTo(hudX, hudY + hr);
+        ctx.quadraticCurveTo(hudX, hudY, hudX + hr, hudY);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+
+        // Tipografía y Datos Oficiales del Atleta
+        ctx.save();
+        // Dorsal Badge
+        ctx.fillStyle = '#00D2FF';
+        ctx.font = 'bold ' + Math.round(hudH * 0.28) + 'px "Courier New", monospace';
+        ctx.fillText('#' + (atletaActual.dorsal || '025'), hudX + 24, hudY + Math.round(hudH * 0.42));
+
+        // Nombre Atleta
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = '900 ' + Math.round(hudH * 0.28) + 'px "Montserrat", sans-serif';
+        const nameX = hudX + Math.round(hudH * 1.15);
+        ctx.fillText((atletaActual.nombre || 'ATLETA OFICIAL').toUpperCase(), nameX, hudY + Math.round(hudH * 0.42));
+
+        // Métricas (Tiempo, Ritmo, Distancia, Ciudad)
+        ctx.fillStyle = '#94A3B8';
+        ctx.font = 'bold ' + Math.round(hudH * 0.20) + 'px "Courier New", monospace';
+        const statsTxt = `${atletaActual.distancia} · TIEMPO ${atletaActual.tiempo} · RITMO ${atletaActual.ritmo} · ${atletaActual.ciudad}`;
+        ctx.fillText(statsTxt, hudX + 24, hudY + Math.round(hudH * 0.78));
+
+        // Logo / Sello Finisher a la derecha
+        ctx.fillStyle = '#00D2FF';
+        ctx.font = 'bold ' + Math.round(hudH * 0.20) + 'px "Montserrat", sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText('FINISHER OFICIAL 10K', hudX + hudW - 24, hudY + Math.round(hudH * 0.42));
+        ctx.fillStyle = '#64748B';
+        ctx.fillText('RETO VIRTUAL VENEZUELA 2026', hudX + hudW - 24, hudY + Math.round(hudH * 0.76));
+        ctx.restore();
+
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+        resolve(dataUrl);
+      };
+
+      bgImg.onerror = () => {
+        reject(new Error("No se pudo cargar la imagen base del estilo."));
+      };
+
+      bgImg.src = est.img;
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+// Botón Principal: Generar con la IA Real / Estudio Digital HD
 async function generarArteConIA() {
   if (!estiloModalActivo) return;
   if (!imgIngrediente1) {
@@ -631,72 +812,43 @@ async function generarArteConIA() {
   btn.classList.add('opacity-50');
 
   // Animación técnica de progreso Monospace
-  let prog = 10;
+  let prog = 15;
+  progressBar.style.width = "15%";
+  percentTxt.innerText = "15%";
+  statusTxt.innerText = "Cargando medalla oficial 10K...";
+
   const timer = setInterval(() => {
-    prog += Math.floor(Math.random() * 12) + 5;
+    prog += 25;
     if (prog > 90) prog = 92;
     progressBar.style.width = `${prog}%`;
     percentTxt.innerText = `${String(prog).padStart(2, '0')}%`;
-    if (prog > 30 && prog < 60) statusTxt.innerText = "Sintetizando iluminación y volumetría...";
-    if (prog >= 60) statusTxt.innerText = "Renderizando composición de alta fidelidad...";
-  }, 400);
-
-  const promptFinal = obtenerPromptFormateado();
+    if (prog >= 40 && prog < 70) statusTxt.innerText = "Sintetizando iluminación de estudio y reflejos...";
+    if (prog >= 70) statusTxt.innerText = "Estampando métricas oficiales y medalla real...";
+  }, 250);
 
   try {
-    const res = await fetch('/api/generar-estudio', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        estiloId: estiloModalActivo.id,
-        prompt: promptFinal,
-        aspectRatio: estiloModalActivo.ratio,
-        atleta: atletaActual,
-        fotoBase64: imgIngrediente1 ? imgIngrediente1.src : null
-      })
-    });
+    // Generar la obra maestra de estudio directamente con la medalla real 10K garantizada
+    const imgSrc = await renderizarMontajeEstudioHD();
 
     clearInterval(timer);
     progressBar.style.width = "100%";
     percentTxt.innerText = "100%";
+    statusTxt.innerText = "¡Obra de arte completada!";
 
-    const resText = await res.text();
-    let data;
-    try {
-      data = JSON.parse(resText);
-    } catch (e) {
-      const errMsg = res.status === 413 
-        ? "La foto seleccionada supera el límite de memoria del servidor. Ya activamos la compresión automática; por favor vuelve a tocar la casilla 1 para recargarla y generar."
-        : `Respuesta del servidor (${res.status}): ${resText.slice(0, 100)}`;
-      throw new Error(errMsg);
-    }
+    document.getElementById('gen-resultado-img').src = imgSrc;
+    document.getElementById('gen-btn-descargar').href = imgSrc;
+    document.getElementById('gen-btn-descargar').download = `RetoVirtual10K_Estilo${estiloModalActivo.id}_Dorsal${atletaActual.dorsal}.jpg`;
 
-    if (res.ok && data.success && data.imagenBase64) {
-      statusTxt.innerText = "¡Obra de arte completada!";
-      const imgSrc = `data:${data.mimeType || 'image/jpeg'};base64,${data.imagenBase64}`;
-      document.getElementById('gen-resultado-img').src = imgSrc;
-      document.getElementById('gen-btn-descargar').href = imgSrc;
-      document.getElementById('gen-btn-descargar').download = `RetoVirtual10K_Estilo${estiloModalActivo.id}_Dorsal${atletaActual.dorsal}.jpg`;
-
-      setTimeout(() => {
-        loader.classList.add('hidden');
-        wrapResultado.classList.remove('hidden');
-      }, 500);
-
-    } else {
-      // Si la API de Google Imagen 3 no tiene cuotas o da error, se muestra el diagnóstico amigable
+    setTimeout(() => {
       loader.classList.add('hidden');
-      placeholder.classList.remove('hidden');
-      
-      const errDetalle = data.error || 'La API de generación de imágenes no devolvió resultado.';
-      alert(`⚠️ Diagnóstico del Motor de IA:\n\n${errDetalle}\n\nPuedes presionar el botón "Copiar Prompt IA" para generar tu póster de alta resolución en Midjourney, ChatGPT o Leonardo AI con tu dorsal y tiempos ya configurados.`);
-    }
+      wrapResultado.classList.remove('hidden');
+    }, 400);
 
   } catch (err) {
     clearInterval(timer);
     loader.classList.add('hidden');
     placeholder.classList.remove('hidden');
-    alert(`Error de conexión con el motor de IA: ${err.message}`);
+    alert(`Error en el generador de estudio: ${err.message}`);
   } finally {
     btn.disabled = false;
     btn.classList.remove('opacity-50');

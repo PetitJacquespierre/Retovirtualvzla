@@ -3,14 +3,13 @@
 
 ---
 
-## 🏅 ESTILO #01: "Medalla Monumental Editorial" (Luxury Studio)
-* **Tipo de motor:** IA Generativa (Foto del Atleta + Foto de la Medalla Real `img/medalla_real_10k.jpg`).
-* **Ingredientes que sube el atleta:** Solo 1 foto suya (corriendo o selfie). *(La medalla del Reto 10K la inyecta automáticamente nuestro sistema por detrás).*
-* **Prompt Base Original (Threads):**
-  > `Avant-garde sports fashion, advertising, a huge medals set up like a monumental sculpture, male athlete sprawled across the curved surface of the medal like modern furniture, the huge word Olymrun medals in bold typography behind, the background of the burnt blue studio, shiny mirrored floor, luxurious sports editorial style, cinematic lighting, ultra-pure composition, 1:1`
+## 🏅 ESTILO #01: "Medalla Monumental Edición Especial 10K" (Luxury Studio)
+* **Tipo de motor:** IA Generativa (Foto del Atleta + Escultura de la Medalla 10K con Puente, Salto Ángel, Médanos y Ola 2026).
+* **Ingredientes que sube el atleta:** Solo 1 foto suya (corriendo o selfie).
+* **Diseño Físico de la Medalla Real Inyectada:** Escultura monumental rectangular dorada con el Puente sobre el Lago de Maracaibo, Médanos de Coro, Salto Ángel con sol naranja, banner vertical 10K y la gran ola de 2026.
 * **Prompt Oculto Calibrado para Reto Virtual VZLA:**
   ```text
-  Avant-garde sports fashion advertising, a huge monumental 3D sculpture of the exact marathon medal from the medal reference image, the athlete from the person reference photo posing confidently leaning and resting one foot on the giant medal like modern sculpture furniture, the huge bold words "RETO VIRTUAL 2026" in massive clean typography behind, burnt deep midnight blue and subtle cyan studio background, shiny mirrored studio floor with reflections, luxurious sports editorial style, cinematic studio lighting, ultra-pure composition, keep exact face identity and outfit, 1:1
+  Avant-garde luxury sports editorial fashion advertising. In a burnt deep midnight-blue and electric cyan studio with a glossy dark reflective mirror floor, a monumental giant 3D sculpture of the official Reto Virtual Venezuela 10K finisher medal: a majestic tall rectangular gold-rimmed shield featuring the Maracaibo suspension bridge on the left, golden sand dunes, Angel Falls waterfall cascading down green tepui cliffs with an orange rising sun on the right, bold embossed vertical "10K" in the center, and a dramatic sculpted 3D ocean wave at the base with "2026" in raised black metal. The athlete from the uploaded reference photo (preserve 100% exact facial identity and black athletic running outfit with RV emblem) leans confidently resting one foot on the giant medal sculpture like modern luxury art furniture. Massive clean white typography behind reads "RETO VIRTUAL VENEZUELA". Cinematic studio rim lighting, floor reflections, 8k, ultra-pure composition, 1:1.
   ```
 * **Ajuste inteligente aplicado:** Se cambió `male athlete` por `the athlete from the person reference photo` para que funcione automáticamente tanto para corredores hombres como mujeres, y se fijó el texto trasero a `"RETO VIRTUAL 2026"`.
 

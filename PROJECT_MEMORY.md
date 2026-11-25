@@ -42,6 +42,14 @@ Archivo de contexto local y memoria viva para la plataforma de carreras deportiv
 
 ---
 
+## 🚨 ESTRATEGIA DE CIERRE "SOLD OUT DE FIN DE MES" (NOV 27-28 / ~80 INSCRITOS)
+* **Momento de Activación:** Faltando 2-3 días para el último de mes (27-28 de noviembre) o al alcanzar los ~80 inscritos.
+* **Pantalla Pública (`inscripcion.html`):** Cierre total **100% SOLD OUT** (SIN botón de "lista de emergencia" ni pistas de que hay cupos). Debe verse completamente cerrado al público.
+* **Desbloqueo Secreto (`?vip=CODIGO`):** Solo cuando el usuario escriba rogando por DM/WhatsApp (especialmente al cobrar el 29-30 de nov o 1 de dic), se le hace el "favor" otorgándole un link VIP de 1 solo uso desde **Grow Studio Admin** (`reto_cupones_10k`).
+* **Reapertura Relámpago Final:** 1 o 2 días después (1-2 de dic, post-cobro), anunciar micro-lote final por petición popular con link limitado hasta completar exactamente las 100 medallas físicas.
+
+---
+
 ## 🚨 RECORDATORIO ACTIVO PARA MAÑANA (GYG GRAPHICS / TEXTIL)
 > **DISPARADOR / TRIGGER:** Apenas el usuario diga que le escribió o habló con la gente de **GYG Graphics (Creaciones Gyg Graphics)**, el asistente DEBE recordarle de inmediato:
 1. **Sumar la pieza de Luis Alberto García (#066 - Tucupita, Delta Amacuro):** Indicarle al taller que sume **1 Franelilla Olímpica Caballero** al lote en Tela Atlética (el pedido pasa de 58 a **59 piezas totales**).

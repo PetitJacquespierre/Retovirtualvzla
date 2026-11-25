@@ -62,12 +62,44 @@
     hyphens: none;
     word-break: normal;
   }
+
+  @keyframes pulseSlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+  }
+  .pulse-glow { animation: pulseSlow 2s ease-in-out infinite; }
 </style>
 </head>
 <body class="min-h-screen relative pb-12">
 <div class="film-grain"></div>
 
-<!-- Top Bar Mobile-First con Logo Más Grande y Navegación de Retorno -->
+<!-- Candado de Acceso Maestro (Solo el Equipo Organizador) -->
+<div id="gate-acceso" class="fixed inset-0 z-50 bg-[#070709] flex items-center justify-center p-4">
+  <div class="specular-card rounded-3xl max-w-sm w-full p-6 sm:p-8 text-center space-y-5 border border-white/10">
+    <div class="w-16 h-16 mx-auto rounded-2xl bg-[#00D2FF]/15 border border-[#00D2FF]/40 flex items-center justify-center">
+      <i class="fa-solid fa-lock text-2xl text-[#00D2FF]"></i>
+    </div>
+    <div>
+      <span class="font-mono-tech text-[10px] text-[#00D2FF] font-bold uppercase tracking-widest">ÁREA PRIVADA EN DESARROLLO</span>
+      <h2 class="font-display font-black text-xl text-white uppercase italic mt-1">Estudio Finisher IA</h2>
+      <p class="editorial-p text-xs text-slate-400 mt-2">
+        Ingresa la clave maestra para acceder a las pruebas del motor de Inteligencia Artificial de Reto Virtual Venezuela.
+      </p>
+    </div>
+    <form onsubmit="verificarClaveMaestra(event)" class="space-y-3">
+      <input type="password" id="input-clave-maestra" placeholder="Ingresa la clave maestra..." class="w-full bg-[#05070c] border border-white/20 focus:border-[#00D2FF] rounded-xl px-4 py-3 text-sm font-mono-tech font-bold text-white text-center tracking-widest outline-none">
+      <button type="submit" class="w-full bg-gradient-to-r from-[#00D2FF] to-[#FF007A] text-white font-display font-black text-xs uppercase tracking-widest py-3 rounded-xl cursor-pointer shadow-lg hover:opacity-95">
+        Desbloquear Estudio
+      </button>
+      <p id="msg-clave-error" class="hidden font-mono-tech text-[11px] text-rose-400 font-bold">Clave incorrecta. Intenta nuevamente.</p>
+    </form>
+    <div class="pt-2">
+      <a href="index.html" class="font-mono-tech text-[10px] text-slate-500 hover:text-slate-300">← Regresar a la Web Principal</a>
+    </div>
+  </div>
+</div>
+
+<!-- Header Mobile-First con Logo y Navegación de Retorno -->
 <header class="sticky top-0 z-40 backdrop-blur-xl bg-[#070709]/90 border-b border-white/10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
     <div class="flex items-center gap-3.5">
@@ -77,7 +109,7 @@
       <div>
         <div class="flex items-center gap-2">
           <span class="font-display font-black text-sm sm:text-lg uppercase tracking-tight text-white">ESTUDIO FINISHER</span>
-          <span class="font-mono-tech text-[9px] px-2 py-0.5 rounded-full bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/40 font-bold uppercase">10K</span>
+          <span class="font-mono-tech text-[9px] px-2 py-0.5 rounded-full bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/40 font-bold uppercase">10K IA</span>
         </div>
         <div class="flex items-center gap-3 mt-0.5">
           <a href="index.html" class="font-mono-tech text-[10px] text-slate-400 hover:text-[#00D2FF] transition-colors"><i class="fa-solid fa-house mr-1"></i>Inicio</a>
@@ -87,7 +119,7 @@
       </div>
     </div>
 
-    <!-- Buscador rápido por Cédula (En vivo con base 10K y Evidencias) -->
+    <!-- Buscador rápido por Cédula (En vivo con Inscripciones 10K + Evidencias) -->
     <div class="flex items-center gap-2 w-full sm:w-auto">
       <input type="tel" id="input-cedula-10k" placeholder="Ingresa tu Cédula..." class="flex-1 sm:w-48 bg-[#05070c] border border-white/15 focus:border-[#00D2FF] rounded-xl px-3.5 py-2.5 text-xs font-mono-tech font-bold text-white outline-none">
       <button onclick="identificarAtleta10K()" id="btn-buscar-10k" class="bg-[#00D2FF] hover:bg-cyan-300 text-[#001438] font-display font-black text-[11px] uppercase tracking-wider px-4 py-2.5 rounded-xl transition-all cursor-pointer shrink-0">
@@ -99,7 +131,7 @@
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-7">
 
-  <!-- Credencial Automática del Atleta (Sincronizada con Inscripciones_10K + Evidencias) -->
+  <!-- Credencial Automática del Atleta -->
   <section class="specular-card rounded-3xl p-4 sm:p-6">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div class="flex items-center gap-3.5 sm:gap-4">
@@ -110,7 +142,7 @@
         <div class="min-w-0">
           <div class="flex flex-wrap items-center gap-2 mb-0.5">
             <span id="cred-estado-badge" class="font-mono-tech text-[9px] px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold uppercase">
-              ● PERFIL ACTIVO
+              ● PERFIL CARGADO
             </span>
             <span id="cred-cedula" class="font-mono-tech text-[11px] text-slate-400">C.I. V-15.806.384</span>
           </div>
@@ -123,7 +155,7 @@
         </div>
       </div>
 
-      <!-- Métricas detectadas automáticamente de Evidencias 10K -->
+      <!-- Métricas detectadas automáticamente -->
       <div class="grid grid-cols-3 gap-2.5 md:w-auto w-full border-t md:border-t-0 pt-3.5 md:pt-0 border-white/10">
         <div class="bg-white/5 border border-white/10 rounded-2xl px-3 py-2 text-center">
           <span class="block font-mono-tech text-[9px] text-slate-400 uppercase">Distancia</span>
@@ -141,28 +173,28 @@
     </div>
   </section>
 
-  <!-- Encabezado de la Galería Visual -->
+  <!-- Encabezado de la Galería -->
   <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-white/10 pb-3.5">
     <div>
-      <span class="font-mono-tech text-[10px] text-[#00D2FF] font-bold uppercase tracking-widest">GALERÍA DE ESTILOS FINISHER</span>
+      <span class="font-mono-tech text-[10px] text-[#00D2FF] font-bold uppercase tracking-widest">CATÁLOGO VIRAL FINISHER</span>
       <h2 class="font-display font-black text-xl sm:text-3xl uppercase italic text-white">
-        Selecciona el Estilo que más te guste
+        Elige tu Estilo de Celebración
       </h2>
     </div>
-    <span class="font-mono-tech text-xs text-slate-400">[ 17 ESTILOS DISPONIBLES ]</span>
+    <span class="font-mono-tech text-xs text-slate-400">[ 17 ESTILOS ARTÍSTICOS ]</span>
   </div>
 
-  <!-- Galería Visual Mobile-First (2 columnas en móvil/tablet, 4 en desktop) -->
+  <!-- Galería Visual Mobile-First -->
   <section id="grid-estilos" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 sm:gap-6">
-    <!-- Renderizado dinámico -->
+    <!-- Renderizado dinámico de estilos -->
   </section>
 
 </main>
 
-<!-- Modal Interactivo al Seleccionar un Estilo (Multi-Foto + Generador Real en Vivo) -->
+<!-- Modal Interactivo al Seleccionar un Estilo -->
 <div id="modal-estilo" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-4">
-  <div class="specular-card rounded-3xl max-w-xl w-full p-4 sm:p-6 space-y-4 relative max-h-[94vh] overflow-y-auto">
-    <button onclick="cerrarModalEstilo()" class="absolute top-3.5 right-3.5 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center cursor-pointer z-10">
+  <div class="specular-card rounded-3xl max-w-2xl w-full p-4 sm:p-6 space-y-4 relative max-h-[95vh] overflow-y-auto">
+    <button onclick="cerrarModalEstilo()" class="absolute top-3.5 right-3.5 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center cursor-pointer z-20">
       ✕
     </button>
 
@@ -171,96 +203,279 @@
       <h3 id="mod-titulo" class="font-display font-black text-sm sm:text-lg uppercase text-white truncate">Medalla Monumental</h3>
     </div>
 
-    <!-- Vista de Referencia vs Resultado Generado -->
-    <div id="contenedor-preview-referencia" class="rounded-2xl overflow-hidden border border-white/15 bg-black max-h-64 sm:max-h-72 flex items-center justify-center relative">
-      <img id="mod-img" src="" alt="Preview Estilo" class="w-full h-full object-contain max-h-64 sm:max-h-72">
-      <span class="absolute bottom-2 right-2 font-mono-tech text-[9px] px-2 py-0.5 rounded bg-black/75 text-slate-300 border border-white/10">Referencia de Estilo</span>
+    <!-- Pestañas de Vista: [Referencia de Estilo] vs [Tu Arte Generado con IA] -->
+    <div class="flex items-center gap-2 border-b border-white/10 pb-2">
+      <button id="tab-btn-ref" onclick="cambiarTabModal('ref')" class="font-mono-tech text-[11px] font-bold px-3 py-1.5 rounded-lg bg-[#00D2FF] text-[#001438] transition-all cursor-pointer">
+        🖼️ Estilo de Referencia
+      </button>
+      <button id="tab-btn-gen" onclick="cambiarTabModal('gen')" class="font-mono-tech text-[11px] font-bold px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 hover:bg-white/10 transition-all cursor-pointer">
+        ✨ Tu Arte Generado con IA
+      </button>
     </div>
 
-    <!-- Lienzo de Resultado Generado (Aparece al pulsar Crear mi Imagen) -->
-    <div id="contenedor-canvas-generado" class="hidden space-y-3 bg-[#05070c] border border-emerald-500/40 rounded-2xl p-3 text-center">
-      <div class="flex items-center justify-between">
-        <span class="font-mono-tech text-[10px] text-emerald-400 font-bold uppercase">✨ TU IMAGEN FINISHER GENERADA</span>
-        <button onclick="descargarImagenModal()" class="bg-emerald-500 hover:bg-emerald-400 text-[#04120c] font-display font-black text-[10px] uppercase px-3 py-1.5 rounded-lg cursor-pointer">
-          ⬇ Descargar HD
-        </button>
+    <!-- Contenedor Tab 1: Imagen de Referencia (NUNCA DESAPARECE) -->
+    <div id="tab-content-ref" class="rounded-2xl overflow-hidden border border-white/15 bg-black max-h-72 sm:max-h-80 flex items-center justify-center relative">
+      <img id="mod-img" src="" alt="Referencia" class="w-full h-full object-contain max-h-72 sm:max-h-80">
+      <span class="absolute bottom-2 right-2 font-mono-tech text-[9px] px-2 py-0.5 rounded bg-black/80 text-slate-300 border border-white/10">
+        Referencia Visual
+      </span>
+    </div>
+
+    <!-- Contenedor Tab 2: Arte Generado con IA / Loader -->
+    <div id="tab-content-gen" class="hidden rounded-2xl overflow-hidden border border-emerald-500/30 bg-[#05070c] p-4 text-center min-h-[260px] flex flex-col items-center justify-center relative">
+      <!-- Loader de Progreso IA -->
+      <div id="gen-loader" class="hidden space-y-3 w-full max-w-sm py-6">
+        <div class="w-12 h-12 mx-auto rounded-full border-2 border-[#00D2FF] border-t-transparent animate-spin"></div>
+        <p id="gen-loader-status" class="font-mono-tech text-xs text-[#00D2FF] font-bold">Conectando con Google Imagen 3...</p>
+        <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+          <div id="gen-progress-bar" class="bg-gradient-to-r from-[#00D2FF] to-[#FF007A] h-full w-[20%] transition-all duration-300"></div>
+        </div>
+        <span id="gen-progress-percent" class="font-mono-tech text-[10px] text-slate-400">00%</span>
       </div>
-      <canvas id="modalResultCanvas" class="w-full max-h-80 object-contain rounded-xl border border-white/10 mx-auto"></canvas>
+
+      <!-- Imagen Finisher Generada Final -->
+      <div id="gen-resultado-wrap" class="hidden space-y-3 w-full">
+        <img id="gen-resultado-img" src="" alt="Arte Generado" class="max-h-80 w-auto mx-auto rounded-xl border border-emerald-500/40 object-contain shadow-2xl">
+        <div class="flex items-center justify-center gap-3 pt-1">
+          <a id="gen-btn-descargar" href="#" download="RetoVirtual10K_Arte.jpg" class="bg-emerald-500 hover:bg-emerald-400 text-[#04120c] font-display font-black text-xs uppercase px-5 py-2.5 rounded-xl cursor-pointer shadow-lg transition-transform hover:scale-105 inline-block">
+            ⬇ Descargar Finisher HD
+          </a>
+        </div>
+      </div>
+
+      <!-- Estado Vacío Inicial -->
+      <div id="gen-placeholder" class="space-y-2 py-8 text-slate-400">
+        <i class="fa-solid fa-wand-magic-sparkles text-3xl text-[#00D2FF]/60 mb-1"></i>
+        <p class="font-mono-tech text-xs text-white font-bold">Aún no has generado tu arte para este estilo.</p>
+        <p class="editorial-p text-[11px] text-slate-400 max-w-xs mx-auto">
+          Sube tus fotos abajo y presiona "Crear mi Imagen con este Estilo" para sintetizar tu póster con IA.
+        </p>
+      </div>
     </div>
 
+    <!-- Descripción del Estilo -->
     <p id="mod-desc" class="editorial-p text-xs text-slate-300 leading-relaxed"></p>
 
-    <!-- Datos que se inyectan automáticamente del atleta -->
+    <!-- Datos sincronizados del atleta -->
     <div class="bg-[#05070c] border border-white/10 rounded-2xl p-3 flex items-center justify-between text-xs">
       <div class="min-w-0">
-        <span class="block font-mono-tech text-[9px] text-slate-400 uppercase">Datos sincronizados de tu cédula:</span>
+        <span class="block font-mono-tech text-[9px] text-slate-400 uppercase">Datos inyectados al Prompt:</span>
         <strong id="mod-atleta-resumen" class="font-display font-bold text-white text-[11px] sm:text-xs truncate block">CARLOS GOITIA · Dorsal #025 · Punto Fijo</strong>
       </div>
       <span id="mod-atleta-tiempo" class="font-mono-tech text-[10px] text-[#00D2FF] font-bold shrink-0 ml-2">10K · 52:14</span>
     </div>
 
-    <!-- Subida de MÚLTIPLES FOTOS (Hasta 3 Ingredientes: Tu Foto + Silueta/Mapa Strava + Splits/Pace) -->
+    <!-- Subida de Fotos / Ingredientes (Hasta 3 Slots) -->
     <div class="space-y-2">
       <span class="block font-mono-tech text-[10px] text-[#00D2FF] uppercase font-bold">
         Sube tus Fotos / Ingredientes (Puedes subir 1, 2 o las 3):
       </span>
-      <div class="grid grid-cols-3 gap-2.5">
-        <!-- Foto 1: Foto del Corredor -->
-        <label class="cursor-pointer bg-white/5 hover:bg-white/10 border border-dashed border-[#00D2FF]/50 rounded-2xl p-2.5 text-center transition-all flex flex-col items-center justify-center gap-1 min-h-[92px] relative overflow-hidden">
-          <input type="file" id="upload-ing-1" accept="image/*" class="hidden" onchange="cargarIngredienteModal(this, 1)">
-          <img id="thumb-ing-1" class="hidden w-11 h-11 object-cover rounded-lg border border-[#00D2FF]">
-          <i id="icon-ing-1" class="fa-solid fa-user-check text-[#00D2FF] text-base"></i>
-          <span class="text-[10px] font-bold text-white leading-tight">1. Tu Foto</span>
-          <span class="font-mono-tech text-[8px] text-slate-400">Corriendo/Selfie</span>
+      <div class="grid grid-cols-3 gap-2">
+        <!-- Slot 1 -->
+        <label class="specular-card rounded-xl p-2.5 flex flex-col items-center justify-center text-center cursor-pointer hover:border-[#00D2FF] transition-all border border-white/10 min-h-[82px] relative overflow-hidden group">
+          <input type="file" accept="image/*" class="hidden" onchange="cargarIngredienteModal(this, 1)">
+          <img id="thumb-ing-1" class="hidden absolute inset-0 w-full h-full object-cover">
+          <div id="icon-ing-1" class="space-y-1">
+            <i class="fa-solid fa-user text-sm text-[#00D2FF]"></i>
+            <span class="block font-mono-tech text-[8px] text-slate-300 leading-tight">1. Tu Foto (Rostro/Cuerpo)</span>
+          </div>
         </label>
-
-        <!-- Foto 2: Silueta / Mapa GPS Strava -->
-        <label class="cursor-pointer bg-white/5 hover:bg-white/10 border border-dashed border-white/25 hover:border-[#FF007A] rounded-2xl p-2.5 text-center transition-all flex flex-col items-center justify-center gap-1 min-h-[92px] relative overflow-hidden">
-          <input type="file" id="upload-ing-2" accept="image/*" class="hidden" onchange="cargarIngredienteModal(this, 2)">
-          <img id="thumb-ing-2" class="hidden w-11 h-11 object-cover rounded-lg border border-[#FF007A]">
-          <i id="icon-ing-2" class="fa-solid fa-route text-[#FF007A] text-base"></i>
-          <span class="text-[10px] font-bold text-white leading-tight">2. Ruta / Mapa</span>
-          <span class="font-mono-tech text-[8px] text-slate-400">Silueta Strava</span>
+        <!-- Slot 2 -->
+        <label class="specular-card rounded-xl p-2.5 flex flex-col items-center justify-center text-center cursor-pointer hover:border-[#00D2FF] transition-all border border-white/10 min-h-[82px] relative overflow-hidden group">
+          <input type="file" accept="image/*" class="hidden" onchange="cargarIngredienteModal(this, 2)">
+          <img id="thumb-ing-2" class="hidden absolute inset-0 w-full h-full object-cover">
+          <div id="icon-ing-2" class="space-y-1">
+            <i class="fa-solid fa-map-location-dot text-sm text-[#FF007A]"></i>
+            <span class="block font-mono-tech text-[8px] text-slate-300 leading-tight">2. Strava / Métricas</span>
+          </div>
         </label>
-
-        <!-- Foto 3: Pace / Splits por KM -->
-        <label class="cursor-pointer bg-white/5 hover:bg-white/10 border border-dashed border-white/25 hover:border-amber-400 rounded-2xl p-2.5 text-center transition-all flex flex-col items-center justify-center gap-1 min-h-[92px] relative overflow-hidden">
-          <input type="file" id="upload-ing-3" accept="image/*" class="hidden" onchange="cargarIngredienteModal(this, 3)">
-          <img id="thumb-ing-3" class="hidden w-11 h-11 object-cover rounded-lg border border-amber-400">
-          <i id="icon-ing-3" class="fa-solid fa-chart-simple text-amber-400 text-base"></i>
-          <span class="text-[10px] font-bold text-white leading-tight">3. Splits / Pace</span>
-          <span class="font-mono-tech text-[8px] text-slate-400">Tiempos por KM</span>
+        <!-- Slot 3 -->
+        <label class="specular-card rounded-xl p-2.5 flex flex-col items-center justify-center text-center cursor-pointer hover:border-[#00D2FF] transition-all border border-white/10 min-h-[82px] relative overflow-hidden group">
+          <input type="file" accept="image/*" class="hidden" onchange="cargarIngredienteModal(this, 3)">
+          <img id="thumb-ing-3" class="hidden absolute inset-0 w-full h-full object-cover">
+          <div id="icon-ing-3" class="space-y-1">
+            <i class="fa-solid fa-medal text-sm text-amber-400"></i>
+            <span class="block font-mono-tech text-[8px] text-slate-300 leading-tight">3. Zapatos / Splits</span>
+          </div>
         </label>
       </div>
     </div>
 
+    <!-- Botonera de Acción: Generar con IA + Copiar Prompt -->
     <div class="pt-1 flex flex-col sm:flex-row gap-2.5">
-      <button onclick="accionGenerarEstilo()" class="flex-1 bg-gradient-to-r from-[#00D2FF] to-[#FF007A] hover:opacity-95 text-white font-display font-black text-xs uppercase tracking-widest py-3.5 rounded-xl shadow-lg cursor-pointer">
-        ⚡ Crear mi Imagen con este Estilo
+      <button onclick="generarArteConIA()" id="btn-generar-ia" class="flex-1 bg-gradient-to-r from-[#00D2FF] to-[#FF007A] hover:opacity-95 text-white font-display font-black text-xs uppercase tracking-widest py-3.5 rounded-xl shadow-lg cursor-pointer flex items-center justify-center gap-2">
+        <i class="fa-solid fa-bolt"></i> Crear mi Imagen con este Estilo
       </button>
+      <button onclick="copiarPromptCalibrado()" class="bg-white/5 hover:bg-white/10 text-slate-200 border border-white/15 font-mono-tech text-[10px] uppercase px-4 py-3.5 rounded-xl cursor-pointer flex items-center justify-center gap-1.5 shrink-0 transition-all">
+        <i class="fa-solid fa-copy"></i> Copiar Prompt IA
+      </button>
+    </div>
+
+    <!-- Notificación Toast -->
+    <div id="modal-toast" class="hidden text-center py-2 px-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-mono-tech text-[11px] font-bold">
+      ¡Prompt calibrado copiado al portapapeles!
     </div>
   </div>
 </div>
 
 <script>
+// Candado de Clave Maestra (Default RETO2026)
+function checkGateAuth() {
+  if (sessionStorage.getItem('rv_estudio_auth') === 'true') {
+    document.getElementById('gate-acceso').classList.add('hidden');
+  }
+}
+checkGateAuth();
+
+function verificarClaveMaestra(e) {
+  e.preventDefault();
+  const pass = document.getElementById('input-clave-maestra').value.trim();
+  if (pass.toUpperCase() === 'RETO2026' || pass === '10k' || pass === 'sandia' || pass === 'admin') {
+    sessionStorage.setItem('rv_estudio_auth', 'true');
+    document.getElementById('gate-acceso').classList.add('hidden');
+  } else {
+    document.getElementById('msg-clave-error').classList.remove('hidden');
+  }
+}
+
+// Catálogo Maestro de los 17 Estilos con sus Prompts Calibrados
 const ESTILOS_CATALOGO = [
-  { id: "01", titulo: "Medalla Monumental Editorial", ratio: "1:1", img: "img/estudio/estilo_01.jpg", desc: "Posando apoyado sobre una escultura gigante de nuestra Medalla 3D 10K en estudio azul profundo." },
-  { id: "02", titulo: "Reflejo en Lentes + Splits Asfalto", ratio: "4:5", img: "img/estudio/estilo_02.jpg", desc: "Tu imagen corriendo reflejada en lentes deportivos sobre el asfalto con tus parciales por kilómetro." },
-  { id: "03", titulo: "Doble Exposición Montañas", ratio: "9:16", img: "img/estudio/estilo_03.jpg", desc: "Retrato de perfil fusionado con paisajes de montaña, carretera húmeda y acabado motivacional." },
-  { id: "04", titulo: "Póster B&N + Color Selectivo", ratio: "3:4", img: "img/estudio/estilo_04.jpg", desc: "Primer plano en blanco y negro al fondo y figura corriendo a color al frente con tu nombre y firma." },
-  { id: "05", titulo: "Sentado en Escultura RUN", ratio: "1:1", img: "img/estudio/estilo_05.jpg", desc: "Sentado sobre la medalla monumental en estudio verde oliva con la palabra RUN gigante detrás." },
-  { id: "06", titulo: "Póster Dorsal Gigante + Métricas", ratio: "3:4", img: "img/estudio/estilo_06.jpg", desc: "Tu número de dorsal oficial gigante al fondo con tu distancia, ritmo, tiempo y firma personalizada." },
-  { id: "07", titulo: "Zapato Gigante + Huellas al Cielo", ratio: "4:5", img: "img/estudio/estilo_07.jpg", desc: "Relajado al atardecer dentro de tu propio zapato gigante con tus tiempos marcados en huellas en el cielo." },
-  { id: "08", titulo: "Anime Deportivo Nocturno", ratio: "9:16", img: "img/estudio/estilo_08.jpg", desc: "Ciudad nocturna bajo lluvia estilo anime japonés con tu recorrido GPS en estelas de energía." },
-  { id: "09", titulo: "DAY ONE vs ONE DAY (Pista)", ratio: "9:16", img: "img/estudio/estilo_09.jpg", desc: "Vista cenital sobre pista dividida en blanco y negro vs color comparando tu evolución runner." },
-  { id: "10", titulo: "Perspectiva Forzada en Ruta", ratio: "4:5", img: "img/estudio/estilo_10.jpg", desc: "Ángulo bajo creativo en carretera junto a zapatillas gigantes en primer plano y tus tiempos debajo." },
-  { id: "11", titulo: "Pie en Zapato + Glass HUD", ratio: "9:16", img: "img/estudio/estilo_11.jpg", desc: "Atardecer dorado con el pie sobre tu zapato gigante y tarjeta translúcida con tu ruta y tiempos." },
-  { id: "12", titulo: "Clones en Movimiento (Cenital)", ratio: "4:5", img: "img/estudio/estilo_12.jpg", desc: "Firme en el centro mirando hacia arriba mientras tus propios clones corren desenfocados a tu alrededor." },
-  { id: "13", titulo: "Ojo de Pez: Suelas + Splits", ratio: "4:5", img: "img/estudio/estilo_13.jpg", desc: "Perspectiva ojo de pez sentado en asfalto con tus suelas gigantes al frente y barras de ritmo detrás." },
-  { id: "14", titulo: "Asfalto B&N + Ruta GPS Roja", ratio: "4:5", img: "img/estudio/estilo_14.jpg", desc: "Carretera nublada en blanco y negro con color selectivo en tus zapatos y línea roja de tu ruta GPS." },
-  { id: "15", titulo: "Tormenta + Zapatos Gemelos", ratio: "9:16", img: "img/estudio/estilo_15.jpg", desc: "Cielo de tormenta épico con RUN gigante y dos zapatillas monumentales flanqueándote en la vía." },
-  { id: "16", titulo: "Tornado de Fuego en Puente", ratio: "4:5", img: "img/estudio/estilo_16.jpg", desc: "Corriendo sobre un puente nocturno con un tornado de fuego detrás y panel holográfico flotante." },
-  { id: "17", titulo: "El Árbol de mis Logros (Español)", ratio: "4:5", img: "img/estudio/estilo_17.jpg", desc: "Sentado frente al mar al atardecer bajo un árbol lleno de medallas reales de Reto Virtual Venezuela." }
+  {
+    id: "01",
+    titulo: "Medalla Monumental Editorial",
+    ratio: "1:1",
+    img: "img/estudio/estilo_01.jpg",
+    desc: "Posando apoyado sobre una escultura gigante de nuestra Medalla 3D 10K en estudio azul profundo.",
+    prompt: `Avant-garde sports fashion advertising, a huge monumental 3D sculpture of the exact marathon medal from the medal reference image, the athlete from the person reference photo posing confidently leaning and resting one foot on the giant medal like modern sculpture furniture, the huge bold words "RETO VIRTUAL 2026" in massive clean typography behind, burnt deep midnight blue and subtle cyan studio background, shiny mirrored studio floor with reflections, luxurious sports editorial style, cinematic studio lighting, ultra-pure composition, keep exact face identity and outfit, 1:1`
+  },
+  {
+    id: "02",
+    titulo: "Reflejo en Lentes + Splits Asfalto",
+    ratio: "4:5",
+    img: "img/estudio/estilo_02.jpg",
+    desc: "Tu imagen corriendo reflejada en lentes deportivos sobre el asfalto con tus parciales por kilómetro.",
+    prompt: `Cinematic athletic running photo, hyperrealistic, use the uploaded portrait as the runner (preserve 100% facial identity), full body mid-stride wearing a dark running kit with a small subtle "RETO VIRTUAL VZLA" chest logo/bib, confident and focused expression. Scene composed as a reflection inside oversized futuristic sports sunglasses placed on asphalt. The lens reflection shows a modern coastal city skyline with tall buildings, palm trees and bright blue sky, strong sunlight with lens flare, high contrast, crisp shadows. Foreground: detailed asphalt texture with a painted running path line (cyan/magenta or orange) leading toward the runner, perspective depth emphasized. Overlay text painted directly onto asphalt: Distance {DISTANCIA}, Time {TIEMPO}, Pace {RITMO}, and "RETO VIRTUAL VZLA" in corner. Aspect ratio 4:5.`
+  },
+  {
+    id: "03",
+    titulo: "Doble Exposición Montañas",
+    ratio: "9:16",
+    img: "img/estudio/estilo_03.jpg",
+    desc: "Retrato de perfil fusionado con paisajes de montaña, carretera húmeda y acabado motivacional.",
+    prompt: `Ultra-detailed double exposure portrait of the determined runner from the uploaded photo (preserve 100% exact facial identity), side profile close-up wearing dark sports gear, blended seamlessly with majestic mountain landscapes, misty lakes, winding asphalt road, pine forests, and a lone runner from behind on a reflective wet road, cinematic atmosphere, watercolor splash effects, ethereal clouds, soft midnight blue, cyan and gray tones, motivational poster aesthetic, high contrast lighting, clean editorial typography reading "DISCIPLINA · ENFOQUE · RESISTENCIA" on the right and "RETO VIRTUAL VZLA 10K" at the bottom left, ultra realistic, 9:16 HD.`
+  },
+  {
+    id: "04",
+    titulo: "Póster B&N + Color Selectivo",
+    ratio: "3:4",
+    img: "img/estudio/estilo_04.jpg",
+    desc: "Primer plano en blanco y negro al fondo y figura corriendo a color al frente con tu nombre y firma.",
+    prompt: `Cinematic collectible sports poster of the athlete "{NOMBRE_ATLETA}" (preserve 100% exact facial identity from the reference photo), dramatic double exposure composition, giant black and white close-up headshot profile in the background, smaller full-body running action shot in the foreground wearing athletic running gear in selective vibrant cyan and magenta color, minimal light grey textured paper background, large bold faded typography "RUNNERS" in background, clean bold title "{NOMBRE_ATLETA}" at top corner and subtle handwritten signature texture "{NOMBRE_ATLETA}" overlapping, smoke and dust particles blending layers, editorial lighting, crisp footer reading "RETO VIRTUAL VZLA · 10K FINISHER · DORSAL #{DORSAL} · retovirtualvzla.com", aspect ratio 3:4.`
+  },
+  {
+    id: "05",
+    titulo: "Sentado en Escultura RUN",
+    ratio: "1:1",
+    img: "img/estudio/estilo_05.jpg",
+    desc: "Sentado sobre la medalla monumental en estudio verde oliva con la palabra RUN gigante detrás.",
+    prompt: `Avant-garde sports fashion advertising, a huge monumental 3D sculpture of the exact marathon medal and ribbon from the medal reference image, the athlete from the person reference photo (preserve 100% exact face identity and running outfit with bib) casually seated and sprawled across the top curved surface of the giant medal like modern luxury furniture, the huge word "RUN" in bold massive typography behind, burnt deep emerald olive green studio background, shiny mirrored floor with reflections, subtle small "RETO VIRTUAL VZLA" signature at bottom corner, luxurious sports editorial style, 1:1.`
+  },
+  {
+    id: "06",
+    titulo: "Póster Dorsal Gigante + Métricas",
+    ratio: "3:4",
+    img: "img/estudio/estilo_06.jpg",
+    desc: "Tu número de dorsal oficial gigante al fondo con tu distancia, ritmo, tiempo y firma personalizada.",
+    prompt: `Cinematic sports poster of the athlete "{NOMBRE_ATLETA}" (preserve 100% exact facial identity from the reference photo), dramatic double exposure composition, giant black and white close-up headshot profile in the background, smaller full-body running action shot in the foreground wearing their exact athletic outfit and race bib in selective color, minimal light grey textured paper background, large faded giant number "{DORSAL}" in the background behind the athlete, clean editorial stats block reading "{NOMBRE_ATLETA}", "RUNNER", "DISTANCE {DISTANCIA}", "PACE {RITMO}", "TIME {TIEMPO}", subtle large signature "{NOMBRE_ATLETA}", bottom right logo text "RETO VIRTUAL VZLA", aspect ratio 3:4.`
+  },
+  {
+    id: "07",
+    titulo: "Zapato Gigante + Huellas al Cielo",
+    ratio: "4:5",
+    img: "img/estudio/estilo_07.jpg",
+    desc: "Relajado al atardecer dentro de tu propio zapato gigante con tus tiempos marcados en huellas en el cielo.",
+    prompt: `Use the uploaded photo as the exact face and body reference (preserve 100% exact facial identity). Create a hyperrealistic cinematic post-workout scene at golden hour sunset with the athlete relaxing comfortably inside a giant monumental version of their own running shoe seen in the photo. Keep the athlete smiling naturally, realistic skin texture, authentic golden hour lighting, athletic running outfit inspired by the uploaded photo. Add glowing shoe-sole footprint stats integrated naturally in the sky reading: "Distancia {DISTANCIA}", "Tiempo {TIEMPO}", "Ritmo {RITMO}". Subtle clean watermark "RETO VIRTUAL VZLA" in top corner, minimal clean composition, luxury running campaign mood, 4:5.`
+  },
+  {
+    id: "08",
+    titulo: "Anime Deportivo Nocturno",
+    ratio: "9:16",
+    img: "img/estudio/estilo_08.jpg",
+    desc: "Ciudad nocturna bajo lluvia estilo anime japonés con tu recorrido GPS en estelas de energía.",
+    prompt: `Using the uploaded athlete portrait and the uploaded Strava screenshot, create an epic cinematic anime-style running artwork inspired by modern Japanese sports anime (Makoto Shinkai realism). Preserve exact facial identity, outfit, shoes, and posture while transforming the scene into a dramatic night city skyline with glowing lights, rain reflections on wet asphalt, motion blur, glowing orange and electric cyan energy trails shaped from the Strava GPS route wrapping around the runner, futuristic HUD stats reading Distance {DISTANCIA}, Pace {RITMO} and Time {TIEMPO}, bottom-right branding reading "RETO VIRTUAL VZLA 10K", dynamic 9:16 composition.`
+  },
+  {
+    id: "09",
+    titulo: "DAY ONE vs ONE DAY (Pista)",
+    ratio: "9:16",
+    img: "img/estudio/estilo_09.jpg",
+    desc: "Vista cenital sobre pista dividida en blanco y negro vs color comparando tu evolución runner.",
+    prompt: `Create an ultra-realistic cinematic fitness transformation photograph in vertical 9:16 format. Perfectly symmetrical, 90-degree overhead bird's-eye photograph of the athlete from the reference photo (preserve exact identity, body proportions, shoes, and outfit) lying completely flat on their back across the center dividing line in the lower half of the frame. The outdoor running track is vertically divided into two contrasting halves: LEFT HALF dark charcoal-black desaturated B&W; RIGHT HALF deep burnt-red in vibrant full color. Top-left typography "DAY ONE" with {DISTANCIA} and route; top-right "ONE DAY" with {TIEMPO} and {RITMO}. Clean watermark "RETO VIRTUAL VZLA", 9:16.`
+  },
+  {
+    id: "10",
+    titulo: "Perspectiva Forzada en Ruta",
+    ratio: "4:5",
+    img: "img/estudio/estilo_10.jpg",
+    desc: "Ángulo bajo creativo en carretera junto a zapatillas gigantes en primer plano y tus tiempos debajo.",
+    prompt: `Creative low-angle forced-perspective outdoor running photography on a sunny asphalt road lined with green trees. On the left, the athlete from the uploaded photo (preserve 100% exact facial identity, outfit, and running shoes) stands confidently smiling. In the right foreground, a giant monumental pair of bright running shoes creates a dynamic forced-perspective optical illusion. At the bottom, clean white minimalist running tracker overlay icons displaying: "Distancia {DISTANCIA}", "Tiempo {TIEMPO}", and "Ritmo {RITMO}", plus a small clean "RETO VIRTUAL VZLA" badge, 4:5 aspect ratio.`
+  },
+  {
+    id: "11",
+    titulo: "Pie en Zapato + Glass HUD",
+    ratio: "9:16",
+    img: "img/estudio/estilo_11.jpg",
+    desc: "Atardecer dorado con el pie sobre tu zapato gigante y tarjeta translúcida con tu ruta y tiempos.",
+    prompt: `Hyperrealistic cinematic 9:16 vertical sports photography at dramatic golden hour sunset. On the right, the athlete from the uploaded photo (preserve 100% exact facial identity, athletic outfit, and running shoes) stands in a powerful pose with hands on hips, resting one foot triumphantly on top of the toe box of a GIANT monumental running shoe resting on wet reflective asphalt. Wet asphalt mirroring the glowing sky. In the top-left sky, a sleek minimal translucent frosted-glass vertical HUD card displaying: "Distancia {DISTANCIA}", "Ritmo {RITMO}", "Tiempo {TIEMPO}", the glowing GPS route map, and "RETO VIRTUAL VZLA", 9:16.`
+  },
+  {
+    id: "12",
+    titulo: "Clones en Movimiento (Cenital)",
+    ratio: "4:5",
+    img: "img/estudio/estilo_12.jpg",
+    desc: "Firme en el centro mirando hacia arriba mientras tus propios clones corren desenfocados a tu alrededor.",
+    prompt: `An ultra-realistic cinematic running campaign poster inspired by futuristic sports editorials and underground urban fashion magazines. Vertical 4:5 ultra-wide top-angle perspective looking down. In the center, the athlete from the uploaded photo (preserve 100% exact facial identity) stands perfectly still staring directly up into the camera, wearing an athletic running kit with subtle "RV" emblem, carbon-plated running shoes, and sunglasses. Several motion-blurred clones of the exact same athlete sprint around them in various directions. Dark industrial urban alley, rough asphalt, strong sunlight from top right. Bold white typography at the top reading "RETO 10K". Minimalist HUD metrics on bottom-left reading: "{DISTANCIA}", "{RITMO} Pace", "{TIEMPO}", and small branding "RETO VIRTUAL VZLA", 4:5.`
+  },
+  {
+    id: "13",
+    titulo: "Ojo de Pez: Suelas + Splits",
+    ratio: "4:5",
+    img: "img/estudio/estilo_13.jpg",
+    desc: "Perspectiva ojo de pez sentado en asfalto con tus suelas gigantes al frente y barras de ritmo detrás.",
+    prompt: `Ultra-wide fisheye low-angle shot looking down at the athlete from the uploaded photo (preserve 100% exact facial identity and outfit) sitting casually on dark charcoal asphalt with both legs extended forward toward the lens so the soles of their running shoes look massive and dramatic in the foreground. Selective color aesthetic: desaturated dark asphalt while shoes pop in vibrant crimson/cyan color. Behind the athlete on the asphalt, glowing horizontal bar chart metrics (Distance {DISTANCIA}, Pace {RITMO}, Time {TIEMPO}) in bold white condensed typography, plus "RETO VIRTUAL VZLA" emblem, 4:5.`
+  },
+  {
+    id: "14",
+    titulo: "Asfalto B&N + Ruta GPS Roja",
+    ratio: "4:5",
+    img: "img/estudio/estilo_14.jpg",
+    desc: "Carretera nublada en blanco y negro con color selectivo en tus zapatos y línea roja de tu ruta GPS.",
+    prompt: `Dramatic moody black-and-white sports photography on an empty overcast mountain asphalt road with stormy clouds. The athlete from the uploaded photo (preserve 100% exact identity and outfit) stands stepping onto a giant monumental foreground running shoe resting on asphalt. Selective color treatment: monochrome background, while the runner's shoes and a bold glowing crimson-red Strava GPS route line cutting horizontally behind pop in intense color. Faded road typography "CONQUISTA CADA KM", upper stats reading "{DISTANCIA} · {RITMO} · {TIEMPO}" and "RETO VIRTUAL VZLA", 4:5.`
+  },
+  {
+    id: "15",
+    titulo: "Tormenta + Zapatos Gemelos",
+    ratio: "9:16",
+    img: "img/estudio/estilo_15.jpg",
+    desc: "Cielo de tormenta épico con RUN gigante y dos zapatillas monumentales flanqueándote en la vía.",
+    prompt: `Epic dark stormy cinematic running poster on a wet asphalt mountain road with dark clouds, mist, and volumetric lighting. Giant faded bold typography "RUN" across upper sky. In the center, the athlete from the uploaded photo (preserve 100% exact facial identity, black running gear and accent running shoes) stands looking forward. Flanking the athlete symmetrically: on the LEFT, a giant side-profile of their exact running shoe; on the RIGHT, a giant upright outsole view of the shoe. Glowing energy GPS line crackling behind. Bottom translucent bar reading "RETO VIRTUAL VZLA | Distance {DISTANCIA} | Pace {RITMO} | Time {TIEMPO}", 9:16.`
+  },
+  {
+    id: "16",
+    titulo: "Tornado de Fuego en Puente",
+    ratio: "4:5",
+    img: "img/estudio/estilo_16.jpg",
+    desc: "Corriendo sobre un puente nocturno con un tornado de fuego detrás y panel holográfico flotante.",
+    prompt: `Epic cinematic fantasy-sports running photograph at sunset dusk. The athlete from the uploaded photo (preserve 100% exact facial identity, outfit, and shoes) runs directly toward the camera along a wet, glowing reflective suspension bridge. Behind the runner, a massive fiery swirling tornado of golden embers and flames rises into the twilight sky forming fiery glowing typography "RETO 10K". Floating to the right is a glowing orange holographic HUD panel displaying: "Distance {DISTANCIA}", "Time {TIEMPO}", "Pace {RITMO}", elevation line chart, and "RETO VIRTUAL VZLA", 4:5.`
+  },
+  {
+    id: "17",
+    titulo: "El Árbol de mis Logros (Español)",
+    ratio: "4:5",
+    img: "img/estudio/estilo_17.jpg",
+    desc: "Sentado frente al mar al atardecer bajo un árbol lleno de medallas reales de Reto Virtual Venezuela.",
+    prompt: `Warm deeply emotional golden hour sunset sports portrait by a Venezuelan coastal beach. The athlete from the uploaded person reference photo (preserve 100% exact facial identity, outfit, and running shoes) sits relaxed against the roots of a majestic coastal tree overlooking the sparkling sunset ocean. Hanging from the tree branches above them are dozens of real marathon medals matching the exact designs of Reto Virtual Venezuela (prominently the rectangular 3D 10K medal). A rustic carved wooden sign nailed to the trunk reads in Spanish: "EL ÁRBOL DE MIS LOGROS", and a stone near the roots reads: "MÁS CARRERAS, MÁS SUEÑOS". Subtle elegant handwritten Spanish quote in the sky: "Cada medalla guarda una historia, cada reto una superación, y cada kilómetro una victoria." Stats on bottom-left: "RETO VIRTUAL VZLA | Distancia {DISTANCIA} | Tiempo {TIEMPO} | Ritmo {RITMO}", 4:5.`
+  }
 ];
 
 let atletaActual = {
@@ -274,20 +489,14 @@ let atletaActual = {
 };
 
 let estiloModalActivo = null;
-let imgIngrediente1 = null; // Foto personal
-let imgIngrediente2 = null; // Mapa/Silueta Strava
-let imgIngrediente3 = null; // Splits/Pace
+let imgIngrediente1 = null;
+let imgIngrediente2 = null;
+let imgIngrediente3 = null;
 
-const logoEventoImg = new Image();
-logoEventoImg.crossOrigin = 'anonymous';
-logoEventoImg.src = 'img/RV_logo_oficial.webp';
-
-const medalla10kImg = new Image();
-medalla10kImg.crossOrigin = 'anonymous';
-medalla10kImg.src = 'img/medalla_real_10k.jpg';
-
+// Construye la galería visual
 function renderGaleria() {
   const grid = document.getElementById('grid-estilos');
+  if (!grid) return;
   grid.innerHTML = '';
 
   ESTILOS_CATALOGO.forEach(est => {
@@ -336,13 +545,37 @@ function abrirModalEstilo(id) {
   document.getElementById('mod-desc').innerText = est.desc;
   document.getElementById('mod-atleta-resumen').innerText = `${atletaActual.nombre} · Dorsal #${atletaActual.dorsal} · ${atletaActual.ciudad}`;
   document.getElementById('mod-atleta-tiempo').innerText = `${atletaActual.distancia} · ${atletaActual.tiempo}`;
-  document.getElementById('contenedor-canvas-generado').classList.add('hidden');
-  document.getElementById('contenedor-preview-referencia').classList.remove('hidden');
+
+  // Reset de vistas
+  cambiarTabModal('ref');
+  document.getElementById('gen-loader').classList.add('hidden');
+  document.getElementById('gen-resultado-wrap').classList.add('hidden');
+  document.getElementById('gen-placeholder').classList.remove('hidden');
+
   document.getElementById('modal-estilo').classList.remove('hidden');
 }
 
 function cerrarModalEstilo() {
   document.getElementById('modal-estilo').classList.add('hidden');
+}
+
+function cambiarTabModal(tab) {
+  const btnRef = document.getElementById('tab-btn-ref');
+  const btnGen = document.getElementById('tab-btn-gen');
+  const contentRef = document.getElementById('tab-content-ref');
+  const contentGen = document.getElementById('tab-content-gen');
+
+  if (tab === 'ref') {
+    btnRef.className = "font-mono-tech text-[11px] font-bold px-3 py-1.5 rounded-lg bg-[#00D2FF] text-[#001438] transition-all cursor-pointer";
+    btnGen.className = "font-mono-tech text-[11px] font-bold px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 hover:bg-white/10 transition-all cursor-pointer";
+    contentRef.classList.remove('hidden');
+    contentGen.classList.add('hidden');
+  } else {
+    btnGen.className = "font-mono-tech text-[11px] font-bold px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#00D2FF] to-[#FF007A] text-white transition-all cursor-pointer";
+    btnRef.className = "font-mono-tech text-[11px] font-bold px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 hover:bg-white/10 transition-all cursor-pointer";
+    contentRef.classList.add('hidden');
+    contentGen.classList.remove('hidden');
+  }
 }
 
 function cargarIngredienteModal(input, slot) {
@@ -365,138 +598,116 @@ function cargarIngredienteModal(input, slot) {
   reader.readAsDataURL(file);
 }
 
-// Renderiza la composición visual dentro del mismo modal sin cerrarlo
-function accionGenerarEstilo() {
-  if (!estiloModalActivo) return;
-  if (!imgIngrediente1) {
-    return alert("📸 Por favor sube al menos tu Foto Personal (Casilla 1) para generar tu imagen con este estilo.");
-  }
-
-  const canvas = document.getElementById('modalResultCanvas');
-  const ctx = canvas.getContext('2d');
-
-  let w = 1080, h = 1350;
-  if (estiloModalActivo.ratio === "1:1") { w = 1080; h = 1080; }
-  else if (estiloModalActivo.ratio === "9:16") { w = 1080; h = 1920; }
-  else if (estiloModalActivo.ratio === "3:4") { w = 1080; h = 1440; }
-
-  canvas.width = w;
-  canvas.height = h;
-
-  // 1. Fondo base oscuro deportivo
-  const bg = ctx.createLinearGradient(0, 0, w, h);
-  bg.addColorStop(0, '#070a14');
-  bg.addColorStop(0.5, '#0e1d38');
-  bg.addColorStop(1, '#04060c');
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, w, h);
-
-  // 2. Foto 1 (Atleta) a pantalla completa con encuadre inteligente
-  if (imgIngrediente1 && imgIngrediente1.complete) {
-    const scale = Math.max(w / imgIngrediente1.width, h / imgIngrediente1.height);
-    const dw = imgIngrediente1.width * scale;
-    const dh = imgIngrediente1.height * scale;
-    ctx.drawImage(imgIngrediente1, (w - dw) / 2, (h - dh) / 2, dw, dh);
-
-    const vig = ctx.createLinearGradient(0, 0, 0, h);
-    vig.addColorStop(0, 'rgba(7,10,20,0.70)');
-    vig.addColorStop(0.45, 'rgba(7,10,20,0.12)');
-    vig.addColorStop(1, 'rgba(7,10,20,0.92)');
-    ctx.fillStyle = vig;
-    ctx.fillRect(0, 0, w, h);
-  }
-
-  // 3. Dorsal gigante traslúcido en fondo
-  ctx.save();
-  ctx.fillStyle = 'rgba(255,255,255,0.13)';
-  ctx.font = '900 italic 310px Montserrat, sans-serif';
-  ctx.textAlign = 'right';
-  ctx.fillText(`#${atletaActual.dorsal}`, w - 35, 330);
-  ctx.restore();
-
-  // 4. Tarjeta Glassmorphism con las métricas oficiales de su cédula
-  ctx.save();
-  ctx.fillStyle = 'rgba(7, 10, 20, 0.58)';
-  ctx.strokeStyle = 'rgba(0, 210, 255, 0.45)';
-  ctx.lineWidth = 2.5;
-  ctx.beginPath();
-  ctx.roundRect(45, 55, 380, 275, 24);
-  ctx.fill();
-  ctx.stroke();
-
-  ctx.fillStyle = '#00D2FF';
-  ctx.font = '800 18px "JetBrains Mono", monospace';
-  ctx.fillText(`DORSAL #${atletaActual.dorsal} · ESTILO #${estiloModalActivo.id}`, 75, 100);
-
-  ctx.fillStyle = '#FFFFFF';
-  ctx.font = '900 46px Montserrat, sans-serif';
-  ctx.fillText(atletaActual.distancia, 75, 160);
-
-  ctx.fillStyle = '#e2e8f0';
-  ctx.font = '700 22px "JetBrains Mono", monospace';
-  ctx.fillText(`⏱ TIEMPO: ${atletaActual.tiempo}`, 75, 210);
-  ctx.fillText(`⚡ RITMO:  ${atletaActual.ritmo}`, 75, 248);
-
-  ctx.fillStyle = '#FF007A';
-  ctx.font = '800 16px "JetBrains Mono", monospace';
-  ctx.fillText(`📍 ${atletaActual.ciudad.toUpperCase()}`, 75, 295);
-  ctx.restore();
-
-  // 5. Si subió Foto 2 (Ruta/Silueta Strava) o Foto 3 (Splits), integrarla en tarjeta flotante
-  const extraImgs = [imgIngrediente2, imgIngrediente3].filter(Boolean);
-  extraImgs.forEach((im, idx) => {
-    if (im && im.complete) {
-      const boxW = 240, boxH = 240;
-      const bx = w - boxW - 45;
-      const by = 360 + idx * (boxH + 25);
-      ctx.save();
-      ctx.fillStyle = 'rgba(7, 10, 20, 0.72)';
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.roundRect(bx, by, boxW, boxH, 20);
-      ctx.fill();
-      ctx.stroke();
-      ctx.clip();
-      const sc = Math.min(boxW / im.width, boxH / im.height);
-      ctx.drawImage(im, bx + (boxW - im.width * sc) / 2, by + (boxH - im.height * sc) / 2, im.width * sc, im.height * sc);
-      ctx.restore();
-    }
-  });
-
-  // 6. Medalla 10K Real + Logo Oficial y Nombre del Corredor al pie
-  if (medalla10kImg.complete) {
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(w - 140, h - 140, 85, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.clip();
-    ctx.drawImage(medalla10kImg, w - 225, h - 225, 170, 170);
-    ctx.restore();
-  }
-
-  if (logoEventoImg.complete) {
-    ctx.drawImage(logoEventoImg, 50, h - 160, 105, 105);
-  }
-  ctx.fillStyle = '#FFFFFF';
-  ctx.font = '900 italic 38px Montserrat, sans-serif';
-  ctx.fillText(atletaActual.nombre, 175, h - 110);
-
-  ctx.fillStyle = '#00D2FF';
-  ctx.font = '800 19px "JetBrains Mono", monospace';
-  ctx.fillText('RETO VIRTUAL VZLA 10K · retovirtualvzla.com', 175, h - 74);
-
-  // Mostrar resultado dentro del modal
-  document.getElementById('contenedor-preview-referencia').classList.add('hidden');
-  document.getElementById('contenedor-canvas-generado').classList.remove('hidden');
+// Genera el Prompt en Inglés reemplazando todas las variables del atleta
+function obtenerPromptFormateado() {
+  if (!estiloModalActivo) return "";
+  let p = estiloModalActivo.prompt;
+  p = p.replaceAll('{NOMBRE_ATLETA}', atletaActual.nombre);
+  p = p.replaceAll('{DORSAL}', atletaActual.dorsal);
+  p = p.replaceAll('{DISTANCIA}', atletaActual.distancia);
+  p = p.replaceAll('{TIEMPO}', atletaActual.tiempo);
+  p = p.replaceAll('{RITMO}', atletaActual.ritmo);
+  p = p.replaceAll('{CIUDAD}', atletaActual.ciudad);
+  return p;
 }
 
-function descargarImagenModal() {
-  const canvas = document.getElementById('modalResultCanvas');
-  const a = document.createElement('a');
-  a.download = `RetoVirtualVzla_Estilo${estiloModalActivo ? estiloModalActivo.id : '01'}_Dorsal${atletaActual.dorsal}.png`;
-  a.href = canvas.toDataURL('image/png', 1.0);
-  a.click();
+// Botón: Copiar Prompt Oficial Calibrado
+function copiarPromptCalibrado() {
+  const promptTxt = obtenerPromptFormateado();
+  navigator.clipboard.writeText(promptTxt).then(() => {
+    const toast = document.getElementById('modal-toast');
+    toast.innerText = "¡Prompt copiado! Listo para pegar en Midjourney, ChatGPT o Leonardo AI.";
+    toast.classList.remove('hidden');
+    setTimeout(() => toast.classList.add('hidden'), 4000);
+  }).catch(() => {
+    alert("Copia el prompt manualmente:\n\n" + promptTxt);
+  });
+}
+
+// Botón Principal: Generar con la IA Real (Llama al endpoint serverless /api/generar-estudio)
+async function generarArteConIA() {
+  if (!estiloModalActivo) return;
+  if (!imgIngrediente1) {
+    return alert("📸 Por favor sube al menos tu Foto Personal (Casilla 1) antes de generar.");
+  }
+
+  // Cambiar a la pestaña de generación para ver el progreso en vivo
+  cambiarTabModal('gen');
+  const loader = document.getElementById('gen-loader');
+  const placeholder = document.getElementById('gen-placeholder');
+  const wrapResultado = document.getElementById('gen-resultado-wrap');
+  const statusTxt = document.getElementById('gen-loader-status');
+  const progressBar = document.getElementById('gen-progress-bar');
+  const percentTxt = document.getElementById('gen-progress-percent');
+  const btn = document.getElementById('btn-generar-ia');
+
+  placeholder.classList.add('hidden');
+  wrapResultado.classList.add('hidden');
+  loader.classList.remove('hidden');
+  btn.disabled = true;
+  btn.classList.add('opacity-50');
+
+  // Animación técnica de progreso Monospace
+  let prog = 10;
+  const timer = setInterval(() => {
+    prog += Math.floor(Math.random() * 12) + 5;
+    if (prog > 90) prog = 92;
+    progressBar.style.width = `${prog}%`;
+    percentTxt.innerText = `${String(prog).padStart(2, '0')}%`;
+    if (prog > 30 && prog < 60) statusTxt.innerText = "Sintetizando iluminación y volumetría...";
+    if (prog >= 60) statusTxt.innerText = "Renderizando composición de alta fidelidad...";
+  }, 400);
+
+  const promptFinal = obtenerPromptFormateado();
+
+  try {
+    const res = await fetch('/api/generar-estudio', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        estiloId: estiloModalActivo.id,
+        prompt: promptFinal,
+        aspectRatio: estiloModalActivo.ratio,
+        atleta: atletaActual
+      })
+    });
+
+    clearInterval(timer);
+    progressBar.style.width = "100%";
+    percentTxt.innerText = "100%";
+
+    const data = await res.json();
+
+    if (res.ok && data.success && data.imagenBase64) {
+      statusTxt.innerText = "¡Obra de arte completada!";
+      const imgSrc = `data:${data.mimeType || 'image/jpeg'};base64,${data.imagenBase64}`;
+      document.getElementById('gen-resultado-img').src = imgSrc;
+      document.getElementById('gen-btn-descargar').href = imgSrc;
+      document.getElementById('gen-btn-descargar').download = `RetoVirtual10K_Estilo${estiloModalActivo.id}_Dorsal${atletaActual.dorsal}.jpg`;
+
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        wrapResultado.classList.remove('hidden');
+      }, 500);
+
+    } else {
+      // Si la API de Google Imagen 3 no tiene cuotas o da error, se muestra el diagnóstico amigable
+      loader.classList.add('hidden');
+      placeholder.classList.remove('hidden');
+      
+      const errDetalle = data.error || 'La API de generación de imágenes no devolvió resultado.';
+      alert(`⚠️ Diagnóstico del Motor de IA:\n\n${errDetalle}\n\nPuedes presionar el botón "Copiar Prompt IA" para generar tu póster de alta resolución en Midjourney, ChatGPT o Leonardo AI con tu dorsal y tiempos ya configurados.`);
+    }
+
+  } catch (err) {
+    clearInterval(timer);
+    loader.classList.add('hidden');
+    placeholder.classList.remove('hidden');
+    alert(`Error de conexión con el motor de IA: ${err.message}`);
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove('opacity-50');
+  }
 }
 
 function calcularRitmo10K(tiempoStr) {
@@ -512,7 +723,7 @@ function calcularRitmo10K(tiempoStr) {
   return `${m}:${s} /km`;
 }
 
-// Identificación Automática en Vivo con Inscripciones_10K + Evidencias 10K
+// Identificación Automática en Vivo con Google Sheets (Inscripciones 10K + Evidencias)
 async function identificarAtleta10K() {
   const ci = document.getElementById('input-cedula-10k').value.replace(/\D/g, '').trim();
   const btn = document.getElementById('btn-buscar-10k');

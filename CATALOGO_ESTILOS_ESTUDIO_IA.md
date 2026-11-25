@@ -135,7 +135,19 @@
 
 ---
 
-## ✅ RESUMEN DEL CATÁLOGO (11 ESTILOS GUARDADOS)
+## ⚡ ESTILO #12: "Clones en Movimiento (Ángulo Cenital Urbano + HUD Técnico)" (Underground Streetwear Editorial)
+* **Tipo de motor:** IA Generativa (1 Foto del Atleta + Distancia / Ritmo / Tiempo).
+* **Ingredientes que sube el atleta:** 1 foto suya (rostro) + sus métricas (Distancia, Ritmo, Tiempo).
+* **Prompt Base Original (Threads):**
+  > `An ultra-realistic cinematic running campaign poster inspired by futuristic sports editorials and underground urban fashion magazines. Vertical 4:5 ultra-wide top-angle perspective. Confident young male runner stands perfectly still staring up into the camera while blurry clones of himself run around him. Dark industrial urban alley, strong sunlight from top right, film grain, oversized neutral running shirt, black shorts, carbon-plated shoes, rainbow sports sunglasses. Large white typography "EASY RUN" at top, minimalist HUD metrics on bottom-left.`
+* **Prompt Oculto Calibrado para Reto Virtual VZLA:**
+  ```text
+  An ultra-realistic cinematic running campaign poster inspired by futuristic sports editorials and underground urban fashion magazines. Vertical 4:5 ultra-wide top-angle perspective looking down. In the center of the frame, the athlete from the uploaded photo (preserve 100% exact facial identity) stands perfectly still, staring directly up into the camera with an intense focused expression, wearing an oversized neutral charcoal/sand running shirt with a tiny subtle "RV" chest emblem, black performance shorts, carbon-plated running shoes, futuristic reflective sports sunglasses, and a sports watch. Several motion-blurred clones of the exact same athlete sprint around them in various directions creating dynamic movement and discipline. Dark industrial urban concrete alley setting with rough asphalt, dramatic long shadows, atmospheric fog, strong sunlight from top right corner, subtle film grain. Large bold accentuated white typography at the top reading "RETO 10K". Minimalist futuristic HUD-style running metrics integrated on the bottom-left with thin white geometric bracket lines and tick marks reading: "{DISTANCIA}", "{RITMO} Pace", "{TIEMPO}", and small clean branding "RETO VIRTUAL VZLA" at bottom right (no Nike or Oakley logos). 8K detail, razor-sharp central subject, 4:5 aspect ratio.
+  ```
+
+---
+
+## ✅ RESUMEN DEL CATÁLOGO (12 ESTILOS GUARDADOS)
 1. **Estilo #01:** Medalla Monumental Editorial (Estudio Azul Profundo · 1:1).
 2. **Estilo #02:** Reflejo en Lentes + Splits de Strava en Asfalto (4:5).
 3. **Estilo #03:** Doble Exposición Motivacional Montañas (9:16 Vertical Stories).

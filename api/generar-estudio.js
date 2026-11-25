@@ -74,12 +74,22 @@ export default async function handler(req, res) {
       });
     }
 
-    // Si Imagen 3 da error de permisos/cuota, informar claramente con detalle técnico
+    // Si Imagen 3 da error de permisos/cuota, listar modelos habilitados en la cuenta
+    let modelosDisponibles = [];
+    try {
+      const listResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${GEMINI_API_KEY}`);
+      if (listResp.ok) {
+        const listData = await listResp.json();
+        modelosDisponibles = (listData.models || []).map(m => m.name.replace('models/', ''));
+      }
+    } catch (e) {}
+
     const errGoogle = imagenData.error?.message || (imagenData.predictions ? 'Sin predicciones devueltas' : 'Error en Imagen 3 API');
     
     return res.status(502).json({
       success: false,
       error: `Error de Google Imagen 3: ${errGoogle}`,
+      modelosDisponibles,
       promptFormateado: prompt,
       atleta
     });

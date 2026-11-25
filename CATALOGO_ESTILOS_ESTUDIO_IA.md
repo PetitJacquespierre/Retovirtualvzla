@@ -191,13 +191,12 @@
 
 ---
 
-## 🌳 ESTILO #17: "El Árbol de mis Logros (Medallas al Atardecer)" (The Tree of Achievements)
-* **Tipo de motor:** IA Generativa (1 Foto del Atleta + Foto de Medalla 10K + Distancia / Tiempo / Ritmo).
-* **Ingredientes que sube el atleta:** 1 foto suya + Distancia, Tiempo y Ritmo.
-* **Nota:** Prompt reconstruido profesionalmente a partir de la imagen central enviada (ideal para fidelización de coleccionistas de medallas).
-* **Prompt Oculto Calibrado para Reto Virtual VZLA:**
+## 🌳 ESTILO #17: "El Árbol de mis Logros (Medallas Reales de Reto Virtual VZLA · 100% Español)"
+* **Tipo de motor:** IA Generativa (Foto del Atleta + Fotos Reales de las Medallas de Reto Virtual Venezuela: `medalla_real_10k.jpg`, `medalla1.jpg`–`medalla4.jpg`).
+* **Ingredientes que sube el atleta:** 1 foto suya + Distancia, Tiempo y Ritmo *(las medallas reales del Reto Virtual Venezuela las inyecta nuestro sistema automáticamente por detrás)*.
+* **Prompt Oculto Calibrado para Reto Virtual VZLA (100% Español):**
   ```text
-  Warm, deeply emotional golden hour sunset sports portrait by the ocean beach. The athlete from the uploaded photo (preserve 100% exact facial identity, outfit, and running shoes) sits relaxed against the roots of a majestic coastal tree overlooking the sparkling sunset sea. Dozens of colorful marathon medals and ribbons (featuring the Reto Virtual VZLA 10K medal prominently) hang from the tree branches above them. A rustic carved wooden sign on the trunk reads "EL ÁRBOL DE MIS LOGROS", and a stone near the roots reads "MÁS CARRERAS, MÁS SUEÑOS". Subtle elegant handwritten motivational quote in the warm sky on the left: "Cada medalla cuenta una historia, cada reto una victoria." Clean white stats on the bottom-left reading "RETO VIRTUAL VZLA", "Distancia {DISTANCIA}", "Tiempo {TIEMPO}", "Ritmo {RITMO}". Natural film warmth, cinematic 8k detail, 4:5 aspect ratio.
+  Warm, deeply emotional golden hour sunset sports portrait by a Venezuelan coastal beach. The athlete from the uploaded person reference photo (preserve 100% exact facial identity, outfit, and running shoes) sits relaxed against the roots of a majestic coastal tree overlooking the sparkling sunset ocean. Hanging from the tree branches above them are dozens of real marathon medals and colorful ribbons matching the exact designs of the uploaded Reto Virtual Venezuela medal reference images (featuring the 10K Edición Especial rectangular 3D medal and the 5K medals prominently). A rustic carved wooden sign nailed to the trunk reads in clean Spanish: "EL ÁRBOL DE MIS LOGROS", and a stone near the roots reads: "MÁS CARRERAS, MÁS SUEÑOS". Subtle elegant handwritten Spanish quote in the warm sky on the left: "Cada medalla guarda una historia, cada reto una superación, y cada kilómetro una victoria." Clean white stats on the bottom-left reading in Spanish: "RETO VIRTUAL VZLA", "Distancia {DISTANCIA}", "Tiempo {TIEMPO}", "Ritmo {RITMO}". Natural film warmth, cinematic 8k detail, 4:5 aspect ratio.
   ```
 
 ---

@@ -124,7 +124,18 @@
 
 ---
 
-## ✅ RESUMEN DEL CATÁLOGO (10 ESTILOS GUARDADOS)
+## 🔥 ESTILO #11: "Pie sobre Zapato Gigante al Atardecer + Tarjeta Glass HUD" (9:16 Golden Hour)
+* **Tipo de motor:** IA Generativa (1 Foto del Atleta + Captura/Datos Strava).
+* **Ingredientes que sube el atleta:** 1 foto suya + su captura de Strava (o Distancia / Ritmo / Tiempo).
+* **Nota:** Prompt reconstruido profesionalmente a partir de la imagen de referencia enviada.
+* **Prompt Oculto Calibrado para Reto Virtual VZLA:**
+  ```text
+  Hyperrealistic cinematic 9:16 vertical sports photography at dramatic golden hour sunset. On the right, the athlete from the uploaded photo (preserve 100% exact facial identity, athletic outfit, and running shoes) stands confidently in a powerful side-profile pose with hands on hips, resting one foot triumphantly on top of the toe box of a GIANT monumental version of their own running shoe resting on wet reflective asphalt. Dramatic fiery orange sunset clouds, low sun backlighting creating rim light, wet asphalt mirroring the glowing sky. In the top-left sky, a sleek minimal translucent frosted-glass vertical HUD card with a thin white border displaying the uploaded Strava stats: "Distancia {DISTANCIA}", "Ritmo {RITMO}", "Tiempo {TIEMPO}", the glowing orange GPS route map, and "RETO VIRTUAL VZLA" cleanly at the bottom of the card. Ultra detailed textures, epic sports advertisement aesthetic, 8k, 9:16 aspect ratio.
+  ```
+
+---
+
+## ✅ RESUMEN DEL CATÁLOGO (11 ESTILOS GUARDADOS)
 1. **Estilo #01:** Medalla Monumental Editorial (Estudio Azul Profundo · 1:1).
 2. **Estilo #02:** Reflejo en Lentes + Splits de Strava en Asfalto (4:5).
 3. **Estilo #03:** Doble Exposición Motivacional Montañas (9:16 Vertical Stories).

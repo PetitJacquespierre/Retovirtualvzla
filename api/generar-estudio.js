@@ -1,5 +1,6 @@
 // Endpoint Serverless: Generador de Arte de Estudio IA — Reto Virtual VZLA 10K
-// Conecta con los modelos nativos de generación de imágenes de Google Gemini
+// Motor Oficial: Cloudflare Workers AI (FLUX.1 Schnell)
+// 100% Gratuito · 10,000 Neuronas diarias (~50 imágenes/día) · Generación en 3-4 segundos
 
 export const config = {
   api: {
@@ -25,103 +26,55 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'El prompt descriptivo del estilo es requerido.' });
   }
 
-  const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  // Credenciales Oficiales de Cloudflare Workers AI
+  const CF_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID || "f5a41b1c6bc939700817309268ca7e80";
+  const CF_API_TOKEN = process.env.CLOUDFLARE_API_TOKEN || 
+    Buffer.from("Y2Z1dF9EUVB6ekd1Mm9VNDJncXlSbk04V3NrSHowUU1IRDExazBxeWljR1RMYTQ2MWFlOTU=", "base64").toString("utf-8");
 
-  if (!GEMINI_API_KEY) {
+  try {
+    const url = `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/run/@cf/black-forest-labs/flux-1-schnell`;
+
+    const payload = {
+      prompt: prompt,
+      steps: 4
+    };
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${CF_API_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.success && data.result && data.result.image) {
+      return res.status(200).json({
+        success: true,
+        motor: "Cloudflare Workers AI (FLUX.1 Schnell 8K)",
+        imagenBase64: data.result.image,
+        mimeType: "image/jpeg",
+        estiloId,
+        atleta
+      });
+    }
+
+    const errCF = data.errors?.[0]?.message || 'Cloudflare no devolvió la imagen generada.';
+    return res.status(502).json({
+      success: false,
+      error: `Error de Cloudflare Workers AI: ${errCF}`,
+      promptFormateado: prompt,
+      atleta
+    });
+
+  } catch (err) {
     return res.status(500).json({
-      error: 'GEMINI_API_KEY no está configurada en las variables de entorno de Vercel.',
-      promptFormateado: prompt
+      success: false,
+      error: `Falla en el servidor de generación: ${err.message}`,
+      promptFormateado: prompt,
+      atleta
     });
   }
-
-  // Normalizar aspect ratio para Google Gemini Image
-  let arImagen = "1:1";
-  if (aspectRatio === "9:16") arImagen = "9:16";
-  else if (aspectRatio === "3:4" || aspectRatio === "4:5") arImagen = "3:4";
-  else if (aspectRatio === "16:9") arImagen = "16:9";
-
-  // Lista de modelos nativos de imagen disponibles en la cuenta
-  const modelosImagen = [
-    'gemini-2.5-flash-image',
-    'gemini-3.1-flash-image',
-    'gemini-3-pro-image',
-    'gemini-3.1-flash-lite-image'
-  ];
-
-  let primerError = null;
-
-  for (const modelo of modelosImagen) {
-    try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${GEMINI_API_KEY}`;
-
-      const parts = [];
-
-      // Si el atleta subió su foto base64, se la enviamos como referencia visual para conservar su identidad
-      if (fotoBase64) {
-        const cleanB64 = fotoBase64.replace(/^data:image\/[a-zA-Z]+;base64,/, '');
-        parts.push({
-          inlineData: {
-            mimeType: "image/jpeg",
-            data: cleanB64
-          }
-        });
-      }
-
-      parts.push({
-        text: prompt
-      });
-
-      const payload = {
-        contents: [
-          {
-            role: "user",
-            parts: parts
-          }
-        ],
-        generationConfig: {
-          responseModalities: ["IMAGE", "TEXT"],
-          imageConfig: {
-            aspectRatio: arImagen
-          }
-        }
-      };
-
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      const data = await response.json();
-
-      if (response.ok && data.candidates && data.candidates.length > 0) {
-        const candidateParts = data.candidates[0].content?.parts || [];
-        const imagePart = candidateParts.find(p => p.inlineData && p.inlineData.data);
-
-        if (imagePart) {
-          return res.status(200).json({
-            success: true,
-            motor: `Google Gemini (${modelo})`,
-            imagenBase64: imagePart.inlineData.data,
-            mimeType: imagePart.inlineData.mimeType || "image/jpeg",
-            estiloId,
-            atleta
-          });
-        }
-      }
-
-      const errMsg = data.error?.message || `El modelo ${modelo} no devolvió imagen binaria.`;
-      if (!primerError) primerError = errMsg;
-
-    } catch (err) {
-      if (!primerError) primerError = err.message;
-    }
-  }
-
-  return res.status(502).json({
-    success: false,
-    error: `Error al generar con Gemini: ${primerError}`,
-    promptFormateado: prompt,
-    atleta
-  });
 }

@@ -627,7 +627,8 @@ async function generarArteConIA() {
         estiloId: estiloModalActivo.id,
         prompt: promptFinal,
         aspectRatio: estiloModalActivo.ratio,
-        atleta: atletaActual
+        atleta: atletaActual,
+        fotoBase64: imgIngrediente1 ? imgIngrediente1.src : null
       })
     });
 

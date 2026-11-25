@@ -1,10 +1,10 @@
 // Endpoint Serverless: Generador de Arte de Estudio IA — Reto Virtual VZLA 10K
-// Conecta con Google Imagen 3 / Gemini API para sintetizar los pósters oficiales de Finisher
+// Conecta con los modelos nativos de generación de imágenes de Google Gemini
 
 export const config = {
   api: {
     bodyParser: {
-      sizeLimit: '10mb'
+      sizeLimit: '15mb'
     }
   }
 };
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método no permitido. Use POST.' });
   }
 
-  const { estiloId, prompt, aspectRatio = "4:5", atleta = {} } = req.body || {};
+  const { estiloId, prompt, aspectRatio = "4:5", atleta = {}, fotoBase64 } = req.body || {};
 
   if (!prompt) {
     return res.status(400).json({ error: 'El prompt descriptivo del estilo es requerido.' });
@@ -34,71 +34,94 @@ export default async function handler(req, res) {
     });
   }
 
-  // Normalizar aspect ratio para Google Imagen 3 (1:1, 3:4, 4:3, 9:16, 16:9)
-  let arImagen = "4:3";
-  if (aspectRatio === "1:1") arImagen = "1:1";
-  else if (aspectRatio === "9:16") arImagen = "9:16";
+  // Normalizar aspect ratio para Google Gemini Image
+  let arImagen = "1:1";
+  if (aspectRatio === "9:16") arImagen = "9:16";
   else if (aspectRatio === "3:4" || aspectRatio === "4:5") arImagen = "3:4";
+  else if (aspectRatio === "16:9") arImagen = "16:9";
 
-  try {
-    // 1. INTENTO 1: Google Imagen 3 (imagen-3.0-generate-002) en Google AI Studio
-    const imagenUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${GEMINI_API_KEY}`;
-    
-    const imagenResponse = await fetch(imagenUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        instances: [
-          { prompt: prompt }
-        ],
-        parameters: {
-          sampleCount: 1,
-          aspectRatio: arImagen,
-          personGeneration: "ALLOW_ADULT",
-          safetySetting: "BLOCK_MEDIUM_AND_ABOVE"
-        }
-      })
-    });
+  // Lista de modelos nativos de imagen disponibles en la cuenta
+  const modelosImagen = [
+    'gemini-2.5-flash-image',
+    'gemini-3.1-flash-image',
+    'gemini-3-pro-image',
+    'gemini-3.1-flash-lite-image'
+  ];
 
-    const imagenData = await imagenResponse.json();
+  let primerError = null;
 
-    if (imagenResponse.ok && imagenData.predictions && imagenData.predictions.length > 0) {
-      const pred = imagenData.predictions[0];
-      return res.status(200).json({
-        success: true,
-        motor: "Google Imagen 3 (imagen-3.0-generate-002)",
-        imagenBase64: pred.bytesBase64Encoded,
-        mimeType: pred.mimeType || "image/jpeg",
-        estiloId,
-        atleta
-      });
-    }
-
-    // Si Imagen 3 da error de permisos/cuota, listar modelos habilitados en la cuenta
-    let modelosDisponibles = [];
+  for (const modelo of modelosImagen) {
     try {
-      const listResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${GEMINI_API_KEY}`);
-      if (listResp.ok) {
-        const listData = await listResp.json();
-        modelosDisponibles = (listData.models || []).map(m => m.name.replace('models/', ''));
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${GEMINI_API_KEY}`;
+
+      const parts = [];
+
+      // Si el atleta subió su foto base64, se la enviamos como referencia visual para conservar su identidad
+      if (fotoBase64) {
+        const cleanB64 = fotoBase64.replace(/^data:image\/[a-zA-Z]+;base64,/, '');
+        parts.push({
+          inlineData: {
+            mimeType: "image/jpeg",
+            data: cleanB64
+          }
+        });
       }
-    } catch (e) {}
 
-    const errGoogle = imagenData.error?.message || (imagenData.predictions ? 'Sin predicciones devueltas' : 'Error en Imagen 3 API');
-    
-    return res.status(502).json({
-      success: false,
-      error: `Error de Google Imagen 3: ${errGoogle}`,
-      modelosDisponibles,
-      promptFormateado: prompt,
-      atleta
-    });
+      parts.push({
+        text: prompt
+      });
 
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      error: `Falla en el servidor de generación: ${err.message}`,
-      promptFormateado: prompt
-    });
+      const payload = {
+        contents: [
+          {
+            role: "user",
+            parts: parts
+          }
+        ],
+        generationConfig: {
+          responseModalities: ["IMAGE", "TEXT"],
+          imageConfig: {
+            aspectRatio: arImagen
+          }
+        }
+      };
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.candidates && data.candidates.length > 0) {
+        const candidateParts = data.candidates[0].content?.parts || [];
+        const imagePart = candidateParts.find(p => p.inlineData && p.inlineData.data);
+
+        if (imagePart) {
+          return res.status(200).json({
+            success: true,
+            motor: `Google Gemini (${modelo})`,
+            imagenBase64: imagePart.inlineData.data,
+            mimeType: imagePart.inlineData.mimeType || "image/jpeg",
+            estiloId,
+            atleta
+          });
+        }
+      }
+
+      const errMsg = data.error?.message || `El modelo ${modelo} no devolvió imagen binaria.`;
+      if (!primerError) primerError = errMsg;
+
+    } catch (err) {
+      if (!primerError) primerError = err.message;
+    }
   }
+
+  return res.status(502).json({
+    success: false,
+    error: `Error al generar con Gemini: ${primerError}`,
+    promptFormateado: prompt,
+    atleta
+  });
 }

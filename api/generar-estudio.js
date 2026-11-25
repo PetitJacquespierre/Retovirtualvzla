@@ -77,9 +77,9 @@ export default async function handler(req, res) {
     });
   }
 
-  // Formato 9:16 Fijo HD para Instagram Stories / Reels / TikTok / Estados WhatsApp
-  const width = 720;
-  const height = 1280;
+  // Formato 9:16 Fijo optimizado para Instagram Stories / Reels (576x1024 ahorra 36% de neuronas diarias de Cloudflare)
+  const width = 576;
+  const height = 1024;
 
   try {
     const form = new FormData();
@@ -198,9 +198,12 @@ export default async function handler(req, res) {
     }
 
     const errCF = data.errors?.[0]?.message || 'Cloudflare FLUX.2 no devolvió la imagen generada.';
-    return res.status(502).json({
+    const esCuotaDiaria = errCF.toLowerCase().includes('10,000 neurons') || errCF.toLowerCase().includes('daily free allocation');
+    return res.status(esCuotaDiaria ? 429 : 502).json({
       success: false,
-      error: `Error de Cloudflare FLUX.2: ${errCF}`,
+      error: esCuotaDiaria
+        ? 'Se alcanzó el límite gratuito diario de generaciones IA de hoy (se reinicia automáticamente a las 8:00 PM hora Venezuela / 00:00 UTC). ¡Vuelve a intentarlo después de las 8:00 PM!'
+        : `Error de Cloudflare FLUX.2: ${errCF}`,
       promptFormateado: promptFinal,
       atleta
     });

@@ -73,31 +73,7 @@
 <body class="min-h-screen relative pb-12">
 <div class="film-grain"></div>
 
-<!-- Candado de Acceso Maestro (Solo el Equipo Organizador) -->
-<div id="gate-acceso" class="fixed inset-0 z-50 bg-[#070709] flex items-center justify-center p-4">
-  <div class="specular-card rounded-3xl max-w-sm w-full p-6 sm:p-8 text-center space-y-5 border border-white/10">
-    <div class="w-16 h-16 mx-auto rounded-2xl bg-[#00D2FF]/15 border border-[#00D2FF]/40 flex items-center justify-center">
-      <i class="fa-solid fa-lock text-2xl text-[#00D2FF]"></i>
-    </div>
-    <div>
-      <span class="font-mono-tech text-[10px] text-[#00D2FF] font-bold uppercase tracking-widest">ÁREA PRIVADA EN DESARROLLO</span>
-      <h2 class="font-display font-black text-xl text-white uppercase italic mt-1">Estudio Finisher IA</h2>
-      <p class="editorial-p text-xs text-slate-400 mt-2">
-        Ingresa la clave maestra para acceder a las pruebas del motor de Inteligencia Artificial de Reto Virtual Venezuela.
-      </p>
-    </div>
-    <form onsubmit="verificarClaveMaestra(event)" class="space-y-3">
-      <input type="password" id="input-clave-maestra" placeholder="Ingresa la clave maestra..." class="w-full bg-[#05070c] border border-white/20 focus:border-[#00D2FF] rounded-xl px-4 py-3 text-sm font-mono-tech font-bold text-white text-center tracking-widest outline-none">
-      <button type="submit" class="w-full bg-gradient-to-r from-[#00D2FF] to-[#FF007A] text-white font-display font-black text-xs uppercase tracking-widest py-3 rounded-xl cursor-pointer shadow-lg hover:opacity-95">
-        Desbloquear Estudio
-      </button>
-      <p id="msg-clave-error" class="hidden font-mono-tech text-[11px] text-rose-400 font-bold">Clave incorrecta. Intenta nuevamente.</p>
-    </form>
-    <div class="pt-2">
-      <a href="index.html" class="font-mono-tech text-[10px] text-slate-500 hover:text-slate-300">← Regresar a la Web Principal</a>
-    </div>
-  </div>
-</div>
+
 
 <!-- Header Mobile-First con Logo y Navegación de Retorno -->
 <header class="sticky top-0 z-40 backdrop-blur-xl bg-[#070709]/90 border-b border-white/10">
@@ -319,24 +295,7 @@
 </div>
 
 <script>
-// Candado de Clave Maestra (Default RETO2026)
-function checkGateAuth() {
-  if (sessionStorage.getItem('rv_estudio_auth') === 'true') {
-    document.getElementById('gate-acceso').classList.add('hidden');
-  }
-}
-checkGateAuth();
 
-function verificarClaveMaestra(e) {
-  e.preventDefault();
-  const pass = document.getElementById('input-clave-maestra').value.trim();
-  if (pass.toUpperCase() === 'RETO2026' || pass === '10k' || pass === 'sandia' || pass === 'admin') {
-    sessionStorage.setItem('rv_estudio_auth', 'true');
-    document.getElementById('gate-acceso').classList.add('hidden');
-  } else {
-    document.getElementById('msg-clave-error').classList.remove('hidden');
-  }
-}
 
 // Catálogo Maestro de los 17 Estilos con sus Prompts Calibrados
 const ESTILOS_CATALOGO = [

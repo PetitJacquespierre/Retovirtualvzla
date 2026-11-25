@@ -26,10 +26,16 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'El prompt descriptivo del estilo es requerido.' });
   }
 
-  // Credenciales Oficiales de Cloudflare Workers AI
-  const CF_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID || "f5a41b1c6bc939700817309268ca7e80";
-  const CF_API_TOKEN = process.env.CLOUDFLARE_API_TOKEN || 
-    Buffer.from("Y2Z1dF9EUVB6ekd1Mm9VNDJncXlSbk04V3NrSHowUU1IRDExazBxeWljR1RMYTQ2MWFlOTU=", "base64").toString("utf-8");
+  // Credenciales Oficiales de Cloudflare Workers AI (100% Protegidas en Vercel)
+  const CF_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
+  const CF_API_TOKEN = process.env.CLOUDFLARE_API_TOKEN;
+
+  if (!CF_ACCOUNT_ID || !CF_API_TOKEN) {
+    return res.status(500).json({
+      success: false,
+      error: 'Las variables CLOUDFLARE_ACCOUNT_ID y CLOUDFLARE_API_TOKEN deben configurarse en el panel de Vercel.'
+    });
+  }
 
   try {
     const url = `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/run/@cf/black-forest-labs/flux-1-schnell`;

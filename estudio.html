@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Estudio Digital Finisher — Reto Virtual VZLA 10K</title>
+<link rel="icon" type="image/webp" href="img/favicon.webp">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Montserrat:ital,wght@0,700;0,800;0,900;1,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-obsidian: #070709;
+    --surface: #0f1117;
+    --cyan: #00D2FF;
+    --magenta: #FF007A;
+    --gold: #F59E0B;
+  }
+
+  body {
+    background-color: var(--bg-obsidian);
+    color: #F4F4F6;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .font-display { font-family: 'Montserrat', sans-serif; }
+  .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
+
+  /* Film Grain sutil (2.5%) */
+  .film-grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  /* Iluminación Cenital Física (Specular Border) */
+  .specular-card {
+    background: linear-gradient(180deg, rgba(22, 25, 34, 0.85) 0%, rgba(12, 14, 20, 0.95) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    border-left: 1px solid rgba(255, 255, 255, 0.07);
+    border-right: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+  }
+
+  .style-card {
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .style-card:hover {
+    transform: translateY(-4px);
+    border-top-color: rgba(0, 210, 255, 0.6);
+    box-shadow: 0 20px 45px rgba(0, 210, 255, 0.12);
+  }
+  .style-card.selected {
+    border: 1.5px solid #00D2FF;
+    box-shadow: 0 0 30px rgba(0, 210, 255, 0.25);
+    background: linear-gradient(180deg, rgba(0, 210, 255, 0.12) 0%, rgba(12, 14, 20, 0.98) 100%);
+  }
+
+  .editorial-p {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: none;
+    word-break: normal;
+  }
+</style>
+</head>
+<body class="min-h-screen relative">
+<div class="film-grain"></div>
+
+<!-- Top Bar Minimalista -->
+<header class="sticky top-0 z-40 backdrop-blur-xl bg-[#070709]/85 border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-5 py-3.5 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <img src="img/RV_logo_oficial.webp" alt="Reto Virtual VZLA" class="w-10 h-10 object-contain">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="font-display font-black text-sm md:text-base uppercase tracking-tight text-white">ESTUDIO DIGITAL FINISHER</span>
+          <span class="font-mono-tech text-[9px] px-2 py-0.5 rounded-full bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/40 font-bold uppercase">BETA INTERNA</span>
+        </div>
+        <p class="font-mono-tech text-[10px] text-slate-400">POWERED BY GROW STUDIO × RETO VIRTUAL VZLA</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <span id="badge-atleta-conectado" class="hidden md:inline-flex items-center gap-2 font-mono-tech text-[11px] px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>MODO LIBRE (SIN RESTRICCIÓN)</span>
+      </span>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-5 py-8">
+
+  <!-- Barra de Conexión con Inscritos 10K (Opcional por ahora, sin bloqueo) -->
+  <section class="specular-card rounded-3xl p-5 md:p-6 mb-8">
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+      <div class="max-w-xl">
+        <div class="font-mono-tech text-[10px] uppercase tracking-widest text-[#00D2FF] font-bold mb-1">
+          [ CONEXIÓN EN VIVO · BASE DE DATOS 10K ]
+        </div>
+        <h1 class="font-display font-black text-xl md:text-2xl uppercase italic text-white mb-1">
+          Carga tu Ficha de Corredor 10K
+        </h1>
+        <p class="editorial-p text-xs text-slate-400 leading-relaxed">
+          Ingresa tu número de cédula para sincronizar automáticamente tu nombre, número de dorsal oficial y ciudad desde nuestra base de inscritos 10K, o edita tus datos manualmente abajo para probar cualquiera de los 17 estilos visuales.
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-2.5 w-full lg:w-auto">
+        <input type="text" id="input-cedula-10k" placeholder="Ej: 16585414" class="bg-[#05070c] border border-white/15 focus:border-[#00D2FF] rounded-xl px-4 py-3 text-sm font-mono-tech font-bold text-white outline-none w-full sm:w-52">
+        <button onclick="buscarAtleta10K()" id="btn-buscar-10k" class="bg-[#00D2FF] hover:bg-cyan-300 text-[#001438] font-display font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all cursor-pointer shrink-0 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-magnifying-glass"></i> Cargar Atleta 10K
+        </button>
+      </div>
+    </div>
+    <p id="estado-busqueda-10k" class="hidden mt-3 text-xs font-mono-tech font-bold"></p>
+  </section>
+
+  <!-- Layout Editorial Asimétrico: Columna Izquierda Sticky (Ingredientes) + Columna Derecha (17 Estilos) -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+    <!-- COLUMNA IZQUIERDA (5 Cols - Sticky): Ingredientes & Generador -->
+    <aside class="lg:col-span-5 lg:sticky lg:top-20 space-y-6">
+      <div class="specular-card rounded-3xl p-6 space-y-5">
+        <div class="flex items-center justify-between border-b border-white/10 pb-3">
+          <div>
+            <span class="font-mono-tech text-[10px] text-[#FF007A] font-bold uppercase tracking-widest">PASO 01 // INGREDIENTES</span>
+            <h2 class="font-display font-black text-lg uppercase text-white">Tus Datos &amp; Fotos</h2>
+          </div>
+          <span class="font-mono-tech text-xs px-2.5 py-1 rounded-lg bg-white/5 text-slate-300 border border-white/10" id="dorsal-preview-tag">DORSAL #001</span>
+        </div>
+
+        <!-- Datos del Atleta -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="col-span-2">
+            <label class="block font-mono-tech text-[10px] text-slate-400 uppercase mb-1">Nombre del Corredor</label>
+            <input type="text" id="est-nombre" value="ATLETA FINISHER" class="w-full bg-[#05070c] border border-white/15 focus:border-[#00D2FF] rounded-xl px-3.5 py-2.5 text-xs font-bold text-white uppercase outline-none">
+          </div>
+          <div>
+            <label class="block font-mono-tech text-[10px] text-slate-400 uppercase mb-1">N° Dorsal</label>
+            <input type="text" id="est-dorsal" value="001" maxlength="3" class="w-full bg-[#05070c] border border-white/15 focus:border-[#00D2FF] rounded-xl px-3.5 py-2.5 text-xs font-mono-tech font-bold text-[#00D2FF] outline-none">
+          </div>
+          <div>
+            <label class="block font-mono-tech text-[10px] text-slate-400 uppercase mb-1">Ciudad / Estado</label>
+            <input type="text" id="est-ciudad" value="Venezuela" class="w-full bg-[#05070c] border border-white/15 focus:border-[#00D2FF] rounded-xl px-3.5 py-2.5 text-xs font-bold text-white outline-none">
+          </div>
+          <div>
+            <label class="block font-mono-tech text-[10px] text-slate-400 uppercase mb-1">Distancia</label>
+            <input type="text" id="est-distancia" value="10.00 KM" class="w-full bg-[#05070c] border border-white/15 focus:border-[#00D2FF] rounded-xl px-3.5 py-2.5 text-xs font-mono-tech font-bold text-white outline-none">
+          </div>
+          <div>
+            <label class="block font-mono-tech text-[10px] text-slate-400 uppercase mb-1">Tiempo</label>
+            <input type="text" id="est-tiempo" value="52m 14s" class="w-full bg-[#05070c] border border-white/15 focus:border-[#00D2FF] rounded-xl px-3.5 py-2.5 text-xs font-mono-tech font-bold text-white outline-none">
+          </div>
+          <div class="col-span-2">
+            <label class="block font-mono-tech text-[10px] text-slate-400 uppercase mb-1">Ritmo (Pace)</label>
+            <input type="text" id="est-ritmo" value="5:13 /km" class="w-full bg-[#05070c] border border-white/15 focus:border-[#00D2FF] rounded-xl px-3.5 py-2.5 text-xs font-mono-tech font-bold text-white outline-none">
+          </div>
+        </div>
+
+        <!-- Subida de Fotos (Ingredientes) -->
+        <div class="grid grid-cols-2 gap-3 pt-1">
+          <label class="cursor-pointer bg-white/5 hover:bg-white/10 border border-dashed border-white/25 hover:border-[#00D2FF] rounded-2xl p-3 text-center transition-all flex flex-col items-center justify-center gap-1.5 min-h-[100px]">
+            <input type="file" id="upload-foto-atleta" accept="image/*" class="hidden" onchange="cargarFotoPreview(this, 'prev-atleta')">
+            <img id="prev-atleta" class="hidden w-14 h-14 object-cover rounded-xl border border-[#00D2FF]">
+            <i id="ico-atleta" class="fa-solid fa-camera text-[#00D2FF] text-lg"></i>
+            <span class="text-[11px] font-bold text-white">1. Tu Foto</span>
+            <span class="font-mono-tech text-[9px] text-slate-400">Selfie o corriendo</span>
+          </label>
+
+          <label class="cursor-pointer bg-white/5 hover:bg-white/10 border border-dashed border-white/25 hover:border-[#FF007A] rounded-2xl p-3 text-center transition-all flex flex-col items-center justify-center gap-1.5 min-h-[100px]">
+            <input type="file" id="upload-foto-strava" accept="image/*" class="hidden" onchange="cargarFotoPreview(this, 'prev-strava')">
+            <img id="prev-strava" class="hidden w-14 h-14 object-cover rounded-xl border border-[#FF007A]">
+            <i id="ico-strava" class="fa-solid fa-route text-[#FF007A] text-lg"></i>
+            <span class="text-[11px] font-bold text-white">2. Captura Strava</span>
+            <span class="font-mono-tech text-[9px] text-slate-400">Opcional (Ruta/Splits)</span>
+          </label>
+        </div>
+
+        <!-- Estilo Seleccionado + Botón Generar -->
+        <div class="bg-[#05070c] border border-white/10 rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-mono-tech text-[10px] text-slate-400 uppercase">Estilo Elegido:</span>
+            <span id="label-estilo-ratio" class="font-mono-tech text-[10px] px-2 py-0.5 rounded bg-[#00D2FF]/15 text-[#00D2FF] font-bold">4:5</span>
+          </div>
+          <p id="label-estilo-activo" class="font-display font-black text-sm text-white uppercase">
+            #01 · Medalla Monumental Editorial
+          </p>
+          <button onclick="generarVistaPrevia()" class="w-full bg-gradient-to-r from-[#00D2FF] via-[#0088cc] to-[#FF007A] hover:opacity-95 text-white font-display font-black text-xs uppercase tracking-widest py-3.5 rounded-xl shadow-lg shadow-[#00D2FF]/20 transition-all cursor-pointer">
+            ⚡ Generar Composición HD
+          </button>
+        </div>
+      </div>
+
+      <!-- Resultado / Canvas Preview -->
+      <div id="caja-resultado" class="hidden specular-card rounded-3xl p-5 text-center space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="font-mono-tech text-[10px] text-emerald-400 font-bold uppercase tracking-widest">✔ ARTE COMPOSICIÓN LISTA</span>
+          <button onclick="descargarArteHD()" class="bg-emerald-500 hover:bg-emerald-400 text-[#04120c] font-display font-black text-[10px] uppercase px-3.5 py-1.5 rounded-lg transition-all cursor-pointer">
+            ⬇ Descargar PNG HD
+          </button>
+        </div>
+        <canvas id="studioCanvas" class="w-full rounded-2xl border border-white/10 shadow-2xl mx-auto"></canvas>
+      </div>
+    </aside>
+
+    <!-- COLUMNA DERECHA (7 Cols): Galería Completa de los 17 Estilos -->
+    <section class="lg:col-span-7 space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-white/10 pb-4">
+        <div>
+          <span class="font-mono-tech text-[10px] text-[#00D2FF] font-bold uppercase tracking-widest">PASO 02 // GALERÍA DE ESTILOS VIRALES</span>
+          <h2 class="font-display font-black text-2xl uppercase italic text-white">Elige tu Estilo (17 Disponibles)</h2>
+        </div>
+        <span class="font-mono-tech text-xs text-slate-400">[ 01 // 17 ]</span>
+      </div>
+
+      <div id="grid-estilos" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Se renderizan dinámicamente los 17 estilos -->
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+const ESTILOS_CATALOGO = [
+  { id: "01", titulo: "Medalla Monumental Editorial", ratio: "1:1", categoria: "Estudio Lujo", icono: "🏅", desc: "Apoyado sobre una escultura gigante de nuestra Medalla 3D 10K en estudio azul profundo.", ingredientes: "Foto + Medalla 10K Auto" },
+  { id: "02", titulo: "Reflejo en Lentes + Splits Asfalto", ratio: "4:5", categoria: "Cinematic Strava", icono: "🕶️", desc: "Corredor reflejado dentro de lentes deportivos sobre el asfalto con tus parciales Strava.", ingredientes: "Foto + Captura Strava" },
+  { id: "03", titulo: "Doble Exposición Montañas", ratio: "9:16", categoria: "Stories HD", icono: "🏔️", desc: "Retrato de perfil fusionado con paisajes de montaña, carretera mojada y acuarela limpia.", ingredientes: "Solo tu Foto" },
+  { id: "04", titulo: "Póster B&N + Color Selectivo", ratio: "3:4", categoria: "Coleccionable", icono: "📰", desc: "Retrato gigante B&N detrás y acción a color al frente con texto RUNNERS y tu firma.", ingredientes: "Foto + Nombre y Dorsal" },
+  { id: "05", titulo: "Sentado en Escultura RUN", ratio: "1:1", categoria: "Estudio Verde", icono: "🌿", desc: "Atleta sentado sobre la medalla monumental en estudio verde oliva con RUN gigante detrás.", ingredientes: "Foto + Medalla 10K Auto" },
+  { id: "06", titulo: "Póster Dorsal Gigante + Métricas", ratio: "3:4", categoria: "Coleccionable", icono: "🔢", desc: "Tu número de dorsal oficial gigante al fondo con Distancia, Ritmo, Tiempo y tu firma.", ingredientes: "Foto + Dorsal + Tiempos" },
+  { id: "07", titulo: "Zapato Gigante + Huellas Cielo", ratio: "4:5", categoria: "Golden Hour", icono: "👟", desc: "Relajado al atardecer dentro de un zapato gigante con estadísticas en huellas en el cielo.", ingredientes: "Foto + Tiempos" },
+  { id: "08", titulo: "Anime Deportivo Nocturno", ratio: "9:16", categoria: "Anime Realism", icono: "🌃", desc: "Ciudad nocturna bajo lluvia estilo anime japonés con tu ruta GPS en estelas de energía.", ingredientes: "Foto + Captura Strava" },
+  { id: "09", titulo: "DAY ONE vs ONE DAY (Pista)", ratio: "9:16", categoria: "Transformación", icono: "🏁", desc: "Toma cenital sobre pista dividida blanco/negro vs rojo color comparando tu evolución.", ingredientes: "Foto + 2 Capturas Strava" },
+  { id: "10", titulo: "Perspectiva Forzada en Ruta", ratio: "4:5", categoria: "Creativo", icono: "📸", desc: "Ángulo bajo en carretera junto a zapatillas gigantes flotando y métricas minimalistas.", ingredientes: "Foto + Tiempos" },
+  { id: "11", titulo: "Pie en Zapato + Glass HUD", ratio: "9:16", categoria: "Golden Hour", icono: "🔥", desc: "Pie apoyado triunfante sobre tu zapato gigante al atardecer con tarjeta translúcida.", ingredientes: "Foto + Captura Strava" },
+  { id: "12", titulo: "Clones en Movimiento (Cenital)", ratio: "4:5", categoria: "Underground", icono: "⚡", desc: "Quieto en el centro mirando arriba mientras tus clones corren desenfocados alrededor.", ingredientes: "Foto + Tiempos" },
+  { id: "13", titulo: "Ojo de Pez: Suelas + Splits", ratio: "4:5", categoria: "Urbano", icono: "👟", desc: "Ángulo ojo de pez sentado con las suelas al frente y tus barras de splits Strava detrás.", ingredientes: "Foto + Captura Strava" },
+  { id: "14", titulo: "Asfalto B&N + Ruta GPS Roja", ratio: "4:5", categoria: "Dramático", icono: "🛣️", desc: "Carretera nublada B&N con color selectivo en zapatos y ruta GPS roja cruzando.", ingredientes: "Foto + Captura Strava" },
+  { id: "15", titulo: "Tormenta + Zapatos Gemelos", ratio: "9:16", categoria: "Cine Épico", icono: "🌩️", desc: "Cielo de tormenta con RUN gigante y dos zapatillas monumentales flanqueándote.", ingredientes: "Foto + Tiempos" },
+  { id: "16", titulo: "Tornado de Fuego en Puente", ratio: "4:5", categoria: "Épico", icono: "🔥", desc: "Corriendo sobre puente nocturno con tornado de fuego y panel holográfico flotante.", ingredientes: "Foto + Tiempos" },
+  { id: "17", titulo: "El Árbol de mis Logros (Español)", ratio: "4:5", categoria: "Coleccionistas", icono: "🌳", desc: "Sentado frente al mar bajo un árbol lleno de medallas reales de Reto Virtual Venezuela.", ingredientes: "Foto + Medallas Auto" }
+];
+
+let estiloSeleccionado = ESTILOS_CATALOGO[0];
+let fotoAtletaImg = null;
+let fotoStravaImg = null;
+const logoEventoImg = new Image();
+logoEventoImg.crossOrigin = 'anonymous';
+logoEventoImg.src = 'img/RV_logo_oficial.webp';
+
+const medalla10kImg = new Image();
+medalla10kImg.crossOrigin = 'anonymous';
+medalla10kImg.src = 'img/medalla_real_10k.jpg';
+
+function renderEstilos() {
+  const grid = document.getElementById('grid-estilos');
+  grid.innerHTML = '';
+  ESTILOS_CATALOGO.forEach(est => {
+    const isSel = est.id === estiloSeleccionado.id;
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.onclick = () => seleccionarEstilo(est.id);
+    card.className = `style-card specular-card rounded-2xl p-4 text-left flex flex-col justify-between gap-3 cursor-pointer ${isSel ? 'selected' : ''}`;
+    card.innerHTML = `
+      <div>
+        <div class="flex items-center justify-between gap-2 mb-2">
+          <span class="font-mono-tech text-[10px] font-bold text-[#00D2FF]">#${est.id} // ${est.categoria.toUpperCase()}</span>
+          <span class="font-mono-tech text-[10px] px-2 py-0.5 rounded bg-white/10 text-slate-300 font-bold">${est.ratio}</span>
+        </div>
+        <h3 class="font-display font-black text-sm text-white uppercase flex items-center gap-2 mb-1.5">
+          <span>${est.icono}</span>
+          <span>${est.titulo}</span>
+        </h3>
+        <p class="editorial-p text-[11px] text-slate-400 leading-relaxed">${est.desc}</p>
+      </div>
+      <div class="pt-2 border-t border-white/10 flex items-center justify-between">
+        <span class="font-mono-tech text-[9px] text-slate-400">${est.ingredientes}</span>
+        <span class="font-display font-black text-[10px] uppercase ${isSel ? 'text-[#00D2FF]' : 'text-white/60'}">${isSel ? '✔ Seleccionado' : 'Elegir →'}</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function seleccionarEstilo(id) {
+  const found = ESTILOS_CATALOGO.find(e => e.id === id);
+  if (!found) return;
+  estiloSeleccionado = found;
+  document.getElementById('label-estilo-activo').innerText = `#${found.id} · ${found.titulo}`;
+  document.getElementById('label-estilo-ratio').innerText = found.ratio;
+  renderEstilos();
+}
+
+function cargarFotoPreview(input, prevId) {
+  const file = input.files && input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const imgEl = document.getElementById(prevId);
+    imgEl.src = e.target.result;
+    imgEl.classList.remove('hidden');
+    if (prevId === 'prev-atleta') {
+      document.getElementById('ico-atleta').classList.add('hidden');
+      fotoAtletaImg = new Image();
+      fotoAtletaImg.src = e.target.result;
+    } else {
+      document.getElementById('ico-strava').classList.add('hidden');
+      fotoStravaImg = new Image();
+      fotoStravaImg.src = e.target.result;
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+// Conexión en Vivo con Inscritos 10K (Inscripciones_10K)
+async function buscarAtleta10K() {
+  const ci = document.getElementById('input-cedula-10k').value.replace(/\D/g, '').trim();
+  const statusEl = document.getElementById('estado-busqueda-10k');
+  const btn = document.getElementById('btn-buscar-10k');
+
+  if (ci.length < 5) {
+    statusEl.innerText = "⚠️ Ingresa una cédula válida para consultar en el 10K.";
+    statusEl.className = "mt-3 text-xs font-mono-tech font-bold text-amber-400 block";
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Buscando...';
+
+  try {
+    let encontrado = null;
+
+    // 1. Consultar vía CSV directo de Inscripciones_10K (gid=244601533)
+    const urlCSV = "https://docs.google.com/spreadsheets/d/1vg9nwhkFxwN4qVzjkfmXTrIVoHVYxeMH3-PXjqzeWao/gviz/tq?tqx=out:csv&headers=1&gid=244601533&t=" + Date.now();
+    const res = await fetch(urlCSV);
+    if (res.ok) {
+      const csvText = await res.text();
+      const filas = csvText.split(/\r?\n/).filter(f => f.trim().length > 0);
+      for (let i = 1; i < filas.length; i++) {
+        const cols = filas[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+        const ciFila = (cols[1] || '').replace(/\D/g, '').trim();
+        if (ciFila === ci) {
+          encontrado = {
+            dorsal: (cols[0] || '001').padStart(3, '0'),
+            nombre: (cols[2] || 'ATLETA 10K').toUpperCase(),
+            estado: cols[5] || '',
+            ciudad: cols[6] || 'Venezuela',
+            kit: cols[14] || '10K Edición Especial'
+          };
+          break;
+        }
+      }
+    }
+
+    if (encontrado) {
+      document.getElementById('est-nombre').value = encontrado.nombre;
+      document.getElementById('est-dorsal').value = encontrado.dorsal;
+      document.getElementById('est-ciudad').value = encontrado.ciudad ? `${encontrado.ciudad}, ${encontrado.estado}` : 'Venezuela';
+      document.getElementById('dorsal-preview-tag').innerText = `DORSAL #${encontrado.dorsal}`;
+      document.getElementById('badge-atleta-conectado').innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span><span>#${encontrado.dorsal} · ${encontrado.nombre}</span>`;
+
+      statusEl.innerText = `✅ Atleta 10K Conectado: ${encontrado.nombre} (Dorsal #${encontrado.dorsal} · ${encontrado.ciudad}) — Kit: ${encontrado.kit}`;
+      statusEl.className = "mt-3 text-xs font-mono-tech font-bold text-emerald-400 block";
+    } else {
+      statusEl.innerText = `❌ Cédula ${ci} no encontrada en los inscritos actuales del 10K.`;
+      statusEl.className = "mt-3 text-xs font-mono-tech font-bold text-red-400 block";
+    }
+  } catch (err) {
+    statusEl.innerText = "⚠️ No se pudo consultar la base en este momento. Verifica tu conexión.";
+    statusEl.className = "mt-3 text-xs font-mono-tech font-bold text-amber-400 block";
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> Cargar Atleta 10K';
+  }
+}
+
+// Generador de Composición Visual HD (Preview en Vivo)
+function generarVistaPrevia() {
+  const caja = document.getElementById('caja-resultado');
+  const canvas = document.getElementById('studioCanvas');
+  const ctx = canvas.getContext('2d');
+
+  // Calibrar proporción según el estilo elegido
+  let w = 1080, h = 1350;
+  if (estiloSeleccionado.ratio === "1:1") { w = 1080; h = 1080; }
+  else if (estiloSeleccionado.ratio === "9:16") { w = 1080; h = 1920; }
+  else if (estiloSeleccionado.ratio === "3:4") { w = 1080; h = 1440; }
+
+  canvas.width = w;
+  canvas.height = h;
+  caja.classList.remove('hidden');
+
+  const nombre = (document.getElementById('est-nombre').value || 'ATLETA FINISHER').toUpperCase();
+  const dorsal = (document.getElementById('est-dorsal').value || '001').padStart(3, '0');
+  const ciudad = document.getElementById('est-ciudad').value || 'Venezuela';
+  const dist = document.getElementById('est-distancia').value || '10.00 KM';
+  const tiempo = document.getElementById('est-tiempo').value || '52m 14s';
+  const ritmo = document.getElementById('est-ritmo').value || '5:13 /km';
+
+  // 1. Fondo base según estilo
+  const bg = ctx.createLinearGradient(0, 0, w, h);
+  bg.addColorStop(0, '#070a14');
+  bg.addColorStop(0.5, '#0b1830');
+  bg.addColorStop(1, '#04060c');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, w, h);
+
+  // 2. Si el usuario subió foto, dibujarla centrada tipo editorial cover
+  if (fotoAtletaImg && fotoAtletaImg.complete) {
+    const scale = Math.max(w / fotoAtletaImg.width, h / fotoAtletaImg.height);
+    const dw = fotoAtletaImg.width * scale;
+    const dh = fotoAtletaImg.height * scale;
+    ctx.save();
+    ctx.globalAlpha = 0.88;
+    ctx.drawImage(fotoAtletaImg, (w - dw) / 2, (h - dh) / 2, dw, dh);
+    ctx.restore();
+
+    // Viñeta oscura cinematográfica inferior/superior para contraste tipográfico
+    const vig = ctx.createLinearGradient(0, 0, 0, h);
+    vig.addColorStop(0, 'rgba(7,10,20,0.75)');
+    vig.addColorStop(0.45, 'rgba(7,10,20,0.15)');
+    vig.addColorStop(1, 'rgba(7,10,20,0.92)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  // 3. Dorsal gigante traslúcido en fondo si es estilo #04 o #06
+  if (estiloSeleccionado.id === "04" || estiloSeleccionado.id === "06") {
+    ctx.save();
+    ctx.fillStyle = 'rgba(255,255,255,0.14)';
+    ctx.font = '900 italic 340px Montserrat, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(estiloSeleccionado.id === "06" ? dorsal : "RUN", w - 40, 360);
+    ctx.restore();
+  }
+
+  // 4. Medalla real en esquina si es estilo #01, #05 o #17
+  if ((estiloSeleccionado.id === "01" || estiloSeleccionado.id === "05" || estiloSeleccionado.id === "17") && medalla10kImg.complete) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(w - 170, h - 220, 110, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.clip();
+    ctx.drawImage(medalla10kImg, w - 280, h - 330, 220, 220);
+    ctx.restore();
+    ctx.strokeStyle = '#F59E0B';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.arc(w - 170, h - 220, 112, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  // 5. Tarjeta Glass HUD con métricas (Estilo Threads)
+  ctx.save();
+  ctx.fillStyle = 'rgba(7, 10, 20, 0.55)';
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.roundRect(50, 60, 360, 280, 22);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle = '#00D2FF';
+  ctx.font = '800 18px "JetBrains Mono", monospace';
+  ctx.fillText(`ESTILO #${estiloSeleccionado.id} · DORSAL #${dorsal}`, 80, 105);
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = '900 44px Montserrat, sans-serif';
+  ctx.fillText(dist, 80, 165);
+
+  ctx.fillStyle = '#cbd5e1';
+  ctx.font = '700 22px "JetBrains Mono", monospace';
+  ctx.fillText(`⏱ ${tiempo}`, 80, 215);
+  ctx.fillText(`⚡ ${ritmo}`, 80, 255);
+
+  ctx.fillStyle = '#FF007A';
+  ctx.font = '800 16px "JetBrains Mono", monospace';
+  ctx.fillText(`📍 ${ciudad.toUpperCase()}`, 80, 305);
+  ctx.restore();
+
+  // 6. Pie de marca Reto Virtual VZLA + Logo + Nombre Atleta
+  if (logoEventoImg.complete) {
+    ctx.drawImage(logoEventoImg, 55, h - 165, 110, 110);
+  }
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = '900 italic 42px Montserrat, sans-serif';
+  ctx.fillText(nombre, 185, h - 110);
+
+  ctx.fillStyle = '#00D2FF';
+  ctx.font = '800 20px "JetBrains Mono", monospace';
+  ctx.fillText('RETO VIRTUAL VZLA 10K · retovirtualvzla.com', 185, h - 72);
+
+  caja.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function descargarArteHD() {
+  const canvas = document.getElementById('studioCanvas');
+  const a = document.createElement('a');
+  const dorsal = (document.getElementById('est-dorsal').value || '001').padStart(3, '0');
+  a.download = `RetoVirtual_Estudio_Estilo${estiloSeleccionado.id}_Dorsal${dorsal}.png`;
+  a.href = canvas.toDataURL('image/png', 1.0);
+  a.click();
+}
+
+renderEstilos();
+</script>
+</body>
+</html>

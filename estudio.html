@@ -209,14 +209,23 @@
         <span id="gen-progress-percent" class="font-mono-tech text-[10px] text-slate-400">00%</span>
       </div>
 
-      <!-- Imagen Finisher Generada Final -->
+      <!-- Imagen Finisher Generada Final (9:16 Vertical Stories + Reel) -->
       <div id="gen-resultado-wrap" class="hidden space-y-3 w-full">
-        <img id="gen-resultado-img" src="" alt="Arte Generado" class="max-h-80 w-auto mx-auto rounded-xl border border-emerald-500/40 object-contain shadow-2xl">
-        <div class="flex items-center justify-center gap-3 pt-1">
-          <a id="gen-btn-descargar" href="#" download="RetoVirtual10K_Arte.jpg" class="bg-emerald-500 hover:bg-emerald-400 text-[#04120c] font-display font-black text-xs uppercase px-5 py-2.5 rounded-xl cursor-pointer shadow-lg transition-transform hover:scale-105 inline-block">
-            ⬇ Descargar Finisher HD
-          </a>
+        <div class="flex items-center justify-center gap-2">
+          <span id="gen-badge-pose" class="font-mono-tech text-[10px] font-bold px-2.5 py-1 rounded-lg bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/30 uppercase">
+            9:16 STORY · POSE AUTOMÁTICA
+          </span>
         </div>
+        <img id="gen-resultado-img" src="" alt="Arte Generado 9:16" class="max-h-[420px] w-auto mx-auto rounded-2xl border border-emerald-500/40 object-contain shadow-2xl">
+        <div class="flex flex-wrap items-center justify-center gap-2.5 pt-1">
+          <a id="gen-btn-descargar" href="#" download="RetoVirtual10K_Story916.jpg" class="bg-emerald-500 hover:bg-emerald-400 text-[#04120c] font-display font-black text-[11px] uppercase px-4 py-2.5 rounded-xl cursor-pointer shadow-lg transition-transform hover:scale-105 inline-flex items-center gap-1.5">
+            <i class="fa-solid fa-download"></i> Descargar Foto 9:16
+          </a>
+          <button id="gen-btn-reel" onclick="descargarReelAnimado916()" class="bg-gradient-to-r from-[#FF007A] to-[#00D2FF] hover:opacity-95 text-white font-display font-black text-[11px] uppercase px-4 py-2.5 rounded-xl cursor-pointer shadow-lg transition-transform hover:scale-105 inline-flex items-center gap-1.5">
+            <i class="fa-solid fa-film"></i> Descargar Reel con Música
+          </button>
+        </div>
+        <p id="reel-status-txt" class="hidden font-mono-tech text-[10px] text-[#00D2FF] animate-pulse"></p>
       </div>
 
       <!-- Estado Vacío Inicial -->
@@ -544,8 +553,8 @@ function cargarIngredienteModal(input, slot) {
   reader.onload = (e) => {
     const rawImg = new Image();
     rawImg.onload = () => {
-      // Auto-compresión en canvas a max 800px (reduce 10MB a <120KB, evitando error 413 de Vercel)
-      const maxDim = 800;
+      // Auto-compresión HD en canvas a max 1024px (preserva máxima fidelidad facial y pesa ~180KB, evitando error 413)
+      const maxDim = 1024;
       let w = rawImg.width;
       let h = rawImg.height;
       if (w > maxDim || h > maxDim) {
@@ -562,7 +571,7 @@ function cargarIngredienteModal(input, slot) {
       canvas.height = h;
       const ctx = canvas.getContext('2d');
       ctx.drawImage(rawImg, 0, 0, w, h);
-      const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+      const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.88);
 
       const thumb = document.getElementById(`thumb-ing-${slot}`);
       const icon = document.getElementById(`icon-ing-${slot}`);
@@ -607,8 +616,330 @@ function copiarPromptCalibrado() {
   });
 }
 
-// Botón Principal: Generar con IA Real Multi-Imagen (Cloudflare FLUX.2 Klein 9B)
-// Fusiona la foto real del corredor + la medalla oficial real 10K dentro de la escena 3D
+let ultimaImagenBase916 = null; // Imagen limpia generada por IA (para el Reel animado)
+
+// Dibuja el HUD editorial flotante (estilo Strava / Nike Run Club) con los datos reales de la Cédula
+function dibujarHUDLogrosFinisher(ctx, W, H) {
+  ctx.save();
+
+  // Degradado oscuro suave en la zona inferior (100% integrado, cero cajas pegadas)
+  const gradBot = ctx.createLinearGradient(0, H * 0.72, 0, H);
+  gradBot.addColorStop(0, 'rgba(2, 5, 12, 0)');
+  gradBot.addColorStop(0.45, 'rgba(3, 6, 15, 0.72)');
+  gradBot.addColorStop(1, 'rgba(2, 4, 10, 0.96)');
+  ctx.fillStyle = gradBot;
+  ctx.fillRect(0, H * 0.72, W, H * 0.28);
+
+  // Sello superior sutil en esquina superior derecha
+  ctx.textAlign = 'right';
+  ctx.fillStyle = 'rgba(0, 210, 255, 0.92)';
+  ctx.font = `700 ${Math.round(W * 0.028)}px "JetBrains Mono", "Courier New", monospace`;
+  ctx.fillText('RETO VIRTUAL VZLA · 10K 2026', W - 32, 48);
+
+  const padX = 36;
+  const baseY = H - 44;
+
+  // Línea superior de acento cian sutil
+  ctx.strokeStyle = 'rgba(0, 210, 255, 0.45)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(padX, H - 225);
+  ctx.lineTo(W - padX, H - 225);
+  ctx.stroke();
+
+  // Cruces arquitectónicas de precisión (+) en los extremos
+  ctx.fillStyle = '#00D2FF';
+  ctx.font = `700 ${Math.round(W * 0.026)}px "JetBrains Mono", monospace`;
+  ctx.textAlign = 'left';
+  ctx.fillText('+', padX - 4, H - 220);
+  ctx.textAlign = 'right';
+  ctx.fillText('+', W - padX + 4, H - 220);
+
+  // Dorsal + Nombre del Atleta
+  const dorsalStr = `#${String(atletaActual.dorsal || '025').padStart(3, '0')}`;
+  const nombreStr = (atletaActual.nombre || 'ATLETA OFICIAL').toUpperCase();
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#00D2FF';
+  ctx.font = `800 ${Math.round(W * 0.046)}px "JetBrains Mono", "Courier New", monospace`;
+  ctx.fillText(dorsalStr, padX, H - 172);
+
+  const dorsalW = ctx.measureText(dorsalStr).width;
+  ctx.fillStyle = '#FFFFFF';
+  // Ajustar tamaño de fuente si el nombre es muy largo
+  let fontName = Math.round(W * 0.052);
+  ctx.font = `900 ${fontName}px "Montserrat", sans-serif`;
+  while (ctx.measureText(nombreStr).width > (W - padX * 2 - dorsalW - 22) && fontName > 22) {
+    fontName -= 2;
+    ctx.font = `900 ${fontName}px "Montserrat", sans-serif`;
+  }
+  ctx.fillText(nombreStr, padX + dorsalW + 16, H - 172);
+
+  // 3 Columnas Técnicas Monospace: DISTANCIA | TIEMPO | RITMO
+  const colW = (W - padX * 2) / 3;
+  const stats = [
+    { label: 'DISTANCIA', val: atletaActual.distancia || '10.00 KM' },
+    { label: 'TIEMPO OFICIAL', val: atletaActual.tiempo || '52:14' },
+    { label: 'RITMO PROM.', val: atletaActual.ritmo || '5:13 /km' }
+  ];
+
+  stats.forEach((st, idx) => {
+    const cx = padX + colW * idx;
+    if (idx > 0) {
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cx - 10, H - 142);
+      ctx.lineTo(cx - 10, H - 88);
+      ctx.stroke();
+    }
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#94A3B8';
+    ctx.font = `700 ${Math.round(W * 0.023)}px "JetBrains Mono", monospace`;
+    ctx.fillText(st.label, cx, H - 126);
+
+    ctx.fillStyle = idx === 1 ? '#00D2FF' : '#FFFFFF';
+    ctx.font = `800 ${Math.round(W * 0.044)}px "JetBrains Mono", monospace`;
+    ctx.fillText(st.val, cx, H - 90);
+  });
+
+  // Pie de página: Ciudad + Finisher Verificado
+  ctx.textAlign = 'left';
+  ctx.fillStyle = 'rgba(226, 232, 240, 0.85)';
+  ctx.font = `700 ${Math.round(W * 0.024)}px "Montserrat", sans-serif`;
+  ctx.fillText(`FINISHER OFICIAL · ${(atletaActual.ciudad || 'VENEZUELA').toUpperCase()}`, padX, baseY);
+
+  ctx.textAlign = 'right';
+  ctx.fillStyle = 'rgba(148, 163, 184, 0.85)';
+  ctx.font = `700 ${Math.round(W * 0.022)}px "JetBrains Mono", monospace`;
+  ctx.fillText('retovirtualvzla.com', W - padX, baseY);
+
+  ctx.restore();
+}
+
+// Estampa los logros exactos de la Cédula sobre el render 9:16 de FLUX.2
+function estamparLogrosFinisher916(rawImgDataUrl) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      ultimaImagenBase916 = img;
+      const W = img.width || 720;
+      const H = img.height || 1280;
+      const canvas = document.createElement('canvas');
+      canvas.width = W;
+      canvas.height = H;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, W, H);
+      dibujarHUDLogrosFinisher(ctx, W, H);
+      resolve(canvas.toDataURL('image/jpeg', 0.94));
+    };
+    img.onerror = () => reject(new Error('Error procesando imagen generada.'));
+    img.src = rawImgDataUrl;
+  });
+}
+
+// Genera y descarga un Video Reel 9:16 de 6 segundos con zoom cinematográfico, brillo en medalla y música épica (100% gratis en navegador)
+async function descargarReelAnimado916() {
+  if (!ultimaImagenBase916) {
+    return alert("Primero genera tu imagen 9:16 para poder exportar el Reel con música.");
+  }
+
+  const btnReel = document.getElementById('gen-btn-reel');
+  const statusEl = document.getElementById('reel-status-txt');
+  btnReel.disabled = true;
+  btnReel.classList.add('opacity-50');
+  statusEl.classList.remove('hidden');
+  statusEl.innerText = "🎬 Sintetizando Reel 9:16 + música épica (6 segundos)...";
+
+  try {
+    const W = 720;
+    const H = 1280;
+    const FPS = 30;
+    const DURACION_SEG = 6;
+    const TOTAL_FRAMES = FPS * DURACION_SEG;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    // Partículas luminosas cian/doradas flotantes
+    const particulas = Array.from({ length: 28 }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 2.5 + 1,
+      vy: -(Math.random() * 1.4 + 0.6),
+      alpha: Math.random() * 0.6 + 0.2,
+      color: Math.random() > 0.45 ? '#00D2FF' : '#FBBF24'
+    }));
+
+    // Sintetizador Web Audio API: Beat motivacional épico 124 BPM libre de copyright
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const audioCtx = new AudioCtx();
+    const dest = audioCtx.createMediaStreamDestination();
+    const masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.35;
+    masterGain.connect(dest);
+
+    const now = audioCtx.currentTime;
+    const beat = 60 / 124; // 124 BPM energético running
+    // Acordes épicos (Cm -> Ab -> Eb -> Bb)
+    const acordes = [
+      [130.81, 155.56, 196.00, 261.63],
+      [103.83, 130.81, 155.56, 207.65],
+      [155.56, 196.00, 233.08, 311.13],
+      [116.54, 146.83, 174.61, 233.08]
+    ];
+
+    // Pads armónicos
+    acordes.forEach((freqs, i) => {
+      const tStart = now + i * (DURACION_SEG / 4);
+      const tDur = DURACION_SEG / 4;
+      freqs.forEach(f => {
+        const osc = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(f, tStart);
+        g.gain.setValueAtTime(0.001, tStart);
+        g.gain.linearRampToValueAtTime(0.11, tStart + 0.25);
+        g.gain.exponentialRampToValueAtTime(0.001, tStart + tDur);
+        osc.connect(g);
+        g.connect(masterGain);
+        osc.start(tStart);
+        osc.stop(tStart + tDur + 0.05);
+      });
+    });
+
+    // Pulso de bombo electrónico + bajo arpegiado
+    for (let s = 0; s < Math.floor(DURACION_SEG / beat); s++) {
+      const t = now + s * beat;
+      // Kick punchy
+      const kick = audioCtx.createOscillator();
+      const kg = audioCtx.createGain();
+      kick.type = 'sine';
+      kick.frequency.setValueAtTime(140, t);
+      kick.frequency.exponentialRampToValueAtTime(38, t + 0.14);
+      kg.gain.setValueAtTime(0.65, t);
+      kg.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+      kick.connect(kg);
+      kg.connect(masterGain);
+      kick.start(t);
+      kick.stop(t + 0.2);
+
+      // Bajo rítmico
+      const bass = audioCtx.createOscillator();
+      const bg = audioCtx.createGain();
+      const chordIdx = Math.min(3, Math.floor((s * beat) / (DURACION_SEG / 4)));
+      bass.type = 'sawtooth';
+      bass.frequency.setValueAtTime(acordes[chordIdx][0] / 2, t + beat * 0.5);
+      bg.gain.setValueAtTime(0.001, t + beat * 0.5);
+      bg.gain.linearRampToValueAtTime(0.16, t + beat * 0.52);
+      bg.gain.exponentialRampToValueAtTime(0.001, t + beat * 0.95);
+      bass.connect(bg);
+      bg.connect(masterGain);
+      bass.start(t + beat * 0.5);
+      bass.stop(t + beat);
+    }
+
+    // Combinar video del canvas + audio sintetizado
+    const videoStream = canvas.captureStream(FPS);
+    const combinedStream = new MediaStream([
+      ...videoStream.getVideoTracks(),
+      ...dest.stream.getAudioTracks()
+    ]);
+
+    const mimeTypes = ['video/mp4;codecs=avc1,mp4a.40.2', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm'];
+    const mimeElegido = mimeTypes.find(m => MediaRecorder.isTypeSupported(m)) || 'video/webm';
+    const ext = mimeElegido.includes('mp4') ? 'mp4' : 'webm';
+
+    const recorder = new MediaRecorder(combinedStream, { mimeType: mimeElegido, videoBitsPerSecond: 4500000 });
+    const chunks = [];
+    recorder.ondataavailable = (e) => { if (e.data && e.data.size > 0) chunks.push(e.data); };
+
+    const recDone = new Promise(resolve => {
+      recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: mimeElegido });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `RetoVirtual10K_Reel916_Dorsal${atletaActual.dorsal || '025'}.${ext}`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
+        audioCtx.close();
+        resolve();
+      };
+    });
+
+    recorder.start();
+
+    let frame = 0;
+    const renderLoop = () => {
+      const progreso = frame / TOTAL_FRAMES;
+      // 1. Zoom cinematográfico suave (Ken Burns 1.00x -> 1.07x)
+      const zoom = 1.0 + progreso * 0.07;
+      const drawW = W * zoom;
+      const drawH = H * zoom;
+      const dx = (W - drawW) / 2;
+      const dy = (H - drawH) / 2 - progreso * 18;
+
+      ctx.clearRect(0, 0, W, H);
+      ctx.drawImage(ultimaImagenBase916, dx, dy, drawW, drawH);
+
+      // 2. Destello diagonal metálico recorriendo la medalla 10K
+      const sweepPos = ((progreso * 2.2) % 1.4) - 0.2;
+      const sx = sweepPos * W * 1.4;
+      const glint = ctx.createLinearGradient(sx - 120, 0, sx + 120, H * 0.6);
+      glint.addColorStop(0, 'rgba(255,255,255,0)');
+      glint.addColorStop(0.5, 'rgba(255,255,255,0.14)');
+      glint.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = glint;
+      ctx.fillRect(0, 0, W, H);
+
+      // 3. Partículas flotantes
+      particulas.forEach(p => {
+        p.y += p.vy;
+        if (p.y < -10) p.y = H + 10;
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+
+      // 4. HUD oficial de logros fijo y nítido encima
+      dibujarHUDLogrosFinisher(ctx, W, H);
+
+      frame++;
+      if (frame % 15 === 0) {
+        const seg = Math.min(DURACION_SEG, Math.ceil(frame / FPS));
+        statusEl.innerText = `🎬 Grabando Reel 9:16 con música... ${seg}s / ${DURACION_SEG}s`;
+      }
+
+      if (frame < TOTAL_FRAMES) {
+        requestAnimationFrame(renderLoop);
+      } else {
+        recorder.stop();
+      }
+    };
+
+    requestAnimationFrame(renderLoop);
+    await recDone;
+    statusEl.innerText = "✅ ¡Reel 9:16 con música descargado! Listo para Instagram Stories / Reels.";
+    setTimeout(() => statusEl.classList.add('hidden'), 5000);
+  } catch (err) {
+    statusEl.classList.add('hidden');
+    alert("No se pudo generar el video en este navegador: " + err.message);
+  } finally {
+    btnReel.disabled = false;
+    btnReel.classList.remove('opacity-50');
+  }
+}
+
+// Botón Principal: Generar con IA Real Multi-Imagen (Cloudflare FLUX.2 Klein 9B — 9:16 Fijo + Pose Automática + Logros Reales)
 async function generarArteConIA() {
   if (!estiloModalActivo) return;
   if (!imgIngrediente1) {
@@ -635,15 +966,15 @@ async function generarArteConIA() {
   let prog = 12;
   progressBar.style.width = "12%";
   percentTxt.innerText = "12%";
-  statusTxt.innerText = "Analizando rostro y cuerpo del atleta (FLUX.2)...";
+  statusTxt.innerText = "Bloqueando identidad facial y pose dinámica 9:16...";
 
   const timer = setInterval(() => {
     prog += Math.floor(Math.random() * 10) + 4;
     if (prog > 92) prog = 92;
     progressBar.style.width = `${prog}%`;
     percentTxt.innerText = `${String(prog).padStart(2, '0')}%`;
-    if (prog >= 35 && prog < 68) statusTxt.innerText = "Fusionando medalla oficial 10K real en 3D...";
-    if (prog >= 68) statusTxt.innerText = "Renderizando iluminación de estudio y reflejos reales...";
+    if (prog >= 35 && prog < 68) statusTxt.innerText = "Esculpiendo medalla oficial 10K real en 3D...";
+    if (prog >= 68) statusTxt.innerText = "Estampando logros, dorsal y tiempos oficiales...";
   }, 600);
 
   const promptFinal = obtenerPromptFormateado();
@@ -655,7 +986,7 @@ async function generarArteConIA() {
       body: JSON.stringify({
         estiloId: estiloModalActivo.id,
         prompt: promptFinal,
-        aspectRatio: estiloModalActivo.ratio,
+        aspectRatio: "9:16",
         atleta: atletaActual,
         fotoBase64: imgIngrediente1 ? imgIngrediente1.src : null,
         foto2Base64: imgIngrediente2 ? imgIngrediente2.src : null,
@@ -679,16 +1010,23 @@ async function generarArteConIA() {
     }
 
     if (res.ok && data.success && data.imagenBase64) {
-      statusTxt.innerText = "¡Obra de arte generada con IA Multi-Imagen!";
-      const imgSrc = `data:${data.mimeType || 'image/jpeg'};base64,${data.imagenBase64}`;
-      document.getElementById('gen-resultado-img').src = imgSrc;
-      document.getElementById('gen-btn-descargar').href = imgSrc;
-      document.getElementById('gen-btn-descargar').download = `RetoVirtual10K_Estilo${estiloModalActivo.id}_Dorsal${atletaActual.dorsal}.jpg`;
+      statusTxt.innerText = "Estampando datos oficiales de tu cédula...";
+      const rawImgSrc = `data:${data.mimeType || 'image/jpeg'};base64,${data.imagenBase64}`;
+      const finalImgSrc = await estamparLogrosFinisher916(rawImgSrc);
+
+      const badgePose = document.getElementById('gen-badge-pose');
+      if (badgePose) {
+        badgePose.innerText = `9:16 STORY · POSE: ${(data.poseAplicada || 'DINÁMICA').toUpperCase()}`;
+      }
+
+      document.getElementById('gen-resultado-img').src = finalImgSrc;
+      document.getElementById('gen-btn-descargar').href = finalImgSrc;
+      document.getElementById('gen-btn-descargar').download = `RetoVirtual10K_Story916_Dorsal${atletaActual.dorsal || '025'}.jpg`;
 
       setTimeout(() => {
         loader.classList.add('hidden');
         wrapResultado.classList.remove('hidden');
-      }, 400);
+      }, 350);
     } else {
       loader.classList.add('hidden');
       placeholder.classList.remove('hidden');

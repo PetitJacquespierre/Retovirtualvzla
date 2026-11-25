@@ -1,6 +1,7 @@
 // Endpoint Serverless: Generador de Arte de Estudio IA Multi-Imagen — Reto Virtual VZLA 10K
 // Motor Oficial: Cloudflare Workers AI — FLUX.2 [klein] 9B (Visión Multi-Referencia Real)
-// Fusiona la foto REAL del corredor (input_image_0) + Medalla REAL 10K (input_image_1) + Strava/Zapatos
+// Formato Oficial: 9:16 Vertical (720x1280) para Instagram Stories, Reels, TikTok y WhatsApp
+// Incluye: Bloqueo de Identidad Facial + Poses/Ángulos de Medalla Automáticos + Medalla Real 10K
 
 export const config = {
   api: {
@@ -18,6 +19,30 @@ function dataUrlToBlob(dataUrl) {
   return new Blob([buffer], { type: mimeType });
 }
 
+// Pool de 5 variaciones dinámicas automáticas (Pose + Encuadre + Ángulo 3D de la Medalla)
+const VARIACIONES_DINAMICAS = [
+  {
+    nombre: "Acercamiento Épico",
+    instruccion: "DYNAMIC MEDIUM CLOSE-UP SHOT (waist-up / thighs-up framing so the runner's face is large, razor-sharp, and unmistakable): The runner from image 0 leans slightly forward toward the camera with an intense, proud finisher expression, looking directly into the lens. Behind them to the left, the monumental 3D medal is tilted dynamically at a dramatic 3/4 perspective angle catching studio rim light."
+  },
+  {
+    nombre: "En Movimiento / Zancada",
+    instruccion: "DYNAMIC ACTION RUNNING POSE: The runner from image 0 is captured mid-stride running powerfully toward the front-right with natural athletic motion and energy, passing right beside the monumental 3D medal tilted at an heroic low-angle perspective with dramatic floor reflections."
+  },
+  {
+    nombre: "Pose de Victoria",
+    instruccion: "TRIUMPHANT VICTORY POSE: The runner from image 0 celebrates their 10K finish with genuine joy, raising one fist proudly in victory (or arms raised in celebration), positioned dynamically in front-right of the monumental 3D medal angled slightly toward the viewer."
+  },
+  {
+    nombre: "Apoyado en el Trofeo",
+    instruccion: "EDITORIAL TROPHY LEAN POSE: The runner from image 0 poses confidently like a luxury sports magazine cover, casually resting one arm or leaning triumphantly beside the monumental 3D medal which stands slightly rotated at a 25-degree 3D angle on the glossy mirror floor."
+  },
+  {
+    nombre: "Clásica de Estudio",
+    instruccion: "CLASSIC POWER EDITORIAL STANCE: The runner from image 0 stands tall with confident athletic posture (hands on hips or arms folded proudly) smiling naturally beside the monumental upright 3D medal on the glossy dark mirror floor."
+  }
+];
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -31,7 +56,6 @@ export default async function handler(req, res) {
   const {
     estiloId = "01",
     prompt,
-    aspectRatio = "1:1",
     atleta = {},
     fotoBase64,
     foto2Base64,
@@ -53,19 +77,9 @@ export default async function handler(req, res) {
     });
   }
 
-  // Dimensiones óptimas múltiplos de 16 para FLUX.2 Klein 9B
-  let width = 1024;
-  let height = 1024;
-  if (aspectRatio === "4:5") {
-    width = 896;
-    height = 1120;
-  } else if (aspectRatio === "3:4") {
-    width = 768;
-    height = 1024;
-  } else if (aspectRatio === "9:16") {
-    width = 576;
-    height = 1024;
-  }
+  // Formato 9:16 Fijo HD para Instagram Stories / Reels / TikTok / Estados WhatsApp
+  const width = 720;
+  const height = 1280;
 
   try {
     const form = new FormData();
@@ -122,25 +136,34 @@ export default async function handler(req, res) {
       }
     }
 
-    // Limpiar sintaxis de Midjourney (--sref y URLs) para que FLUX.2 reciba instrucciones limpias referenciando image 0, image 1, etc.
+    // Seleccionar pose/encuadre dinámico automáticamente en cada generación
+    const variacion = VARIACIONES_DINAMICAS[Math.floor(Math.random() * VARIACIONES_DINAMICAS.length)];
+
+    // Limpiar sintaxis de Midjourney (--sref, URLs y ratios fijos 1:1 / 4:5) para 9:16 limpio
     let promptLimpio = prompt
       .replace(/--sref\s+\S+/gi, '')
       .replace(/https?:\/\/\S+/gi, '')
+      .replace(/\b(1:1|4:5|3:4)\b/gi, '9:16 vertical')
       .replace(/\s{2,}/g, ' ')
       .trim();
 
-    let prefijoMultiImagen = "";
+    let prefijoMultiImagen = "VERTICAL 9:16 INSTAGRAM STORY COMPOSITION (keep the bottom 18% of the frame clean dark floor/gradient space for stats typography, no garbled small text). ";
+
     if (tieneAtleta) {
-      prefijoMultiImagen += "CRITICAL: Use the exact person from image 0 as the runner in the scene, preserving 100% of their exact face, hair, skin tone, body build, and athletic clothing naturally integrated into the 3D lighting and shadows of the scene (NEVER paste a flat rectangle photo). ";
+      prefijoMultiImagen += "STRICT FACIAL IDENTITY LOCK: Preserve 100% EXACT face, facial structure, eyes, nose, mouth, jawline, hair, beard, skin tone, sunglasses/cap, and authentic likeness of the exact person from image 0. Keep their face clearly visible, well-lit, sharp, and completely unaltered — NEVER change or replace their face, and NEVER paste a flat rectangle photo. ";
     }
+
+    // Inyectar la variación dinámica automática de pose y ángulo
+    prefijoMultiImagen += `${variacion.instruccion} `;
+
     if (idxMedalla >= 0) {
-      prefijoMultiImagen += `CRITICAL: Replicate 100% identically the exact physical marathon medal from image ${idxMedalla} as a monumental 3D sculpture (preserving its exact rectangular gold notched shield frame, royal blue top ribbon, VEN EZU ELA banner, vertical 3D black 10K, Maracaibo bridge, golden sand dunes, orange sun, Angel Falls waterfall, and blue breaking wave with 2026). `;
+      prefijoMultiImagen += `CRITICAL MEDAL FIDELITY: Replicate 100% identically the exact physical marathon medal from image ${idxMedalla} as a monumental 3D sculpture (preserving its exact rectangular gold notched shield frame, royal blue top ribbon, VEN EZU ELA banner, vertical 3D black 10K, Maracaibo bridge, golden sand dunes, orange sun, Angel Falls waterfall, and blue breaking wave with 2026). If wall typography appears behind, spell strictly and cleanly "RETO VIRTUAL" (only two words, crisp bold white sans-serif, no typos). `;
     }
     if (idxStrava >= 0) {
-      prefijoMultiImagen += `Use the running route/stats from image ${idxStrava} as visual HUD overlay elements. `;
+      prefijoMultiImagen += `Use the running route from image ${idxStrava} as subtle glowing visual accent. `;
     }
     if (idxExtra >= 0) {
-      prefijoMultiImagen += `Use the running shoes/object from image ${idxExtra} accurately in the scene. `;
+      prefijoMultiImagen += `Keep the running shoes/item from image ${idxExtra} faithful in the scene. `;
     }
 
     const promptFinal = (prefijoMultiImagen + promptLimpio).trim();
@@ -155,7 +178,6 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${CF_API_TOKEN}`
-        // NO definir Content-Type manualmente: fetch añade multipart/form-data con su boundary automáticamente
       },
       body: form
     });
@@ -165,7 +187,9 @@ export default async function handler(req, res) {
     if (response.ok && data.success && data.result && data.result.image) {
       return res.status(200).json({
         success: true,
-        motor: "Cloudflare Workers AI — FLUX.2 Klein 9B (Multi-Imagen Real)",
+        motor: "Cloudflare Workers AI — FLUX.2 Klein 9B (9:16 Multi-Imagen)",
+        poseAplicada: variacion.nombre,
+        formato: "9:16",
         imagenBase64: data.result.image,
         mimeType: "image/jpeg",
         estiloId,

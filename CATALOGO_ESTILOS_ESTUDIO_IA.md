@@ -169,7 +169,18 @@
 
 ---
 
-## ✅ RESUMEN DEL CATÁLOGO (14 ESTILOS GUARDADOS)
+## ⚡ ESTILO #15: "Tormenta Épica + Zapatos Monumentales Gemelos" (Stormy Twin Shoes Editorial)
+* **Tipo de motor:** IA Generativa (1 Foto del Atleta + Captura/Datos Strava).
+* **Ingredientes que sube el atleta:** 1 foto suya + Distancia, Ritmo y Tiempo.
+* **Nota:** Prompt reconstruido profesionalmente a partir de la imagen enviada.
+* **Prompt Oculto Calibrado para Reto Virtual VZLA:**
+  ```text
+  Epic dark stormy cinematic running poster on a wet asphalt mountain road with dramatic dark clouds, mist, and volumetric lighting. Giant faded bold typography "RUN" across the upper stormy sky. In the center foreground, the athlete from the uploaded photo (preserve 100% exact facial identity, sweaty intense post-run look, black running gear and bright orange/accent running shoes) stands confidently looking slightly down. Flanking the athlete symmetrically like monumental twin pillars on wet asphalt: on the LEFT, a giant side-profile of their exact running shoe; on the RIGHT, a giant upright outsole/tread view of the same shoe. Subtle glowing amber-orange energy/GPS route line crackling behind the shoes. At the bottom, a sleek dark translucent bar displaying "RETO VIRTUAL VZLA" on the left and clean white stats reading "Distance {DISTANCIA} | Pace {RITMO} | Time {TIEMPO}". Ultra realistic, gritty sports movie poster aesthetic, 8k, 9:16 or 4:5 aspect ratio.
+  ```
+
+---
+
+## ✅ RESUMEN DEL CATÁLOGO (15 ESTILOS GUARDADOS)
 1. **Estilo #01:** Medalla Monumental Editorial (Estudio Azul Profundo · 1:1).
 2. **Estilo #02:** Reflejo en Lentes + Splits de Strava en Asfalto (4:5).
 3. **Estilo #03:** Doble Exposición Motivacional Montañas (9:16 Vertical Stories).

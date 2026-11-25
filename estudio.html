@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Estudio Digital Finisher — Reto Virtual VZLA 10K</title>
 <link rel="icon" type="image/webp" href="img/favicon.webp">
@@ -39,7 +39,7 @@
   }
 
   .specular-card {
-    background: linear-gradient(180deg, rgba(20, 23, 32, 0.9) 0%, rgba(10, 12, 18, 0.98) 100%);
+    background: linear-gradient(180deg, rgba(20, 23, 32, 0.92) 0%, rgba(10, 12, 18, 0.98) 100%);
     border-top: 1px solid rgba(255, 255, 255, 0.18);
     border-left: 1px solid rgba(255, 255, 255, 0.07);
     border-right: 1px solid rgba(255, 255, 255, 0.07);
@@ -51,7 +51,7 @@
     transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
   }
   .gallery-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-5px);
     border-top-color: #00D2FF;
     box-shadow: 0 25px 50px rgba(0, 210, 255, 0.16);
   }
@@ -64,134 +64,178 @@
   }
 </style>
 </head>
-<body class="min-h-screen relative">
+<body class="min-h-screen relative pb-12">
 <div class="film-grain"></div>
 
-<!-- Top Bar -->
-<header class="sticky top-0 z-40 backdrop-blur-xl bg-[#070709]/85 border-b border-white/10">
-  <div class="max-w-7xl mx-auto px-5 py-3.5 flex items-center justify-between gap-4">
-    <div class="flex items-center gap-3">
-      <img src="img/RV_logo_oficial.webp" alt="Reto Virtual VZLA" class="w-10 h-10 object-contain">
+<!-- Top Bar Mobile-First con Logo Más Grande y Navegación de Retorno -->
+<header class="sticky top-0 z-40 backdrop-blur-xl bg-[#070709]/90 border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-3.5">
+      <a href="index.html" class="shrink-0 group">
+        <img src="img/RV_logo_oficial.webp" alt="Reto Virtual VZLA" class="w-12 h-12 sm:w-14 sm:h-14 object-contain drop-shadow-[0_0_12px_rgba(0,210,255,0.45)] group-hover:scale-105 transition-transform">
+      </a>
       <div>
         <div class="flex items-center gap-2">
-          <span class="font-display font-black text-sm md:text-base uppercase tracking-tight text-white">ESTUDIO DIGITAL FINISHER</span>
-          <span class="font-mono-tech text-[9px] px-2 py-0.5 rounded-full bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/40 font-bold uppercase">10K OFICIAL</span>
+          <span class="font-display font-black text-sm sm:text-lg uppercase tracking-tight text-white">ESTUDIO FINISHER</span>
+          <span class="font-mono-tech text-[9px] px-2 py-0.5 rounded-full bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/40 font-bold uppercase">10K</span>
         </div>
-        <p class="font-mono-tech text-[10px] text-slate-400">POWERED BY GROW STUDIO × RETO VIRTUAL VZLA</p>
+        <div class="flex items-center gap-3 mt-0.5">
+          <a href="index.html" class="font-mono-tech text-[10px] text-slate-400 hover:text-[#00D2FF] transition-colors"><i class="fa-solid fa-house mr-1"></i>Inicio</a>
+          <span class="text-white/20">•</span>
+          <a href="evidencias2.html" class="font-mono-tech text-[10px] text-slate-400 hover:text-[#00D2FF] transition-colors"><i class="fa-solid fa-trophy mr-1"></i>Evidencias &amp; Ranking</a>
+        </div>
       </div>
     </div>
 
-    <!-- Buscador rápido por Cédula (En vivo con base 10K) -->
-    <div class="flex items-center gap-2">
-      <input type="text" id="input-cedula-10k" placeholder="Tu Cédula (Ej: 16585414)" class="bg-[#05070c] border border-white/15 focus:border-[#00D2FF] rounded-xl px-3.5 py-2 text-xs font-mono-tech font-bold text-white outline-none w-44 sm:w-52">
-      <button onclick="identificarAtleta10K()" id="btn-buscar-10k" class="bg-[#00D2FF] hover:bg-cyan-300 text-[#001438] font-display font-black text-[11px] uppercase tracking-wider px-4 py-2 rounded-xl transition-all cursor-pointer shrink-0">
+    <!-- Buscador rápido por Cédula (En vivo con base 10K y Evidencias) -->
+    <div class="flex items-center gap-2 w-full sm:w-auto">
+      <input type="tel" id="input-cedula-10k" placeholder="Ingresa tu Cédula..." class="flex-1 sm:w-48 bg-[#05070c] border border-white/15 focus:border-[#00D2FF] rounded-xl px-3.5 py-2.5 text-xs font-mono-tech font-bold text-white outline-none">
+      <button onclick="identificarAtleta10K()" id="btn-buscar-10k" class="bg-[#00D2FF] hover:bg-cyan-300 text-[#001438] font-display font-black text-[11px] uppercase tracking-wider px-4 py-2.5 rounded-xl transition-all cursor-pointer shrink-0">
         Identificar
       </button>
     </div>
   </div>
 </header>
 
-<main class="max-w-7xl mx-auto px-5 py-8 space-y-8">
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-7">
 
-  <!-- Credencial Automática del Atleta (Cero campos manuales) -->
-  <section class="specular-card rounded-3xl p-5 md:p-6">
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-5">
-      <div class="flex items-center gap-4">
-        <div class="w-14 h-14 rounded-2xl bg-[#00D2FF]/15 border border-[#00D2FF]/40 flex flex-col items-center justify-center shrink-0">
+  <!-- Credencial Automática del Atleta (Sincronizada con Inscripciones_10K + Evidencias) -->
+  <section class="specular-card rounded-3xl p-4 sm:p-6">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="flex items-center gap-3.5 sm:gap-4">
+        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#00D2FF]/15 border border-[#00D2FF]/40 flex flex-col items-center justify-center shrink-0">
           <span class="font-mono-tech text-[8px] text-[#00D2FF] uppercase font-bold">DORSAL</span>
-          <span id="cred-dorsal" class="font-mono-tech font-black text-lg text-white leading-none">#025</span>
+          <span id="cred-dorsal" class="font-mono-tech font-black text-lg sm:text-xl text-white leading-none">#025</span>
         </div>
-        <div>
+        <div class="min-w-0">
           <div class="flex flex-wrap items-center gap-2 mb-0.5">
             <span id="cred-estado-badge" class="font-mono-tech text-[9px] px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold uppercase">
-              ● PERFIL SINCRONIZADO
+              ● PERFIL ACTIVO
             </span>
             <span id="cred-cedula" class="font-mono-tech text-[11px] text-slate-400">C.I. V-15.806.384</span>
           </div>
-          <h1 id="cred-nombre" class="font-display font-black text-xl md:text-2xl uppercase italic text-white">
+          <h1 id="cred-nombre" class="font-display font-black text-lg sm:text-2xl uppercase italic text-white truncate">
             CARLOS GOITIA
           </h1>
-          <p id="cred-ubicacion" class="font-mono-tech text-xs text-[#00D2FF]">
+          <p id="cred-ubicacion" class="font-mono-tech text-[11px] sm:text-xs text-[#00D2FF] truncate">
             📍 Punto Fijo, Falcón · Edición Especial 10K
           </p>
         </div>
       </div>
 
-      <!-- Métricas detectadas automáticamente de la base de datos -->
-      <div class="grid grid-cols-3 gap-3 md:w-auto w-full border-t md:border-t-0 pt-4 md:pt-0 border-white/10">
-        <div class="bg-white/5 border border-white/10 rounded-2xl px-4 py-2.5 text-center">
+      <!-- Métricas detectadas automáticamente de Evidencias 10K -->
+      <div class="grid grid-cols-3 gap-2.5 md:w-auto w-full border-t md:border-t-0 pt-3.5 md:pt-0 border-white/10">
+        <div class="bg-white/5 border border-white/10 rounded-2xl px-3 py-2 text-center">
           <span class="block font-mono-tech text-[9px] text-slate-400 uppercase">Distancia</span>
-          <span id="cred-distancia" class="font-mono-tech font-extrabold text-sm text-white">10.00 KM</span>
+          <span id="cred-distancia" class="font-mono-tech font-extrabold text-xs sm:text-sm text-white">10.00 KM</span>
         </div>
-        <div class="bg-white/5 border border-white/10 rounded-2xl px-4 py-2.5 text-center">
-          <span class="block font-mono-tech text-[9px] text-slate-400 uppercase">Tiempo</span>
-          <span id="cred-tiempo" class="font-mono-tech font-extrabold text-sm text-[#00D2FF]">52:14</span>
+        <div class="bg-white/5 border border-white/10 rounded-2xl px-3 py-2 text-center">
+          <span class="block font-mono-tech text-[9px] text-slate-400 uppercase">Tiempo Oficial</span>
+          <span id="cred-tiempo" class="font-mono-tech font-extrabold text-xs sm:text-sm text-[#00D2FF]">52:14</span>
         </div>
-        <div class="bg-white/5 border border-white/10 rounded-2xl px-4 py-2.5 text-center">
+        <div class="bg-white/5 border border-white/10 rounded-2xl px-3 py-2 text-center">
           <span class="block font-mono-tech text-[9px] text-slate-400 uppercase">Ritmo</span>
-          <span id="cred-ritmo" class="font-mono-tech font-extrabold text-sm text-emerald-400">5:13 /km</span>
+          <span id="cred-ritmo" class="font-mono-tech font-extrabold text-xs sm:text-sm text-emerald-400">5:13 /km</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Encabezado de la Galería Visual -->
-  <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-white/10 pb-4">
+  <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-white/10 pb-3.5">
     <div>
-      <span class="font-mono-tech text-[10px] text-[#00D2FF] font-bold uppercase tracking-widest">CATÁLOGO EXCLUSIVO FINISHER</span>
-      <h2 class="font-display font-black text-2xl md:text-3xl uppercase italic text-white">
+      <span class="font-mono-tech text-[10px] text-[#00D2FF] font-bold uppercase tracking-widest">GALERÍA DE ESTILOS FINISHER</span>
+      <h2 class="font-display font-black text-xl sm:text-3xl uppercase italic text-white">
         Selecciona el Estilo que más te guste
       </h2>
     </div>
     <span class="font-mono-tech text-xs text-slate-400">[ 17 ESTILOS DISPONIBLES ]</span>
   </div>
 
-  <!-- Galería Visual de las 17 Tarjetas con su Imagen Real y Descripción Corta -->
-  <section id="grid-estilos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+  <!-- Galería Visual Mobile-First (2 columnas en móvil/tablet, 4 en desktop) -->
+  <section id="grid-estilos" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 sm:gap-6">
     <!-- Renderizado dinámico -->
   </section>
 
 </main>
 
-<!-- Modal al Seleccionar un Estilo -->
-<div id="modal-estilo" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-  <div class="specular-card rounded-3xl max-w-lg w-full p-6 space-y-5 relative max-h-[92vh] overflow-y-auto">
-    <button onclick="cerrarModalEstilo()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center cursor-pointer">
+<!-- Modal Interactivo al Seleccionar un Estilo (Multi-Foto + Generador Real en Vivo) -->
+<div id="modal-estilo" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-4">
+  <div class="specular-card rounded-3xl max-w-xl w-full p-4 sm:p-6 space-y-4 relative max-h-[94vh] overflow-y-auto">
+    <button onclick="cerrarModalEstilo()" class="absolute top-3.5 right-3.5 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center cursor-pointer z-10">
       ✕
     </button>
 
-    <div class="flex items-center gap-3">
-      <span id="mod-badge" class="font-mono-tech text-[10px] px-2.5 py-1 rounded-lg bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/30 font-bold">#01</span>
-      <h3 id="mod-titulo" class="font-display font-black text-lg uppercase text-white">Medalla Monumental</h3>
+    <div class="flex items-center gap-2.5 pr-10">
+      <span id="mod-badge" class="font-mono-tech text-[10px] px-2.5 py-1 rounded-lg bg-[#00D2FF]/15 text-[#00D2FF] border border-[#00D2FF]/30 font-bold shrink-0">#01</span>
+      <h3 id="mod-titulo" class="font-display font-black text-sm sm:text-lg uppercase text-white truncate">Medalla Monumental</h3>
     </div>
 
-    <div class="rounded-2xl overflow-hidden border border-white/15 bg-black max-h-80 flex items-center justify-center">
-      <img id="mod-img" src="" alt="Preview Estilo" class="w-full h-full object-contain max-h-80">
+    <!-- Vista de Referencia vs Resultado Generado -->
+    <div id="contenedor-preview-referencia" class="rounded-2xl overflow-hidden border border-white/15 bg-black max-h-64 sm:max-h-72 flex items-center justify-center relative">
+      <img id="mod-img" src="" alt="Preview Estilo" class="w-full h-full object-contain max-h-64 sm:max-h-72">
+      <span class="absolute bottom-2 right-2 font-mono-tech text-[9px] px-2 py-0.5 rounded bg-black/75 text-slate-300 border border-white/10">Referencia de Estilo</span>
+    </div>
+
+    <!-- Lienzo de Resultado Generado (Aparece al pulsar Crear mi Imagen) -->
+    <div id="contenedor-canvas-generado" class="hidden space-y-3 bg-[#05070c] border border-emerald-500/40 rounded-2xl p-3 text-center">
+      <div class="flex items-center justify-between">
+        <span class="font-mono-tech text-[10px] text-emerald-400 font-bold uppercase">✨ TU IMAGEN FINISHER GENERADA</span>
+        <button onclick="descargarImagenModal()" class="bg-emerald-500 hover:bg-emerald-400 text-[#04120c] font-display font-black text-[10px] uppercase px-3 py-1.5 rounded-lg cursor-pointer">
+          ⬇ Descargar HD
+        </button>
+      </div>
+      <canvas id="modalResultCanvas" class="w-full max-h-80 object-contain rounded-xl border border-white/10 mx-auto"></canvas>
     </div>
 
     <p id="mod-desc" class="editorial-p text-xs text-slate-300 leading-relaxed"></p>
 
-    <!-- Datos que se inyectarán automáticamente del atleta -->
-    <div class="bg-[#05070c] border border-white/10 rounded-2xl p-3.5 flex items-center justify-between text-xs">
-      <div>
-        <span class="block font-mono-tech text-[9px] text-slate-400 uppercase">Datos inyectados automáticamente:</span>
-        <strong id="mod-atleta-resumen" class="font-display font-bold text-white">CARLOS GOITIA · Dorsal #025 · Punto Fijo</strong>
+    <!-- Datos que se inyectan automáticamente del atleta -->
+    <div class="bg-[#05070c] border border-white/10 rounded-2xl p-3 flex items-center justify-between text-xs">
+      <div class="min-w-0">
+        <span class="block font-mono-tech text-[9px] text-slate-400 uppercase">Datos sincronizados de tu cédula:</span>
+        <strong id="mod-atleta-resumen" class="font-display font-bold text-white text-[11px] sm:text-xs truncate block">CARLOS GOITIA · Dorsal #025 · Punto Fijo</strong>
       </div>
-      <span class="font-mono-tech text-[10px] text-emerald-400 font-bold">10.00 KM</span>
+      <span id="mod-atleta-tiempo" class="font-mono-tech text-[10px] text-[#00D2FF] font-bold shrink-0 ml-2">10K · 52:14</span>
     </div>
 
-    <!-- Subir foto personal para aplicar el estilo -->
-    <div class="space-y-3">
-      <label class="cursor-pointer bg-white/5 hover:bg-white/10 border border-dashed border-[#00D2FF]/50 rounded-2xl p-4 text-center transition-all flex items-center justify-center gap-3">
-        <input type="file" id="mod-upload-foto" accept="image/*" class="hidden" onchange="previsualizarFotoModal(this)">
-        <i class="fa-solid fa-camera text-[#00D2FF] text-xl"></i>
-        <div class="text-left">
-          <span id="mod-upload-label" class="block text-xs font-bold text-white">Sube tu Foto para aplicar este estilo</span>
-          <span class="block font-mono-tech text-[10px] text-slate-400">Tus datos, dorsal y medalla se integran solos</span>
-        </div>
-      </label>
+    <!-- Subida de MÚLTIPLES FOTOS (Hasta 3 Ingredientes: Tu Foto + Silueta/Mapa Strava + Splits/Pace) -->
+    <div class="space-y-2">
+      <span class="block font-mono-tech text-[10px] text-[#00D2FF] uppercase font-bold">
+        Sube tus Fotos / Ingredientes (Puedes subir 1, 2 o las 3):
+      </span>
+      <div class="grid grid-cols-3 gap-2.5">
+        <!-- Foto 1: Foto del Corredor -->
+        <label class="cursor-pointer bg-white/5 hover:bg-white/10 border border-dashed border-[#00D2FF]/50 rounded-2xl p-2.5 text-center transition-all flex flex-col items-center justify-center gap-1 min-h-[92px] relative overflow-hidden">
+          <input type="file" id="upload-ing-1" accept="image/*" class="hidden" onchange="cargarIngredienteModal(this, 1)">
+          <img id="thumb-ing-1" class="hidden w-11 h-11 object-cover rounded-lg border border-[#00D2FF]">
+          <i id="icon-ing-1" class="fa-solid fa-user-check text-[#00D2FF] text-base"></i>
+          <span class="text-[10px] font-bold text-white leading-tight">1. Tu Foto</span>
+          <span class="font-mono-tech text-[8px] text-slate-400">Corriendo/Selfie</span>
+        </label>
 
-      <button onclick="accionGenerarEstilo()" class="w-full bg-gradient-to-r from-[#00D2FF] to-[#FF007A] hover:opacity-95 text-white font-display font-black text-xs uppercase tracking-widest py-3.5 rounded-xl shadow-lg cursor-pointer">
+        <!-- Foto 2: Silueta / Mapa GPS Strava -->
+        <label class="cursor-pointer bg-white/5 hover:bg-white/10 border border-dashed border-white/25 hover:border-[#FF007A] rounded-2xl p-2.5 text-center transition-all flex flex-col items-center justify-center gap-1 min-h-[92px] relative overflow-hidden">
+          <input type="file" id="upload-ing-2" accept="image/*" class="hidden" onchange="cargarIngredienteModal(this, 2)">
+          <img id="thumb-ing-2" class="hidden w-11 h-11 object-cover rounded-lg border border-[#FF007A]">
+          <i id="icon-ing-2" class="fa-solid fa-route text-[#FF007A] text-base"></i>
+          <span class="text-[10px] font-bold text-white leading-tight">2. Ruta / Mapa</span>
+          <span class="font-mono-tech text-[8px] text-slate-400">Silueta Strava</span>
+        </label>
+
+        <!-- Foto 3: Pace / Splits por KM -->
+        <label class="cursor-pointer bg-white/5 hover:bg-white/10 border border-dashed border-white/25 hover:border-amber-400 rounded-2xl p-2.5 text-center transition-all flex flex-col items-center justify-center gap-1 min-h-[92px] relative overflow-hidden">
+          <input type="file" id="upload-ing-3" accept="image/*" class="hidden" onchange="cargarIngredienteModal(this, 3)">
+          <img id="thumb-ing-3" class="hidden w-11 h-11 object-cover rounded-lg border border-amber-400">
+          <i id="icon-ing-3" class="fa-solid fa-chart-simple text-amber-400 text-base"></i>
+          <span class="text-[10px] font-bold text-white leading-tight">3. Splits / Pace</span>
+          <span class="font-mono-tech text-[8px] text-slate-400">Tiempos por KM</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="pt-1 flex flex-col sm:flex-row gap-2.5">
+      <button onclick="accionGenerarEstilo()" class="flex-1 bg-gradient-to-r from-[#00D2FF] to-[#FF007A] hover:opacity-95 text-white font-display font-black text-xs uppercase tracking-widest py-3.5 rounded-xl shadow-lg cursor-pointer">
         ⚡ Crear mi Imagen con este Estilo
       </button>
     </div>
@@ -230,6 +274,17 @@ let atletaActual = {
 };
 
 let estiloModalActivo = null;
+let imgIngrediente1 = null; // Foto personal
+let imgIngrediente2 = null; // Mapa/Silueta Strava
+let imgIngrediente3 = null; // Splits/Pace
+
+const logoEventoImg = new Image();
+logoEventoImg.crossOrigin = 'anonymous';
+logoEventoImg.src = 'img/RV_logo_oficial.webp';
+
+const medalla10kImg = new Image();
+medalla10kImg.crossOrigin = 'anonymous';
+medalla10kImg.src = 'img/medalla_real_10k.jpg';
 
 function renderGaleria() {
   const grid = document.getElementById('grid-estilos');
@@ -237,32 +292,32 @@ function renderGaleria() {
 
   ESTILOS_CATALOGO.forEach(est => {
     const card = document.createElement('div');
-    card.className = "gallery-card specular-card rounded-3xl overflow-hidden flex flex-col justify-between cursor-pointer group";
+    card.className = "gallery-card specular-card rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col justify-between cursor-pointer group";
     card.onclick = () => abrirModalEstilo(est.id);
     card.innerHTML = `
       <div>
         <div class="relative aspect-[4/5] w-full overflow-hidden bg-[#04060b]">
           <img src="${est.img}" alt="${est.titulo}" loading="lazy" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[#070709] via-transparent to-black/30 opacity-85"></div>
-          <span class="absolute top-3 left-3 font-mono-tech text-[10px] font-extrabold px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-md text-[#00D2FF] border border-[#00D2FF]/30">
+          <span class="absolute top-2.5 left-2.5 font-mono-tech text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-lg bg-black/75 backdrop-blur-md text-[#00D2FF] border border-[#00D2FF]/30">
             #${est.id}
           </span>
-          <span class="absolute top-3 right-3 font-mono-tech text-[10px] font-bold px-2 py-0.5 rounded-md bg-black/70 backdrop-blur-md text-white/80 border border-white/10">
+          <span class="absolute top-2.5 right-2.5 font-mono-tech text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-md bg-black/75 backdrop-blur-md text-white/80 border border-white/10">
             ${est.ratio}
           </span>
         </div>
-        <div class="p-4 pb-2">
-          <h3 class="font-display font-black text-sm uppercase text-white group-hover:text-[#00D2FF] transition-colors mb-1.5">
+        <div class="p-3 sm:p-4 pb-1.5">
+          <h3 class="font-display font-black text-xs sm:text-sm uppercase text-white group-hover:text-[#00D2FF] transition-colors mb-1 leading-snug">
             ${est.titulo}
           </h3>
-          <p class="editorial-p text-xs text-slate-400 leading-relaxed">
+          <p class="editorial-p text-[11px] sm:text-xs text-slate-400 leading-relaxed line-clamp-3">
             ${est.desc}
           </p>
         </div>
       </div>
-      <div class="px-4 pb-4 pt-2">
-        <div class="w-full py-2.5 rounded-xl bg-white/5 group-hover:bg-[#00D2FF] text-white group-hover:text-[#001438] font-display font-black text-[11px] uppercase tracking-wider text-center transition-all">
-          Seleccionar Estilo →
+      <div class="px-3 sm:px-4 pb-3.5 pt-2">
+        <div class="w-full py-2 rounded-xl bg-white/5 group-hover:bg-[#00D2FF] text-white group-hover:text-[#001438] font-display font-black text-[10px] sm:text-[11px] uppercase tracking-wider text-center transition-all">
+          Seleccionar →
         </div>
       </div>
     `;
@@ -280,6 +335,9 @@ function abrirModalEstilo(id) {
   document.getElementById('mod-img').src = est.img;
   document.getElementById('mod-desc').innerText = est.desc;
   document.getElementById('mod-atleta-resumen').innerText = `${atletaActual.nombre} · Dorsal #${atletaActual.dorsal} · ${atletaActual.ciudad}`;
+  document.getElementById('mod-atleta-tiempo').innerText = `${atletaActual.distancia} · ${atletaActual.tiempo}`;
+  document.getElementById('contenedor-canvas-generado').classList.add('hidden');
+  document.getElementById('contenedor-preview-referencia').classList.remove('hidden');
   document.getElementById('modal-estilo').classList.remove('hidden');
 }
 
@@ -287,19 +345,174 @@ function cerrarModalEstilo() {
   document.getElementById('modal-estilo').classList.add('hidden');
 }
 
-function previsualizarFotoModal(input) {
-  if (input.files && input.files[0]) {
-    document.getElementById('mod-upload-label').innerText = `✔ Foto cargada: ${input.files[0].name}`;
-  }
+function cargarIngredienteModal(input, slot) {
+  const file = input.files && input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const thumb = document.getElementById(`thumb-ing-${slot}`);
+    const icon = document.getElementById(`icon-ing-${slot}`);
+    thumb.src = e.target.result;
+    thumb.classList.remove('hidden');
+    icon.classList.add('hidden');
+
+    const imgObj = new Image();
+    imgObj.src = e.target.result;
+    if (slot === 1) imgIngrediente1 = imgObj;
+    if (slot === 2) imgIngrediente2 = imgObj;
+    if (slot === 3) imgIngrediente3 = imgObj;
+  };
+  reader.readAsDataURL(file);
 }
 
+// Renderiza la composición visual dentro del mismo modal sin cerrarlo
 function accionGenerarEstilo() {
   if (!estiloModalActivo) return;
-  alert(`✅ Estilo #${estiloModalActivo.id} (${estiloModalActivo.titulo}) seleccionado para:\n\n• Atleta: ${atletaActual.nombre}\n• Dorsal: #${atletaActual.dorsal}\n• Ubicación: ${atletaActual.ciudad}\n• Métricas: ${atletaActual.distancia} (${atletaActual.tiempo} · ${atletaActual.ritmo})\n\nEl prompt oculto de este estilo está listo en el catálogo para conectarse al generador IA al activar la llave maestra.`);
-  cerrarModalEstilo();
+  if (!imgIngrediente1) {
+    return alert("📸 Por favor sube al menos tu Foto Personal (Casilla 1) para generar tu imagen con este estilo.");
+  }
+
+  const canvas = document.getElementById('modalResultCanvas');
+  const ctx = canvas.getContext('2d');
+
+  let w = 1080, h = 1350;
+  if (estiloModalActivo.ratio === "1:1") { w = 1080; h = 1080; }
+  else if (estiloModalActivo.ratio === "9:16") { w = 1080; h = 1920; }
+  else if (estiloModalActivo.ratio === "3:4") { w = 1080; h = 1440; }
+
+  canvas.width = w;
+  canvas.height = h;
+
+  // 1. Fondo base oscuro deportivo
+  const bg = ctx.createLinearGradient(0, 0, w, h);
+  bg.addColorStop(0, '#070a14');
+  bg.addColorStop(0.5, '#0e1d38');
+  bg.addColorStop(1, '#04060c');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, w, h);
+
+  // 2. Foto 1 (Atleta) a pantalla completa con encuadre inteligente
+  if (imgIngrediente1 && imgIngrediente1.complete) {
+    const scale = Math.max(w / imgIngrediente1.width, h / imgIngrediente1.height);
+    const dw = imgIngrediente1.width * scale;
+    const dh = imgIngrediente1.height * scale;
+    ctx.drawImage(imgIngrediente1, (w - dw) / 2, (h - dh) / 2, dw, dh);
+
+    const vig = ctx.createLinearGradient(0, 0, 0, h);
+    vig.addColorStop(0, 'rgba(7,10,20,0.70)');
+    vig.addColorStop(0.45, 'rgba(7,10,20,0.12)');
+    vig.addColorStop(1, 'rgba(7,10,20,0.92)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  // 3. Dorsal gigante traslúcido en fondo
+  ctx.save();
+  ctx.fillStyle = 'rgba(255,255,255,0.13)';
+  ctx.font = '900 italic 310px Montserrat, sans-serif';
+  ctx.textAlign = 'right';
+  ctx.fillText(`#${atletaActual.dorsal}`, w - 35, 330);
+  ctx.restore();
+
+  // 4. Tarjeta Glassmorphism con las métricas oficiales de su cédula
+  ctx.save();
+  ctx.fillStyle = 'rgba(7, 10, 20, 0.58)';
+  ctx.strokeStyle = 'rgba(0, 210, 255, 0.45)';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.roundRect(45, 55, 380, 275, 24);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle = '#00D2FF';
+  ctx.font = '800 18px "JetBrains Mono", monospace';
+  ctx.fillText(`DORSAL #${atletaActual.dorsal} · ESTILO #${estiloModalActivo.id}`, 75, 100);
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = '900 46px Montserrat, sans-serif';
+  ctx.fillText(atletaActual.distancia, 75, 160);
+
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = '700 22px "JetBrains Mono", monospace';
+  ctx.fillText(`⏱ TIEMPO: ${atletaActual.tiempo}`, 75, 210);
+  ctx.fillText(`⚡ RITMO:  ${atletaActual.ritmo}`, 75, 248);
+
+  ctx.fillStyle = '#FF007A';
+  ctx.font = '800 16px "JetBrains Mono", monospace';
+  ctx.fillText(`📍 ${atletaActual.ciudad.toUpperCase()}`, 75, 295);
+  ctx.restore();
+
+  // 5. Si subió Foto 2 (Ruta/Silueta Strava) o Foto 3 (Splits), integrarla en tarjeta flotante
+  const extraImgs = [imgIngrediente2, imgIngrediente3].filter(Boolean);
+  extraImgs.forEach((im, idx) => {
+    if (im && im.complete) {
+      const boxW = 240, boxH = 240;
+      const bx = w - boxW - 45;
+      const by = 360 + idx * (boxH + 25);
+      ctx.save();
+      ctx.fillStyle = 'rgba(7, 10, 20, 0.72)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(bx, by, boxW, boxH, 20);
+      ctx.fill();
+      ctx.stroke();
+      ctx.clip();
+      const sc = Math.min(boxW / im.width, boxH / im.height);
+      ctx.drawImage(im, bx + (boxW - im.width * sc) / 2, by + (boxH - im.height * sc) / 2, im.width * sc, im.height * sc);
+      ctx.restore();
+    }
+  });
+
+  // 6. Medalla 10K Real + Logo Oficial y Nombre del Corredor al pie
+  if (medalla10kImg.complete) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(w - 140, h - 140, 85, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.clip();
+    ctx.drawImage(medalla10kImg, w - 225, h - 225, 170, 170);
+    ctx.restore();
+  }
+
+  if (logoEventoImg.complete) {
+    ctx.drawImage(logoEventoImg, 50, h - 160, 105, 105);
+  }
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = '900 italic 38px Montserrat, sans-serif';
+  ctx.fillText(atletaActual.nombre, 175, h - 110);
+
+  ctx.fillStyle = '#00D2FF';
+  ctx.font = '800 19px "JetBrains Mono", monospace';
+  ctx.fillText('RETO VIRTUAL VZLA 10K · retovirtualvzla.com', 175, h - 74);
+
+  // Mostrar resultado dentro del modal
+  document.getElementById('contenedor-preview-referencia').classList.add('hidden');
+  document.getElementById('contenedor-canvas-generado').classList.remove('hidden');
 }
 
-// Identificación Automática en Vivo con Inscritos 10K (Inscripciones_10K)
+function descargarImagenModal() {
+  const canvas = document.getElementById('modalResultCanvas');
+  const a = document.createElement('a');
+  a.download = `RetoVirtualVzla_Estilo${estiloModalActivo ? estiloModalActivo.id : '01'}_Dorsal${atletaActual.dorsal}.png`;
+  a.href = canvas.toDataURL('image/png', 1.0);
+  a.click();
+}
+
+function calcularRitmo10K(tiempoStr) {
+  if (!tiempoStr || tiempoStr.toLowerCase().includes('pendiente')) return '5:13 /km';
+  const partes = tiempoStr.trim().split(':').map(Number);
+  let totalSeg = 0;
+  if (partes.length === 3) totalSeg = partes[0] * 3600 + partes[1] * 60 + partes[2];
+  else if (partes.length === 2) totalSeg = partes[0] * 60 + partes[1];
+  if (!totalSeg || isNaN(totalSeg)) return '5:13 /km';
+  const segPorKm = Math.round(totalSeg / 10);
+  const m = Math.floor(segPorKm / 60);
+  const s = String(segPorKm % 60).padStart(2, '0');
+  return `${m}:${s} /km`;
+}
+
+// Identificación Automática en Vivo con Inscripciones_10K + Evidencias 10K
 async function identificarAtleta10K() {
   const ci = document.getElementById('input-cedula-10k').value.replace(/\D/g, '').trim();
   const btn = document.getElementById('btn-buscar-10k');
@@ -336,10 +549,25 @@ async function identificarAtleta10K() {
         atletaActual.dorsal = encontrado.dorsal;
         atletaActual.ciudad = encontrado.ciudad ? `${encontrado.ciudad}, ${encontrado.estado}` : encontrado.estado;
 
+        // Intentar traer su tiempo oficial si ya subió evidencia de 10K
+        try {
+          const resEv = await fetch(`/api/consultar-atleta?accion=ranking_evidencias&edicion=10k&t=${Date.now()}`);
+          if (resEv.ok) {
+            const dataEv = await resEv.json();
+            const matchEv = (dataEv.ranking || []).find(r => r.dorsal === atletaActual.dorsal);
+            if (matchEv && matchEv.tiempo && matchEv.tiempo !== 'Pendiente') {
+              atletaActual.tiempo = matchEv.tiempo;
+              atletaActual.ritmo = calcularRitmo10K(matchEv.tiempo);
+            }
+          }
+        } catch (e) {}
+
         document.getElementById('cred-dorsal').innerText = `#${atletaActual.dorsal}`;
         document.getElementById('cred-cedula').innerText = `C.I. V-${atletaActual.cedula}`;
         document.getElementById('cred-nombre').innerText = atletaActual.nombre;
         document.getElementById('cred-ubicacion').innerText = `📍 ${atletaActual.ciudad} · Edición Especial 10K`;
+        document.getElementById('cred-tiempo').innerText = atletaActual.tiempo;
+        document.getElementById('cred-ritmo').innerText = atletaActual.ritmo;
         document.getElementById('cred-estado-badge').innerText = "● ATLETA 10K VERIFICADO";
       } else {
         alert(`La cédula ${ci} no aparece registrada aún en la lista oficial de los 10K.`);

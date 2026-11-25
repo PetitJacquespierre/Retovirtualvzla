@@ -76,7 +76,55 @@
 
 ---
 
-## ✅ RESUMEN DEL CATÁLOGO COMPLETO (6 DE 6 LISTOS)
+## 👟 ESTILO #07: "Relax Post-Entreno en Zapato Gigante + Huellas en el Cielo" (Golden Hour Shoe Couch)
+* **Tipo de motor:** IA Generativa (1 Foto del Atleta + Distancia / Tiempo / Ritmo).
+* **Ingredientes que sube el atleta:** 1 foto suya (la IA detecta automáticamente los zapatos que lleva puestos en la foto, o usa zapatillas running deportivas) + su Distancia, Tiempo y Ritmo.
+* **Prompt Base Original (Threads):**
+  > `Use the uploaded photo as the exact face and body reference. Create a hyperrealistic cinematic post-workout scene at golden hour with the person relaxing inside a giant version of their own running shoe model [INSERT SHOE MODEL]. Keep the athlete smiling naturally at the camera, masculine energy, realistic skin texture, authentic lighting, premium sports editorial aesthetic, subtle fatigue after training, sleeveless running outfit and compression shorts inspired by the uploaded photo. Add Strava-style stats integrated as shoe sole footprints in the sky with: Distance [INSERT DISTANCE], Time [INSERT TIME], Pace [INSERT PACE]. Minimal clean composition, luxury running campaign mood, no AI look, no extra text or slogans.`
+* **Prompt Oculto Calibrado para Reto Virtual VZLA:**
+  ```text
+  Use the uploaded photo as the exact face and body reference (preserve 100% exact facial identity). Create a hyperrealistic cinematic post-workout scene at golden hour sunset with the athlete relaxing comfortably inside a giant monumental version of their own running shoe seen in the photo (or sleek modern running shoe). Keep the athlete smiling naturally and relaxed, realistic skin texture, authentic golden hour lighting, subtle post-run fatigue, athletic running outfit inspired by the uploaded photo. Add glowing shoe-sole footprint stats integrated naturally in the sky reading: "Distancia {DISTANCIA}", "Tiempo {TIEMPO}", "Ritmo {RITMO}". Subtle clean watermark "RETO VIRTUAL VZLA" in the top-left corner, minimal clean composition, luxury running campaign mood, no AI look, no third-party shoe brand slogans.
+  ```
+
+---
+
+## 🌃 ESTILO #08: "Anime Deportivo Nocturno + Ruta Strava en Energía" (Japanese Sports Anime)
+* **Tipo de motor:** IA Generativa (Foto del Atleta + Captura de Strava / Ruta GPS).
+* **Ingredientes que sube el atleta:** 1 foto suya + 1 captura de Strava (con su mapa de ruta, distancia, tiempo y ritmo).
+* **Prompt Base Original (Threads):**
+  > `Using the uploaded photo of me and the uploaded Strava screenshot, create an epic cinematic anime-style running artwork inspired by modern Japanese sports anime. Preserve my exact identity, outfit, shoes, and posture while transforming the scene into a dramatic night city with glowing lights, rain reflections, motion blur, orange energy trails from the Strava route, futuristic HUD stats, and intense emotional sports-movie atmosphere. Ultra detailed anime realism, dynamic composition, vibrant colors`
+* **Prompt Oculto Calibrado para Reto Virtual VZLA:**
+  ```text
+  Using the uploaded athlete portrait and the uploaded Strava screenshot, create an epic cinematic anime-style running artwork inspired by modern Japanese sports anime (Makoto Shinkai realism). Preserve exact facial identity, outfit, shoes, and posture while transforming the scene into a dramatic night city skyline with glowing lights, rain reflections on wet asphalt, motion blur, glowing orange and electric cyan energy trails shaped from the Strava GPS route wrapping around the runner, futuristic HUD stats on top-left reading the exact Distance, Pace and Time from the Strava screenshot, subtle Japanese sports calligraphy "走れ。" on the right, and bottom-right branding reading "RETO VIRTUAL VZLA 10K", intense emotional sports-movie atmosphere, ultra detailed anime realism, dynamic 9:16 composition, vibrant colors.
+  ```
+
+---
+
+## 🏁 ESTILO #09: "DAY ONE vs ONE DAY (Pista Dividida Cenital 9:16)" (Transformation Track Split)
+* **Tipo de motor:** IA Generativa (1 Foto del Atleta + 2 Capturas/Datos Strava: Antes vs Hoy).
+* **Ingredientes que sube el atleta:** 1 foto suya + 2 estadísticas/capturas (ej. su primer reto 5K vs su reto 10K actual).
+* **Prompt Base Original (Threads):**
+  > `Create an ultra-realistic cinematic fitness transformation photograph in vertical 9:16 format. Perfectly symmetrical, 90-degree overhead photograph of a male athlete lying flat on his back on an outdoor running track. The running track is vertically divided into two contrasting halves: LEFT HALF dark charcoal-black textured rubber running track; RIGHT HALF deep burnt-red textured running track. A thin, slightly weathered white vertical line separates both halves. Character lying completely flat on his back with arms spread wide across the dividing line, left side desaturated black & white, right side full vibrant color. Above left: DAY ONE + first Strava stats & route. Above right: ONE DAY + second Strava stats & route.`
+* **Prompt Oculto Calibrado para Reto Virtual VZLA:**
+  ```text
+  Create an ultra-realistic cinematic fitness transformation photograph in vertical 9:16 format. Perfectly symmetrical, 90-degree overhead bird's-eye photograph of the athlete from the reference photo (preserve exact identity, body proportions, cap, shoes, and outfit) lying completely flat on their back with arms spread wide and legs slightly apart directly across the center dividing line in the lower half of the frame. The outdoor running track is vertically divided into two contrasting halves by a thin weathered white vertical line: LEFT HALF is dark charcoal-black textured rubber track with the left side of the athlete's body in dramatic black-and-white desaturation; RIGHT HALF is deep burnt-red textured rubber track with the right side of the athlete's body in crisp full color. Top-left white bold typography reading "DAY ONE" with the first Strava stats and route outline painted on the track; top-right white bold typography reading "ONE DAY" with the second Strava stats and route outline painted on the track. Small clean watermark "RETO VIRTUAL VZLA" at bottom center. Natural daylight, sharp shadows, 8k ultra realistic.
+  ```
+
+---
+
+## 📸 ESTILO #10: "Perspectiva Forzada: Zapatos Gigantes en Ruta" (Creative Low-Angle Forced Perspective)
+* **Tipo de motor:** IA Generativa (1 Foto del Atleta + Distancia / Tiempo / Ritmo).
+* **Ingredientes que sube el atleta:** 1 foto suya (preservando 100% rostro, vestimenta y zapatillas) + sus métricas (Distancia, Tiempo, Ritmo).
+* **Concepto Original (Threads):**
+  > Composición de perspectiva forzada en ángulo bajo (*low angle*) en una carretera asfaltada al aire libre: el corredor sonriendo relajado apoyado visualmente junto a un par gigante de zapatillas deportivas flotando en primer plano (o una zapatilla monumental a su lado), con íconos blancos minimalistas de estadísticas de carrera en la parte inferior (`Distancia`, `Tiempo`, `Ritmo`).
+* **Prompt Oculto Calibrado para Reto Virtual VZLA:**
+  ```text
+  Creative low-angle forced-perspective outdoor running photography on a sunny asphalt road lined with green trees under a bright sky. On the left, the athlete from the uploaded photo (preserve 100% exact facial identity, outfit, and running shoes) stands confidently smiling and leaning naturally toward the center. In the right foreground, a giant monumental pair of bright colorful running shoes / legs mid-air creates a playful, dynamic forced-perspective optical illusion. At the bottom of the frame, clean white minimalist running tracker overlay icons displaying: "Distancia {DISTANCIA}" with a pin icon, "Tiempo {TIEMPO}" with a stopwatch icon, and "Ritmo {RITMO}" with a speedometer icon, plus a small clean "RETO VIRTUAL VZLA" badge at the top corner. Ultra realistic photography, crisp daylight, vibrant colors, 4:5 aspect ratio.
+  ```
+
+---
+
+## ✅ RESUMEN DEL CATÁLOGO (10 ESTILOS GUARDADOS)
 1. **Estilo #01:** Medalla Monumental Editorial (Estudio Azul Profundo · 1:1).
 2. **Estilo #02:** Reflejo en Lentes + Splits de Strava en Asfalto (4:5).
 3. **Estilo #03:** Doble Exposición Motivacional Montañas (9:16 Vertical Stories).

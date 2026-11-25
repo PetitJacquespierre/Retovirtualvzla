@@ -17,31 +17,31 @@ export default async function handler(req, res) {
     const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
     const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
-    // OPCION 1: GOOGLE GEMINI (Recomendado, gratis, sin bloqueos de país)
+    // OPCION 1: GOOGLE GEMINI (Con modelos actuales y fallback silencioso a Groq si falla)
     if (GEMINI_API_KEY) {
-        try {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{
-                        parts: [{ text: prompt }]
-                    }]
-                })
-            });
-
-            const data = await response.json();
-            if (!response.ok) {
-                return res.status(response.status).json({ 
-                    error: data.error?.message || 'Error en Gemini API' 
+        const modelosGemini = ['gemini-2.5-flash', 'gemini-flash-latest', 'gemini-3.5-flash'];
+        for (const mod of modelosGemini) {
+            try {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/${mod}:generateContent?key=${GEMINI_API_KEY}`;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{ text: prompt }]
+                        }]
+                    })
                 });
-            }
 
-            return res.status(200).json(data);
-        } catch (err) {
-            return res.status(500).json({ error: err.message });
+                if (response.ok) {
+                    const data = await response.json();
+                    return res.status(200).json(data);
+                }
+            } catch (err) {
+                console.warn(`Error probando ${mod}:`, err.message);
+            }
         }
+        // Si ningún modelo de Gemini responde, continúa automáticamente a Groq sin romper la petición
     }
 
     // GROQ ENGINE (Con Auto-Detección y Fallback Dinámico)

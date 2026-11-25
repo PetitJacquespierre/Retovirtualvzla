@@ -147,7 +147,29 @@
 
 ---
 
-## ✅ RESUMEN DEL CATÁLOGO (12 ESTILOS GUARDADOS)
+## 👟 ESTILO #13: "Ojo de Pez: Suelas al Frente + Barras de Splits" (Fisheye Soles & Splits)
+* **Tipo de motor:** IA Generativa (1 Foto del Atleta + Captura de Splits/Strava).
+* **Ingredientes que sube el atleta:** 1 foto suya + su captura de Strava (splits por km).
+* **Nota:** Prompt reconstruido profesionalmente a partir de la imagen #2 enviada.
+* **Prompt Oculto Calibrado para Reto Virtual VZLA:**
+  ```text
+  Ultra-wide fisheye low-angle shot looking down at the athlete from the uploaded photo (preserve 100% exact facial identity and outfit) sitting casually on dark charcoal-black textured asphalt with both legs extended forward toward the lens so the soles of their running shoes look massive and dramatic in the foreground. Selective color aesthetic: dark desaturated moody asphalt and background, while the running shoes pop in vibrant neon crimson/cyan accent color. Behind the athlete's torso directly on the dark asphalt, translucent glowing horizontal bar chart metrics from the uploaded Strava splits (KM, Pace, Elevation) in bold white condensed typography, plus a clean small "RETO VIRTUAL VZLA" emblem at bottom corner. High contrast, urban editorial sports style, 8k, 4:5 aspect ratio.
+  ```
+
+---
+
+## 🛣️ ESTILO #14: "Asfalto Dramático B&N + Ruta GPS Roja" (Moody B&W Selective Color)
+* **Tipo de motor:** IA Generativa (1 Foto del Atleta + Captura de Strava).
+* **Ingredientes que sube el atleta:** 1 foto suya + su captura de Strava (distancia, ritmo, tiempo y ruta).
+* **Nota:** Prompt reconstruido profesionalmente a partir de la imagen #1 enviada.
+* **Prompt Oculto Calibrado para Reto Virtual VZLA:**
+  ```text
+  Dramatic moody black-and-white sports photography on an empty overcast mountain asphalt road with stormy clouds. The athlete from the uploaded photo (preserve 100% exact identity and outfit) stands from a dynamic three-quarter back/side angle stepping onto a giant monumental foreground running shoe resting on the asphalt. Selective color treatment: the sky, mountains, and asphalt are stark desaturated monochrome, while the runner's shoes, the giant foreground shoe, and a bold glowing crimson-red Strava GPS route line cutting horizontally behind the athlete pop in intense vibrant color. Faded white road typography at the bottom reading "CONQUISTA CADA KM" next to a painted white road arrow. In the upper cloudy sky, clean white minimal stats reading "{DISTANCIA} · {RITMO} · {TIEMPO}" with a small running shoe icon and "RETO VIRTUAL VZLA". Cinematic HDR contrast, 4:5 aspect ratio, 8k.
+  ```
+
+---
+
+## ✅ RESUMEN DEL CATÁLOGO (14 ESTILOS GUARDADOS)
 1. **Estilo #01:** Medalla Monumental Editorial (Estudio Azul Profundo · 1:1).
 2. **Estilo #02:** Reflejo en Lentes + Splits de Strava en Asfalto (4:5).
 3. **Estilo #03:** Doble Exposición Motivacional Montañas (9:16 Vertical Stories).

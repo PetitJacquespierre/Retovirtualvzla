@@ -630,22 +630,23 @@ function renderizarMontajeEstudioHD() {
         // Dibujar fondo maestro
         ctx.drawImage(bgImg, 0, 0, W, H);
 
-        // 2. Si el atleta subió su foto, integrarla con iluminación de estudio y piso espejo
+        // 2. Si el atleta subió su foto, integrarla en la columna derecha sin tapar la medalla
         if (imgIngrediente1) {
-          const cardW = Math.round(W * 0.44);
-          const cardH = Math.round(H * 0.60);
-          const cardX = Math.round(W * 0.52);
-          const cardY = Math.round(H * 0.20);
+          // Posicionamiento preciso a la derecha para dejar la medalla 100% visible a la izquierda
+          const cardW = Math.round(W * 0.38);
+          const cardH = Math.round(H * 0.58);
+          const cardX = Math.round(W * 0.58);
+          const cardY = Math.round(H * 0.22);
 
-          // Sombra física profunda
+          // Sombra física profunda y difuminada
           ctx.save();
-          ctx.shadowColor = 'rgba(0, 0, 0, 0.90)';
-          ctx.shadowBlur = 45;
-          ctx.shadowOffsetX = 0;
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.95)';
+          ctx.shadowBlur = 50;
+          ctx.shadowOffsetX = -10;
           ctx.shadowOffsetY = 25;
 
-          // Marco redondeado elegante
-          const r = 24;
+          // Marco redondeado elegante con bisel
+          const r = 20;
           ctx.beginPath();
           ctx.moveTo(cardX + r, cardY);
           ctx.lineTo(cardX + cardW - r, cardY);
@@ -657,7 +658,7 @@ function renderizarMontajeEstudioHD() {
           ctx.lineTo(cardX, cardY + r);
           ctx.quadraticCurveTo(cardX, cardY, cardX + r, cardY);
           ctx.closePath();
-          ctx.fillStyle = '#060a12';
+          ctx.fillStyle = '#040711';
           ctx.fill();
           ctx.restore();
 
@@ -693,43 +694,43 @@ function renderizarMontajeEstudioHD() {
           }
           ctx.drawImage(imgIngrediente1, sx, sy, sw, sh, cardX, cardY, cardW, cardH);
 
-          // Viñeta oscura inferior para texto
-          const grad = ctx.createLinearGradient(cardX, cardY + cardH * 0.65, cardX, cardY + cardH);
+          // Viñeta oscura inferior para texto y degradado suave hacia el piso
+          const grad = ctx.createLinearGradient(cardX, cardY + cardH * 0.60, cardX, cardY + cardH);
           grad.addColorStop(0, 'rgba(0,0,0,0)');
-          grad.addColorStop(1, 'rgba(3, 7, 16, 0.95)');
+          grad.addColorStop(1, 'rgba(2, 5, 12, 0.95)');
           ctx.fillStyle = grad;
           ctx.fillRect(cardX, cardY, cardW, cardH);
 
-          // Borde especular cenital cian
-          ctx.strokeStyle = 'rgba(0, 210, 255, 0.45)';
-          ctx.lineWidth = 3;
+          // Borde especular cenital cian de 1px
+          ctx.strokeStyle = 'rgba(0, 210, 255, 0.55)';
+          ctx.lineWidth = 2.5;
           ctx.stroke();
           ctx.restore();
 
           // Reflejo en piso espejo debajo de la tarjeta del atleta
           ctx.save();
-          ctx.globalAlpha = 0.20;
+          ctx.globalAlpha = 0.18;
           ctx.translate(0, (cardY + cardH) * 2);
           ctx.scale(1, -1);
           ctx.drawImage(canvas, cardX, cardY + Math.round(cardH * 0.6), cardW, Math.round(cardH * 0.4), cardX, cardY + Math.round(cardH * 0.6), cardW, Math.round(cardH * 0.4));
           ctx.restore();
         }
 
-        // 3. HUD Técnico Inferior (Branded Reto Virtual Venezuela)
-        const hudH = Math.round(H * 0.13);
+        // 3. HUD Técnico Inferior Anti-Colisiones (Calibrado con Jerarquía Visual de Grow Studio)
+        const hudH = Math.round(H * 0.12);
         const hudY = H - hudH - Math.round(H * 0.025);
         const hudW = Math.round(W * 0.94);
         const hudX = Math.round((W - hudW) / 2);
 
         ctx.save();
-        ctx.fillStyle = 'rgba(6, 9, 18, 0.92)';
-        ctx.strokeStyle = 'rgba(0, 210, 255, 0.40)';
-        ctx.lineWidth = 2;
-        ctx.shadowColor = 'rgba(0,0,0,0.7)';
-        ctx.shadowBlur = 25;
+        ctx.fillStyle = 'rgba(4, 7, 15, 0.94)';
+        ctx.strokeStyle = 'rgba(0, 210, 255, 0.35)';
+        ctx.lineWidth = 1.5;
+        ctx.shadowColor = 'rgba(0,0,0,0.8)';
+        ctx.shadowBlur = 30;
 
         // Caja HUD redondeada
-        const hr = 18;
+        const hr = 16;
         ctx.beginPath();
         ctx.moveTo(hudX + hr, hudY);
         ctx.lineTo(hudX + hudW - hr, hudY);
@@ -745,32 +746,42 @@ function renderizarMontajeEstudioHD() {
         ctx.stroke();
         ctx.restore();
 
-        // Tipografía y Datos Oficiales del Atleta
+        // Tipografía y Datos Oficiales del Atleta (Diseño Editorial Sin Colisiones)
         ctx.save();
-        // Dorsal Badge
+
+        // FILA SUPERIOR: Dorsal + Nombre (Izquierda) | Sello Finisher (Derecha)
+        // 1. Badge Dorsal
+        const dorsalTxt = '#' + (atletaActual.dorsal || '025');
         ctx.fillStyle = '#00D2FF';
         ctx.font = 'bold ' + Math.round(hudH * 0.28) + 'px "Courier New", monospace';
-        ctx.fillText('#' + (atletaActual.dorsal || '025'), hudX + 24, hudY + Math.round(hudH * 0.42));
+        ctx.fillText(dorsalTxt, hudX + 20, hudY + Math.round(hudH * 0.42));
 
-        // Nombre Atleta
+        // 2. Nombre del Atleta
         ctx.fillStyle = '#FFFFFF';
         ctx.font = '900 ' + Math.round(hudH * 0.28) + 'px "Montserrat", sans-serif';
-        const nameX = hudX + Math.round(hudH * 1.15);
-        ctx.fillText((atletaActual.nombre || 'ATLETA OFICIAL').toUpperCase(), nameX, hudY + Math.round(hudH * 0.42));
+        const offsetNombre = hudX + Math.round(hudH * 1.10);
+        ctx.fillText((atletaActual.nombre || 'ATLETA OFICIAL').toUpperCase(), offsetNombre, hudY + Math.round(hudH * 0.42));
 
-        // Métricas (Tiempo, Ritmo, Distancia, Ciudad)
+        // 3. Sello Finisher Oficial a la derecha
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#00D2FF';
+        ctx.font = 'bold ' + Math.round(hudH * 0.22) + 'px "Montserrat", sans-serif';
+        ctx.fillText('FINISHER OFICIAL 10K', hudX + hudW - 20, hudY + Math.round(hudH * 0.42));
+
+        // FILA INFERIOR: Métricas Técnicas (Izquierda) | Ciudad y Evento (Derecha)
+        ctx.textAlign = 'left';
         ctx.fillStyle = '#94A3B8';
         ctx.font = 'bold ' + Math.round(hudH * 0.20) + 'px "Courier New", monospace';
-        const statsTxt = `${atletaActual.distancia} · TIEMPO ${atletaActual.tiempo} · RITMO ${atletaActual.ritmo} · ${atletaActual.ciudad}`;
-        ctx.fillText(statsTxt, hudX + 24, hudY + Math.round(hudH * 0.78));
+        const metricasTxt = `${atletaActual.distancia} · ${atletaActual.tiempo} · ${atletaActual.ritmo}`;
+        ctx.fillText(metricasTxt, hudX + 20, hudY + Math.round(hudH * 0.80));
 
-        // Logo / Sello Finisher a la derecha
-        ctx.fillStyle = '#00D2FF';
-        ctx.font = 'bold ' + Math.round(hudH * 0.20) + 'px "Montserrat", sans-serif';
+        // Ciudad y Reto a la derecha (Sin chocar con las métricas)
         ctx.textAlign = 'right';
-        ctx.fillText('FINISHER OFICIAL 10K', hudX + hudW - 24, hudY + Math.round(hudH * 0.42));
         ctx.fillStyle = '#64748B';
-        ctx.fillText('RETO VIRTUAL VENEZUELA 2026', hudX + hudW - 24, hudY + Math.round(hudH * 0.76));
+        ctx.font = 'bold ' + Math.round(hudH * 0.18) + 'px "Montserrat", sans-serif';
+        const ciudadTxt = (atletaActual.ciudad || 'VENEZUELA').toUpperCase() + ' · 2026';
+        ctx.fillText(ciudadTxt, hudX + hudW - 20, hudY + Math.round(hudH * 0.80));
+
         ctx.restore();
 
         const dataUrl = canvas.toDataURL('image/jpeg', 0.95);

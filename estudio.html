@@ -542,17 +542,41 @@ function cargarIngredienteModal(input, slot) {
   if (!file) return;
   const reader = new FileReader();
   reader.onload = (e) => {
-    const thumb = document.getElementById(`thumb-ing-${slot}`);
-    const icon = document.getElementById(`icon-ing-${slot}`);
-    thumb.src = e.target.result;
-    thumb.classList.remove('hidden');
-    icon.classList.add('hidden');
+    const rawImg = new Image();
+    rawImg.onload = () => {
+      // Auto-compresión en canvas a max 800px (reduce 10MB a <120KB, evitando error 413 de Vercel)
+      const maxDim = 800;
+      let w = rawImg.width;
+      let h = rawImg.height;
+      if (w > maxDim || h > maxDim) {
+        if (w > h) {
+          h = Math.round((h * maxDim) / w);
+          w = maxDim;
+        } else {
+          w = Math.round((w * maxDim) / h);
+          h = maxDim;
+        }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(rawImg, 0, 0, w, h);
+      const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
 
-    const imgObj = new Image();
-    imgObj.src = e.target.result;
-    if (slot === 1) imgIngrediente1 = imgObj;
-    if (slot === 2) imgIngrediente2 = imgObj;
-    if (slot === 3) imgIngrediente3 = imgObj;
+      const thumb = document.getElementById(`thumb-ing-${slot}`);
+      const icon = document.getElementById(`icon-ing-${slot}`);
+      thumb.src = compressedDataUrl;
+      thumb.classList.remove('hidden');
+      icon.classList.add('hidden');
+
+      const imgObj = new Image();
+      imgObj.src = compressedDataUrl;
+      if (slot === 1) imgIngrediente1 = imgObj;
+      if (slot === 2) imgIngrediente2 = imgObj;
+      if (slot === 3) imgIngrediente3 = imgObj;
+    };
+    rawImg.src = e.target.result;
   };
   reader.readAsDataURL(file);
 }
@@ -636,7 +660,16 @@ async function generarArteConIA() {
     progressBar.style.width = "100%";
     percentTxt.innerText = "100%";
 
-    const data = await res.json();
+    const resText = await res.text();
+    let data;
+    try {
+      data = JSON.parse(resText);
+    } catch (e) {
+      const errMsg = res.status === 413 
+        ? "La foto seleccionada supera el límite de memoria del servidor. Ya activamos la compresión automática; por favor vuelve a tocar la casilla 1 para recargarla y generar."
+        : `Respuesta del servidor (${res.status}): ${resText.slice(0, 100)}`;
+      throw new Error(errMsg);
+    }
 
     if (res.ok && data.success && data.imagenBase64) {
       statusTxt.innerText = "¡Obra de arte completada!";

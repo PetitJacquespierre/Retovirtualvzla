@@ -180,7 +180,29 @@
 
 ---
 
-## ✅ RESUMEN DEL CATÁLOGO (15 ESTILOS GUARDADOS)
+## 🔥 ESTILO #16: "Tornado de Fuego en Puente + HUD Holográfico" (Fiery Vortex Run)
+* **Tipo de motor:** IA Generativa (1 Foto del Atleta + Distancia / Tiempo / Ritmo).
+* **Ingredientes que sube el atleta:** 1 foto suya + Distancia, Tiempo y Ritmo.
+* **Nota:** Prompt reconstruido profesionalmente a partir de la imagen izquierda enviada.
+* **Prompt Oculto Calibrado para Reto Virtual VZLA:**
+  ```text
+  Epic cinematic fantasy-sports running photograph at dramatic sunset dusk. The athlete from the uploaded photo (preserve 100% exact facial identity, outfit, and shoes) runs directly toward the camera along a wet, glowing reflective suspension bridge. Behind the runner, a massive fiery swirling tornado of golden embers and flames rises into the stormy twilight sky, forming the huge glowing fiery typography "RETO 10K" across the top. Floating to the right of the runner is a sleek glowing orange holographic translucent HUD panel displaying: "Distance {DISTANCIA}", "Time {TIEMPO}", "Pace {RITMO}", a glowing elevation line chart, and "RETO VIRTUAL VZLA" cleanly at the bottom. Dramatic volumetric lighting, sparks, wet asphalt reflections, 8k, 4:5 or 9:16 aspect ratio.
+  ```
+
+---
+
+## 🌳 ESTILO #17: "El Árbol de mis Logros (Medallas al Atardecer)" (The Tree of Achievements)
+* **Tipo de motor:** IA Generativa (1 Foto del Atleta + Foto de Medalla 10K + Distancia / Tiempo / Ritmo).
+* **Ingredientes que sube el atleta:** 1 foto suya + Distancia, Tiempo y Ritmo.
+* **Nota:** Prompt reconstruido profesionalmente a partir de la imagen central enviada (ideal para fidelización de coleccionistas de medallas).
+* **Prompt Oculto Calibrado para Reto Virtual VZLA:**
+  ```text
+  Warm, deeply emotional golden hour sunset sports portrait by the ocean beach. The athlete from the uploaded photo (preserve 100% exact facial identity, outfit, and running shoes) sits relaxed against the roots of a majestic coastal tree overlooking the sparkling sunset sea. Dozens of colorful marathon medals and ribbons (featuring the Reto Virtual VZLA 10K medal prominently) hang from the tree branches above them. A rustic carved wooden sign on the trunk reads "EL ÁRBOL DE MIS LOGROS", and a stone near the roots reads "MÁS CARRERAS, MÁS SUEÑOS". Subtle elegant handwritten motivational quote in the warm sky on the left: "Cada medalla cuenta una historia, cada reto una victoria." Clean white stats on the bottom-left reading "RETO VIRTUAL VZLA", "Distancia {DISTANCIA}", "Tiempo {TIEMPO}", "Ritmo {RITMO}". Natural film warmth, cinematic 8k detail, 4:5 aspect ratio.
+  ```
+
+---
+
+## ✅ RESUMEN DEL CATÁLOGO (17 ESTILOS GUARDADOS)
 1. **Estilo #01:** Medalla Monumental Editorial (Estudio Azul Profundo · 1:1).
 2. **Estilo #02:** Reflejo en Lentes + Splits de Strava en Asfalto (4:5).
 3. **Estilo #03:** Doble Exposición Motivacional Montañas (9:16 Vertical Stories).

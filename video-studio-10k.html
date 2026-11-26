@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grow Video Engine 10K · Estilo Capa Zero & Remotion | Reto Virtual Venezuela</title>
+    <meta name="description" content="Motor de generación programática de reels y videos verticales 9:16 estilo Capa Zero / Remotion para la Edición Especial 10K de Reto Virtual Venezuela.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/webp" href="img/favicon.webp">
+
+    <!-- Preconnect Fonts & CDNs -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,700;0,800;0,900;1,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+
+    <style>
+        :root {
+            --bg-obsidian: #070709;
+            --surface-elevated: #0E1015;
+            --accent-green: #1CE872;
+            --accent-cyan: #00D2FF;
+            --text-titanium: #F4F4F6;
+            --text-muted: #8E929F;
+        }
+
+        /* LEY DE ALINEACIÓN EDITORIAL GROW STUDIO (CERO PALABRAS CORTADAS) */
+        * {
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            word-break: normal !important;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-obsidian);
+            color: var(--text-titanium);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .font-display {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: -0.03em;
+        }
+
+        .font-mono-tech {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        p, .editorial-justify {
+            text-align: justify;
+            text-justify: inter-word;
+            hyphens: none !important;
+            word-break: normal !important;
+        }
+
+        /* Film Grain Texture (2.5% Opacity) */
+        .bg-film-grain::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 45;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* Specular Top Border Cards ($5,000+ USD Standard) */
+        .card-studio-dark {
+            position: relative;
+            background: linear-gradient(180deg, rgba(22, 25, 34, 0.78) 0%, rgba(11, 12, 17, 0.94) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-top-color: rgba(255, 255, 255, 0.19);
+            border-radius: 18px;
+            box-shadow:
+                0 1px 0 0 rgba(255, 255, 255, 0.05) inset,
+                0 20px 45px -15px rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(16px);
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.45s ease;
+        }
+
+        /* Architectural Hairlines & Crosses */
+        .architectural-hairline {
+            position: relative;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .architectural-cross {
+            position: relative;
+        }
+        .architectural-cross::after {
+            content: "+";
+            position: absolute;
+            top: -9px;
+            left: -5px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.35);
+            pointer-events: none;
+        }
+
+        /* Splash Curtain Anti-Bloqueo (<= 1.2s) */
+        .splash-curtain {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #070709;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: clamp(1.5rem, 4vw, 3rem);
+            clip-path: inset(0 0 0 0);
+            transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+            will-change: clip-path;
+        }
+        .splash-curtain.is-revealed {
+            clip-path: inset(0 0 100% 0);
+            pointer-events: none;
+        }
+
+        /* 9:16 Vertical Stage (Capa Zero Aesthetic) */
+        .phone-stage-wrapper {
+            width: 100%;
+            max-width: 390px;
+            aspect-ratio: 9 / 16;
+            background: #0B0C0E;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-top-color: rgba(255, 255, 255, 0.28);
+            box-shadow:
+                0 0 0 6px rgba(255, 255, 255, 0.02),
+                0 30px 70px -15px rgba(0, 0, 0, 0.85),
+                0 0 50px -10px rgba(28, 232, 114, 0.12);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 36px 22px 32px;
+            user-select: none;
+        }
+
+        /* Capa Zero Miniature Micro-UI Cards inside the 9:16 stage */
+        .cz-mini-card {
+            background: #111317;
+            border: 1.5px solid rgba(255, 255, 255, 0.75);
+            border-radius: 12px;
+            padding: 12px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cz-mini-card.glow-left {
+            box-shadow: 4px 4px 0px rgba(28, 232, 114, 0.35), 0 0 22px rgba(28, 232, 114, 0.14);
+        }
+        .cz-mini-card.glow-right {
+            box-shadow: 4px 4px 0px rgba(255, 255, 255, 0.16);
+        }
+
+        /* Highlight Pill (Capa Zero Green Box) */
+        .cz-highlight-pill {
+            background-color: var(--accent-green);
+            color: #06110A;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-weight: 800;
+            display: inline-block;
+            line-height: 1.15;
+            box-shadow: 0 0 20px rgba(28, 232, 114, 0.35);
+        }
+
+        .cz-sub-highlight {
+            background-color: var(--accent-green);
+            color: #06110A;
+            padding: 1px 7px;
+            border-radius: 3px;
+            font-weight: 700;
+        }
+
+        /* Waveform Bars Animation */
+        .wave-bar {
+            width: 3px;
+            background-color: var(--accent-green);
+            border-radius: 99px;
+            transition: height 0.09s ease;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070709;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1F2430;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-film-grain min-h-screen flex flex-col justify-between">
+
+    <!-- ========================================== -->
+    <!-- SPLASH SCREEN ANTI-BLOQUEO (<= 1.1s)       -->
+    <!-- ========================================== -->
+    <div class="splash-curtain" data-splash data-splash-duration="1100" id="splash-screen">
+        <div class="w-full flex items-center justify-between text-xs font-mono-tech text-zinc-500 tracking-widest uppercase">
+            <span>[GROW STUDIO // VIDEO ENGINE 9:16]</span>
+            <span>RETO VIRTUAL VZLA · 10K</span>
+        </div>
+        <div class="flex flex-col items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-400/30 flex items-center justify-center">
+                <span class="font-mono-tech font-bold text-emerald-400 text-lg">10K</span>
+            </div>
+            <span class="font-display font-extrabold text-xl tracking-tight text-white">CAPA ZERO × REMOTION LAB</span>
+        </div>
+        <div class="w-full flex items-end justify-between">
+            <span class="text-xs font-mono-tech text-zinc-500">TOCA O HAZ CLIC PARA SALTAR</span>
+            <span class="font-mono-tech text-4xl sm:text-6xl font-bold text-white" id="splash-counter">00%</span>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- CABECERA EJECUTIVA GROW STUDIO             -->
+    <!-- ========================================== -->
+    <header class="sticky top-0 z-40 bg-[#070709]/85 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <button id="brand-logo-trigger" type="button" title="5 toques o mantén presionado (Easter Egg Grow Studio)" class="group relative flex items-center gap-2.5 text-left focus:outline-none">
+                    <div id="logo-badge" class="w-9 h-9 rounded-lg bg-emerald-500/15 border border-emerald-400/40 flex items-center justify-center transition-transform duration-300 group-active:scale-95">
+                        <span class="font-mono-tech font-bold text-xs text-emerald-400">GS</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-display font-extrabold text-sm sm:text-base text-white tracking-tight">GROW VIDEO ENGINE</span>
+                            <span class="font-mono-tech text-[10px] px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 uppercase tracking-wider">10K Edition</span>
+                        </div>
+                        <span class="block font-mono-tech text-[11px] text-zinc-400">[ESTILO CAPA ZERO · REMOTION PIPELINE]</span>
+                    </div>
+                </button>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+                <a href="index.html" class="font-mono-tech text-xs px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300 transition">
+                    ← Volver a Inicio 10K
+                </a>
+                <a href="inscripcion.html?modo=10K" class="font-mono-tech text-xs px-3.5 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold transition">
+                    Inscripción 10K →
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- CONTENIDO PRINCIPAL: BENTO ASIMÉTRICO 5+7  -->
+    <!-- ========================================== -->
+    <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10 flex-1">
+
+        <!-- Franja Arquitectónica de Contexto Técnico -->
+        <section class="architectural-hairline py-4 mb-8 grid grid-cols-1 md:grid-cols-4 gap-4 text-xs font-mono-tech">
+            <div class="architectural-cross pl-3">
+                <span class="text-zinc-500 block">[01 // MODALIDAD ACTIVA]</span>
+                <span class="text-emerald-400 font-semibold">SOLO MEDALLA 3D ($25 USD)</span>
+            </div>
+            <div class="architectural-cross pl-3">
+                <span class="text-zinc-500 block">[02 // TEXTIL EN FÁBRICA]</span>
+                <span class="text-amber-400 font-semibold">🔒 CONFECCIÓN CERRADA</span>
+            </div>
+            <div class="architectural-cross pl-3">
+                <span class="text-zinc-500 block">[03 // PAGO TOTAL & CARRERA]</span>
+                <span class="text-cyan-400 font-semibold">30 NOV LIQUIDACIÓN · 11 DIC 10K</span>
+            </div>
+            <div class="architectural-cross pl-3">
+                <span class="text-zinc-500 block">[04 // LOGÍSTICA OFICIAL]</span>
+                <span class="text-zinc-200 font-semibold">COBRO A DESTINO (MRW / ZOOM)</span>
+            </div>
+        </section>
+
+        <!-- Bento Grid Asimétrico: 5 Columnas (Visor 9:16 en Vivo) + 7 Columnas (Estudio & Pipeline) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+            <!-- ========================================== -->
+            <!-- COLUMNA IZQUIERDA (5 COLS): REPRODUCTOR 9:16 -->
+            <!-- ========================================== -->
+            <div class="lg:col-span-5 flex flex-col items-center lg:sticky lg:top-24">
+                
+                <!-- Marco 9:16 Exacto al Video de Capa Zero -->
+                <div class="phone-stage-wrapper" id="cz-stage">
+                    
+                    <!-- Cabecera superior sutil dentro del Reel -->
+                    <div class="w-full flex items-center justify-between text-[10px] font-mono-tech text-zinc-500 tracking-widest uppercase">
+                        <span>RETOVIRTUALVZLA.COM</span>
+                        <span id="stage-reel-tag">[REEL 01 // 10K]</span>
+                    </div>
+
+                    <!-- BLOQUE 1: Paso + Titular con Palabra en Caja Verde -->
+                    <div class="text-center my-auto pt-4">
+                        <div class="font-mono-tech text-xs tracking-[0.22em] text-emerald-400 font-semibold mb-2 uppercase" id="stage-step-label">
+                            [PASO 01]
+                        </div>
+                        <h1 class="font-display font-extrabold text-2xl sm:text-3xl text-white tracking-tight leading-tight">
+                            <span id="stage-title-prefix">Aparta tu</span>
+                            <span class="cz-highlight-pill ml-1" id="stage-title-highlight">cupo 10K</span>
+                        </h1>
+                    </div>
+
+                    <!-- BLOQUE 2: Las 2 Micro-Tarjetas Interactivas Lado a Lado (Fórmula Capa Zero) -->
+                    <div class="my-auto w-full grid grid-cols-11 items-center gap-1.5 py-4">
+                        
+                        <!-- Tarjeta Izquierda: Onda / Telemetría en Vivo -->
+                        <div class="col-span-5 cz-mini-card glow-left flex flex-col justify-between h-36">
+                            <div class="flex items-center gap-1.5 text-[10px] font-mono-tech text-zinc-400">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span id="stage-left-top">■ 10.0 KM GPS</span>
+                            </div>
+
+                            <!-- Waveform Dinámica Animada -->
+                            <div class="flex items-center justify-between gap-[2px] h-14 px-1" id="waveform-container">
+                                <!-- Se generan 18 barras por JS -->
+                            </div>
+
+                            <div class="font-mono-tech text-[10px] text-zinc-400 truncate" id="stage-left-bottom">
+                                ritmo validado_
+                            </div>
+                        </div>
+
+                        <!-- Flecha Central -->
+                        <div class="col-span-1 flex items-center justify-center font-mono-tech text-emerald-400 text-xs">
+                            →
+                        </div>
+
+                        <!-- Tarjeta Derecha: Estado de Proceso & Barra de Progreso -->
+                        <div class="col-span-5 cz-mini-card glow-right flex flex-col justify-between h-36">
+                            <div>
+                                <div class="font-mono-tech text-[9px] tracking-wider text-zinc-400 uppercase mb-2" id="stage-right-top">
+                                    INSCRIPCIÓN · 10K
+                                </div>
+                                <!-- Barra de Progreso Verde -->
+                                <div class="w-full h-2 bg-zinc-800 rounded-full overflow-hidden mb-1.5">
+                                    <div id="stage-progress-bar" class="h-full bg-emerald-400 rounded-full transition-all duration-300" style="width: 85%;"></div>
+                                </div>
+                                <div class="font-mono-tech text-[10px] text-zinc-400" id="stage-right-status">
+                                    reservando... 85%
+                                </div>
+                            </div>
+
+                            <!-- Mini-Badge de Dato Duro -->
+                            <div class="bg-white/[0.04] border border-white/10 rounded-lg p-2">
+                                <span class="block font-mono-tech text-[9px] text-zinc-400 uppercase" id="stage-right-meta-label">RESERVA INICIAL</span>
+                                <span class="font-mono-tech text-xs font-bold text-emerald-400" id="stage-right-meta-val">$10.00 USD</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE 3: Subtítulo Sincronizado con Cápsula Verde -->
+                    <div class="my-auto text-center px-2">
+                        <div class="font-mono-tech text-sm sm:text-base text-zinc-300 leading-relaxed" id="stage-subtitle-box">
+                            apartas hoy con <span class="cz-sub-highlight">$10 USD</span> tu kit
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE 4: Línea de Tiempo Inferior + Contador de Fotogramas [0] 072 -->
+                    <div class="w-full pt-4">
+                        <div class="relative w-full h-[2px] bg-zinc-800 rounded-full mb-5 flex items-center">
+                            <div id="stage-timeline-fill" class="h-full bg-emerald-400 transition-all duration-150" style="width: 28%;"></div>
+                            <div id="stage-timeline-knob" class="w-7 h-7 rounded-full bg-[#0B0C0E] border-2 border-emerald-400 flex items-center justify-center font-mono-tech text-[10px] font-bold text-white shadow-lg transition-all duration-150 -ml-3.5" style="left: 28%;">
+                                S1
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-center gap-2 font-mono-tech text-xs">
+                            <span class="px-1.5 py-0.5 rounded border border-white/60 text-white text-[10px] font-bold" id="stage-scene-index">1</span>
+                            <span class="text-emerald-400 font-bold tracking-wider" id="stage-frame-counter">072</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controles Rápidos del Reproductor 9:16 -->
+                <div class="w-full max-w-[390px] mt-4 grid grid-cols-3 gap-2">
+                    <button id="btn-play-pause" type="button" class="col-span-1 font-mono-tech text-xs py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold transition flex items-center justify-center gap-1.5">
+                        <span id="play-icon">⏸</span> <span id="play-text">Pausar</span>
+                    </button>
+                    <button id="btn-voice-tts" type="button" class="col-span-1 font-mono-tech text-xs py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-zinc-200 transition flex items-center justify-center gap-1.5">
+                        <span>🔊</span> <span id="tts-text">Voz IA: OFF</span>
+                    </button>
+                    <button id="btn-record-video" type="button" class="col-span-1 font-mono-tech text-xs py-2.5 px-3 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/40 text-cyan-300 font-semibold transition flex items-center justify-center gap-1.5">
+                        <span>⏺</span> <span id="record-text">Render .WEBM</span>
+                    </button>
+                </div>
+
+                <!-- Botones de Escena (S1 a S4) -->
+                <div class="w-full max-w-[390px] mt-2 grid grid-cols-4 gap-2 font-mono-tech text-xs">
+                    <button type="button" data-scene-btn="0" class="scene-tab py-1.5 rounded-lg border border-emerald-400/60 bg-emerald-500/15 text-emerald-300 font-bold">PASO 01</button>
+                    <button type="button" data-scene-btn="1" class="scene-tab py-1.5 rounded-lg border border-white/10 bg-white/5 text-zinc-400 hover:text-white">PASO 02</button>
+                    <button type="button" data-scene-btn="2" class="scene-tab py-1.5 rounded-lg border border-white/10 bg-white/5 text-zinc-400 hover:text-white">PASO 03</button>
+                    <button type="button" data-scene-btn="3" class="scene-tab py-1.5 rounded-lg border border-white/10 bg-white/5 text-zinc-400 hover:text-white">PASO 04</button>
+                </div>
+            </div>
+
+            <!-- ========================================== -->
+            <!-- COLUMNA DERECHA (7 COLS): CONSOLA & GUIONES -->
+            <!-- ========================================== -->
+            <div class="lg:col-span-7 flex flex-col gap-6">
+
+                <!-- Tarjeta 1: Explicación Estratégica & Selector de los 3 Reels 10K -->
+                <div class="card-studio-dark p-6 sm:p-7">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <span class="font-mono-tech text-xs text-emerald-400 uppercase tracking-widest">[PIPELINE AUTOMATIZADO · RETO VIRTUAL VZLA 10K]</span>
+                        <span class="font-mono-tech text-xs text-zinc-400">60 FPS · ZERO STOCK VIDEO</span>
+                    </div>
+                    <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mb-3">
+                        Fábrica de Reels Programáticos <span class="italic font-normal text-emerald-400">10K</span>
+                    </h2>
+                    <p class="text-sm text-zinc-300 leading-relaxed mb-6">
+                        Este motor replica exactamente la arquitectura visual de Capa Zero adaptada a la Edición Especial 10K de Reto Virtual Venezuela. En lugar de editar clips manuales en CapCut, cada reel se compone de cuatro micro-interfaces vivas alimentadas por datos reales: precios oficiales de los kits, fecha de apertura del 11 de diciembre y logística transparente con envíos Cobro a Destino por MRW o ZOOM.
+                    </p>
+
+                    <!-- Selector de 3 Plantillas Oficiales 10K -->
+                    <div class="mb-2">
+                        <label class="block font-mono-tech text-xs text-zinc-400 uppercase mb-2.5">
+                            1. Selecciona el Guion Oficial 10K a Previsualizar:
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <button type="button" data-preset="kits" class="preset-btn text-left p-3.5 rounded-xl border border-emerald-400/60 bg-emerald-500/10 transition">
+                                <span class="font-mono-tech text-[10px] text-emerald-400 block mb-1">[REEL 01 // SOLO MEDALLA 3D]</span>
+                                <span class="font-display font-bold text-sm text-white block">Medalla 3D ($25) & Pago 30 Nov</span>
+                                <span class="font-mono-tech text-[11px] text-zinc-400 mt-1 block">Textil Cerrado · Aparta con $10</span>
+                            </button>
+                            <button type="button" data-preset="cronograma" class="preset-btn text-left p-3.5 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition">
+                                <span class="font-mono-tech text-[10px] text-cyan-400 block mb-1">[REEL 02 // REGLAS GPS]</span>
+                                <span class="font-display font-bold text-sm text-white block">¿Cómo se corre el 11 de Diciembre?</span>
+                                <span class="font-mono-tech text-[11px] text-zinc-400 mt-1 block">2 Semanas · GPS · COD</span>
+                            </button>
+                            <button type="button" data-preset="urgencia" class="preset-btn text-left p-3.5 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition">
+                                <span class="font-mono-tech text-[10px] text-amber-400 block mb-1">[REEL 03 // CIERRE LOTE]</span>
+                                <span class="font-display font-bold text-sm text-white block">Textil Cerrado · Últimas Medallas</span>
+                                <span class="font-mono-tech text-[11px] text-zinc-400 mt-1 block">Liquidación Total 30 Nov</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: Editor en Caliente de la Escena Actual + Audio Clonado -->
+                <div class="card-studio-dark p-6 sm:p-7">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="font-mono-tech text-xs text-cyan-400 uppercase tracking-widest block">[EDITOR EN VIVO // MICRO-UI]</span>
+                            <h3 class="font-display font-bold text-lg text-white">Personalizar Escena Activa (<span id="editor-scene-badge" class="text-emerald-400 font-mono-tech">PASO 01</span>)</h3>
+                        </div>
+                        <label class="cursor-pointer font-mono-tech text-xs px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-zinc-200 transition flex items-center gap-2">
+                            <span>🎙️ Subir Voz Clonada (.MP3)</span>
+                            <input type="file" id="audio-upload-input" accept="audio/*" class="hidden">
+                        </label>
+                    </div>
+
+                    <div id="audio-file-banner" class="hidden mb-4 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between text-xs font-mono-tech">
+                        <span class="text-emerald-300 truncate" id="audio-file-name">Audio cargado</span>
+                        <button type="button" id="btn-play-uploaded-audio" class="px-2.5 py-1 rounded bg-emerald-400 text-zinc-950 font-bold">▶ Reproducir con Onda Real</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <label class="block font-mono-tech text-zinc-400 mb-1">ETIQUETA DE PASO (MONOSPACE)</label>
+                            <input type="text" id="inp-step" class="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-white/15 text-white font-mono-tech focus:border-emerald-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-mono-tech text-zinc-400 mb-1">PORCENTAJE BARRA DE PROGRESO</label>
+                            <input type="number" id="inp-progress" min="5" max="100" class="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-white/15 text-emerald-400 font-mono-tech focus:border-emerald-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-mono-tech text-zinc-400 mb-1">TITULAR (PREFIJO BLANCO)</label>
+                            <input type="text" id="inp-title-prefix" class="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-white/15 text-white focus:border-emerald-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-mono-tech text-zinc-400 mb-1">PALABRA EN CAJA VERDE</label>
+                            <input type="text" id="inp-title-highlight" class="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-emerald-400/50 text-emerald-300 font-bold focus:border-emerald-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-mono-tech text-zinc-400 mb-1">DATO TARJETA DERECHA (VALOR)</label>
+                            <input type="text" id="inp-meta-val" class="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-white/15 text-emerald-400 font-mono-tech focus:border-emerald-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-mono-tech text-zinc-400 mb-1">SUBTÍTULO (USA [PALABRA] PARA RESALTAR)</label>
+                            <input type="text" id="inp-subtitle" class="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-white/15 text-white font-mono-tech focus:border-emerald-400 focus:outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3: Tabla de la Verdad Oficial 10K (Reglas Blindadas Grow Studio) -->
+                <div class="card-studio-dark p-6 sm:p-7">
+                    <span class="font-mono-tech text-xs text-amber-400 uppercase tracking-widest block mb-1">[FUENTE DE LA VERDAD // INSCRIPCION.HTML ACTUALIZADA]</span>
+                    <h3 class="font-display font-bold text-lg text-white mb-3">Estado Operativo Real Inyectado en los Guiones 10K</h3>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+                        La confección de franelas y franelillas ya fue cerrada y enviada a fábrica. Todos los guiones promocionan exclusivamente la modalidad activa de Solo Medalla 3D ($25 USD), liquidación total el 30 de noviembre y carrera desde el 11 de diciembre.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 font-mono-tech text-xs">
+                        <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
+                            <span class="text-emerald-300 block text-[10px]">✅ ÚNICA MODALIDAD ACTIVA</span>
+                            <span class="text-lg font-bold text-white block my-0.5">$25.00 USD</span>
+                            <span class="text-emerald-400 text-[11px] block">Aparta con $10 · Resta $15</span>
+                            <span class="text-zinc-300 text-[10px] block mt-1">Medalla 3D Metal Macizo + Dorsal</span>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 opacity-75">
+                            <span class="text-amber-400 block text-[10px]">🔒 CONFECCIÓN TEXTIL</span>
+                            <span class="text-lg font-bold text-zinc-400 block my-0.5">CERRADA</span>
+                            <span class="text-zinc-400 text-[11px] block">Lote ya enviado a fábrica</span>
+                            <span class="text-zinc-500 text-[10px] block mt-1">No se cobran franelas nuevas</span>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30">
+                            <span class="text-cyan-300 block text-[10px]">📅 FECHAS INNEGOCIABLES</span>
+                            <span class="text-lg font-bold text-white block my-0.5">30 NOV / 11 DIC</span>
+                            <span class="text-cyan-400 text-[11px] block">30 Nov: Pago 100% Total</span>
+                            <span class="text-zinc-300 text-[10px] block mt-1">11 Dic: Carrera · Envío COD</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 4: Exportador de Código Remotion (React .TSX) & Prompt Claude -->
+                <div class="card-studio-dark p-6 sm:p-7">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <div>
+                            <span class="font-mono-tech text-xs text-emerald-400 uppercase tracking-widest block">[EXPORTACIÓN DE CÓDIGO // REMOTION + CLAUDE]</span>
+                            <h3 class="font-display font-bold text-lg text-white">Código React Remotion & JSON del Reel</h3>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button type="button" id="btn-copy-json" class="font-mono-tech text-xs px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-white transition">
+                                ⧉ Copiar JSON
+                            </button>
+                            <button type="button" id="btn-copy-remotion" class="font-mono-tech text-xs px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold transition">
+                                ⧉ Copiar Componente Remotion (.TSX)
+                            </button>
+                        </div>
+                    </div>
+
+                    <pre id="code-export-box" class="w-full p-4 rounded-xl bg-black/70 border border-white/10 font-mono-tech text-[11px] text-emerald-300 overflow-x-auto max-h-56 leading-relaxed"></pre>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Canvas Oculto 1080x1920 para Renderizado Directo a Archivo de Video (.WEBM) -->
+    <canvas id="render-canvas" width="540" height="960" class="hidden"></canvas>
+
+    <!-- ========================================== -->
+    <!-- MODAL EASTER EGG GROW STUDIO (5 CLICS)     -->
+    <!-- ========================================== -->
+    <div id="easter-egg-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-md p-4">
+        <div class="card-studio-dark max-w-sm w-full p-6 text-center border border-emerald-400/40">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/40 mx-auto flex items-center justify-center mb-3">
+                <span class="font-mono-tech font-bold text-emerald-400">GS</span>
+            </div>
+            <h3 class="font-display font-extrabold text-lg text-white mb-2">Hecho con pasión por Grow Studio 🚀</h3>
+            <p class="text-xs text-zinc-300 leading-relaxed mb-4">
+                Ingeniería de software, automatización programática de contenido y diseño de alto impacto para marcas líderes.
+            </p>
+            <button type="button" id="close-easter-egg" class="w-full py-2.5 rounded-xl bg-emerald-500 text-zinc-950 font-mono-tech text-xs font-bold">
+                Continuar en el Laboratorio
+            </button>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- FOOTER OFICIAL GROW STUDIO                 -->
+    <!-- ========================================== -->
+    <footer class="border-t border-white/10 bg-[#050507] mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono-tech text-zinc-400">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span>GROW STUDIO VIDEO ENGINE · RETO VIRTUAL VENEZUELA <span id="dynamic-year">2026</span></span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="hover:text-white transition">Plataforma 10K</a>
+                <a href="inscripcion.html?modo=10K" class="hover:text-emerald-400 transition">Inscripciones</a>
+                <a href="https://wa.me/584127732710" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition">Soporte WhatsApp</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- MOTOR JAVASCRIPT: REEL ENGINE + AUDIO + REC -->
+    <!-- ========================================== -->
+    <script>
+        /* 1. SPLASH SCREEN ANTI-BLOQUEO (<= 1.1s) */
+        (function initAdaptiveSplash() {
+            const splash = document.getElementById('splash-screen');
+            const counterEl = document.getElementById('splash-counter');
+            if (!splash) return;
+            let progress = 0;
+            let dismissed = false;
+
+            const interval = setInterval(() => {
+                progress = Math.min(100, progress + 14);
+                if (counterEl) counterEl.textContent = String(progress).padStart(2, '0') + '%';
+            }, 90);
+
+            const dismiss = () => {
+                if (dismissed) return;
+                dismissed = true;
+                clearInterval(interval);
+                if (counterEl) counterEl.textContent = '100%';
+                splash.classList.add('is-revealed');
+            };
+
+            const timer = setTimeout(dismiss, 1100);
+            ['click', 'touchstart', 'keydown', 'wheel'].forEach(evt =>
+                window.addEventListener(evt, () => { clearTimeout(timer); dismiss(); }, { once: true, passive: true })
+            );
+        })();
+
+        /* 2. BASE DE DATOS DE LOS 3 GUIONES OFICIALES 10K (SOLO MEDALLA $25 · TEXTIL CERRADO · PAGO 30 NOV · CARRERA 11 DIC) */
+        const REEL_PRESETS = {
+            kits: {
+                tag: "[REEL 01 // MEDALLA 3D 10K]",
+                scenes: [
+                    {
+                        step: "[PASO 01]",
+                        titlePrefix: "Aparta tu",
+                        titleHighlight: "Medalla 3D",
+                        leftTop: "■ 10.0 KM GPS",
+                        leftBottom: "dorsal oficial_",
+                        rightTop: "RESERVA · 10K",
+                        progress: 88,
+                        rightStatus: "apartando... 88%",
+                        metaLabel: "ABONO INICIAL",
+                        metaVal: "$10.00 USD",
+                        subtitle: "apartas hoy con [$10 USD] tu cupo 10K",
+                        tts: "Paso 1. Aparta hoy tu cupo en la edición especial 10K con solo 10 dólares."
+                    },
+                    {
+                        step: "[PASO 02]",
+                        titlePrefix: "Solo Medalla",
+                        titleHighlight: "$25 USD",
+                        leftTop: "■ METAL MACIZO",
+                        leftBottom: "textil ya cerrado_",
+                        rightTop: "MODALIDAD · ACTIVA",
+                        progress: 92,
+                        rightStatus: "disponible... 92%",
+                        metaLabel: "PRECIO OFICIAL",
+                        metaVal: "$25.00 USD",
+                        subtitle: "incluye [Medalla 3D] física, dorsal y certificado",
+                        tts: "Paso 2. Las franelas ya están en fábrica. Queda disponible la modalidad Solo Medalla 3D de metal macizo por 25 dólares."
+                    },
+                    {
+                        step: "[PASO 03]",
+                        titlePrefix: "Pago total el",
+                        titleHighlight: "30 Nov",
+                        leftTop: "■ RESTAN $15 USD",
+                        leftBottom: "tasa BCV oficial_",
+                        rightTop: "CIERRE · TOTAL",
+                        progress: 95,
+                        rightStatus: "liquidando... 95%",
+                        metaLabel: "FECHA TOPE 100%",
+                        metaVal: "30 NOV 2026",
+                        subtitle: "liquidas la totalidad el [30 de noviembre]",
+                        tts: "Paso 3. Todo corredor completa la totalidad del pago hasta el 30 de noviembre."
+                    },
+                    {
+                        step: "[PASO 04]",
+                        titlePrefix: "Corremos el",
+                        titleHighlight: "11 Dic",
+                        leftTop: "■ MRW / ZOOM",
+                        leftBottom: "cobro a destino_",
+                        rightTop: "DESPACHO · COD",
+                        progress: 100,
+                        rightStatus: "confirmado... 100%",
+                        metaLabel: "ENVÍO NACIONAL",
+                        metaVal: "COBRO A DESTINO",
+                        subtitle: "arrancamos el [11 de diciembre] con envío COD",
+                        tts: "Paso 4. Corremos desde el 11 de diciembre y recibes tu medalla por MRW o ZOOM con Cobro a Destino."
+                    }
+                ]
+            },
+            cronograma: {
+                tag: "[REEL 02 // REGLAS GPS]",
+                scenes: [
+                    {
+                        step: "[PASO 01]",
+                        titlePrefix: "Arrancamos el",
+                        titleHighlight: "11 Dic",
+                        leftTop: "■ APERTURA 10K",
+                        leftBottom: "11 diciembre_",
+                        rightTop: "CALENDARIO · 10K",
+                        progress: 90,
+                        rightStatus: "programado... 90%",
+                        metaLabel: "INICIO OFICIAL",
+                        metaVal: "11 DIC 2026",
+                        subtitle: "la carrera abre el [11 de diciembre] en todo el país",
+                        tts: "Paso 1. La carrera 10K arranca oficialmente el 11 de diciembre de 2026."
+                    },
+                    {
+                        step: "[PASO 02]",
+                        titlePrefix: "Tienes",
+                        titleHighlight: "2 semanas",
+                        leftTop: "■ 2 FINES DE SEMANA",
+                        leftBottom: "a tu propio ritmo_",
+                        rightTop: "VENTANA · GPS",
+                        progress: 85,
+                        rightStatus: "activa... 85%",
+                        metaLabel: "TIEMPO PARA CORRER",
+                        metaVal: "14 DÍAS HÁBILES",
+                        subtitle: "dispones de [2 fines de semana] para tus 10K",
+                        tts: "Paso 2. Dispones de dos semanas completas y dos fines de semana para completar tus 10 kilómetros."
+                    },
+                    {
+                        step: "[PASO 03]",
+                        titlePrefix: "Registra tu",
+                        titleHighlight: "ruta GPS",
+                        leftTop: "■ STRAVA / GARMIN",
+                        leftBottom: "captura 10.0 km_",
+                        rightTop: "VALIDACIÓN · WEB",
+                        progress: 95,
+                        rightStatus: "subiendo... 95%",
+                        metaLabel: "PLATAFORMA OFICIAL",
+                        metaVal: "RANKING 10K",
+                        subtitle: "subes tu captura de [GPS] a la plataforma web",
+                        tts: "Paso 3. Corre con tu app o reloj GPS favorito y sube tu captura a la plataforma."
+                    },
+                    {
+                        step: "[PASO 04]",
+                        titlePrefix: "Solo Medalla",
+                        titleHighlight: "$25 USD",
+                        leftTop: "■ PAGO TOTAL 30 NOV",
+                        leftBottom: "aparta con $10_",
+                        rightTop: "MRW · ZOOM COD",
+                        progress: 100,
+                        rightStatus: "completado... 100%",
+                        metaLabel: "ENVÍO NACIONAL",
+                        metaVal: "COBRO A DESTINO",
+                        subtitle: "inscríbete en [retovirtualvzla.com] apartando con $10",
+                        tts: "Paso 4. Inscríbete hoy en retovirtualvzla.com en modalidad Solo Medalla de 25 dólares apartando con 10."
+                    }
+                ]
+            },
+            urgencia: {
+                tag: "[REEL 03 // CIERRE LOTE]",
+                scenes: [
+                    {
+                        step: "[ALERTA 01]",
+                        titlePrefix: "Franelas en",
+                        titleHighlight: "fábrica",
+                        leftTop: "■ TEXTIL CERRADO",
+                        leftBottom: "lote en confección_",
+                        rightTop: "PRENDAS · 10K",
+                        progress: 100,
+                        rightStatus: "cerrado... 100%",
+                        metaLabel: "ESTATUS TEXTIL",
+                        metaVal: "🔒 CERRADO",
+                        subtitle: "la confección de franelas ya fue [enviada a fábrica]",
+                        tts: "Alerta 1. El lote de franelas ya fue enviado a fábrica y la confección textil está cerrada."
+                    },
+                    {
+                        step: "[ALERTA 02]",
+                        titlePrefix: "Últimos cupos",
+                        titleHighlight: "Medalla 3D",
+                        leftTop: "■ METAL MACIZO",
+                        leftBottom: "relieve esmaltado_",
+                        rightTop: "SOLO MEDALLA",
+                        progress: 91,
+                        rightStatus: "ocupado... 91%",
+                        metaLabel: "INSCRIPCIÓN ACTIVA",
+                        metaVal: "$25.00 USD",
+                        subtitle: "quedan los últimos cupos de [Solo Medalla 3D] ($25)",
+                        tts: "Alerta 2. Únicamente quedan disponibles los últimos cupos para la Medalla Oficial 3D por 25 dólares."
+                    },
+                    {
+                        step: "[ALERTA 03]",
+                        titlePrefix: "Aparta con",
+                        titleHighlight: "$10 USD",
+                        leftTop: "■ CIERRE 30 NOV",
+                        leftBottom: "restan $15 USD_",
+                        rightTop: "LIQUIDACIÓN · 100%",
+                        progress: 96,
+                        rightStatus: "verificando... 96%",
+                        metaLabel: "PAGO TOTAL TOPE",
+                        metaVal: "30 NOV 2026",
+                        subtitle: "reservas con $10 y liquidas todo el [30 de noviembre]",
+                        tts: "Alerta 3. Aparta hoy con 10 dólares y completa los 15 restantes a más tardar el 30 de noviembre."
+                    },
+                    {
+                        step: "[ALERTA 04]",
+                        titlePrefix: "Entra ya al",
+                        titleHighlight: "link en bio",
+                        leftTop: "■ CARRERA 11 DIC",
+                        leftBottom: "envío COD MRW/ZOOM_",
+                        rightTop: "ENVÍO · COD",
+                        progress: 100,
+                        rightStatus: "confirmado... 100%",
+                        metaLabel: "MRW / ZOOM",
+                        metaVal: "COBRO A DESTINO",
+                        subtitle: "asegura tu medalla en [retovirtualvzla.com] hoy",
+                        tts: "Alerta 4. Entra ahora a retovirtualvzla.com y asegura tu medalla 3D antes del cierre total."
+                    }
+                ]
+            }
+        };
+
+        /* 3. ESTADO DEL MOTOR EN VIVO */
+        let currentPresetKey = 'kits';
+        let currentSceneIdx = 0;
+        let isPlaying = true;
+        let ttsEnabled = false;
+        let frameCount = 72;
+        let sceneTick = 0;
+        const TICKS_PER_SCENE = 50; // ~4 segundos por escena a 80ms por tick
+
+        /* Crear barras de la onda de audio estilo Capa Zero */
+        const waveformContainer = document.getElementById('waveform-container');
+        const NUM_BARS = 18;
+        const waveBars = [];
+        for (let i = 0; i < NUM_BARS; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'wave-bar';
+            bar.style.height = '18px';
+            waveformContainer.appendChild(bar);
+            waveBars.push(bar);
+        }
+
+        function formatSubtitleHTML(rawText) {
+            return rawText.replace(/\[([^\]]+)\]/g, '<span class="cz-sub-highlight">$1</span>');
+        }
+
+        function speakScene(text) {
+            if (!ttsEnabled || !('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'es-ES';
+            utter.rate = 1.08;
+            window.speechSynthesis.speak(utter);
+        }
+
+        function renderSceneToDOM(sceneIdx, triggerSpeech = false) {
+            const preset = REEL_PRESETS[currentPresetKey];
+            const scene = preset.scenes[sceneIdx];
+            if (!scene) return;
+
+            document.getElementById('stage-reel-tag').textContent = preset.tag;
+            document.getElementById('stage-step-label').textContent = scene.step;
+            document.getElementById('stage-title-prefix').textContent = scene.titlePrefix;
+            document.getElementById('stage-title-highlight').textContent = scene.titleHighlight;
+            document.getElementById('stage-left-top').textContent = scene.leftTop;
+            document.getElementById('stage-left-bottom').textContent = scene.leftBottom;
+            document.getElementById('stage-right-top').textContent = scene.rightTop;
+            document.getElementById('stage-progress-bar').style.width = scene.progress + '%';
+            document.getElementById('stage-right-status').textContent = scene.rightStatus;
+            document.getElementById('stage-right-meta-label').textContent = scene.metaLabel;
+            document.getElementById('stage-right-meta-val').textContent = scene.metaVal;
+            document.getElementById('stage-subtitle-box').innerHTML = formatSubtitleHTML(scene.subtitle);
+
+            document.getElementById('stage-timeline-knob').textContent = 'S' + (sceneIdx + 1);
+            document.getElementById('stage-scene-index').textContent = String(sceneIdx + 1);
+            document.getElementById('editor-scene-badge').textContent = scene.step;
+
+            // Actualizar inputs del editor
+            document.getElementById('inp-step').value = scene.step;
+            document.getElementById('inp-progress').value = scene.progress;
+            document.getElementById('inp-title-prefix').value = scene.titlePrefix;
+            document.getElementById('inp-title-highlight').value = scene.titleHighlight;
+            document.getElementById('inp-meta-val').value = scene.metaVal;
+            document.getElementById('inp-subtitle').value = scene.subtitle;
+
+            // Actualizar botones de pestaña de escena
+            document.querySelectorAll('.scene-tab').forEach((btn, idx) => {
+                if (idx === sceneIdx) {
+                    btn.className = 'scene-tab py-1.5 rounded-lg border border-emerald-400/60 bg-emerald-500/15 text-emerald-300 font-bold';
+                } else {
+                    btn.className = 'scene-tab py-1.5 rounded-lg border border-white/10 bg-white/5 text-zinc-400 hover:text-white';
+                }
+            });
+
+            updateExportBox();
+            if (triggerSpeech) speakScene(scene.tts);
+        }
+
+        function updateExportBox() {
+            const preset = REEL_PRESETS[currentPresetKey];
+            const codeBox = document.getElementById('code-export-box');
+            codeBox.textContent = JSON.stringify(preset, null, 2);
+        }
+
+        /* 4. LOOP DE ANIMACIÓN A 60 FPS (ONDA DE AUDIO + TIMELINE + CONTADOR [0] 072) */
+        let audioAnalyser = null;
+        let audioDataArray = null;
+
+        setInterval(() => {
+            // Animar barras de onda (con audio real si se subió MP3, o simulación matemática orgánica)
+            if (audioAnalyser && audioDataArray) {
+                audioAnalyser.getByteFrequencyData(audioDataArray);
+                for (let i = 0; i < NUM_BARS; i++) {
+                    const val = audioDataArray[i * 2] || 20;
+                    const h = Math.max(8, Math.min(48, Math.round((val / 255) * 48)));
+                    waveBars[i].style.height = h + 'px';
+                }
+            } else if (isPlaying) {
+                for (let i = 0; i < NUM_BARS; i++) {
+                    const wave = Math.sin(Date.now() / 140 + i * 0.65) * 0.5 + 0.5;
+                    const jitter = Math.random() * 14;
+                    const h = Math.max(8, Math.min(46, Math.round(10 + wave * 24 + jitter)));
+                    waveBars[i].style.height = h + 'px';
+                }
+            }
+
+            if (!isPlaying) return;
+
+            frameCount = (frameCount + 1) % 999;
+            document.getElementById('stage-frame-counter').textContent = String(frameCount).padStart(3, '0');
+
+            sceneTick++;
+            const totalProgress = ((currentSceneIdx * TICKS_PER_SCENE + sceneTick) / (4 * TICKS_PER_SCENE)) * 100;
+            const clampedPct = Math.min(96, Math.max(6, totalProgress));
+            document.getElementById('stage-timeline-fill').style.width = clampedPct + '%';
+            document.getElementById('stage-timeline-knob').style.left = clampedPct + '%';
+
+            if (sceneTick >= TICKS_PER_SCENE) {
+                sceneTick = 0;
+                currentSceneIdx = (currentSceneIdx + 1) % 4;
+                renderSceneToDOM(currentSceneIdx, true);
+            }
+        }, 80);
+
+        /* 5. EVENTOS DE INTERACCIÓN Y EDICIÓN EN VIVO */
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentPresetKey = btn.dataset.preset;
+                currentSceneIdx = 0;
+                sceneTick = 0;
+                document.querySelectorAll('.preset-btn').forEach(b => {
+                    b.className = 'preset-btn text-left p-3.5 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition';
+                });
+                btn.className = 'preset-btn text-left p-3.5 rounded-xl border border-emerald-400/60 bg-emerald-500/10 transition';
+                renderSceneToDOM(0, true);
+            });
+        });
+
+        document.querySelectorAll('.scene-tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentSceneIdx = Number(btn.dataset.sceneBtn);
+                sceneTick = 0;
+                renderSceneToDOM(currentSceneIdx, true);
+            });
+        });
+
+        document.getElementById('btn-play-pause').addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            document.getElementById('play-icon').textContent = isPlaying ? '⏸' : '▶';
+            document.getElementById('play-text').textContent = isPlaying ? 'Pausar' : 'Reproducir';
+        });
+
+        document.getElementById('btn-voice-tts').addEventListener('click', () => {
+            ttsEnabled = !ttsEnabled;
+            const btn = document.getElementById('btn-voice-tts');
+            document.getElementById('tts-text').textContent = ttsEnabled ? 'Voz IA: ON' : 'Voz IA: OFF';
+            btn.className = ttsEnabled
+                ? 'col-span-1 font-mono-tech text-xs py-2.5 px-3 rounded-xl bg-emerald-500/20 border border-emerald-400 text-emerald-300 font-bold transition flex items-center justify-center gap-1.5'
+                : 'col-span-1 font-mono-tech text-xs py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-zinc-200 transition flex items-center justify-center gap-1.5';
+            if (ttsEnabled) {
+                const scene = REEL_PRESETS[currentPresetKey].scenes[currentSceneIdx];
+                speakScene(scene.tts);
+            } else if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+        });
+
+        // Binding de inputs en caliente
+        ['inp-step', 'inp-progress', 'inp-title-prefix', 'inp-title-highlight', 'inp-meta-val', 'inp-subtitle'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                const scene = REEL_PRESETS[currentPresetKey].scenes[currentSceneIdx];
+                scene.step = document.getElementById('inp-step').value;
+                scene.progress = Number(document.getElementById('inp-progress').value) || 85;
+                scene.titlePrefix = document.getElementById('inp-title-prefix').value;
+                scene.titleHighlight = document.getElementById('inp-title-highlight').value;
+                scene.metaVal = document.getElementById('inp-meta-val').value;
+                scene.subtitle = document.getElementById('inp-subtitle').value;
+                renderSceneToDOM(currentSceneIdx, false);
+            });
+        });
+
+        /* 6. SUBIDA DE VOZ CLONADA (.MP3 / .WAV) CON ANALIZADOR DE ONDA REAL */
+        let uploadedAudioElement = null;
+        document.getElementById('audio-upload-input').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const url = URL.createObjectURL(file);
+            if (uploadedAudioElement) uploadedAudioElement.pause();
+            uploadedAudioElement = new Audio(url);
+
+            document.getElementById('audio-file-banner').classList.remove('hidden');
+            document.getElementById('audio-file-name').textContent = '🎙️ ' + file.name;
+
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) {
+                const ctx = new AudioCtx();
+                const src = ctx.createMediaElementSource(uploadedAudioElement);
+                audioAnalyser = ctx.createAnalyser();
+                audioAnalyser.fftSize = 64;
+                src.connect(audioAnalyser);
+                audioAnalyser.connect(ctx.destination);
+                audioDataArray = new Uint8Array(audioAnalyser.frequencyBinCount);
+            }
+        });
+
+        document.getElementById('btn-play-uploaded-audio').addEventListener('click', () => {
+            if (!uploadedAudioElement) return;
+            if (uploadedAudioElement.paused) {
+                uploadedAudioElement.play();
+                isPlaying = true;
+                document.getElementById('btn-play-uploaded-audio').textContent = '⏸ Pausar Audio';
+            } else {
+                uploadedAudioElement.pause();
+                document.getElementById('btn-play-uploaded-audio').textContent = '▶ Reproducir con Onda Real';
+            }
+        });
+
+        /* 7. EXPORTADOR DE COMPONENTE REMOTION (.TSX) & JSON */
+        document.getElementById('btn-copy-json').addEventListener('click', () => {
+            navigator.clipboard.writeText(JSON.stringify(REEL_PRESETS[currentPresetKey], null, 2));
+            const btn = document.getElementById('btn-copy-json');
+            btn.textContent = '✓ JSON Copiado';
+            setTimeout(() => { btn.textContent = '⧉ Copiar JSON'; }, 1800);
+        });
+
+        document.getElementById('btn-copy-remotion').addEventListener('click', () => {
+            const presetData = JSON.stringify(REEL_PRESETS[currentPresetKey], null, 2);
+            const remotionTemplate = `// Remotion 9:16 Vertical Component — Grow Studio × Reto Virtual Vzla 10K
+import React from 'react';
+import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate } from 'remotion';
+
+const REEL_DATA = ${presetData};
+
+export const Reto10KCapaZeroReel: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const framesPerScene = fps * 4;
+  const sceneIndex = Math.min(3, Math.floor(frame / framesPerScene));
+  const scene = REEL_DATA.scenes[sceneIndex];
+
+  return (
+    <AbsoluteFill style={{ backgroundColor: '#0B0C0E', color: '#F4F4F6', padding: 64, justifyContent: 'space-between', fontFamily: 'Inter, sans-serif' }}>
+      <div style={{ textAlign: 'center', marginTop: 120 }}>
+        <div style={{ fontFamily: 'JetBrains Mono', color: '#1CE872', fontSize: 24, letterSpacing: 6 }}>{scene.step}</div>
+        <h1 style={{ fontFamily: 'Montserrat', fontSize: 68, fontWeight: 900, marginTop: 16 }}>
+          {scene.titlePrefix} <span style={{ backgroundColor: '#1CE872', color: '#06110A', padding: '4px 18px', borderRadius: 8 }}>{scene.titleHighlight}</span>
+        </h1>
+      </div>
+      <div style={{ fontFamily: 'JetBrains Mono', fontSize: 34, textAlign: 'center', color: '#D4D4D8' }}>
+        {scene.subtitle}
+      </div>
+      <div style={{ fontFamily: 'JetBrains Mono', fontSize: 26, textAlign: 'center', color: '#1CE872' }}>
+        [{sceneIndex + 1}] {String(frame).padStart(3, '0')}
+      </div>
+    </AbsoluteFill>
+  );
+};`;
+            navigator.clipboard.writeText(remotionTemplate);
+            const btn = document.getElementById('btn-copy-remotion');
+            btn.textContent = '✓ Código Remotion (.TSX) Copiado';
+            setTimeout(() => { btn.textContent = '⧉ Copiar Componente Remotion (.TSX)'; }, 2000);
+        });
+
+        /* 8. RENDERIZADOR DIRECTO DE VIDEO (.WEBM) EN CANVAS 9:16 */
+        document.getElementById('btn-record-video').addEventListener('click', () => {
+            const canvas = document.getElementById('render-canvas');
+            const ctx = canvas.getContext('2d');
+            const btn = document.getElementById('record-text');
+            if (!window.MediaRecorder) {
+                alert('Tu navegador no soporta grabación directa MediaRecorder.');
+                return;
+            }
+
+            btn.textContent = 'Grabando 8s...';
+            const stream = canvas.captureStream(30);
+            const recorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+            const chunks = [];
+            recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+            recorder.onstop = () => {
+                const blob = new Blob(chunks, { type: 'video/webm' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `reto-10k-${currentPresetKey}-capazero.webm`;
+                a.click();
+                btn.textContent = 'Render .WEBM';
+            };
+
+            recorder.start();
+            let recFrame = 0;
+            const totalFrames = 240; // 8 segundos a 30fps
+
+            const drawInterval = setInterval(() => {
+                const sIdx = Math.min(3, Math.floor((recFrame / totalFrames) * 4));
+                const sc = REEL_PRESETS[currentPresetKey].scenes[sIdx];
+
+                // Fondo oscuro
+                ctx.fillStyle = '#0B0C0E';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Paso
+                ctx.fillStyle = '#1CE872';
+                ctx.font = 'bold 18px "JetBrains Mono", monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText(sc.step, canvas.width / 2, 170);
+
+                // Título
+                ctx.fillStyle = '#F4F4F6';
+                ctx.font = 'bold 34px "Montserrat", sans-serif';
+                ctx.fillText(sc.titlePrefix + ' [' + sc.titleHighlight + ']', canvas.width / 2, 225);
+
+                // Tarjeta Izquierda
+                ctx.strokeStyle = '#FFFFFF';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(45, 340, 200, 170);
+                ctx.fillStyle = '#9CA3AF';
+                ctx.font = '13px "JetBrains Mono", monospace';
+                ctx.textAlign = 'left';
+                ctx.fillText(sc.leftTop, 60, 370);
+
+                // Barras de onda en canvas
+                ctx.fillStyle = '#1CE872';
+                for (let b = 0; b < 14; b++) {
+                    const bh = 15 + Math.abs(Math.sin((recFrame + b * 4) * 0.2)) * 55;
+                    ctx.fillRect(65 + b * 12, 430 - bh / 2, 6, bh);
+                }
+                ctx.fillStyle = '#9CA3AF';
+                ctx.fillText(sc.leftBottom, 60, 490);
+
+                // Tarjeta Derecha
+                ctx.strokeRect(295, 340, 200, 170);
+                ctx.fillText(sc.rightTop, 310, 370);
+                ctx.fillStyle = '#27272A';
+                ctx.fillRect(310, 390, 170, 10);
+                ctx.fillStyle = '#1CE872';
+                ctx.fillRect(310, 390, (170 * sc.progress) / 100, 10);
+                ctx.fillStyle = '#1CE872';
+                ctx.font = 'bold 18px "JetBrains Mono", monospace';
+                ctx.fillText(sc.metaVal, 310, 475);
+
+                // Subtítulo
+                ctx.fillStyle = '#E4E4E7';
+                ctx.font = '18px "JetBrains Mono", monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText(sc.subtitle.replace(/\[|\]/g, ''), canvas.width / 2, 640);
+
+                // Contador inferior
+                ctx.fillStyle = '#1CE872';
+                ctx.font = 'bold 18px "JetBrains Mono", monospace';
+                ctx.fillText(`[${sIdx + 1}] ${String(recFrame).padStart(3, '0')}`, canvas.width / 2, 840);
+
+                recFrame++;
+                if (recFrame >= totalFrames) {
+                    clearInterval(drawInterval);
+                    recorder.stop();
+                }
+            }, 1000 / 30);
+        });
+
+        /* 9. TRÍADA DE EASTER EGGS GROW STUDIO */
+        // B. Consola F12
+        console.log(
+            "%c🎨 Crafted by Grow Studio | ¿Te gusta lo que ves? Hablemos de tu próximo proyecto.",
+            "background:#070709;color:#1CE872;font-family:'JetBrains Mono',monospace;font-size:13px;padding:10px 16px;border:1px solid #1CE872;border-radius:8px;"
+        );
+
+        // A & C. 5 Toques (Confeti + Modal) y Long-Press (Giro/Pulso 3D)
+        (function initEasterEggs() {
+            const trigger = document.getElementById('brand-logo-trigger');
+            const badge = document.getElementById('logo-badge');
+            const modal = document.getElementById('easter-egg-modal');
+            const closeBtn = document.getElementById('close-easter-egg');
+            let clickCount = 0;
+            let clickTimer = null;
+            let pressTimer = null;
+
+            trigger.addEventListener('click', () => {
+                clickCount++;
+                clearTimeout(clickTimer);
+                clickTimer = setTimeout(() => { clickCount = 0; }, 1400);
+                if (clickCount >= 5) {
+                    clickCount = 0;
+                    if (typeof confetti === 'function') {
+                        confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
+                    }
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+            });
+
+            const startPress = () => {
+                pressTimer = setTimeout(() => {
+                    badge.style.transform = 'rotateY(360deg) scale(1.18)';
+                    badge.style.boxShadow = '0 0 25px rgba(28, 232, 114, 0.75)';
+                    setTimeout(() => {
+                        badge.style.transform = '';
+                        badge.style.boxShadow = '';
+                    }, 900);
+                }, 1800);
+            };
+            const cancelPress = () => clearTimeout(pressTimer);
+
+            trigger.addEventListener('mousedown', startPress);
+            trigger.addEventListener('touchstart', startPress, { passive: true });
+            trigger.addEventListener('mouseup', cancelPress);
+            trigger.addEventListener('mouseleave', cancelPress);
+            trigger.addEventListener('touchend', cancelPress);
+
+            closeBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            });
+        })();
+
+        // Inicializar año y primera escena
+        document.getElementById('dynamic-year').textContent = new Date().getFullYear();
+        renderSceneToDOM(0, false);
+    </script>
+</body>
+</html>

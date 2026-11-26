@@ -1,8 +1,22 @@
-const CACHE_NAME = 'retovirtual-cache-v17';
+const CACHE_NAME = 'retovirtual-cache-v18';
 
-// Instalar el Service Worker
+// Recursos estáticos clave para precachear inmediatamente
+const STATIC_PRECACHE = [
+  '/',
+  '/index.html',
+  '/css/wow-effects.css',
+  '/js/wow-effects.js',
+  '/img/favicon.webp',
+  '/img/RV-Isotipo-sinfondo.webp'
+];
+
+// Instalar el Service Worker y precachear recursos base
 self.addEventListener('install', (e) => {
-  self.skipWaiting();
+  e.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(STATIC_PRECACHE).catch(() => {});
+    }).then(() => self.skipWaiting())
+  );
 });
 
 // Activar el Service Worker y purgar cachés viejos
@@ -16,15 +30,47 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-// Responder a las peticiones (Network First con fallback a caché)
+// Responder a las peticiones (Stale-While-Revalidate para CDNs/Assets y Network First para navegación)
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET' || e.request.url.includes('/api/')) {
     return;
   }
 
+  const url = new URL(e.request.url);
+
+  // CDNs estáticos (Tailwind, Fonts, FontAwesome, jsdelivr) y assets locales (.css, .js, .webp, .png, .jpg)
+  const isStaticAsset = url.hostname.includes('cdn.tailwindcss.com') ||
+                        url.hostname.includes('fonts.googleapis.com') ||
+                        url.hostname.includes('fonts.gstatic.com') ||
+                        url.hostname.includes('cdnjs.cloudflare.com') ||
+                        url.hostname.includes('cdn.jsdelivr.net') ||
+                        url.pathname.match(/\.(css|js|webp|png|jpg|jpeg|svg|woff2|ico)$/i);
+
+  if (isStaticAsset) {
+    e.respondWith(
+      caches.match(e.request).then((cachedResponse) => {
+        const fetchPromise = fetch(e.request).then((networkResponse) => {
+          if (networkResponse && (networkResponse.status === 200 || networkResponse.type === 'opaque')) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(e.request, responseClone));
+          }
+          return networkResponse;
+        }).catch(() => cachedResponse);
+
+        return cachedResponse || fetchPromise;
+      })
+    );
+    return;
+  }
+
+  // Network First con persistencia en caché para páginas HTML
   e.respondWith(
     fetch(e.request)
       .then((response) => {
+        if (response && response.status === 200) {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(e.request, responseClone));
+        }
         return response;
       })
       .catch(() => {

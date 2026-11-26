@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados Históricos - Reto Virtual VZLA</title>
+    <title>Resultados HistÃ³ricos - Reto Virtual VZLA</title>
     <meta http-equiv="refresh" content="0; url=evidencias2.html">
     <script>window.location.replace('evidencias2.html' + window.location.search);</script>
     <meta name="description" content="Consulta los resultados oficiales, tiempos por dorsal y descarga de certificados digitales de las ediciones de Reto Virtual Venezuela.">
@@ -70,7 +70,7 @@
         /* Estilo para el selector nativo */
         select { -webkit-appearance: none; -moz-appearance: none; appearance: none; }
         
-        /* Estilo para los títulos de los grupos en el selector */
+        /* Estilo para los tÃ­tulos de los grupos en el selector */
         optgroup { font-weight: 900; color: #00D2FF; background-color: #001E50; font-style: normal; }
         option { font-weight: 600; color: #ffffff; background-color: #0A0E1A; }
     </style>
@@ -82,7 +82,7 @@
 <body style="background-color: #0A0A0C !important; color: #f8fafc !important;" class="bg-[#0A0A0C] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-[#00D2FF] selection:text-[#001E50]">
 
     <div class="bg-[#001E50] text-white py-2 text-center text-[10px] font-bold uppercase tracking-[0.4em] z-50 relative border-b border-white/10">
-        HISTÓRICO Y RESULTADOS OFICIALES • RETO VIRTUAL VZLA
+        HISTÃ“RICO Y RESULTADOS OFICIALES â€¢ RETO VIRTUAL VZLA
     </div>
 
     <nav class="bg-[#001E50] sticky top-0 z-50 shadow-2xl">
@@ -127,10 +127,10 @@
                         <div class="absolute right-0 mt-2 w-64 bg-[#001E50] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                             <div class="p-2 space-y-1">
                                 <button onclick="window.location.href='inscripcion.html?modo=5K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
-                                    <i class="fa-solid fa-person-running mr-3 text-sm"></i> Tercera Edición 5K / Combo
+                                    <i class="fa-solid fa-person-running mr-3 text-sm"></i> Tercera EdiciÃ³n 5K / Combo
                                 </button>
                                 <button onclick="window.location.href='inscripcion.html?modo=10K'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-white/80 hover:text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all">
-                                    <i class="fa-solid fa-medal mr-3 text-sm"></i> Edición Especial 10K
+                                    <i class="fa-solid fa-medal mr-3 text-sm"></i> EdiciÃ³n Especial 10K
                                 </button>
                                 <button onclick="window.location.href='inscripcion.html?modo=ABONO'" class="w-full flex items-center px-4 py-3 text-xs font-bold text-[#00D2FF] hover:bg-white/5 rounded-lg text-left transition-all border-t border-white/10 pt-2">
                                     <i class="fa-solid fa-money-bill-wave mr-3 text-sm"></i> Consultar Saldo / Abonar
@@ -160,8 +160,8 @@
                     <a href="tienda.html" class="text-white/60 text-sm font-bold uppercase tracking-widest">Tienda</a>
                 </div>
                 <div class="border-t border-white/20 w-full pt-5 flex flex-col gap-3 text-center">
-                    <a href="inscripcion.html?modo=5K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Tercera Edición 5K / Combo</a>
-                    <a href="inscripcion.html?modo=10K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Edición Especial 10K</a>
+                    <a href="inscripcion.html?modo=5K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">Tercera EdiciÃ³n 5K / Combo</a>
+                    <a href="inscripcion.html?modo=10K" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-[#00D2FF] transition-colors">EdiciÃ³n Especial 10K</a>
                     <a href="inscripcion.html?modo=ABONO" class="btn-nav-movil text-white text-lg font-bold uppercase tracking-widest hover:text-white transition-colors">Consultar Saldo / Abonar</a>
                 </div>
             </div>
@@ -184,16 +184,16 @@
                 Historial cronometrado, podio y certificados de ediciones concluidas.
             </p>
 
-            <!-- SELECTOR AGRUPADO POR AÑO (DARK & NEON) -->
+            <!-- SELECTOR AGRUPADO POR AÃ‘O (DARK & NEON) -->
             <div class="relative max-w-md mx-auto">
                 <select id="selector-edicion" onchange="cambiarEdicion(this.value)" class="w-full bg-[#101626] text-white font-black text-center px-6 py-4 rounded-2xl border-2 border-[#00D2FF]/40 shadow-xl shadow-[#00D2FF]/10 uppercase tracking-widest cursor-pointer focus:outline-none focus:border-[#00D2FF] transition-all">
                     <!-- GRUPO 2026 -->
-                    <optgroup label="🏆 TEMPORADA 2026">
-                        <option value="edicion2">5K - 2da Edición (Junio) • Oficial</option>
-                        <option value="edicion1">5K - 1era Edición (Marzo) • Oficial</option>
-                        <option value="edicion3">5K - 3era Edición • En Curso (Evidencias)</option>
-                        <option value="edicion4">5K - 4ta Edición • Próxima (Evidencias)</option>
-                        <option value="edicion10k">10K - Edición Especial • Noviembre</option>
+                    <optgroup label="ðŸ† TEMPORADA 2026">
+                        <option value="edicion2">5K - 2da EdiciÃ³n (Junio) â€¢ Oficial</option>
+                        <option value="edicion1">5K - 1era EdiciÃ³n (Marzo) â€¢ Oficial</option>
+                        <option value="edicion3">5K - 3era EdiciÃ³n â€¢ En Curso (Evidencias)</option>
+                        <option value="edicion4">5K - 4ta EdiciÃ³n â€¢ PrÃ³xima (Evidencias)</option>
+                        <option value="edicion10k">10K - EdiciÃ³n Especial â€¢ Noviembre</option>
                     </optgroup>
                 </select>
                 <div class="absolute inset-y-0 right-5 flex items-center pointer-events-none">
@@ -229,13 +229,13 @@
                 </div>
                 <div>
                     <span class="inline-block text-[#00D2FF] font-black text-[10px] uppercase tracking-[0.25em] mb-1">
-                        CARRERA EN DESARROLLO • EVIDENCIAS EN VIVO
+                        CARRERA EN DESARROLLO â€¢ EVIDENCIAS EN VIVO
                     </span>
                     <h3 id="banner-evidencias-titulo" class="text-lg md:text-xl font-black text-white uppercase italic">
-                        Esta edición está validando tiempos activamente
+                        Esta ediciÃ³n estÃ¡ validando tiempos activamente
                     </h3>
                     <p class="text-slate-300 text-xs mt-1">
-                        Los atletas están enviando sus capturas oficiales y consultando su split en el Centro de Evidencias.
+                        Los atletas estÃ¡n enviando sus capturas oficiales y consultando su split en el Centro de Evidencias.
                     </p>
                 </div>
             </div>
@@ -245,7 +245,7 @@
             </a>
         </div>
 
-        <!-- FILTROS DE GÉNERO -->
+        <!-- FILTROS DE GÃ‰NERO -->
         <div class="flex flex-wrap justify-center lg:justify-start gap-3">
             <button id="btn-general" onclick="cambiarFiltro('GENERAL')" class="bg-[#00D2FF] text-[#001E50] font-black px-8 py-3 rounded-full transition-all shadow-lg shadow-[#00D2FF]/20 text-xs uppercase tracking-widest">General</button>
             <button id="btn-masculino" onclick="cambiarFiltro('MASCULINO')" class="bg-white/5 text-slate-300 font-bold px-8 py-3 rounded-full transition-all border border-white/10 text-xs uppercase tracking-widest hover:border-[#00D2FF] hover:text-white">Masculino</button>
@@ -270,19 +270,19 @@
                         </tr>
                     </thead>
                     <tbody id="tabla-corredores" class="text-slate-200 divide-y divide-white/5">
-                        <!-- Datos dinámicos -->
+                        <!-- Datos dinÃ¡micos -->
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- SECCIÓN CERTIFICADO DARK PREMIUM -->
+        <!-- SECCIÃ“N CERTIFICADO DARK PREMIUM -->
         <div class="card-dark rounded-[3rem] p-8 md:p-14 text-center relative overflow-hidden">
             <div class="absolute top-0 right-0 w-72 h-72 bg-[#00D2FF]/10 rounded-full blur-3xl pointer-events-none"></div>
             
             <i class="fa-solid fa-certificate text-6xl text-[#00D2FF] mb-5 block drop-shadow-[0_0_15px_rgba(0,210,255,0.4)]"></i>
             <h3 class="text-2xl md:text-4xl font-black text-white uppercase tracking-tight italic mb-3">Reclama tu Diploma Oficial</h3>
-            <p class="text-slate-400 mb-8 text-xs md:text-sm max-w-md mx-auto" id="texto-diploma">Ingresa tu número de Dorsal para generar tu certificado de la edición actual.</p>
+            <p class="text-slate-400 mb-8 text-xs md:text-sm max-w-md mx-auto" id="texto-diploma">Ingresa tu nÃºmero de Dorsal para generar tu certificado de la ediciÃ³n actual.</p>
             
             <div class="flex flex-col sm:flex-row max-w-md mx-auto gap-3">
                 <input type="text" id="input-dorsal" placeholder="EJ: 015" class="w-full bg-white/5 border border-white/15 rounded-2xl px-6 py-4 text-white text-center font-black focus:outline-none focus:border-[#00D2FF] transition-all">
@@ -298,7 +298,7 @@
 
             <div class="mt-8">
                 <button id="btn-descargar" onclick="descargarCertificado()" class="hidden bg-white text-[#001E50] font-black px-12 py-5 rounded-full shadow-2xl hover:scale-105 transition-transform uppercase tracking-widest text-xs">
-                    <i class="fa-solid fa-download mr-2 text-[#00D2FF]"></i> Descargar Diploma en Alta Resolución
+                    <i class="fa-solid fa-download mr-2 text-[#00D2FF]"></i> Descargar Diploma en Alta ResoluciÃ³n
                 </button>
             </div>
         </div>
@@ -310,24 +310,24 @@
             <div>
                 <img src="img/RV-Isotipo-sinfondo.webp" class="h-14 mx-auto md:mx-0 mb-6 grayscale brightness-200 opacity-40">
                 <p class="text-white/30 text-[10px] uppercase tracking-[0.4em] leading-relaxed">
-                    Reto Virtual VZLA es una producción <br>
+                    Reto Virtual VZLA es una producciÃ³n <br>
                 <span class="text-white/60 font-bold">Nacional Independiente</span>. <br>
-                    ©&copy; <span class="current-year">2026</span> Reto Virtual VZLA. Todos los derechos reservados.
+                    Â©&copy; <span class="current-year">2026</span> Reto Virtual VZLA. Todos los derechos reservados.
                 </p>
             </div>
             <div class="flex flex-col items-center justify-center gap-6">
-                <h4 class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.3em]">Síguenos en la ruta</h4>
+                <h4 class="text-[#00D2FF] font-bold text-[10px] uppercase tracking-[0.3em]">SÃ­guenos en la ruta</h4>
                 <div class="flex gap-8">
-                    <a href="https://whatsapp.com/channel/0029VbD2Dmi7IUYZR6nmh60z" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="https://www.instagram.com/retovirtual.vzla/" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://www.tiktok.com/@retovirtual.vzla" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="https://www.strava.com/clubs/1859944" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110"><i class="fa-brands fa-strava"></i></a>
+                    <a href="https://whatsapp.com/channel/0029VbD2Dmi7IUYZR6nmh60z" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/retovirtual.vzla/" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@retovirtual.vzla" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110" rel="noopener noreferrer"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.strava.com/clubs/1859944" target="_blank" class="text-white/40 hover:text-[#00D2FF] text-3xl transition-all transform hover:scale-110" rel="noopener noreferrer"><i class="fa-brands fa-strava"></i></a>
                 </div>
             </div>
             <!-- Tercera columna centrada horizontalmente para Grow Studio -->
             <div class="flex flex-col md:items-end items-center justify-center gap-4 pt-8 md:pt-0 border-t border-white/10 md:border-none md:border-l md:pl-8 col-span-1 text-center md:text-right">
                 <span class="text-[#64748b] text-[10px] uppercase tracking-[0.3em] font-bold">Desarrollado por</span>
-                <a href="https://growstudioweb.vercel.app/" target="_blank" class="flex items-center justify-center md:justify-end gap-3 hover:scale-105 transition-transform cursor-pointer group">
+                <a href="https://growstudioweb.vercel.app/" target="_blank" class="flex items-center justify-center md:justify-end gap-3 hover:scale-105 transition-transform cursor-pointer group" rel="noopener noreferrer">
                     <span class="chameleon-text font-black text-base md:text-lg tracking-[0.1em]">GROW STUDIO</span>
                     <img src="img/grow-logo.png" alt="Grow Studio" class="h-7 md:h-8 object-contain drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_15px_rgba(0,210,255,0.9)] transition-all">
                 </a>
@@ -337,7 +337,7 @@
 
     <script>
 
-// ========== MENÚ MÓVIL HAMBURGUESA ==========
+// ========== MENÃš MÃ“VIL HAMBURGUESA ==========
         const menuToggle = document.getElementById('menuToggle');
         const mobileMenu = document.getElementById('mobileMenu');
         const menuIcon = menuToggle.querySelector('i');
@@ -355,7 +355,7 @@
             }
         });
 
-        // Cerrar menú al hacer click en un enlace
+        // Cerrar menÃº al hacer click en un enlace
         const mobileLinks = mobileMenu.querySelectorAll('a');
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -366,7 +366,7 @@
         });
 
         // ====================================================================
-        // CONFIGURADOR MAESTRO DE EDICIONES POR AÑO
+        // CONFIGURADOR MAESTRO DE EDICIONES POR AÃ‘O
         // ====================================================================
         const enlaceBase = "https://docs.google.com/spreadsheets/d/1vg9nwhkFxwN4qVzjkfmXTrIVoHVYxeMH3-PXjqzeWao/gviz/tq?tqx=out:csv&headers=1&gid=";
         
@@ -375,7 +375,7 @@
             "edicion2": {
                 gid: "316140127", 
                 titulo: "Fase de Inscripciones",
-                fecha: "2da Edición: Junio 2026",
+                fecha: "2da EdiciÃ³n: Junio 2026",
                 estado: "Inscripciones Abiertas",
                 nombreCorto: "2026_Ed2_5K",
                 imagenCertificado: "img/fondo-certificado.webp"
@@ -383,15 +383,15 @@
             "edicion1": {
                 gid: "1297920374", 
                 titulo: "Carrera Finalizada",
-                fecha: "1era Edición: Marzo 2026",
+                fecha: "1era EdiciÃ³n: Marzo 2026",
                 estado: "Resultados Oficiales",
                 nombreCorto: "2026_Ed1_5K",
                 imagenCertificado: "img/fondo-certificado.webp"
             },
             "edicion3": {
                 gid: "PENDIENTE", 
-                titulo: "3ra Edición 5K",
-                fecha: "3era Edición: Octubre 2026",
+                titulo: "3ra EdiciÃ³n 5K",
+                fecha: "3era EdiciÃ³n: Octubre 2026",
                 estado: "Evidencias en Curso",
                 nombreCorto: "2026_Ed3_5K",
                 esEvidencias: true,
@@ -400,8 +400,8 @@
             },
             "edicion4": {
                 gid: "PENDIENTE", 
-                titulo: "4ta Edición 5K",
-                fecha: "4ta Edición: Octubre 2026",
+                titulo: "4ta EdiciÃ³n 5K",
+                fecha: "4ta EdiciÃ³n: Octubre 2026",
                 estado: "Evidencias Abiertas",
                 nombreCorto: "2026_Ed4_5K",
                 esEvidencias: true,
@@ -410,7 +410,7 @@
             },
             "edicion10k": {
                 gid: "PENDIENTE", 
-                titulo: "Edición Especial 10K",
+                titulo: "EdiciÃ³n Especial 10K",
                 fecha: "10K: Noviembre 2026",
                 estado: "Inscripciones Abiertas",
                 nombreCorto: "2026_Ed10K",
@@ -420,9 +420,9 @@
             // TEMPORADA 2027
             "edicion1_2027": {
                 gid: "PENDIENTE", 
-                titulo: "Próximamente",
-                fecha: "1era Edición 2027",
-                estado: "Próximo Año",
+                titulo: "PrÃ³ximamente",
+                fecha: "1era EdiciÃ³n 2027",
+                estado: "PrÃ³ximo AÃ±o",
                 nombreCorto: "2027_Ed1_5K",
                 esEvidencias: false,
                 imagenCertificado: "fondo-certificado-2027.webp"
@@ -441,7 +441,7 @@
             document.getElementById('titulo-carrera').innerText = data.titulo;
             document.getElementById('fechas-carrera').innerText = data.fecha;
             document.getElementById('estado-carrera').innerText = data.estado;
-            document.getElementById('texto-diploma').innerText = `Ingresa tu número de Dorsal para generar tu certificado de la ${data.fecha}.`;
+            document.getElementById('texto-diploma').innerText = `Ingresa tu nÃºmero de Dorsal para generar tu certificado de la ${data.fecha}.`;
 
             document.getElementById('img-fondo-cert').src = data.imagenCertificado;
 
@@ -471,7 +471,7 @@
             const loader = document.getElementById('loader-tabla');
             
             if (dataEdicion.gid === "PENDIENTE") {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-12 text-center text-slate-400 font-bold uppercase tracking-widest"><i class="fa-solid fa-person-digging text-3xl block mb-4 text-slate-300"></i>Edición en planificación.<br>Aún no hay datos.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="p-12 text-center text-slate-400 font-bold uppercase tracking-widest"><i class="fa-solid fa-person-digging text-3xl block mb-4 text-slate-300"></i>EdiciÃ³n en planificaciÃ³n.<br>AÃºn no hay datos.</td></tr>`;
                 corredores = [];
                 return;
             }
@@ -483,13 +483,13 @@
                 const urlFresca = enlaceBase + dataEdicion.gid + "&nocache=" + new Date().getTime();
                 const respuesta = await fetch(urlFresca);
                 
-                if(!respuesta.ok) throw new Error("Google rechazó la conexión.");
+                if(!respuesta.ok) throw new Error("Google rechazÃ³ la conexiÃ³n.");
                 
                 const datosCsv = await respuesta.text();
                 const filas = datosCsv.split(/\r?\n/);
                 corredores = [];
 
-                if(filas.length < 2) throw new Error("La hoja de cálculo está vacía.");
+                if(filas.length < 2) throw new Error("La hoja de cÃ¡lculo estÃ¡ vacÃ­a.");
 
                 const headers = filas[0].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.replace(/^"|"$/g, '').trim().toLowerCase());
                 
@@ -526,7 +526,7 @@
             } catch (error) { 
                 console.error("Error:", error); 
                 loader.classList.add('hidden');
-                tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-red-500 font-bold bg-red-50 rounded-xl">⚠️ Error al cargar los datos de esta edición. Verifica el GID.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-red-500 font-bold bg-red-50 rounded-xl">âš ï¸ Error al cargar los datos de esta ediciÃ³n. Verifica el GID.</td></tr>`;
             }
         }
 
@@ -551,7 +551,7 @@
             });
 
             if (filtrados.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-500 font-bold">No hay corredores registrados en esta categoría/edición.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-500 font-bold">No hay corredores registrados en esta categorÃ­a/ediciÃ³n.</td></tr>`;
                 return;
             }
 
@@ -559,7 +559,7 @@
                 const esPendiente = c.tiempo === "Pendiente";
                 const pos = esPendiente ? "-" : i + 1;
                 let posHtml = `<span class="font-bold text-slate-400 text-base">${pos}</span>`;
-                if(pos === 1 && !esPendiente) posHtml = '🥇'; else if(pos === 2 && !esPendiente) posHtml = '🥈'; else if(pos === 3 && !esPendiente) posHtml = '🥉';
+                if(pos === 1 && !esPendiente) posHtml = 'ðŸ¥‡'; else if(pos === 2 && !esPendiente) posHtml = 'ðŸ¥ˆ'; else if(pos === 3 && !esPendiente) posHtml = 'ðŸ¥‰';
 
                 const fila = `
                     <tr class="hover:bg-white/5 transition-colors border-b border-white/5">
@@ -589,12 +589,12 @@
 
         function mostrarCertificado() {
             if (corredores.length === 0) {
-                alert("Esta edición aún no tiene corredores registrados.");
+                alert("Esta ediciÃ³n aÃºn no tiene corredores registrados.");
                 return;
             }
 
             let inputRaw = document.getElementById('input-dorsal').value.replace(/\D/g, '');
-            if(inputRaw === "") { alert("Ingresa un número de dorsal."); return; }
+            if(inputRaw === "") { alert("Ingresa un nÃºmero de dorsal."); return; }
             let d = inputRaw.padStart(3, '0');
             
             const c = corredores.find(x => x.dorsal === d);
@@ -615,7 +615,7 @@
 
                 document.getElementById('mi-certificado-objetivo').style.display = 'block';
                 document.getElementById('btn-descargar').classList.remove('hidden');
-            } else { alert("Dorsal no encontrado en esta edición."); }
+            } else { alert("Dorsal no encontrado en esta ediciÃ³n."); }
         }
 
         function descargarCertificado() {
@@ -640,4 +640,5 @@
     <script src="js/wow-effects.js"></script>
 </body>
 </html>
+
 

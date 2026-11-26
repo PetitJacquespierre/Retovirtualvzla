@@ -112,20 +112,73 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* 7. GROW STUDIO - EASTER EGG B: CONSOLA F12 PARA CURIOSOS */
-    const gsBanner = `%c 🎨 CRAFTED BY GROW STUDIO %c 🚀 
-%c¿Te gusta lo que ves? Hablemos de tu próximo proyecto: https://growstudioweb.vercel.app/`;
+    const gsBanner = `%c 🎨 GROW STUDIO DIGITAL ENGINE %c PROTOCOLO KDOG_K %c
+⚡ Arquitectura visual deportiva de alto valor ($5,000+ USD) calibrada para producción.
+🌐 Hablemos de tu próximo desarrollo: https://growstudioweb.vercel.app/`;
     console.log(
         gsBanner,
-        'background: #001E50; color: #00D2FF; font-size: 14px; font-weight: bold; padding: 8px 12px; border-radius: 6px 0 0 6px; border: 1px solid #00D2FF;',
-        'background: #00D2FF; color: #001E50; font-size: 14px; font-weight: bold; padding: 8px 12px; border-radius: 0 6px 6px 0;',
-        'color: #94a3b8; font-size: 11px; margin-top: 6px;'
+        'background: #001E50; color: #00D2FF; font-size: 13px; font-weight: 900; padding: 6px 12px; border-radius: 6px 0 0 6px; border: 1px solid #00D2FF;',
+        'background: #00D2FF; color: #001E50; font-size: 13px; font-weight: 900; padding: 6px 12px; border-radius: 0 6px 6px 0;',
+        'color: #94a3b8; font-size: 11px; margin-top: 6px; font-family: monospace;'
     );
 
-    /* 8. GROW STUDIO - EASTER EGG C: TOQUE MÁGICO DEL LOGO (DOBLE TAP / MANTENER PRESIONADO) */
-    const logos = document.querySelectorAll('nav img[alt*="Reto Virtual"], .rv-logo img');
+    /* 8. GROW STUDIO - TRÍADA DE EASTER EGGS: CONFETI + TARJETA (5 TOQUES) Y PULSO (LONG-PRESS) */
+    const logos = document.querySelectorAll('nav img[alt*="Reto Virtual"], .rv-logo img, header img');
+    
+    // Función para disparar confeti
+    const lanzarConfetiGrowStudio = () => {
+        if (typeof confetti === 'function') {
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#00D2FF', '#FF5500', '#001E50', '#FFFFFF', '#10B981']
+            });
+        } else {
+            // Carga dinámica de canvas-confetti si no está en la página
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js';
+            script.onload = () => {
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 120,
+                        spread: 80,
+                        origin: { y: 0.6 },
+                        colors: ['#00D2FF', '#FF5500', '#001E50', '#FFFFFF', '#10B981']
+                    });
+                }
+            };
+            document.head.appendChild(script);
+        }
+
+        // Mostrar tarjeta flotante de Grow Studio
+        const cardId = 'gs-easter-egg-card';
+        let card = document.getElementById(cardId);
+        if (!card) {
+            card = document.createElement('div');
+            card.id = cardId;
+            card.className = 'gs-easter-toast';
+            card.innerHTML = `
+                <div class="gs-easter-icon">⚡</div>
+                <div>
+                    <div class="gs-easter-title">CRAFTED BY GROW STUDIO</div>
+                    <div class="gs-easter-subtitle">Experiencia running digital • Protocolo KDOG_K activo</div>
+                </div>
+            `;
+            document.body.appendChild(card);
+        }
+        card.classList.remove('active');
+        void card.offsetWidth; // Forzar reflow
+        card.classList.add('active');
+        setTimeout(() => {
+            if (card) card.classList.remove('active');
+        }, 4000);
+    };
+
     logos.forEach(logo => {
         let pressTimer;
-        let lastTap = 0;
+        let tapCount = 0;
+        let tapTimer = null;
 
         const triggerMagic = () => {
             logo.classList.remove('grow-magic-active');
@@ -134,18 +187,26 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => logo.classList.remove('grow-magic-active'), 1400);
         };
 
-        // Doble clic / doble toque rápido
+        // Detector de 5 toques para Confeti + Tarjeta Grow Studio
         logo.addEventListener('click', (e) => {
-            const currentTime = new Date().getTime();
-            const tapLength = currentTime - lastTap;
-            if (tapLength < 400 && tapLength > 0) {
+            tapCount++;
+            clearTimeout(tapTimer);
+
+            if (tapCount >= 5) {
+                tapCount = 0;
                 triggerMagic();
+                lanzarConfetiGrowStudio();
                 e.preventDefault();
+                return;
             }
-            lastTap = currentTime;
+
+            // Si no llega a 5 toques en 2 segundos, reiniciar cuenta
+            tapTimer = setTimeout(() => {
+                tapCount = 0;
+            }, 2000);
         });
 
-        // Mantener presionado 1.5s
+        // Mantener presionado 1.2s para efecto de pulso/giro
         logo.addEventListener('mousedown', () => {
             pressTimer = setTimeout(triggerMagic, 1200);
         });

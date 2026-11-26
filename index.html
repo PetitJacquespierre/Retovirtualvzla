@@ -478,6 +478,16 @@ if (typeof document !== 'undefined') {
 
 /* Stat cards slide 3 */
 .hero-stat-card { background:rgba(0,30,80,.6); border:1px solid rgba(0,210,255,.2); backdrop-filter:blur(12px); border-radius:1.25rem; padding:1.5rem; text-align:center; }
+
+/* Calibración Mobile-First (375px - 1023px): Cero recortes en títulos y cero solapamiento de flechas */
+@media (max-width: 1023px) {
+  .hero-carousel { height: auto; min-height: 760px; }
+  .hero-slide { position: relative; display: none; padding: 2.25rem 0 4.75rem; }
+  .hero-slide.active { display: block; opacity: 1; pointer-events: auto; }
+  .carousel-arrow { top: auto; bottom: 14px; transform: none; width: 38px; height: 38px; }
+  .carousel-arrow.prev { left: 16px; }
+  .carousel-arrow.next { right: 16px; }
+}
 </style>
 
 <section class="hero-carousel" id="heroCarousel">
@@ -568,9 +578,9 @@ if (typeof document !== 'undefined') {
         </div>
 
         <!-- Medalla Real derecha (Selector 4 Vistas: En Mano, Video 360°, Giro 3D Táctil, Con Lanyard) -->
-        <div class="lg:w-1/2 flex flex-col items-center gap-3">
+        <div class="lg:w-1/2 w-full flex flex-col items-center gap-3">
           <!-- Selector de Modo de Visualización -->
-          <div class="flex items-center gap-1 p-1 bg-black/60 backdrop-blur-md rounded-full border border-white/10 shadow-lg mb-1 overflow-x-auto max-w-full">
+          <div class="flex flex-wrap items-center justify-center gap-1.5 p-1.5 bg-black/60 backdrop-blur-md rounded-2xl sm:rounded-full border border-white/10 shadow-lg mb-1 max-w-full">
             <button type="button" id="tabMedallaMano" onclick="cambiarVistaMedalla('mano')" class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all bg-[#00D2FF] text-[#001E50] shadow-[0_0_12px_rgba(0,210,255,0.5)] whitespace-nowrap">
               <i class="fa-solid fa-hand-holding-hand text-[9px] mr-1"></i> En Mano
             </button>

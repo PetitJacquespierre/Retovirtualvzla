@@ -187,24 +187,47 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => logo.classList.remove('grow-magic-active'), 1400);
         };
 
-        // Detector de 5 toques para Confeti + Tarjeta Grow Studio
-        logo.addEventListener('click', (e) => {
+        // Detector de 5 toques para Confeti + Tarjeta Grow Studio (en fase de captura para evitar recarga prematura)
+        const logoParent = logo.closest('a, [onclick*="location.href"]');
+        const isHome = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
+        let navDelayTimer = null;
+
+        const handleLogoTap = (e) => {
             tapCount++;
             clearTimeout(tapTimer);
+            clearTimeout(navDelayTimer);
 
             if (tapCount >= 5) {
                 tapCount = 0;
+                e.preventDefault();
+                e.stopPropagation();
                 triggerMagic();
                 lanzarConfetiGrowStudio();
-                e.preventDefault();
                 return;
+            }
+
+            // En la home o a partir del 2do toque rápido, bloqueamos la recarga para permitir llegar a 5 toques
+            if (isHome || tapCount >= 2) {
+                e.preventDefault();
+                e.stopPropagation();
+            } else if (logoParent) {
+                // En páginas internas, esperamos 380ms en el 1er toque: si no hay 2do toque, navega al inicio
+                e.preventDefault();
+                e.stopPropagation();
+                navDelayTimer = setTimeout(() => {
+                    if (tapCount === 1) {
+                        window.location.href = 'index.html';
+                    }
+                }, 380);
             }
 
             // Si no llega a 5 toques en 2 segundos, reiniciar cuenta
             tapTimer = setTimeout(() => {
                 tapCount = 0;
             }, 2000);
-        });
+        };
+
+        logo.addEventListener('click', handleLogoTap, true);
 
         // Mantener presionado 1.2s para efecto de pulso/giro
         logo.addEventListener('mousedown', () => {

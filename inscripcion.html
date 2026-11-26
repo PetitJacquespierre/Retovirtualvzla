@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -693,7 +693,7 @@
                 <p class="text-white/30 text-[10px] uppercase tracking-[0.4em] leading-relaxed">
                     Reto Virtual VZLA es una producción <br>
                 <span class="text-white/60 font-bold">Nacional Independiente</span>. <br>
-                    ©&copy; <span class="current-year">2026</span> Reto Virtual VZLA. Todos los derechos reservados.
+                    &copy; <span class="current-year">2026</span> Reto Virtual VZLA. Todos los derechos reservados.
                 </p>
             </div>
             <div class="flex flex-col items-center justify-center gap-6">
@@ -856,6 +856,15 @@
         }
 
         // CONFIGURACIÓN DE CONEXIONES (ESTÁNDAR GROW STUDIO BACKEND)
+        function escapeHTML(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
         const urlConsultaAtleta = "/api/consultar-atleta";
         const urlBaseDeDatos = "https://script.google.com/macros/s/AKfycbyO9tDp2GreaVR-PVRIUS7zbJRQYydOv2S6mgPcYwyqHVM6-v0-TSQ1y-5UlWk6KVN8CA/exec"; 
 
@@ -1139,9 +1148,10 @@
                     imgTextil.classList.remove('hidden');
                 }
                 if (tabPrenda) tabPrenda.className = activeTabClass;
-                if (badgeTexto) badgeTexto.innerText = "Kit + Franelilla Olímpica";
-                if (subLabel) subLabel.innerText = "Frontal & Dorsal · Maniquí de Alta Gama";
-                if (selectTipo && vista === 'prenda_franelilla' && selectTipo.value !== "Franelilla Oscura") {
+                if (badgeTexto) badgeTexto.innerText = "Kit + Franelilla Olímpica (Referencia)";
+                if (subLabel) subLabel.innerText = "Frontal & Dorsal · Confección Cerrada";
+                const optFranelilla = selectTipo ? selectTipo.querySelector('option[value="Franelilla Oscura"]') : null;
+                if (selectTipo && vista === 'prenda_franelilla' && optFranelilla && !optFranelilla.disabled && selectTipo.value !== "Franelilla Oscura") {
                     selectTipo.value = "Franelilla Oscura";
                     cambiarTipoKit10k(false);
                 }
@@ -1151,9 +1161,10 @@
                     imgTextil.classList.remove('hidden');
                 }
                 if (tabPrenda) tabPrenda.className = activeTabClass;
-                if (badgeTexto) badgeTexto.innerText = "Kit + Franela con Mangas";
-                if (subLabel) subLabel.innerText = "Frontal & Dorsal · Sublimado Premium";
-                if (selectTipo && selectTipo.value !== "Franela Oscura") {
+                if (badgeTexto) badgeTexto.innerText = "Kit + Franela con Mangas (Referencia)";
+                if (subLabel) subLabel.innerText = "Frontal & Dorsal · Confección Cerrada";
+                const optFranela = selectTipo ? selectTipo.querySelector('option[value="Franela Oscura"]') : null;
+                if (selectTipo && optFranela && !optFranela.disabled && selectTipo.value !== "Franela Oscura") {
                     selectTipo.value = "Franela Oscura";
                     cambiarTipoKit10k(false);
                 }
@@ -1334,8 +1345,8 @@
                         htmlDesglose += `
                             <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 text-xs">
                                 <div>
-                                    <span class="font-black text-white block">${reg.carrera} (Dorsal #${reg.dorsal})</span>
-                                    <span class="text-white/40 text-[10px]">${reg.textil || 'Registro Oficial'}</span>
+                                    <span class="font-black text-white block">${escapeHTML(reg.carrera)} (Dorsal #${escapeHTML(reg.dorsal)})</span>
+                                    <span class="text-white/40 text-[10px]">${escapeHTML(reg.textil || 'Registro Oficial')}</span>
                                 </div>
                                 <span class="px-2.5 py-1 rounded-lg font-black border ${badgeColor}">${badgeText}</span>
                             </div>

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'retovirtual-cache-v18';
+const CACHE_NAME = 'retovirtual-cache-v19';
 
 // Recursos estáticos clave para precachear inmediatamente
 const STATIC_PRECACHE = [

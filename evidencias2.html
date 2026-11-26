@@ -1653,10 +1653,19 @@
             document.getElementById('estado-ci').innerHTML = `<span class="text-amber-400 font-bold">Presiona Verificar</span>`;
         }
 
+        let verificandoCedulaEnCurso = false;
+        let ultimoChequeoCi = { ci: '', ts: 0 };
+
         async function verificarCedula() {
             const ciRaw = document.getElementById('inputCedula').value.trim();
             const ci = ciRaw.replace(/\D/g, '');
             const estadoCi = document.getElementById('estado-ci');
+
+            const ahora = Date.now();
+            if (verificandoCedulaEnCurso || (ultimoChequeoCi.ci === ci && (ahora - ultimoChequeoCi.ts) < 1500)) {
+                return;
+            }
+
             atletaVerificadoConExito = false;
 
             if (!ci || ci.length < 5) {
@@ -1665,6 +1674,8 @@
                 return;
             }
 
+            verificandoCedulaEnCurso = true;
+            ultimoChequeoCi = { ci, ts: ahora };
             estadoCi.innerHTML = `<span class="text-[#00D2FF]"><i class="fa-solid fa-spinner fa-spin mr-1"></i>Buscando en lista oficial...</span>`;
 
             try {
@@ -1743,6 +1754,8 @@
             } catch (err) {
                 console.error("Error al verificar cédula:", err);
                 estadoCi.innerHTML = `<span class="text-rose-400">Error de conexión al verificar</span>`;
+            } finally {
+                verificandoCedulaEnCurso = false;
             }
         }
 

@@ -447,6 +447,64 @@ export default async function handler(req, res) {
             return res.status(200).json({ total: 48 });
         }
 
+        // ACCIÓN: ÚLTIMOS 10 INSCRITOS REALES 10K (SOLO PRIMER NOMBRE + INICIAL + CIUDAD/ESTADO — ANTI-SCRAPING)
+        if (accion === 'ultimos_inscritos') {
+            try {
+                let resp10k = await fetch(GOOGLE_CSV_URL_10K + "&t=" + Date.now(), { headers: { 'User-Agent': 'Vercel-Serverless-Fetcher' } });
+                if (!resp10k.ok) {
+                    resp10k = await fetch(GOOGLE_CSV_URL_10K_GVIZ + "&t=" + Date.now());
+                }
+                if (resp10k.ok) {
+                    const text = await resp10k.text();
+                    const filas = text.split(/\r?\n/).filter(f => f.trim().length > 0);
+                    if (filas.length > 1) {
+                        const headers = parseCsvLine(filas[0]).map(h => h.toLowerCase());
+                        const idxNombre = headers.findIndex(h => h.includes('nombre'));
+                        const idxCiudad = headers.findIndex(h => h.includes('ciudad'));
+                        const idxEstado = headers.findIndex(h => h.includes('estado'));
+
+                        const capitalizar = (s) => s.toLowerCase().replace(/(^|\s)\S/g, l => l.toUpperCase());
+                        const vistos = new Set();
+                        const recientes = [];
+
+                        for (let i = filas.length - 1; i >= 1 && recientes.length < 10; i--) {
+                            const col = parseCsvLine(filas[i]);
+                            const rawNombre = (idxNombre !== -1 ? col[idxNombre] : '') || '';
+                            const limpio = rawNombre.replace(/\s+/g, ' ').trim();
+                            // Filtrar nombres raros, vacíos, pruebas o con números/símbolos
+                            if (!limpio || limpio.length < 3 || /[0-9@<>]/.test(limpio) || /\b(test|prueba|abono|admin|n\/a)\b/i.test(limpio)) {
+                                continue;
+                            }
+                            const partes = limpio.split(' ').filter(p => p.length >= 2);
+                            if (partes.length === 0) continue;
+
+                            const primerNombre = capitalizar(partes[0]);
+                            const inicial = partes.length > 1 ? ` ${partes[partes.length - 1][0].toUpperCase()}.` : '';
+                            const nombrePublico = `${primerNombre}${inicial}`;
+                            if (vistos.has(nombrePublico.toLowerCase())) continue;
+                            vistos.add(nombrePublico.toLowerCase());
+
+                            const rawCiudad = (idxCiudad !== -1 ? col[idxCiudad] : '') || '';
+                            const rawEstado = (idxEstado !== -1 ? col[idxEstado] : '') || '';
+                            let ubicacion = 'Venezuela';
+                            if (rawCiudad && rawEstado && rawCiudad.toUpperCase() !== 'N/A' && rawEstado.toUpperCase() !== 'N/A') {
+                                ubicacion = `${capitalizar(rawCiudad.trim())}, ${capitalizar(rawEstado.trim())}`;
+                            } else if (rawEstado && rawEstado.toUpperCase() !== 'N/A') {
+                                ubicacion = capitalizar(rawEstado.trim());
+                            } else if (rawCiudad && rawCiudad.toUpperCase() !== 'N/A') {
+                                ubicacion = capitalizar(rawCiudad.trim());
+                            }
+
+                            recientes.push({ atleta: nombrePublico, ubicacion });
+                        }
+
+                        return res.status(200).json({ recientes });
+                    }
+                }
+            } catch (e) {}
+            return res.status(200).json({ recientes: [] });
+        }
+
         if (!ciRaw || ciRaw.trim().length === 0) {
             return res.status(400).json({ error: 'Cédula o dorsal requerido' });
         }

@@ -335,6 +335,19 @@ if (typeof document !== 'undefined') {
 
     <!-- ===================== HEADER SEMÁNTICO ===================== -->
     <header class="relative z-50">
+        <!-- BANNER DINÁMICO CONTROLADO DESDE GROW STUDIO ADMIN (PROGRAMABLE EN VIVO) -->
+        <div id="reto-admin-aviso-banner" class="hidden w-full px-3 py-2.5 border-b border-white/15 backdrop-blur-md transition-all">
+            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+                <div class="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5 text-xs">
+                    <strong id="reto-admin-aviso-titulo" class="font-black uppercase tracking-wider"></strong>
+                    <span id="reto-admin-aviso-mensaje" class="opacity-90 font-medium text-[11px] sm:text-xs"></span>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <a id="reto-admin-aviso-cta" href="inscripcion.html?modo=10K" class="hidden px-3.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-white text-[#001E50] hover:opacity-90 transition-all shadow-sm whitespace-nowrap"></a>
+                    <button type="button" onclick="cerrarAvisoAdminReto()" aria-label="Cerrar aviso" class="w-6 h-6 rounded-full bg-black/25 hover:bg-black/45 text-white flex items-center justify-center text-[10px] cursor-pointer">✕</button>
+                </div>
+            </div>
+        </div>
         <div class="bg-[#00D2FF] text-[#001E50] py-2 px-3 z-50 relative">
             <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.14em]">
                 <span class="inline-flex items-center gap-1.5">
@@ -2480,6 +2493,97 @@ document.addEventListener('DOMContentLoaded', function() {
   cargarInscritosRecientesReales().finally(() => {
       setTimeout(mostrarToastSocialProof, 4500);
   });
+
+  // ========= 4. RECEPTOR DE AVISOS PROGRAMADOS (GROW STUDIO ADMIN -> FIRESTORE) ============
+  const FIRESTORE_AVISO_URL = "https://firestore.googleapis.com/v1/projects/grow-studio-menus/databases/(default)/documents/reto_cupones_10k/__AVISO_WEB__";
+  let avisoAdminActualId = null;
+
+  function cerrarAvisoAdminReto() {
+      const el = document.getElementById('reto-admin-aviso-banner');
+      if (el) el.classList.add('hidden');
+      if (avisoAdminActualId) {
+          try { sessionStorage.setItem('reto_aviso_cerrado_' + avisoAdminActualId, '1'); } catch (e) {}
+      }
+  }
+
+  async function cargarAvisoDesdeAdmin() {
+      try {
+          const res = await fetch(`${FIRESTORE_AVISO_URL}?t=${Date.now()}`);
+          if (!res.ok) return;
+          const docJson = await res.json();
+          const f = docJson.fields || {};
+          if (f.activo?.booleanValue !== true) return;
+
+          const ahora = Date.now();
+          const inicioStr = f.programarInicio?.stringValue || '';
+          const finStr = f.programarFin?.stringValue || '';
+          if (inicioStr && ahora < new Date(inicioStr).getTime()) return;
+          if (finStr && ahora > new Date(finStr).getTime()) return;
+
+          const avisoId = f.avisoId?.stringValue || 'AV_DEFAULT';
+          avisoAdminActualId = avisoId;
+          try {
+              if (sessionStorage.getItem('reto_aviso_cerrado_' + avisoId) === '1') return;
+          } catch (e) {}
+
+          const titulo = f.titulo?.stringValue || '';
+          const mensaje = f.mensaje?.stringValue || '';
+          const estilo = f.estilo?.stringValue || 'cian';
+          const textoBoton = f.textoBoton?.stringValue || '';
+          const urlBoton = f.urlBoton?.stringValue || 'inscripcion.html?modo=10K';
+          const enviarPush = f.enviarPush?.booleanValue === true;
+
+          if (!titulo && !mensaje) return;
+
+          const banner = document.getElementById('reto-admin-aviso-banner');
+          const elTitulo = document.getElementById('reto-admin-aviso-titulo');
+          const elMensaje = document.getElementById('reto-admin-aviso-mensaje');
+          const elCta = document.getElementById('reto-admin-aviso-cta');
+
+          if (banner && elTitulo && elMensaje) {
+              elTitulo.textContent = titulo;
+              elMensaje.textContent = mensaje;
+
+              banner.classList.remove('bg-[#071A38]', 'bg-red-700', 'bg-emerald-700', 'text-white');
+              if (estilo === 'urgente') {
+                  banner.classList.add('bg-red-700', 'text-white');
+              } else if (estilo === 'exito') {
+                  banner.classList.add('bg-emerald-700', 'text-white');
+              } else {
+                  banner.classList.add('bg-[#071A38]', 'text-white');
+              }
+
+              if (elCta && textoBoton) {
+                  elCta.textContent = textoBoton;
+                  elCta.href = urlBoton;
+                  elCta.classList.remove('hidden');
+              } else if (elCta) {
+                  elCta.classList.add('hidden');
+              }
+
+              banner.classList.remove('hidden');
+          }
+
+          // Disparar notificación nativa del navegador / PWA una sola vez por avisoId si el usuario activó la campana
+          if (enviarPush && 'Notification' in window && Notification.permission === 'granted') {
+              const keyPush = 'reto_push_visto_' + avisoId;
+              if (!localStorage.getItem(keyPush)) {
+                  localStorage.setItem(keyPush, '1');
+                  if ('serviceWorker' in navigator) {
+                      const reg = await navigator.serviceWorker.ready;
+                      reg.showNotification(titulo || 'Reto Virtual Venezuela 2026', {
+                          body: mensaje,
+                          icon: 'img/RV-Isotipo-sinfondo.webp',
+                          badge: 'img/RV-Isotipo-sinfondo.webp',
+                          data: { url: urlBoton }
+                      });
+                  }
+              }
+          }
+      } catch (e) {}
+  }
+
+  cargarAvisoDesdeAdmin();
   </script>
 
 <script>

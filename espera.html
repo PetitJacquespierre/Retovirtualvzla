@@ -168,6 +168,11 @@ La demanda supera los cupos. RegÃ­strate gratis en esta lista VIP y recibe el 
 
             <form id="formEspera" class="text-left space-y-4" onsubmit="enviarListaEspera(event)">
                 
+                <!-- Campo trampa silencioso Anti-Bot (Grow Studio Honeypot) -->
+                <div style="display:none !important; visibility:hidden !important; position:absolute; left:-9999px;" aria-hidden="true">
+                    <input type="text" id="_gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+                </div>
+                
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="flex flex-col gap-1.5 md:col-span-2">
                         <label class="text-[10px] font-bold uppercase text-[#00D2FF] ml-2 tracking-widest">Nombre Completo *</label>
@@ -355,6 +360,11 @@ La demanda supera los cupos. RegÃ­strate gratis en esta lista VIP y recibe el 
 
         function enviarListaEspera(e) {
             e.preventDefault();
+            const hpElement = document.getElementById('_gotcha') || document.getElementById('website_url_hp');
+            if (hpElement && hpElement.value && hpElement.value.trim().length > 0) {
+                console.warn('Bot detectado por Honeypot. Envio descartado silenciosamente.');
+                return;
+            }
             const btn = document.getElementById('btnEspera');
             
             btn.innerText = "REGISTRANDO...";

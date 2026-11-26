@@ -349,15 +349,18 @@ if (typeof document !== 'undefined') {
             </div>
         </div>
         <div class="bg-[#00D2FF] text-[#001E50] py-2 px-3 z-50 relative">
-            <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.14em]">
+            <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-2.5 sm:gap-x-3 gap-y-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.12em]">
                 <span class="inline-flex items-center gap-1.5">
                     <i class="fa-solid fa-fire text-red-600"></i>
                     10K: ÚLTIMOS CUPOS · DESDE 11 DIC
                 </span>
-                <div class="inline-flex items-center gap-2.5">
+                <div class="inline-flex items-center gap-2">
                     <a href="inscripcion.html?modo=10K" class="underline underline-offset-2 hover:opacity-75 transition-opacity font-black">Asegurar Kit &rarr;</a>
-                    <button type="button" onclick="dispararInstalacionPWA()" aria-label="Instalar aplicación Reto Virtual" class="inline-flex items-center gap-1.5 bg-[#001E50] text-[#00D2FF] hover:bg-black px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider shadow-sm transition-all cursor-pointer">
-                        <i class="fa-solid fa-mobile-screen-button text-[10px]"></i> Instalar App
+                    <button type="button" onclick="dispararInstalacionPWA()" aria-label="Instalar aplicación Reto Virtual" class="inline-flex items-center gap-1 bg-[#001E50] text-[#00D2FF] hover:bg-black px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider shadow-sm transition-all cursor-pointer">
+                        <i class="fa-solid fa-mobile-screen-button text-[10px]"></i> App
+                    </button>
+                    <button type="button" onclick="solicitarNotificacionesPush()" aria-label="Activar notificaciones y avisos" class="inline-flex items-center gap-1 bg-[#001E50] text-amber-300 hover:bg-black px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider shadow-sm transition-all cursor-pointer">
+                        <i class="fa-solid fa-bell text-[10px]"></i> Avisos 🔔
                     </button>
                 </div>
             </div>
@@ -427,9 +430,17 @@ if (typeof document !== 'undefined') {
                         </button>
                     </div>
 
-                    <button id="menuToggle" aria-label="Abrir menú de navegación" class="lg:hidden text-white text-2xl focus:outline-none z-50">
-                        <i class="fa-solid fa-bars-staggered"></i>
-                    </button>
+                    <!-- Controles Móvil: Campanita Visible con Pulso + Menú Hamburguesa -->
+                    <div class="flex items-center gap-2 lg:hidden">
+                        <button id="btnActivarPushMovil" onclick="solicitarNotificacionesPush()" type="button" aria-label="Activar notificaciones de cupos" class="relative border border-[#00D2FF]/40 text-[#00D2FF] bg-[#00D2FF]/10 active:scale-95 rounded-full w-10 h-10 flex items-center justify-center text-sm transition-all shadow-[0_0_12px_rgba(0,210,255,0.25)]" title="Activar avisos y cupos">
+                            <i id="iconoCampanaPushMovil" class="fa-solid fa-bell"></i>
+                            <span class="push-ping-badge absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full animate-ping"></span>
+                            <span class="push-ping-badge absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border border-[#001E50]"></span>
+                        </button>
+                        <button id="menuToggle" aria-label="Abrir menú de navegación" class="text-white text-2xl focus:outline-none z-50 p-1.5 ml-1">
+                            <i class="fa-solid fa-bars-staggered"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -2371,6 +2382,24 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // ========= 2. NOTIFICACIONES PUSH WEB ============
+  function refrescarIconosCampana() {
+      if (!('Notification' in window)) return;
+      const concedido = Notification.permission === 'granted';
+      ['iconoCampanaPush', 'iconoCampanaPushMovil'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+              if (concedido) {
+                  el.className = 'fa-solid fa-bell-circle-check text-emerald-400';
+              } else {
+                  el.className = 'fa-solid fa-bell';
+              }
+          }
+      });
+      if (concedido) {
+          document.querySelectorAll('.push-ping-badge').forEach(b => b.remove());
+      }
+  }
+
   async function solicitarNotificacionesPush() {
       if (!('Notification' in window)) {
           alert('Tu navegador no admite notificaciones web.');
@@ -2379,13 +2408,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
       try {
           const permiso = await Notification.requestPermission();
-          const iconoCampana = document.getElementById('iconoCampanaPush');
+          refrescarIconosCampana();
 
           if (permiso === 'granted') {
-              if (iconoCampana) {
-                  iconoCampana.classList.remove('fa-bell');
-                  iconoCampana.classList.add('fa-bell-circle-check', 'text-emerald-400');
-              }
               if ('serviceWorker' in navigator) {
                   const reg = await navigator.serviceWorker.ready;
                   reg.showNotification('¡Notificaciones Activadas! 🏁', {
@@ -2400,11 +2425,15 @@ document.addEventListener('DOMContentLoaded', function() {
                   });
               }
           } else if (permiso === 'denied') {
-              alert('Las notificaciones están bloqueadas en tu navegador. Puedes activarlas desde el candado de la barra de direcciones.');
+              alert('Las notificaciones están bloqueadas en tu navegador. Puedes activarlas desde los ajustes de tu teléfono o el candado de la barra de direcciones.');
           }
       } catch (err) {
           console.warn('Error al solicitar permiso de notificaciones', err);
       }
+  }
+
+  if (typeof window !== 'undefined') {
+      window.addEventListener('DOMContentLoaded', refrescarIconosCampana);
   }
 
   // ========= 3. TOASTS DE PRUEBA SOCIAL EN VIVO (ÚLTIMOS 10 INSCRITOS REALES EN ORDEN ALEATORIO) ============

@@ -349,18 +349,15 @@ if (typeof document !== 'undefined') {
             </div>
         </div>
         <div class="bg-[#00D2FF] text-[#001E50] py-2 px-3 z-50 relative">
-            <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-2.5 sm:gap-x-3 gap-y-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.12em]">
+            <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.14em]">
                 <span class="inline-flex items-center gap-1.5">
                     <i class="fa-solid fa-fire text-red-600"></i>
                     10K: ÚLTIMOS CUPOS · DESDE 11 DIC
                 </span>
-                <div class="inline-flex items-center gap-2">
+                <div class="inline-flex items-center gap-2.5">
                     <a href="inscripcion.html?modo=10K" class="underline underline-offset-2 hover:opacity-75 transition-opacity font-black">Asegurar Kit &rarr;</a>
-                    <button type="button" onclick="dispararInstalacionPWA()" aria-label="Instalar aplicación Reto Virtual" class="inline-flex items-center gap-1 bg-[#001E50] text-[#00D2FF] hover:bg-black px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider shadow-sm transition-all cursor-pointer">
-                        <i class="fa-solid fa-mobile-screen-button text-[10px]"></i> App
-                    </button>
-                    <button type="button" onclick="solicitarNotificacionesPush()" aria-label="Activar notificaciones y avisos" class="inline-flex items-center gap-1 bg-[#001E50] text-amber-300 hover:bg-black px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider shadow-sm transition-all cursor-pointer">
-                        <i class="fa-solid fa-bell text-[10px]"></i> Avisos 🔔
+                    <button type="button" onclick="dispararInstalacionPWA()" aria-label="Instalar aplicación Reto Virtual" class="inline-flex items-center gap-1.5 bg-[#001E50] text-[#00D2FF] hover:bg-black px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider shadow-sm transition-all cursor-pointer">
+                        <i class="fa-solid fa-mobile-screen-button text-[10px]"></i> Instalar App
                     </button>
                 </div>
             </div>
@@ -424,15 +421,15 @@ if (typeof document !== 'undefined') {
                             <span>Instalar App</span>
                         </button>
 
-                        <!-- Botón Push Notifications -->
-                        <button id="btnActivarPush" onclick="solicitarNotificacionesPush()" type="button" aria-label="Activar notificaciones de cupos y eventos" class="border border-white/20 text-white/70 hover:text-white hover:border-[#00D2FF] hover:bg-[#00D2FF]/10 bg-white/5 rounded-full w-9 h-9 flex items-center justify-center text-xs transition-all" title="Activar notificaciones de cupos">
+                        <!-- Botón Push Notifications (Visible solo si no está activado aún) -->
+                        <button id="btnActivarPush" onclick="solicitarNotificacionesPush()" type="button" aria-label="Activar notificaciones de cupos y eventos" class="border border-[#00D2FF]/40 text-[#00D2FF] hover:text-white hover:border-[#00D2FF] hover:bg-[#00D2FF]/20 bg-[#00D2FF]/10 rounded-full w-9 h-9 flex items-center justify-center text-xs transition-all shadow-[0_0_12px_rgba(0,210,255,0.2)]" title="Activar avisos de cupos">
                             <i id="iconoCampanaPush" class="fa-solid fa-bell"></i>
                         </button>
                     </div>
 
-                    <!-- Controles Móvil: Campanita Visible con Pulso + Menú Hamburguesa -->
+                    <!-- Controles Móvil: Campanita Visible (se oculta al activar) + Menú Hamburguesa -->
                     <div class="flex items-center gap-2 lg:hidden">
-                        <button id="btnActivarPushMovil" onclick="solicitarNotificacionesPush()" type="button" aria-label="Activar notificaciones de cupos" class="relative border border-[#00D2FF]/40 text-[#00D2FF] bg-[#00D2FF]/10 active:scale-95 rounded-full w-10 h-10 flex items-center justify-center text-sm transition-all shadow-[0_0_12px_rgba(0,210,255,0.25)]" title="Activar avisos y cupos">
+                        <button id="btnActivarPushMovil" onclick="solicitarNotificacionesPush()" type="button" aria-label="Activar notificaciones de cupos" class="relative border border-[#00D2FF]/40 text-[#00D2FF] bg-[#00D2FF]/10 active:scale-95 rounded-full w-10 h-10 flex items-center justify-center text-sm transition-all shadow-[0_0_12px_rgba(0,210,255,0.25)]" title="Activar avisos de cupos">
                             <i id="iconoCampanaPushMovil" class="fa-solid fa-bell"></i>
                             <span class="push-ping-badge absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full animate-ping"></span>
                             <span class="push-ping-badge absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border border-[#001E50]"></span>
@@ -2385,18 +2382,17 @@ document.addEventListener('DOMContentLoaded', function() {
   function refrescarIconosCampana() {
       if (!('Notification' in window)) return;
       const concedido = Notification.permission === 'granted';
-      ['iconoCampanaPush', 'iconoCampanaPushMovil'].forEach(id => {
-          const el = document.getElementById(id);
-          if (el) {
-              if (concedido) {
-                  el.className = 'fa-solid fa-bell-circle-check text-emerald-400';
-              } else {
-                  el.className = 'fa-solid fa-bell';
-              }
-          }
-      });
+      const btnDesktop = document.getElementById('btnActivarPush');
+      const btnMovil = document.getElementById('btnActivarPushMovil');
+
       if (concedido) {
-          document.querySelectorAll('.push-ping-badge').forEach(b => b.remove());
+          // Una vez activado, se oculta completamente para que no estorbe ni quede un círculo vacío
+          if (btnDesktop) btnDesktop.classList.add('hidden');
+          if (btnMovil) btnMovil.classList.add('hidden');
+      } else {
+          // Si no está activado, se muestra la campanita
+          if (btnDesktop) btnDesktop.classList.remove('hidden');
+          if (btnMovil) btnMovil.classList.remove('hidden');
       }
   }
 
@@ -2408,9 +2404,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
       try {
           const permiso = await Notification.requestPermission();
-          refrescarIconosCampana();
 
           if (permiso === 'granted') {
+              // Animación suave de salida y desaparición inmediata
+              const btnDesktop = document.getElementById('btnActivarPush');
+              const btnMovil = document.getElementById('btnActivarPushMovil');
+              [btnDesktop, btnMovil].forEach(btn => {
+                  if (btn) {
+                      btn.style.transition = 'all 0.3s ease';
+                      btn.style.opacity = '0';
+                      btn.style.transform = 'scale(0.5)';
+                      setTimeout(() => {
+                          btn.classList.add('hidden');
+                      }, 300);
+                  }
+              });
+
               if ('serviceWorker' in navigator) {
                   const reg = await navigator.serviceWorker.ready;
                   reg.showNotification('¡Notificaciones Activadas! 🏁', {
